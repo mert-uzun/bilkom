@@ -100,7 +100,7 @@ By bringing all these features together, Bilkom not only enhances the social and
 
 ## Team
 
-**Group0 – CS102 (Fall 2024/2025)**
+**Group0 – CS102 (Spring 2024/2025)**
 
 - **Salih Mert Uzun**
 - **Sıla Bozkurt**
