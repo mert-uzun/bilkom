@@ -102,10 +102,9 @@ By bringing all these features together, Bilkom not only enhances the social and
 
 **Group0 – CS102 (Fall 2024/2025)**
 
-- **Sıla Bozkurt** – Frontend Developer  
-- **Salih Mert Uzun** – Backend Developer  
-- **Elif Bozkurt** – Full-Stack Developer  
-- **Utku Kabukçu** – API & DB Specialist  
-- **Ali İhsan Sevindi** – Architect & Integration Lead
-
+- **Salih Mert Uzun**
+- **Sıla Bozkurt**
+- **Elif Bozkurt** 
+- **Utku Kabukçu**   
+- **Ali İhsan Sevindi** 
 
