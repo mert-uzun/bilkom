@@ -9,7 +9,6 @@ Bilkom is a community-driven platform exclusively for Bilkent University student
 - [Overview](#overview)
 - [Features](#features)
 - [Technologies](#technologies)
-- [Installation & Setup](#installation--setup)
 - [Usage](#usage)
 - [Team](#team)
 - [References](#references)
@@ -63,10 +62,50 @@ By bringing all these features together, Bilkom not only enhances the social and
   - OpenWeatherMap API for real-time weather updates  
   - RSS Feed Parsing/JSoup for integrating Bilkent news
 
-## Installation & Setup
+## Usage
 
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/yourusername/Bilkom.git
-   cd Bilkom
+### Register
+- Only Bilkent emails (`@bilkent.edu.tr`) allowed  
+- Email verification via JWT system
+
+### Setup Profile
+- Add interests → get matched with relevant events  
+- Interests control homepage suggestions
+
+### Create / Join Event
+- Fill title, description, quota, tags  
+- Join an event → Get notified when someone else joins too  
+- Filter by interest, time, and availability
+
+### Club Announcements
+- Clubs post events with quota/time  
+- Replaces Instagram/WhatsApp chaos
+
+### Emergency Alerts
+- Fire, accident, blood donation, etc.  
+- Uses WebSocket for instant broadcast
+
+### Carpooling
+- Offer/request ride → verified only  
+- Includes GPS + messaging + report button  
+- Optional: share live location
+
+### News & Weather Feed
+- Pulls news from:
+  - [https://bilkentnews.bilkent.edu.tr/](https://bilkentnews.bilkent.edu.tr/)
+  - [https://gazetebilkent.com/](https://gazetebilkent.com/)
+- Displays real-time weather on homepage via OpenWeatherMap API
+
+---
+
+## Team
+
+**Group0 – CS102 (Fall 2024/2025)**
+
+- **Sıla Bozkurt** – Frontend Developer  
+- **Salih Mert Uzun** – Backend Developer  
+- **Elif Bozkurt** – Full-Stack Developer  
+- **Utku Kabukçu** – API & DB Specialist  
+- **Ali İhsan Sevindi** – Architect & Integration Lead
+
 
