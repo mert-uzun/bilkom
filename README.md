@@ -1,6 +1,8 @@
 # Bilkom: Enhancing Campus Life at Bilkent University
 
-![Bilkom Logo](https://via.placeholder.com/400x200?text=Bilkom)
+<p align="center">
+  <img src="Media/logo.jpg" width="300"/>
+</p>
 
 Bilkom is a community-driven platform exclusively for Bilkent University students. Developed as part of our CS102 group project for Fall 2024/2025, Bilkom aims to revolutionize campus connectivity by fostering social interactions, streamlining event management, and ensuring student safety—all within a secure, Bilkent-only environment.
 
