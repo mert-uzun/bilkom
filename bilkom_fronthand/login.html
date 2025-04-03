@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="author" content="Sila">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bilkom Login</title>
   <style>
@@ -30,14 +31,22 @@
       text-align: center;
     }
     .logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-bottom: 1rem;
-      border-bottom: 1px solid #333; 
+      border-bottom: 1px solid #333;
       padding-bottom: 1rem;
     }
     .logo-row img {
-      max-height: 200px; 
+      max-height: 150px; 
       display: block;
       margin: 0 auto;
+    }
+    .divider {
+    width: 0.3px;
+    height: 100px; 
+    background-color: #abaaaa; 
     }
     h2 {
       margin: 1rem 0;
@@ -88,8 +97,10 @@
 <body>
     <div class="login-container">
         <div class="logo-row">
-            <img src="bilkom_logo.png" alt="Bilkom Logo" />
-        </div>
+            <img src="bilkom_logo.png" alt="Bilkom Logo">
+            <div class="divider"></div>
+            <img src="bilkent-logo.png" alt="Other Logo">
+          </div>
       <h2>Login</h2>
       <form action="/login" method="post">
         <input type="text" name="username" placeholder="Username" required>
