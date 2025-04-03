@@ -1,80 +1,106 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bilkom Registration</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
+      background-color: #1E1E1E; 
+      color: #fff;            
       display: flex;
-      align-items: center;
       justify-content: center;
-      height: 100vh;
+      align-items: center;
+      min-height: 100vh;
     }
-    .register-container {
-      background-color: #fff;
-      padding: 2em;
-      border-radius: 5px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      width: 300px;
-      text-align: center;
-    }
-    .register-container img.logo {
-      max-width: 100px;
-      margin-bottom: 1em;
-    }
-    .register-container h2 {
-      margin-bottom: 1em;
-    }
-    .register-container input[type="text"],
-    .register-container input[type="password"],
-    .register-container input[type="email"] {
-      width: 100%;
-      padding: 0.75em;
-      margin-bottom: 1em;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-    }
-    .register-container button {
-    display: block;
-    width: 100%;
-    padding: 0.75em;
-    margin-bottom: 1em;
-}
 
-    .register-container button:hover {
-      background-color: #218838;
-    }
-    .register-container .links {
+    .registration-container {
+      width: 320px;  
+      padding: 1.5rem;
+      background-color: #1E1E1E; 
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
       text-align: center;
-      margin-top: 1em;
     }
-    .register-container .links a {
-      color: #28a745;
+    .logo-row {
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #333; 
+      padding-bottom: 1rem;
+    }
+    .logo-row img {
+      max-height: 200px; 
+      display: block;
+      margin: 0 auto;
+    }
+    h2 {
+      margin: 1rem 0;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    form input {
+      padding: 0.6rem;
+      border: 1px solid #444;
+      border-radius: 4px;
+      background-color: #222;
+      color: #fff;
+    }
+    form input::placeholder {
+      color: #999;
+    }
+    .verify-btn {
+      padding: 0.6rem;
+      border: none;
+      border-radius: 4px;
+      background-color: #00529F;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .verify-btn:hover {
+      background-color: #00529F;
+    }
+    .login-link {
+      display: block;
+      margin-top: 0.5rem;
+      color: #007bff;
       text-decoration: none;
-      margin: 0 0.5em;
+      font-size: 0.9rem;
     }
-    .register-container .links a:hover {
+    .login-link:hover {
       text-decoration: underline;
     }
   </style>
 </head>
 <body>
-<div class="container">
-    <img class="logo" src="bilkom_fronthand/bilkom_logo.png" alt="Bilkom Logo" style="max-width:100px; margin-bottom: 20px;">
+  <div class="registration-container">
+    <div class="logo-row">
+      <img src="bilkom_logo.png" alt="Bilkom Logo" />
+    </div>
     <h2>Register</h2>
     <form action="/register" method="post">
-        <input type="text" name="username" placeholder="Username" required />
-        <input type="email" name="email" placeholder="Bilkent Email" required />
-        <input type="password" name="password" placeholder="Password" required />
-        <button type="submit">Register</button>
-        <button class="switch-btn" onclick="window.location.href='login.html';">
-            Already registered? Login.
-        </button>
+      <input type="text" name="username" placeholder="Username" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <input type="email" name="bilkent_email" placeholder="name@ug.bilkent.edu.tr" required />
+      <button type="button" class="verify-btn" onclick="window.location.href='login.html'">
+        Verify Account
+      </button>
+      <!--ToDo: write script functions that check if the wanted words are entered is entered-->
     </form>
-    </div>
+    <a href="login.html" class="login-link">Already registered? Login</a>
+  </div>
 </body>
 </html>

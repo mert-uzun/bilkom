@@ -5,79 +5,98 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bilkom Login</title>
   <style>
-    /* General page styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
+      background-color: #1E1E1E; 
+      color: #fff;            
       display: flex;
-      align-items: center;
       justify-content: center;
-      height: 100vh;
+      align-items: center;
+      min-height: 100vh;
     }
-    /* Login container styling */
+
     .login-container {
-      background-color: #fff;
-      padding: 2em;
-      border-radius: 5px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      width: 300px;
+      width: 320px;  
+      padding: 1.5rem;
+      background-color: #1E1E1E; 
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
       text-align: center;
     }
-    .login-container img.logo {
-      max-width: 100px;
-      margin-bottom: 1em;
+    .logo-row {
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #333; 
+      padding-bottom: 1rem;
     }
-    .login-container h2 {
-      text-align: center;
-      margin-bottom: 1em;
+    .logo-row img {
+      max-height: 200px; 
+      display: block;
+      margin: 0 auto;
     }
-    /* Input fields styling */
-    .login-container input[type="text"],
-    .login-container input[type="password"] {
-      width: 100%;
-      padding: 0.75em;
-      margin-bottom: 1em;
-      border: 1px solid #ccc;
-      border-radius: 3px;
+    h2 {
+      margin: 1rem 0;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
     }
-    .login-container button {
-    display: block;
-    width: 100%;
-    padding: 0.75em;
-    margin-bottom: 1em;
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
     }
-    .login-container button:hover {
-      background-color: #0056b3;
+    form input {
+      padding: 0.6rem;
+      border: 1px solid #444;
+      border-radius: 4px;
+      background-color: #222;
+      color: #fff;
     }
-    /* Link styling */
-    .login-container .links {
-      text-align: center;
-      margin-top: 1em;
+    form input::placeholder {
+      color: #999;
     }
-    .login-container .links a {
-      color: #007BFF;
+    .login-btn {
+      padding: 0.6rem;
+      border: none;
+      border-radius: 4px;
+      background-color: #00529F;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .login-btn:hover {
+      background-color: #00529F;
+    }
+    .register-link {
+      display: block;
+      margin-top: 0.5rem;
+      color: #007bff;
       text-decoration: none;
-      margin: 0 0.5em;
+      font-size: 0.9rem;
     }
-    .login-container .links a:hover {
+    .register-link:hover {
       text-decoration: underline;
     }
   </style>
 </head>
 <body>
-    <div class="container">
-      <img class="logo" src="bilkom_fronthand/bilkom_logo.png" alt="Bilkom Logo" style="max-width:100px; margin-bottom: 20px;">
+    <div class="login-container">
+        <div class="logo-row">
+            <img src="bilkom_logo.png" alt="Bilkom Logo" />
+        </div>
       <h2>Login</h2>
-      <form action="process_login.php" method="post">
+      <form action="/login" method="post">
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit" class="login-btn">Login</button>
-        <button class="switch-btn" onclick="window.location.href='registration.html';">
-            No account? Register.
-          </button>
       </form>
-
+      <a href="register.html" class="register-link">No account? Register.</a>
     </div>
   </body>
 </html>
