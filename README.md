@@ -13,8 +13,6 @@ Bilkom is a community-driven platform exclusively for Bilkent University student
 - [Technologies](#technologies)
 - [Usage](#usage)
 - [Team](#team)
-- [References](#references)
-- [License](#license)
 
 ## Overview
 
