@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Live Blood Requests</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    h2 { color: darkred; }
+    .mail { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+    .time { font-size: 0.9em; color: #777; }
+  </style>
+</head>
+<body>
+
+  <h2>🩸 Blood Transfusion Alerts</h2>
+  <div id="mails">Loading...</div>
+  <p class="time" id="timestamp"></p>
+
+  <script>
+    function loadMails() {
+      fetch('/api/v1/mail')
+        .then(response => response.json())
+        .then(data => {
+          const container = document.getElementById('mails');
+          container.innerHTML = '';
+
+          if (data.length === 0) {
+            container.innerHTML = '<p>No blood-related messages found.</p>';
+          } else {
+            data.reverse().forEach(mail => {
+            const mailDiv = document.createElement('div');
+            mailDiv.classList.add('mail');
+            mailDiv.innerHTML = `
+              <strong>${mail.bloodType + " BLOOD NEEDED"}</strong><br>
+              <pre>📞 Contact: ${mail.phoneNumber || "N/A"}</pre>
+              <pre>${mail.content}</pre>
+            `;
+            container.appendChild(mailDiv);
+            });
+          }
+
+          const now = new Date();
+          document.getElementById('timestamp').innerText =
+            "Last updated at " + now.toLocaleTimeString();
+        })
+        .catch(err => {
+          document.getElementById('mails').innerHTML = '<p>Error loading messages.</p>';
+        });
+    }
+
+    loadMails();
+    setInterval(loadMails, 10000);   
+  </script>
+</body>
+</html>
