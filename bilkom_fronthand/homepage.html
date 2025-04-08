@@ -56,7 +56,7 @@
     }
 
     .logo {
-      width: 150px;
+      width: 350px;
       margin: 20px 0;
     }
 
@@ -77,11 +77,12 @@
       margin-bottom: 20px;
       width: 90%;
       max-width: 400px;
+      margin-top: 20px;
     }
 
     .shortcut img {
-      width: 50px;
-      margin-bottom: 10px;
+      width: 150px;
+      margin-bottom: 30px;
     }
 
     .shortcut.activity { border-color: #4caf50; }
@@ -106,11 +107,12 @@
 
     .widget.news {
       background: #1e1e1e;
-      padding: 20px;
+      padding: 200px;
       border-radius: 12px;
       text-align: left;
       width: 90%;
-      max-width: 400px;
+      max-width: 100px;
+      margin-bottom: 10;
     }
 
     .widget h2 {
@@ -133,12 +135,14 @@
     <h1 class="welcome">WELCOME TO BILKOM</h1>
     <img src="bilkom_logo.png" alt="Bilkom Logo" class="logo">
 
-    <button class="shortcut emergency">
-      <span>Emergency Alerts</span>
+    <button class="shortcut emergency" onclick="window.location.href='emergency-alerts.html'"> 
+      <span>
+        Emergency Alerts
+      </span>
     </button>
 
-    <div class="alert-preview">
-      <strong>Latest Alert:</strong>
+    <div class="alert-preview" id="alertPreview">
+      <strong>Latest Alert:</strong> <span id="alertText">Loading...</span>
     </div>
 
     <div class="widget news">
@@ -154,8 +158,25 @@
       <img src="club.png" alt="Club Icon">
       <span>Club Activities</span>
     </button>
-
   </main>
+  <!--To get the most recent emergency printed on home page-->
+  <script>
+    async function fetchLatestAlert() {
+      try {
+        const response = await fetch('/api/v1/mail/latest');
+        if (!response.ok) throw new Error('Request failed');
+
+        const data = await response.json();
+        const alertText = `${data.bloodType || 'Unknown Blood Type'} — ${data.phoneNumber || 'No contact found'}: ${data.content.substring(0, 100)}...`;
+
+        document.getElementById('alertText').textContent = alertText;
+      } catch (e) {
+        console.error('Failed to fetch latest alert:', e);
+        document.getElementById('alertText').textContent = 'No emergency alerts available at the moment.';
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', fetchLatestAlert);
+  </script>
 </body>
 </html>
-
