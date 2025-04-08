@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bilkom Home</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #f5f5dc;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu-container {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      width: 40px;
+      height: 40px;
+      background-color: #444;
+      border-radius: 6px;
+      overflow: hidden;
+      transition: width 0.3s ease, height 0.3s ease;
+      z-index: 1000;
+    }
+
+    .menu-container:hover {
+      width: 200px;
+      height: auto;
+    }
+
+    .menu {
+      display: none;
+      flex-direction: column;
+      padding: 10px;
+    }
+
+    .menu-container:hover .menu {
+      display: flex;
+    }
+
+    .menu a {
+      color: #f5f5dc;
+      text-decoration: none;
+      padding: 8px 0;
+      font-weight: bold;
+    }
+
+    .container-vertical {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 100px 20px 40px;
+    }
+
+    .logo {
+      width: 150px;
+      margin: 20px 0;
+    }
+
+    .welcome {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .shortcut {
+      background: #1e1e1e;
+      color: #f5f5dc;
+      border: 2px solid transparent;
+      padding: 15px;
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: 0.3s ease;
+      margin-bottom: 20px;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .shortcut img {
+      width: 50px;
+      margin-bottom: 10px;
+    }
+
+    .shortcut.activity { border-color: #4caf50; }
+    .shortcut.club { border-color: #8d6e63; }
+    .shortcut.emergency { border-color: #f44336; }
+
+    .shortcut:hover {
+      background: #333;
+    }
+
+    .alert-preview {
+      background: #333;
+      color: #f5f5dc;
+      border-left: 4px solid #f44336;
+      padding: 10px;
+      margin: 20px 0;
+      border-radius: 8px;
+      text-align: left;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .widget.news {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: left;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .widget h2 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="menu-container">
+    <div class="menu">
+      <a href="#profile">Profile</a>
+      <a href="#home">Home</a>
+      <a href="#settings">Settings</a>
+      <a href="#logout">Log Out</a>
+    </div>
+  </div>
+
+  <main class="container-vertical">
+    <h1 class="welcome">WELCOME TO BILKOM</h1>
+    <img src="bilkom_logo.png" alt="Bilkom Logo" class="logo">
+
+    <button class="shortcut emergency">
+      <span>Emergency Alerts</span>
+    </button>
+
+    <div class="alert-preview">
+      <strong>Latest Alert:</strong>
+    </div>
+
+    <div class="widget news">
+      <h2>News</h2>
+    </div>
+
+    <button class="shortcut activity">
+      <img src="activity.png" alt="Activity Icon">
+      <span>Activity Selection</span>
+    </button>
+
+    <button class="shortcut club">
+      <img src="club.png" alt="Club Icon">
+      <span>Club Activities</span>
+    </button>
+
+  </main>
+</body>
+</html>
+
