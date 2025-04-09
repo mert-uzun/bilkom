@@ -89,4 +89,15 @@ CREATE TABLE event_participants (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+-- Tablo for emergency alerts
+CREATE TABLE emergency_alerts  (
+    alert_id PRIMARY KEY BIGINT UNIQUE AUTO_INCREMENT,
+    alert_type VARCHAR(255) NOT NULL DEFAULT "Blood Infusion",
+    blood_type VARCHAR(5) NOT NULL,
+    phone_number VARCHAR(15) NOT NULL,
+    alert_description TEXT NOT NULL,
+    alert_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE,    
+)
+
 
