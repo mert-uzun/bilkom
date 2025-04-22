@@ -1,18 +1,18 @@
 -- Table for users
 CREATE TABLE users (
-    user_id BIGINT PRIMARY KEY AUTO_INCREMENT DEFAULT 1,
+    user_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(255) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     first_name VARCHAR(255) NOT NULL,
     last_name Varchar(255) NOT NULL,
     bilkent_id VARCHAR(15) NOT NULL UNIQUE,
-    user_role VARCHAR(20) NOT NULL,
     phone_number VARCHAR(15) NOT NULL UNIQUE,
     blood_type VARCHAR(5) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     is_verified BOOLEAN DEFAULT FALSE,
     is_active BOOLEAN DEFAULT TRUE,
-    last_login TIMESTAMP DEFAULT created_at
+    last_login TIMESTAMP DEFAULT created_at,
+    verification_token VARCHAR(255)
 );
 
 -- Table for clubs
