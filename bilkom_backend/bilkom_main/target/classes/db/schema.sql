@@ -15,15 +15,6 @@ CREATE TABLE users (
     last_login TIMESTAMP DEFAULT created_at
 );
 
--- Table for interests
-CREATE TABLE interests (
-    interest_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    user_id BIGINT,
-    interest_name VARCHAR(255) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    UNIQUE (user_id, interest_name)
-);
-
 -- Table for clubs
 CREATE TABLE clubs (
     club_id INT PRIMARY KEY DEFAULT 1 AUTO_INCREMENT,
@@ -31,8 +22,8 @@ CREATE TABLE clubs (
     club_description TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     is_active BOOLEAN DEFAULT TRUE,
-    club_head_id BIGINT,
-    FOREIGN KEY (club_head_id) REFERENCES users(user_id)
+    club_head BIGINT,
+    FOREIGN KEY (club_head) REFERENCES users(user_id)
 );
 
 -- Table for club_executives
@@ -65,8 +56,8 @@ CREATE TABLE events (
     is_club_event BOOLEAN DEFAULT FALSE, -- Indicates if the event is a club event or not
     club_id INT,
     max_participants INT NOT NULL,
-    current_participants INT DEFAULT 0,
-    location VARCHAR(255) NOT NULL,
+    current_participants_number INT DEFAULT 0,
+    event_location VARCHAR(255) NOT NULL,
     event_date DATE NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (creator_id) REFERENCES users(user_id),
@@ -77,9 +68,10 @@ CREATE TABLE events (
 CREATE TABLE tags (
     tag_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     event_id BIGINT,
-    tag_name VARCHAR(255) NOT NULL,
+    user_id BIGINT,
+    tag_name UNIQUE VARCHAR(255) NOT NULL,
     FOREIGN KEY (event_id) REFERENCES events(event_id),
-    UNIQUE (event_id, tag_name)
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
 );
 
 -- Table for event participants
@@ -99,7 +91,7 @@ CREATE TABLE emergency_alerts  (
     phone_number VARCHAR(15) NOT NULL,
     alert_description TEXT NOT NULL,
     alert_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    is_active BOOLEAN DEFAULT TRUE,    
-)
+    is_active BOOLEAN DEFAULT TRUE 
+);
 
 

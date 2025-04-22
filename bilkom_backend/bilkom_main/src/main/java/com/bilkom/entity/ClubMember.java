@@ -14,12 +14,12 @@ import java.io.Serializable;
 public class ClubMember {
     @Id
     @ManyToOne
-    @JoinColumn(name = "club_id")
+    @JoinColumn(name = "club_id", nullable = false, columnDefinition = "BIGINT")
     private Club club;
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", nullable = false, columnDefinition = "BIGINT")
     private User member;
 }
 
@@ -53,5 +53,27 @@ class ClubMemberPK implements Serializable {
     @Override
     public int hashCode() {
         return club.hashCode() ^ member.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "ClubMemberPK{" + "club=" + club + ", member=" + member + '}';
+    }
+
+    // GETTERS AND SETTERS
+    public Long getClub() {
+        return club;
+    }
+
+    public void setClub(Long club) {
+        this.club = club;
+    }
+
+    public Long getMember() {
+        return member;
+    }
+
+    public void setMember(Long member) {
+        this.member = member;
     }
 }
