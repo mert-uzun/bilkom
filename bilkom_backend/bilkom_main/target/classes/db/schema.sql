@@ -37,11 +37,13 @@ CREATE TABLE clubs (
 
 -- Table for club_executives
 CREATE TABLE club_executives (
-    executive_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    executive_id BIGINT PRIMARY KEY,
     club_id INT,
     FOREIGN KEY (club_id) REFERENCES clubs(club_id),
     FOREIGN KEY (executive_id) REFERENCES users(user_id),
     position VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE,
     UNIQUE (club_id, executive_id)    
 );
 

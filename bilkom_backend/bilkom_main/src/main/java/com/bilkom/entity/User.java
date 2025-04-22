@@ -13,41 +13,42 @@ import java.sql.Timestamp;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long userId;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-    @Column(nullable = false)
-    private String first_name;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
 
-    @Column(nullable = false)
-    private String last_name;
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
-    @Column(nullable = false, unique = true)
-    private String bilkent_id;
+    @Column(name = "bilkent_id", nullable = false, unique = true)
+    private String bilkentId;
 
-    @Column(nullable = false)
-    private String user_role;
+    @Column(name = "user_role", nullable = false)
+    private String userRole;
 
-    @Column(nullable = false, unique = true)
-    private String phone_number;
+    @Column(name = "phone_number", nullable = false, unique = true)
+    private String phoneNumber;
 
-    @Column(nullable = false)
-    private String blood_type;
+    @Column(name = "blood_type", nullable = false)
+    private String bloodType;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Timestamp created_at;
+    @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp createdAt;
 
-    @Column(nullable = false)
-    private boolean is_verified;
+    @Column(name = "is_verified", nullable = false)
+    private boolean isVerified;
 
-    @Column(nullable = false)
-    private boolean is_active;
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT created_at")
-    private Timestamp last_login;
+    @Column(name = "last_login", nullable = false, columnDefinition = "TIMESTAMP DEFAULT created_at")
+    private Timestamp lastLogin;
 }
