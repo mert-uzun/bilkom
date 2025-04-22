@@ -13,6 +13,10 @@ import java.util.Properties;
 
 import org.slf4j.Logger;
 
+import java.time.Instant;
+import java.util.Date;
+import java.time.temporal.ChronoUnit;
+
 @Service
 public class MailService {
 
@@ -21,8 +25,8 @@ public class MailService {
     public List<MailMessage> fetchBloodMails() {
         List<MailMessage> result = new ArrayList<>();
 
-        String email = "2007elifbozkurt@gmail.com";
-        String appPassword = "efly bvfv ribe yomw";
+        String email = "bilkomproje@gmail.com";
+        String appPassword = "idps dgqu wvug ulhc";
 
         Properties props = new Properties();
         props.put("mail.store.protocol", "imaps");
@@ -39,30 +43,35 @@ public class MailService {
             inbox.open(Folder.READ_ONLY);
 
             int count = inbox.getMessageCount();
-            int start = Math.max(1, count - 100); 
+            int start = Math.max(1, count - 500); 
             Message[] messages = inbox.getMessages(start, count);
 
+            Date cutoff = Date.from(Instant.now().minus(48, ChronoUnit.HOURS));
+
             for (Message message : messages) {
-                String subject = message.getSubject();
-                if (subject != null &&
-                subject.contains("ACİL KAN İHTİYACI")) {
-                    String from = message.getFrom()[0].toString();
-                    String content = getTextFromMessage(message);
-                    result.add(new MailMessage(subject, content));
+                Date sentDate = message.getSentDate();
+                if (sentDate == null || sentDate.before(cutoff)) {
+                    continue; // Skip if older than 48 hours
                 }
-            }
+            
+                String subject = message.getSubject();
+                if (subject != null && subject.contains("ACİL KAN İHTİYACI")) {
+                    String content = getTextFromMessage(message);
+                    result.add(new MailMessage(subject, content, sentDate));
+                }
+            }            
 
             inbox.close(false);
             store.close();
         } catch (Exception e) {
-            result.add(new MailMessage("ERROR", e.getMessage()));
+            result.add(new MailMessage("ERROR", e.getMessage(), new Date()));
         }
 
         return result;
     }
 
 
-    @Scheduled(fixedRate = 3000) 
+    @Scheduled(fixedRate = 60000) 
     public void scheduledMailCheck() {
         List<MailMessage> newMails = fetchBloodMails();
         log.info("Checked mail at {} — found {} blood-related messages", java.time.LocalTime.now(), newMails.size());

@@ -2,16 +2,19 @@ package com.bilkom.mailreader;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Date;
 
 public class MailMessage {
     private String subject;
     private String content;
     private String bloodType;
     private String phoneNumber;
+    private Date sentDate;
 
-    public MailMessage(String subject, String content) {
+    public MailMessage(String subject, String content, Date sentDate) {
         this.subject = subject;
         this.content = content;
+        this.sentDate = sentDate;
         setBloodType();
         setPhoneNumber();
     }
@@ -20,6 +23,7 @@ public class MailMessage {
     public String getContent() { return content; }
     public String getBloodType() { if (bloodType == null) return ""; return bloodType; }
     public String getPhoneNumber() { if (phoneNumber == null) return ""; return phoneNumber; }
+    
 
     public void setBloodType() {
         if (content == null || content.isEmpty()) {
