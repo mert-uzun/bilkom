@@ -7,10 +7,12 @@ import jakarta.persistence.Column;
 import java.sql.Timestamp;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Id;
 
 @Entity
 @Table(name = "club_executives")
 public class ClubExecutive {
+    @Id
     @OneToOne
     @JoinColumn(name = "executive_id", referencedColumnName = "user_id", nullable = false, columnDefinition = "BIGINT")
     private User user;

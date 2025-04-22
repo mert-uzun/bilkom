@@ -19,7 +19,7 @@ import jakarta.persistence.CascadeType;
 public class Club {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "club_id", nullable = false, columnDefinition = "BIGINT")
+    @Column(name = "club_id", nullable = false, columnDefinition = "INT")
     private Long clubId;
 
     @Column(name = "club_name", nullable = false, columnDefinition = "VARCHAR(255)")

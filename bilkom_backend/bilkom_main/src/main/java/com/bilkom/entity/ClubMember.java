@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class ClubMember {
     @Id
     @ManyToOne
-    @JoinColumn(name = "club_id", nullable = false, columnDefinition = "BIGINT")
+    @JoinColumn(name = "club_id", nullable = false, columnDefinition = "INT")
     private Club club;
 
     @Id

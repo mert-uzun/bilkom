@@ -57,7 +57,7 @@ public class User {
     private Timestamp lastLogin;
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Interest> interests = new ArrayList<>();
+    private List<Tag> tags = new ArrayList<>();
     
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClubMember> clubMemberships = new ArrayList<>();
@@ -70,7 +70,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", email=" + email + ", passwordHash=" + passwordHash + ", firstName=" + firstName + ", lastName=" + lastName + ", bilkentId=" + bilkentId + ", userRole=" + userRole + ", phoneNumber=" + phoneNumber + ", bloodType=" + bloodType + ", createdAt=" + createdAt + ", isVerified=" + isVerified + ", isActive=" + isActive + ", lastLogin=" + lastLogin + ", interests=" + interests + ", clubMemberships=" + clubMemberships + ", createdEvents=" + createdEvents + ", eventParticipations=" + eventParticipations + '}';
+        return "User{" + "userId=" + userId + ", email=" + email + ", passwordHash=" + passwordHash + ", firstName=" + firstName + ", lastName=" + lastName + ", bilkentId=" + bilkentId + ", userRole=" + userRole + ", phoneNumber=" + phoneNumber + ", bloodType=" + bloodType + ", createdAt=" + createdAt + ", isVerified=" + isVerified + ", isActive=" + isActive + ", lastLogin=" + lastLogin + ", tags=" + tags + ", clubMemberships=" + clubMemberships + ", createdEvents=" + createdEvents + ", eventParticipations=" + eventParticipations + '}';
     }
 
     // GETTERS AND SETTERS
@@ -178,8 +178,8 @@ public class User {
         this.lastLogin = new Timestamp(System.currentTimeMillis());
     }
 
-    public List<Interest> getInterests() {
-        return interests;
+    public List<Tag> getTags() {
+        return tags;
     }
 
     public List<ClubMember> getClubMemberships() {

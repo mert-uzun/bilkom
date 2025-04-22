@@ -16,10 +16,10 @@ public class EmergencyAlert {
     @Column(name = "alert_id", nullable = false, columnDefinition = "BIGINT")
     private Long alertId;
 
-    @Column(name = "alert_type", nullable = false, columnDefinition = "VARCHAR(255)")
+    @Column(name = "alert_type", nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'Blood Infusion'")
     private String alertType;
 
-    @Column(name = "blood_type", nullable = false, columnDefinition = "VARCHAR(255) NOT NULL DEFAULT 'Blood Infusion'")
+    @Column(name = "blood_type", nullable = false, columnDefinition = "VARCHAR(5)")
     private String bloodType;
 
     @Column(name = "phone_number", nullable = false, columnDefinition = "VARCHAR(15)")

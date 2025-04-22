@@ -69,9 +69,9 @@ CREATE TABLE tags (
     tag_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     event_id BIGINT,
     user_id BIGINT,
-    tag_name UNIQUE VARCHAR(255) NOT NULL,
+    tag_name VARCHAR(255) NOT NULL UNIQUE,
     FOREIGN KEY (event_id) REFERENCES events(event_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 -- Table for event participants
@@ -85,7 +85,7 @@ CREATE TABLE event_participants (
 
 -- Tablo for emergency alerts
 CREATE TABLE emergency_alerts  (
-    alert_id PRIMARY KEY BIGINT UNIQUE AUTO_INCREMENT,
+    alert_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     alert_type VARCHAR(255) NOT NULL DEFAULT "Blood Infusion",
     blood_type VARCHAR(5) NOT NULL,
     phone_number VARCHAR(15) NOT NULL,
