@@ -1,4 +1,4 @@
-package tr.edu.bilkent.bilkom.config;
+package com.bilkom.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
