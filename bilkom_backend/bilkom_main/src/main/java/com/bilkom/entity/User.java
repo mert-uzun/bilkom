@@ -20,6 +20,9 @@ public class User {
     @Column(name = "user_id", nullable = false, columnDefinition = "BIGINT")
     private Long userId;
 
+    @Column(name = "verification_token")
+    private String verificationToken;
+
     @Column(name = "email", nullable = false, unique = true, columnDefinition = "VARCHAR(255)")
     private String email;
 
@@ -34,9 +37,6 @@ public class User {
 
     @Column(name = "bilkent_id", nullable = false, unique = true, columnDefinition = "VARCHAR(15)")
     private String bilkentId;
-
-    @Column(name = "user_role", nullable = false, columnDefinition = "VARCHAR(20)")
-    private String userRole;
 
     @Column(name = "phone_number", nullable = false, unique = true, columnDefinition = "VARCHAR(15)")
     private String phoneNumber;
@@ -70,7 +70,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", email=" + email + ", passwordHash=" + passwordHash + ", firstName=" + firstName + ", lastName=" + lastName + ", bilkentId=" + bilkentId + ", userRole=" + userRole + ", phoneNumber=" + phoneNumber + ", bloodType=" + bloodType + ", createdAt=" + createdAt + ", isVerified=" + isVerified + ", isActive=" + isActive + ", lastLogin=" + lastLogin + ", tags=" + tags + ", clubMemberships=" + clubMemberships + ", createdEvents=" + createdEvents + ", eventParticipations=" + eventParticipations + '}';
+        return "User{" + "userId=" + userId + ", email=" + email + ", passwordHash=" + passwordHash + ", firstName=" + firstName + ", lastName=" + lastName + ", bilkentId=" + bilkentId + ", phoneNumber=" + phoneNumber + ", bloodType=" + bloodType + ", createdAt=" + createdAt + ", isVerified=" + isVerified + ", isActive=" + isActive + ", lastLogin=" + lastLogin + ", tags=" + tags + ", clubMemberships=" + clubMemberships + ", createdEvents=" + createdEvents + ", eventParticipations=" + eventParticipations + '}';
     }
 
     // GETTERS AND SETTERS
@@ -120,14 +120,6 @@ public class User {
 
     public void setBilkentId(String bilkentId) {
         this.bilkentId = bilkentId;
-    }
-
-    public String getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
     }
 
     public String getPhoneNumber() {
@@ -192,5 +184,13 @@ public class User {
 
     public List<EventParticipant> getEventParticipations() {
         return eventParticipations;
+    }
+
+    public String getVerificationToken() {
+        return verificationToken;
+    }
+    
+    public void setVerificationToken(String verificationToken) {
+        this.verificationToken = verificationToken;
     }
 }
