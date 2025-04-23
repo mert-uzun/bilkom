@@ -1,7 +1,10 @@
-package com.bilkom.mailreader;
+package com.bilkom.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import com.bilkom.entity.MailMessage;
+import com.bilkom.service.MailService;
 
 import java.util.List;
 

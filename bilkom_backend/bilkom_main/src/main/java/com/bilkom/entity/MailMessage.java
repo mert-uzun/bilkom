@@ -1,4 +1,4 @@
-package com.bilkom.mailreader;
+package com.bilkom.entity;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

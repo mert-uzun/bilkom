@@ -1,4 +1,4 @@
-package com.bilkom.mailreader;
+package com.bilkom.service;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.MimeMultipart;
@@ -6,6 +6,8 @@ import jakarta.mail.internet.MimeMultipart;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import com.bilkom.entity.MailMessage;
 
 import java.util.ArrayList;
 import java.util.List;
