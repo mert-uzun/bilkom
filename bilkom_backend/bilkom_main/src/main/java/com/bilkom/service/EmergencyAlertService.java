@@ -4,10 +4,13 @@ import jakarta.mail.*;
 import jakarta.mail.internet.MimeMultipart;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.bilkom.entity.MailMessage;
+import com.bilkom.entity.EmergencyAlert;
+import com.bilkom.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,15 +23,24 @@ import java.util.Date;
 import java.time.temporal.ChronoUnit;
 
 @Service
-public class MailService {
+public class EmergencyAlertService {
 
-    private static final Logger log = LoggerFactory.getLogger(MailService.class);
+    private static final Logger log = LoggerFactory.getLogger(EmergencyAlertService.class);
 
-    public List<MailMessage> fetchBloodMails() {
-        List<MailMessage> result = new ArrayList<>();
+    @Autowired
+    private UserService userService;
 
-        String email = "bilkomproje@gmail.com";
-        String appPassword = "idps dgqu wvug ulhc";
+    @Autowired
+    private NotificationService notificationService;
+
+    @Value("${gmail.username}")
+    private String email;
+
+    @Value("${gmail.password}")
+    private String appPassword;
+
+    public List<EmergencyAlert> fetchEmergencyAlerts() {
+        List<EmergencyAlert> result = new ArrayList<>();
 
         Properties props = new Properties();
         props.put("mail.store.protocol", "imaps");
@@ -45,7 +57,7 @@ public class MailService {
             inbox.open(Folder.READ_ONLY);
 
             int count = inbox.getMessageCount();
-            int start = Math.max(1, count - 500); 
+            int start = Math.max(1, count - 500);
             Message[] messages = inbox.getMessages(start, count);
 
             Date cutoff = Date.from(Instant.now().minus(48, ChronoUnit.HOURS));
@@ -53,30 +65,44 @@ public class MailService {
             for (Message message : messages) {
                 Date sentDate = message.getSentDate();
                 if (sentDate == null || sentDate.before(cutoff)) {
-                    continue; // Skip if older than 48 hours
+                    continue;
                 }
-            
+
                 String subject = message.getSubject();
                 if (subject != null && subject.contains("ACİL KAN İHTİYACI")) {
                     String content = getTextFromMessage(message);
-                    result.add(new MailMessage(subject, content, sentDate));
+                    EmergencyAlert emergencyAlert = new EmergencyAlert(subject, content, sentDate);
+                    result.add(emergencyAlert);
+
+                    String bloodType = emergencyAlert.getBloodType();
+                    if (bloodType != null && !bloodType.isEmpty()) {
+                        List<User> matchingUsers = userService.getUsersByBloodType(bloodType);
+                        for (User user : matchingUsers) {
+                            if (user.getFcmToken() != null && !user.getFcmToken().isEmpty()) {
+                                notificationService.sendFcm(
+                                        user.getFcmToken(),
+                                        bloodType + " BLOOD NEEDED",
+                                        "" + emergencyAlert.getContent() + "\n\n");
+                                log.info("Notified {} for blood type {}", user.getEmail(), bloodType);
+                            }
+                        }
+                    }
                 }
-            }            
+            }
 
             inbox.close(false);
             store.close();
         } catch (Exception e) {
-            result.add(new MailMessage("ERROR", e.getMessage(), new Date()));
+            log.error("Error while fetching alerts: {}", e.getMessage(), e);
         }
 
         return result;
     }
 
-
-    @Scheduled(fixedRate = 60000) 
+    @Scheduled(fixedRate = 60000)
     public void scheduledMailCheck() {
-        List<MailMessage> newMails = fetchBloodMails();
-        log.info("Checked mail at {} — found {} blood-related messages", java.time.LocalTime.now(), newMails.size());
+        List<EmergencyAlert> newAlerts = fetchEmergencyAlerts();
+        log.info("Checked mail at {} — found {} emergency alerts", java.time.LocalTime.now(), newAlerts.size());
     }
 
     private String getTextFromMessage(Message message) throws Exception {
@@ -91,7 +117,7 @@ public class MailService {
                     result.append(bodyPart.getContent());
                 }
             }
-            return result.toString().replaceAll("\r\n","");
+            return result.toString().replaceAll("\r\n", "");
         }
         return "";
     }

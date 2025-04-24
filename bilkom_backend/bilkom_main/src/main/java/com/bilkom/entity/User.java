@@ -68,6 +68,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EventParticipant> eventParticipations = new ArrayList<>();
 
+    @Column(name = "fcm_token", columnDefinition = "TEXT")
+    private String fcmToken;
+
     @Override
     public String toString() {
         return "User{" + "userId=" + userId + ", email=" + email + ", passwordHash=" + passwordHash + ", firstName=" + firstName + ", lastName=" + lastName + ", bilkentId=" + bilkentId + ", phoneNumber=" + phoneNumber + ", bloodType=" + bloodType + ", createdAt=" + createdAt + ", isVerified=" + isVerified + ", isActive=" + isActive + ", lastLogin=" + lastLogin + ", tags=" + tags + ", clubMemberships=" + clubMemberships + ", createdEvents=" + createdEvents + ", eventParticipations=" + eventParticipations + '}';
@@ -192,5 +195,13 @@ public class User {
     
     public void setVerificationToken(String verificationToken) {
         this.verificationToken = verificationToken;
+    }
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 }
