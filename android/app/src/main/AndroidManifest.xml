@@ -40,6 +40,10 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.Bilkom"/>
 
+        <activity
+            android:name=".ui.LoginActivity"
+            android:exported="false"/>
+
     </application>
 
 </manifest>
