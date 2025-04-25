@@ -1,3 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Bilkom</string>
+    <string name="login">Login</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="login_failed">Login failed</string>
+    <string name="network_error">Network error</string>
+    <string name="welcome_message">Welcome to Bilkom</string>
 </resources>

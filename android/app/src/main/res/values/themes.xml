@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Base application theme -->
+    <style name="Theme.Bilkom.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
-    <style name="Theme.Bilkom" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Bilkom.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.Bilkom.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

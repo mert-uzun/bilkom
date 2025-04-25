@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bilkom.android.MainActivity;
+import com.bilkom.android.R;
 import com.bilkom.android.databinding.ActivityLoginBinding;
 import com.bilkom.android.network.BilkomApiService;
 import com.bilkom.android.network.models.LoginRequest;
@@ -48,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
             String password = binding.passwordEditText.getText().toString().trim();
 
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.login_failed, Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -70,15 +71,14 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse.isSuccess()) {
-                        // Save token and navigate to main activity
-                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, R.string.login, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     } else {
                         Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 binding.progressBar.setVisibility(View.GONE);
                 binding.loginButton.setEnabled(true);
-                Toast.makeText(LoginActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, R.string.network_error, Toast.LENGTH_SHORT).show();
             }
         });
     }
