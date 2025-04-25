@@ -1,3 +1,6 @@
+// this is the home activity class for the home page
+// it is used to store the home page content
+// it extends the BaseActivity class to show the menu 
 package com.bilkom.ui;
 
 import android.os.Bundle;

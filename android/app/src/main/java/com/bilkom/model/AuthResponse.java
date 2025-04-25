@@ -1,3 +1,6 @@
+// this class is used to store the response from the server
+// it is used to store the success, message, token and userId from the server 
+// for example this is a pojo class just like other pojo classes in the model package
 package com.bilkom.model;
 
 public class AuthResponse {

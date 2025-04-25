@@ -1,3 +1,5 @@
+// this is the activity_main.xml file for the main activity
+// it extends the ScrollView class to show the main activity content
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,7 +13,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Header with Logo -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +31,6 @@
             android:src="@drawable/bilkom_logo"
             android:contentDescription="Bilkom Logo"/>
 
-        <!-- Emergency Alerts Section -->
         <androidx.cardview.widget.CardView
             android:id="@+id/emergencyCard"
             android:layout_width="match_parent"
@@ -63,7 +63,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Weather Forecast Section -->
         <androidx.cardview.widget.CardView
             android:id="@+id/weatherCard"
             android:layout_width="match_parent"
@@ -96,7 +95,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Club Activities Button -->
         <androidx.cardview.widget.CardView
             android:id="@+id/clubActivitiesCard"
             android:layout_width="match_parent"

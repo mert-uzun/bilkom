@@ -1,3 +1,6 @@
+//this is the api service interface for the api calls
+// it is used to store the api calls for the login, register, get user by id, get user by email and get user by bilkentId
+// not a pojo class
 package com.bilkom.network;
 
 import com.bilkom.model.LoginRequest;

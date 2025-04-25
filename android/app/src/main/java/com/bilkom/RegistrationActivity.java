@@ -1,3 +1,4 @@
+// this is the registration activity class for the registration page
 package com.bilkom;
 
 import android.content.Intent;

@@ -1,3 +1,5 @@
+// this is the activity_profile.xml file for the profile activity
+// it extends the LinearLayout class to show the profile activity content
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -15,6 +17,5 @@
         android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
 
-    <!-- Add your profile content here -->
 
 </LinearLayout> 

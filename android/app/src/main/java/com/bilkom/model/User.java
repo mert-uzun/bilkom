@@ -1,3 +1,6 @@
+// this is a pojo class for the user 
+// it is used to store the user data from the server using userId, email, passwordHash, firstName, 
+//lastName, bilkentId, phoneNumber, bloodType, createdAt, isVerified, isActive, lastLogin and verificationToken    
 package com.bilkom.model;
 
 import java.sql.Timestamp;

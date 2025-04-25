@@ -1,3 +1,4 @@
+// this is the main activity class for the main page
 package com.bilkom;
 
 import android.os.Bundle;

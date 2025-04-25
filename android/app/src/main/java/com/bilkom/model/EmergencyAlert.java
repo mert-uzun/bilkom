@@ -1,3 +1,4 @@
+// we use this class to store the emergency alert data from the server using id, title, message and severity
 package com.bilkom.model;
 
 public class EmergencyAlert {

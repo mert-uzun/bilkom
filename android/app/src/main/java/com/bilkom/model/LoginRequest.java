@@ -1,3 +1,5 @@
+//this is a pojo class for the login request 
+// it is used to store the email and password from the user 
 package com.bilkom.model;
 
 public class LoginRequest {

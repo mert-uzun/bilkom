@@ -1,3 +1,6 @@
+// this is a pojo class for the weather forecast 
+// it is used to store the weather forecast data from the server using
+// temperature, description, humidity, windSpeed, iconCode and location
 package com.bilkom.model;
 
 public class WeatherForecast {

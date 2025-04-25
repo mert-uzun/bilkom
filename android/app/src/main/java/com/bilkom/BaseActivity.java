@@ -1,3 +1,6 @@
+// this is the base activity class for the home, profile and settings activities
+// it is used to store the base activity content
+// it extends the AppCompatActivity class to show the menu 
 package com.bilkom;
 
 import android.content.Intent;

@@ -1,3 +1,5 @@
+// this is a pojo class for the registration request 
+// it is used to store the email, password, firstName, lastName, bilkentId, phoneNumber and bloodType from the user 
 package com.bilkom.model;
 
 public class RegistrationRequest {

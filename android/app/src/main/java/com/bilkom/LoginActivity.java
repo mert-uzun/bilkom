@@ -1,3 +1,5 @@
+// this is the login activity class for the login page
+// it is used to store the login page content
 package com.bilkom;
 
 import android.content.Intent;
@@ -33,16 +35,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialize secure storage
         secureStorage = new SecureStorage(this);
 
-        // Check if already logged in
         if (secureStorage.getAuthToken() != null) {
             navigateToMain();
             return;
         }
 
-        // Initialize views
         initializeViews();
         setupClickListeners();
     }
@@ -77,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
         String email = emailInput.getText().toString().trim();
         String password = passwordInput.getText().toString().trim();
 
-        // Validate email
         if (TextUtils.isEmpty(email)) {
             emailLayout.setError("Email is required");
             isValid = false;
@@ -91,7 +89,6 @@ public class LoginActivity extends AppCompatActivity {
             emailLayout.setError(null);
         }
 
-        // Validate password
         if (TextUtils.isEmpty(password)) {
             passwordLayout.setError("Password is required");
             isValid = false;

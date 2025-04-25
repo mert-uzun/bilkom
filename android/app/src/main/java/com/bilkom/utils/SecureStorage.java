@@ -1,3 +1,5 @@
+// this is the secure storage class for the secure storage of the auth token and user id
+// it is imporant because we use it in the LoginActivity and RegistrationActivity to store the auth token and user id
 package com.bilkom.utils;
 
 import android.content.Context;

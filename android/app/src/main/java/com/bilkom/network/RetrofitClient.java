@@ -1,3 +1,6 @@
+// this is the retrofit client class for the api calls
+// it is used to create the retrofit instance and the api service instance
+// not a pojo class
 package com.bilkom.network;
 
 import okhttp3.OkHttpClient;
