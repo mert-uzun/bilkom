@@ -1,7 +1,7 @@
 package com.bilkom.controller;
 
 import com.bilkom.dto.EventDto;
-import com.bilkom.entity.Event;
+import com.bilkom.entity.*;
 import com.bilkom.service.EventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +58,11 @@ public class EventController {
     public ResponseEntity<List<Event>> getEventsUserJoined(Principal principal) {
         List<Event> events = eventService.getEventsUserJoined(principal.getName());
         return ResponseEntity.ok(events);
+    }
+
+    @GetMapping("/{eventId}/participants")
+    public ResponseEntity<List<User>> getParticipants(@PathVariable Long eventId, Principal principal) {
+        List<User> users = eventService.getParticipantsForEvent(eventId, principal.getName());
+        return ResponseEntity.ok(users);
     }
 }

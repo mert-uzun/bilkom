@@ -56,7 +56,6 @@ public class EventService {
     
         return eventRepository.save(event);
     }
-    
 
     public void joinEvent(Long eventId, String userEmail) {
         Event event = eventRepository.findById(eventId)
@@ -131,6 +130,19 @@ public class EventService {
         return participations.stream()
                 .map(EventParticipant::getEvent)
                 .filter(Event::isActive)
+                .collect(Collectors.toList());
+    }
+
+    public List<User> getParticipantsForEvent(Long eventId, String requesterEmail) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new BadRequestException("Event not found"));
+    
+        if (!event.getCreator().getEmail().equals(requesterEmail)) {
+            throw new BadRequestException("You are not authorized to view this event's participants.");
+        }
+    
+        return event.getParticipants().stream()
+                .map(EventParticipant::getUser)
                 .collect(Collectors.toList());
     }    
 }
