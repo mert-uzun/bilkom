@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Bilkom</string>
     <string name="login">Login</string>
+    <string name="register">Register</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
     <string name="login_failed">Login failed</string>
