@@ -6,6 +6,7 @@ package com.bilkom.ui;
 import android.os.Bundle;
 import com.bilkom.BaseActivity;
 import com.bilkom.R;
+import com.bilkom.MainActivity;
 
 public class HomeActivity extends BaseActivity {
     @Override

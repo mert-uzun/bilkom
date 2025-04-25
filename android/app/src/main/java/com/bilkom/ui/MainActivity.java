@@ -1,5 +1,5 @@
 // this is the main activity class for the main page
-package com.bilkom;
+package com.bilkom.ui;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
