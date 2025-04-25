@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Bilkom" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/bgPrimary</item>
+        <item name="colorOnPrimary">@color/textPrimary</item>
+        <item name="materialButtonStyle">@style/Widget.Bilkom.Button</item>
+    </style>
+
+    <style name="Widget.Bilkom.Button" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">24dp</item>
+        <item name="android:insetTop">12dp</item>
+        <item name="android:insetBottom">12dp</item>
+        <item name="android:paddingStart">32dp</item>
+        <item name="android:paddingEnd">32dp</item>
+    </style>
+
+</resources>
