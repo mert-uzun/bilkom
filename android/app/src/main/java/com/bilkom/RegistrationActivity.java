@@ -1,34 +1,25 @@
 // this is the registration activity class for the registration page
-package com.bilkom;
+package com.bilkom.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.bilkom.model.RegistrationRequest;
+import com.bilkom.R;
 import com.bilkom.model.AuthResponse;
+import com.bilkom.model.RegistrationRequest;
+import com.bilkom.network.RetrofitClient;
+import com.bilkom.network.ApiService;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegistrationActivity extends AppCompatActivity {
-    private TextInputEditText emailInput;
-    private TextInputEditText passwordInput;
-    private TextInputEditText firstNameInput;
-    private TextInputEditText lastNameInput;
-    private TextInputEditText bilkentIdInput;
-    private TextInputEditText phoneNumberInput;
-    private TextInputEditText bloodTypeInput;
+    private TextInputEditText emailInput, passwordInput, firstNameInput, lastNameInput;
+    private TextInputEditText bilkentIdInput, phoneNumberInput, bloodTypeInput;
     private MaterialButton registerButton;
     private ApiService apiService;
 
@@ -37,33 +28,15 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        // Initialize Retrofit
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://your-backend-url/api/") // Replace with your actual backend URL
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        apiService = retrofit.create(ApiService.class);
-
-        // Initialize views
+        apiService = RetrofitClient.getInstance().getApiService();
         initializeViews();
 
-        // Set click listeners
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (validateInputs()) {
-                    performRegistration();
-                }
-            }
+        registerButton.setOnClickListener(v -> {
+            if (validateInputs()) performRegistration();
         });
-
-        findViewById(R.id.loginText).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
-                finish();
-            }
+        findViewById(R.id.loginText).setOnClickListener(v -> {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
         });
     }
 
@@ -88,105 +61,70 @@ public class RegistrationActivity extends AppCompatActivity {
         String phoneNumber = phoneNumberInput.getText().toString().trim();
         String bloodType = bloodTypeInput.getText().toString().trim();
 
-        // Validate email
-        if (TextUtils.isEmpty(email)) {
-            emailInput.setError("Email is required");
-            isValid = false;
-        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailInput.setError("Enter a valid email address");
-            isValid = false;
-        } else if (!email.endsWith("@bilkent.edu.tr") && !email.endsWith("@ug.bilkent.edu.tr")) {
-            emailInput.setError("Only Bilkent University emails are allowed");
+        if (TextUtils.isEmpty(email) || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+            || !(email.endsWith("@bilkent.edu.tr") || email.endsWith("@ug.bilkent.edu.tr"))) {
+            emailInput.setError("Enter a valid Bilkent email");
             isValid = false;
         }
-
-        // Validate password
-        if (TextUtils.isEmpty(password)) {
-            passwordInput.setError("Password is required");
-            isValid = false;
-        } else if (password.length() < 8) {
+        if (TextUtils.isEmpty(password) || password.length() < 8) {
             passwordInput.setError("Password must be at least 8 characters");
             isValid = false;
         }
-
-        // Validate first name
         if (TextUtils.isEmpty(firstName)) {
             firstNameInput.setError("First name is required");
             isValid = false;
         }
-
-        // Validate last name
         if (TextUtils.isEmpty(lastName)) {
             lastNameInput.setError("Last name is required");
             isValid = false;
         }
-
-        // Validate Bilkent ID
-        if (TextUtils.isEmpty(bilkentId)) {
-            bilkentIdInput.setError("Bilkent ID is required");
-            isValid = false;
-        } else if (!bilkentId.matches("\\d+")) {
-            bilkentIdInput.setError("Bilkent ID must contain only numbers");
+        if (TextUtils.isEmpty(bilkentId) || !bilkentId.matches("\\d+")) {
+            bilkentIdInput.setError("Enter a valid Bilkent ID");
             isValid = false;
         }
-
-        // Validate phone number
         if (TextUtils.isEmpty(phoneNumber)) {
             phoneNumberInput.setError("Phone number is required");
             isValid = false;
         }
-
-        // Validate blood type
         if (TextUtils.isEmpty(bloodType)) {
             bloodTypeInput.setError("Blood type is required");
             isValid = false;
         }
-
         return isValid;
     }
 
     private void performRegistration() {
-        String email = emailInput.getText().toString().trim();
-        String password = passwordInput.getText().toString().trim();
-        String firstName = firstNameInput.getText().toString().trim();
-        String lastName = lastNameInput.getText().toString().trim();
-        String bilkentId = bilkentIdInput.getText().toString().trim();
-        String phoneNumber = phoneNumberInput.getText().toString().trim();
-        String bloodType = bloodTypeInput.getText().toString().trim();
-
-        RegistrationRequest request = new RegistrationRequest(
-            email, password, firstName, lastName, bilkentId, phoneNumber, bloodType
+        registerButton.setEnabled(false);
+        RegistrationRequest req = new RegistrationRequest(
+            emailInput.getText().toString().trim(),
+            passwordInput.getText().toString().trim(),
+            firstNameInput.getText().toString().trim(),
+            lastNameInput.getText().toString().trim(),
+            bilkentIdInput.getText().toString().trim(),
+            phoneNumberInput.getText().toString().trim(),
+            bloodTypeInput.getText().toString().trim()
         );
 
-        apiService.register(request).enqueue(new Callback<AuthResponse>() {
+        apiService.register(req).enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    AuthResponse authResponse = response.body();
-                    if (authResponse.isSuccess()) {
-                        Toast.makeText(RegistrationActivity.this, 
-                            "Registration successful. Please check your email to verify your account.", 
-                            Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
-                        finish();
-                    } else {
-                        Toast.makeText(RegistrationActivity.this, 
-                            authResponse.getMessage(), 
-                            Toast.LENGTH_SHORT).show();
-                    }
+                registerButton.setEnabled(true);
+                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                    Toast.makeText(RegistrationActivity.this,
+                        "Registration successful. Check your email to verify.", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+                    finish();
                 } else {
-                    Toast.makeText(RegistrationActivity.this, 
-                        "Registration failed. Please try again.", 
-                        Toast.LENGTH_SHORT).show();
+                    String msg = response.body() != null ? response.body().getMessage() : "Registration failed";
+                    Toast.makeText(RegistrationActivity.this, msg, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<AuthResponse> call, Throwable t) {
-                Toast.makeText(RegistrationActivity.this, 
-                    "Network error. Please check your connection.", 
-                    Toast.LENGTH_SHORT).show();
+                registerButton.setEnabled(true);
+                Toast.makeText(RegistrationActivity.this, "Network error. Try again.", Toast.LENGTH_SHORT).show();
             }
         });
     }
-} 
+}

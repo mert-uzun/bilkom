@@ -1,4 +1,4 @@
-// this is the nav_drawer_menu.xml file for the navigation drawer menu
+<!--this is the nav_drawer_menu.xml file for the navigation drawer menu-->
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="280dp"

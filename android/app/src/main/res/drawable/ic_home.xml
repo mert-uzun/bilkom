@@ -1,5 +1,4 @@
-// this is the ic_home.xml file for the home icon
-// it is used to store the home icon
+<!--this is the ic_home.xml file for the home icon-->
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"

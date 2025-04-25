@@ -1,6 +1,5 @@
-// this is the activity_base.xml file for the base activity
-// it is used to store the base activity content
-// it extends the DrawerLayout class to show the menu 
+<!--this is the activity_base.xml file for the base activity
+it extends the DrawerLayout class to show the menu -->
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"

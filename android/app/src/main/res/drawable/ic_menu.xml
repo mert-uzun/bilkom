@@ -1,4 +1,4 @@
-// this is the ic_menu.xml file for the menu icon that is used in the menu for user to logout
+<!--this is the ic_menu.xml file for the menu icon that is used in the menu for user to logout-->
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"

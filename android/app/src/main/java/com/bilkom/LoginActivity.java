@@ -5,30 +5,27 @@ package com.bilkom;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.bilkom.model.LoginRequest;
+import com.bilkom.R;
 import com.bilkom.model.AuthResponse;
+import com.bilkom.model.LoginRequest;
 import com.bilkom.network.RetrofitClient;
+import com.bilkom.network.ApiService;
 import com.bilkom.utils.SecureStorage;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
-    private TextInputEditText emailInput;
-    private TextInputEditText passwordInput;
+    private TextInputEditText emailInput, passwordInput;
+    private TextInputLayout emailLayout, passwordLayout;
     private MaterialButton loginButton;
-    private TextInputLayout emailLayout;
-    private TextInputLayout passwordLayout;
     private SecureStorage secureStorage;
+    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         secureStorage = new SecureStorage(this);
+        apiService = RetrofitClient.getInstance().getApiService();
 
         if (secureStorage.getAuthToken() != null) {
             navigateToMain();
@@ -56,19 +54,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setupClickListeners() {
         loginButton.setOnClickListener(v -> {
-            if (validateInputs()) {
-                performLogin();
-            }
+            if (validateInputs()) performLogin();
         });
-
-        findViewById(R.id.registerText).setOnClickListener(v -> {
-            startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
-        });
-
-        findViewById(R.id.forgotPasswordText).setOnClickListener(v -> {
-            // TODO: Implement forgot password functionality
-            Toast.makeText(LoginActivity.this, "Forgot password clicked", Toast.LENGTH_SHORT).show();
-        });
+        findViewById(R.id.registerText).setOnClickListener(v ->
+            startActivity(new Intent(LoginActivity.this, RegistrationActivity.class))
+        );
+        findViewById(R.id.forgotPasswordText).setOnClickListener(v ->
+            Toast.makeText(LoginActivity.this, "Forgot password clicked", Toast.LENGTH_SHORT).show()
+        );
     }
 
     private boolean validateInputs() {
@@ -79,11 +72,9 @@ public class LoginActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(email)) {
             emailLayout.setError("Email is required");
             isValid = false;
-        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailLayout.setError("Enter a valid email address");
-            isValid = false;
-        } else if (!email.endsWith("@bilkent.edu.tr") && !email.endsWith("@ug.bilkent.edu.tr")) {
-            emailLayout.setError("Only Bilkent University emails are allowed");
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+            || !(email.endsWith("@bilkent.edu.tr") || email.endsWith("@ug.bilkent.edu.tr"))) {
+            emailLayout.setError("Enter a valid Bilkent email");
             isValid = false;
         } else {
             emailLayout.setError(null);
@@ -100,49 +91,41 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void performLogin() {
+        loginButton.setEnabled(false);
         String email = emailInput.getText().toString().trim();
         String password = passwordInput.getText().toString().trim();
+        LoginRequest request = new LoginRequest(email, password);
 
-        loginButton.setEnabled(false); // Prevent double clicks
-
-        LoginRequest loginRequest = new LoginRequest(email, password);
-
-        RetrofitClient.getInstance().getApiService().login(loginRequest).enqueue(new Callback<AuthResponse>() {
+        apiService.login(request).enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                 loginButton.setEnabled(true);
-                
                 if (response.isSuccessful() && response.body() != null) {
-                    AuthResponse authResponse = response.body();
-                    if (authResponse.isSuccess()) {
-                        // Save authentication data
-                        saveAuthData(authResponse.getToken(), authResponse.getUserId());
+                    AuthResponse auth = response.body();
+                    if (auth.isSuccess()) {
+                        secureStorage.saveAuthToken("Bearer " + auth.getToken());
+                        secureStorage.saveUserId(auth.getUserId());
                         navigateToMain();
                     } else {
-                        Toast.makeText(LoginActivity.this, authResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, auth.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(LoginActivity.this, "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Login failed. Try again.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<AuthResponse> call, Throwable t) {
                 loginButton.setEnabled(true);
-                Toast.makeText(LoginActivity.this, "Network error. Please check your connection.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Network error. Check connection.", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void saveAuthData(String token, Long userId) {
-        secureStorage.saveAuthToken(token);
-        secureStorage.saveUserId(userId);
-    }
-
     private void navigateToMain() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
-} 
+}
