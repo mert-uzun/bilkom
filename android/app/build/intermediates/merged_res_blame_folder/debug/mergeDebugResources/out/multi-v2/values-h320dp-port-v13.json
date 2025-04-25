@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.bilkom.android.app-mergeDebugResources-30:/values-h320dp-port-v13/values-h320dp-port-v13.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\alisv\\.gradle\\caches\\8.11.1\\transforms\\6e466d48a3e6292c8db8ebb6ffaca820\\transformed\\material-1.11.0\\res\\values-h320dp-port-v13\\values-h320dp-port-v13.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "63",
+                        "endOffsets": "114"
+                    }
+                }
+            ]
+        }
+    ]
+}
