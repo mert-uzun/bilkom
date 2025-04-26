@@ -12,6 +12,10 @@ CREATE TABLE users (
     is_verified BOOLEAN DEFAULT FALSE,
     is_active BOOLEAN DEFAULT TRUE,
     last_login TIMESTAMP DEFAULT created_at,
+    user_role ENUM('USER', 'CLUB_HEAD', 'CLUB_EXECUTIVE', 'ADMIN') DEFAULT 'USER',
+    email_notifications BOOLEAN DEFAULT TRUE,
+    sms_notifications BOOLEAN DEFAULT FALSE,
+    profile_visibility ENUM('PUBLIC', 'MEMBERS', 'PRIVATE') DEFAULT 'PUBLIC',
     verification_token VARCHAR(255)
 );
 
@@ -23,6 +27,7 @@ CREATE TABLE clubs (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     is_active BOOLEAN DEFAULT TRUE,
     club_head BIGINT,
+    status ENUM('PENDING', 'APPROVED', 'REJECTED') DEFAULT 'PENDING',
     FOREIGN KEY (club_head) REFERENCES users(user_id)
 );
 
@@ -33,7 +38,8 @@ CREATE TABLE club_executives (
     FOREIGN KEY (club_id) REFERENCES clubs(club_id),
     FOREIGN KEY (executive_id) REFERENCES users(user_id),
     position VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    join_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    leave_date TIMESTAMP,
     is_active BOOLEAN DEFAULT TRUE,
     UNIQUE (club_id, executive_id)    
 );
@@ -42,6 +48,9 @@ CREATE TABLE club_executives (
 CREATE TABLE club_members (
     club_id INT,
     member_id BIGINT,
+    join_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    leave_date TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (club_id) REFERENCES clubs(club_id),
     FOREIGN KEY (member_id) REFERENCES users(user_id),
     PRIMARY KEY (club_id, member_id)
@@ -59,6 +68,7 @@ CREATE TABLE events (
     current_participants_number INT DEFAULT 0,
     event_location VARCHAR(255) NOT NULL,
     event_date DATE NOT NULL,
+    event_status ENUM('upcoming', 'past') NOT NULL DEFAULT 'upcoming',
     is_active BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (creator_id) REFERENCES users(user_id),
     FOREIGN KEY (club_id) REFERENCES clubs(club_id)
@@ -94,4 +104,6 @@ CREATE TABLE emergency_alerts  (
     is_active BOOLEAN DEFAULT TRUE 
 );
 
-
+-- Add index to event_participants for faster user and event lookups
+ALTER TABLE event_participants ADD INDEX idx_event_participants_user (user_id);
+ALTER TABLE event_participants ADD INDEX idx_event_participants_event (event_id);
