@@ -1,0 +1,98 @@
+package com.bilkom.controller;
+
+import com.bilkom.dto.EventDto;
+import com.bilkom.entity.*;
+import com.bilkom.service.EventService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/events")
+public class EventController {
+
+    @Autowired
+    private EventService eventService;
+
+    @PostMapping
+    public ResponseEntity<Event> createEvent(@RequestBody EventDto dto, Principal principal) {
+        Event created = eventService.createEvent(dto, principal.getName());
+        return ResponseEntity.ok(created);        
+    }
+
+    @PostMapping("/{eventId}/join")
+    public ResponseEntity<Void> joinEvent(@PathVariable Long eventId, Principal principal) {
+        eventService.joinEvent(eventId, principal.getName());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{eventId}/withdraw")
+    public ResponseEntity<Void> withdrawFromEvent(@PathVariable Long eventId, Principal principal) {
+        eventService.withdrawFromEvent(eventId, principal.getName());
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Event>> listAllEvents() {
+        List<Event> events = eventService.listAllEvents(); 
+        return ResponseEntity.ok(events);
+    }
+
+    @PostMapping("/filter")
+    public ResponseEntity<List<Event>> filterEventsByTags(@RequestBody List<String> tagNames) {
+        List<Event> events = eventService.filterEventsByTags(tagNames); 
+        return ResponseEntity.ok(events);
+    }
+
+    @GetMapping("/created")
+    public ResponseEntity<List<Event>> getEventsCreatedByUser(Principal principal) {
+        List<Event> events = eventService.getEventsCreatedByUser(principal.getName());
+        return ResponseEntity.ok(events);
+    }
+
+    @GetMapping("/joined")
+    public ResponseEntity<List<Event>> getEventsUserJoined(Principal principal) {
+        List<Event> events = eventService.getEventsUserJoined(principal.getName());
+        return ResponseEntity.ok(events);
+    }
+
+    @GetMapping("/{eventId}/participants")
+    public ResponseEntity<List<User>> getParticipants(@PathVariable Long eventId, Principal principal) {
+        List<User> users = eventService.getParticipantsForEvent(eventId, principal.getName());
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/past")
+    public ResponseEntity<List<Event>> listPastEvents() {
+        List<Event> pastEvents = eventService.listPastEvents();
+        return ResponseEntity.ok(pastEvents);
+    }
+
+    @GetMapping("/created/past")
+    public ResponseEntity<List<Event>> getPastEventsCreatedByUser(Principal principal) {
+        List<Event> events = eventService.getPastEventsCreatedByUser(principal.getName());
+        return ResponseEntity.ok(events);
+    }
+
+    @GetMapping("/joined/past")
+    public ResponseEntity<List<Event>> getPastEventsUserJoined(Principal principal) {
+        List<Event> events = eventService.getPastEventsUserJoined(principal.getName());
+        return ResponseEntity.ok(events);
+    }
+
+    @PostMapping("/{eventId}/done")
+    public ResponseEntity<Void> markEventAsDone(@PathVariable Long eventId, Principal principal) {
+        eventService.markEventAsDone(eventId, principal.getName());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{eventId}/report")
+    public ResponseEntity<Void> reportPastEvent(@PathVariable Long eventId, @RequestBody String reason, Principal principal) {
+        eventService.reportEvent(eventId, principal.getName(), reason);
+        return ResponseEntity.ok().build();
+    }
+}

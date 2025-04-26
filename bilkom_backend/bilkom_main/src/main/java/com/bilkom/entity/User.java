@@ -94,6 +94,12 @@ public class User {
         PRIVATE     // Visible only to the user and admins
     }
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserInterestTag> interestTags = new ArrayList<>();
+
+    @Column(name = "fcm_token", columnDefinition = "TEXT")
+    private String fcmToken;
+
     @Override
     public String toString() {
         return "User{" + "userId=" + userId + ", email=" + email + ", passwordHash=" + passwordHash + ", firstName=" + firstName + ", lastName=" + lastName 
@@ -253,5 +259,21 @@ public class User {
     
     public void setProfileVisibility(ProfileVisibility profileVisibility) {
         this.profileVisibility = profileVisibility;
+    }
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
+
+    public List<UserInterestTag> getInterestTags() {
+        return interestTags;
+    }
+    
+    public void setInterestTags(List<UserInterestTag> interestTags) {
+        this.interestTags = interestTags;
     }
 }
