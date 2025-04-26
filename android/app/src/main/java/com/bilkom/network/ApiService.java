@@ -15,6 +15,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ApiService {
@@ -26,6 +27,9 @@ public interface ApiService {
 
     @GET("users/{id}")
     Call<User> getUserById(@Path("id") Long id, @Header("Authorization") String bearerToken);
+
+    @PUT("users/{id}")
+    Call<User> updateUser(@Path("id") Long id, @Body User user, @Header("Authorization") String bearerToken);
 
     @GET("users/email/{email}")
     Call<User> getUserByEmail(@Path("email") String email, @Header("Authorization") String bearerToken);

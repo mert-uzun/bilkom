@@ -1,21 +1,84 @@
 <!--this is the activity_settings.xml file for the settings activity-->
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:background="@color/black">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Settings"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
 
-    <!-- Add your settings content here -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SETTING"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
 
-</LinearLayout> 
+        <ImageView
+            android:id="@+id/profileImageView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_profile"
+            android:layout_marginBottom="8dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/changeProfilePicButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change Profile Picture"
+            android:backgroundTint="@color/design_default_color_primary"
+            android:textColor="@color/white"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change Password"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+        <EditText
+            android:id="@+id/newPasswordEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="New Password"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/white"
+            android:layout_marginBottom="8dp"/>
+        <EditText
+            android:id="@+id/confirmPasswordEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/white"
+            android:layout_marginBottom="8dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/updatePasswordButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update Password"
+            android:backgroundTint="@color/design_default_color_primary"
+            android:textColor="@color/white"
+            android:layout_marginBottom="24dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/logoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Log Out"
+            android:backgroundTint="#B71C1C"
+            android:textColor="@color/white"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+</ScrollView> 
