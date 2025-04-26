@@ -68,6 +68,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EventParticipant> eventParticipations = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserInterestTag> interestTags = new ArrayList<>();
+
     @Column(name = "fcm_token", columnDefinition = "TEXT")
     private String fcmToken;
 
@@ -203,5 +206,13 @@ public class User {
 
     public void setFcmToken(String fcmToken) {
         this.fcmToken = fcmToken;
+    }
+
+    public List<UserInterestTag> getInterestTags() {
+        return interestTags;
+    }
+    
+    public void setInterestTags(List<UserInterestTag> interestTags) {
+        this.interestTags = interestTags;
     }
 }

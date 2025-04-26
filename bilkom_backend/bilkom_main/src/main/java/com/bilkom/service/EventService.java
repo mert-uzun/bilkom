@@ -8,6 +8,8 @@ import com.bilkom.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +24,9 @@ public class EventService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PastEventReportRepository pastEventReportRepository;
 
     @Autowired
     private ClubRepository clubRepository;
@@ -58,14 +63,14 @@ public class EventService {
 
     public void joinEvent(Long eventId, String userEmail) {
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new BadRequestException("Event not found"));
+            .orElseThrow(() -> new BadRequestException("Event not found"));
     
         if (event.getCurrentParticipantsNumber() >= event.getMaxParticipants()) {
             throw new BadRequestException("Event is full");
         }
     
         User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new BadRequestException("User not found"));
+            .orElseThrow(() -> new BadRequestException("User not found"));
     
         if (event.getParticipants().stream().anyMatch(p -> p.getUser().equals(user))) {
             throw new BadRequestException("User already joined the event");
@@ -82,16 +87,16 @@ public class EventService {
     
     public void withdrawFromEvent(Long eventId, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new BadRequestException("User not found"));
+            .orElseThrow(() -> new BadRequestException("User not found"));
     
         EventParticipantPK eventParticipantPK = new EventParticipantPK(eventId, user.getUserId());
         EventParticipant participant = participantRepository.findById(eventParticipantPK)
-                .orElseThrow(() -> new BadRequestException("User is not a participant of the event"));
+            .orElseThrow(() -> new BadRequestException("User is not a participant of the event"));
     
         participantRepository.delete(participant);
     
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new BadRequestException("Event not found"));
+            .orElseThrow(() -> new BadRequestException("Event not found"));
     
         event.setCurrentParticipantsNumber(event.getCurrentParticipantsNumber() - 1);
         eventRepository.save(event);
@@ -100,48 +105,107 @@ public class EventService {
 
     public List<Event> listAllEvents() {
         return eventRepository.findAll().stream()
-                .filter(Event::isActive)
-                .collect(Collectors.toList());
+            .filter(Event::isActive)
+            .collect(Collectors.toList());
     }    
 
     public List<Event> filterEventsByTags(List<String> tagNames) {
         return eventRepository.findAll().stream()
-                .filter(event -> event.getTags().stream()
-                        .anyMatch(tag -> tagNames.contains(tag.getTagName())))
-                .collect(Collectors.toList());
+            .filter(event -> event.getTags().stream()
+                    .anyMatch(tag -> tagNames.contains(tag.getTagName())))
+            .collect(Collectors.toList());
     }
 
     public List<Event> getEventsCreatedByUser(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new BadRequestException("User not found"));
+            .orElseThrow(() -> new BadRequestException("User not found"));
     
         return eventRepository.findAll().stream()
-                .filter(event -> event.getCreator().getUserId().equals(user.getUserId()))
-                .collect(Collectors.toList());
+            .filter(event -> event.getCreator().getUserId().equals(user.getUserId()))
+            .collect(Collectors.toList());
     } 
 
     public List<Event> getEventsUserJoined(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new BadRequestException("User not found"));
+            .orElseThrow(() -> new BadRequestException("User not found"));
     
         List<EventParticipant> participations = participantRepository.findByUser(user);
     
         return participations.stream()
-                .map(EventParticipant::getEvent)
-                .filter(Event::isActive)
-                .collect(Collectors.toList());
+            .map(EventParticipant::getEvent)
+            .filter(Event::isActive)
+            .collect(Collectors.toList());
     }
 
     public List<User> getParticipantsForEvent(Long eventId, String requesterEmail) {
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new BadRequestException("Event not found"));
+            .orElseThrow(() -> new BadRequestException("Event not found"));
     
         if (!event.getCreator().getEmail().equals(requesterEmail)) {
             throw new BadRequestException("You are not authorized to view this event's participants.");
         }
     
         return event.getParticipants().stream()
-                .map(EventParticipant::getUser)
-                .collect(Collectors.toList());
+            .map(EventParticipant::getUser)
+            .collect(Collectors.toList());
     }    
+
+    public List<Event> listPastEvents() {
+        LocalDate today = LocalDate.now();
+        return eventRepository.findAll().stream()
+            .filter(event -> !event.isActive() || event.getEventDate().toLocalDate().isBefore(today))
+            .collect(Collectors.toList());
+    }
+
+    public List<Event> getPastEventsCreatedByUser(String email) {
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new BadRequestException("User not found"));
+
+        LocalDate today = LocalDate.now();
+        return eventRepository.findAll().stream()
+            .filter(event -> event.getCreator().getUserId().equals(user.getUserId()))
+            .filter(event -> !event.isActive() || event.getEventDate().toLocalDate().isBefore(today))
+            .collect(Collectors.toList());
+    }
+
+    public List<Event> getPastEventsUserJoined(String email) {
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new BadRequestException("User not found"));
+
+        List<EventParticipant> participations = participantRepository.findByUser(user);
+
+        LocalDate today = LocalDate.now();
+        return participations.stream()
+            .map(EventParticipant::getEvent)
+            .filter(event -> !event.isActive() || event.getEventDate().toLocalDate().isBefore(today))
+            .collect(Collectors.toList());
+    }
+
+    public void markEventAsDone(Long eventId, String creatorEmail) {
+        Event event = eventRepository.findById(eventId)
+            .orElseThrow(() -> new BadRequestException("Event not found"));
+
+        if (!event.getCreator().getEmail().equals(creatorEmail)) {
+            throw new BadRequestException("You are not authorized to mark this event as done.");
+        }
+
+        event.setActive(false);
+        eventRepository.save(event);
+    }
+
+    public void reportEvent(Long eventId, String reporterEmail, String reason) {
+        Event event = eventRepository.findById(eventId)
+            .orElseThrow(() -> new BadRequestException("Event not found"));
+
+        User reporter = userRepository.findByEmail(reporterEmail)
+            .orElseThrow(() -> new BadRequestException("Reporter not found"));
+
+        PastEventReport report = new PastEventReport();
+        report.setEvent(event);
+        report.setReporter(reporter);
+        report.setReason(reason);
+        report.setReportedAt(LocalDateTime.now());
+
+        pastEventReportRepository.save(report);
+    }
 }
