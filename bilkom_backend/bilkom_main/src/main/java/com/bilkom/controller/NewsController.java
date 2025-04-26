@@ -14,8 +14,8 @@ public class NewsController {
     @Autowired
     private NewsService newsService;
 
-    @GetMapping("/bilkent")
-    public List<NewsDto> getBilkentNews() {
-        return newsService.fetchFromBilkentNews();
-    }
+    @GetMapping("/gazetebilkent")
+    public List<NewsDto> getGazeteBilkentNews() {
+        return newsService.fetchFromGazeteBilkent();
+    }    
 }

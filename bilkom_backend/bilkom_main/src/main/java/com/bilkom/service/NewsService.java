@@ -1,35 +1,42 @@
 package com.bilkom.service;
 
 import com.bilkom.dto.NewsDto;
-import com.rometools.rome.feed.synd.*;
-import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.XmlReader;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import org.springframework.stereotype.Service;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class NewsService {
+public List<NewsDto> fetchFromGazeteBilkent() {
+    List<NewsDto> newsList = new ArrayList<>();
+    try {
+        Document doc = Jsoup.connect("https://gazetebilkent.com/").get();
+        
+        // Find article cards (you may adjust the CSS selectors based on actual HTML)
+        Elements articles = doc.select("article");
 
-    public List<NewsDto> fetchFromBilkentNews() {
-        List<NewsDto> newsList = new ArrayList<>();
-        try {
-            URL feedUrl = new URL("https://bilkentnews.bilkent.edu.tr/feed/");
-            SyndFeedInput input = new SyndFeedInput();
-            SyndFeed feed = input.build(new XmlReader(feedUrl));
+        for (Element article : articles) {
+            // Extract title
+            Element titleElement = article.selectFirst("h2.entry-title a");
+            String title = titleElement != null ? titleElement.text() : "No Title";
+            String link = titleElement != null ? titleElement.attr("href") : "#";
 
-            for (SyndEntry entry : feed.getEntries()) {
-                String title = entry.getTitle();
-                String link = entry.getLink();
-                String summary = entry.getDescription() != null ? entry.getDescription().getValue() : "";
-                newsList.add(new NewsDto(title, summary, link));
-            }
+            // Extract summary (if available)
+            Element summaryElement = article.selectFirst("div.entry-summary p");
+            String summary = summaryElement != null ? summaryElement.text() : "";
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            newsList.add(new NewsDto(title, summary, link));
         }
-        return newsList;
+
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+    return newsList;
+}
 }
