@@ -1,17 +1,20 @@
 package com.bilkom.service;
 
 import com.bilkom.entity.User;
+import com.bilkom.entity.UserInterestTag;
 import com.bilkom.exception.BadRequestException;
+import com.bilkom.repository.UserInterestTagRepository;
 import com.bilkom.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserInterestTagRepository userInterestTagRepository;
 
     public User getUserById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> 
@@ -126,5 +129,23 @@ public class UserService {
         }
         
         return userRepository.save(existingUser);
+    }
+
+    @Transactional
+    public void updateUserTags(Long userId, List<String> newTags) {
+        User user = getUserById(userId);
+
+        userInterestTagRepository.deleteAll(user.getInterestTags());
+
+        List<UserInterestTag> interestTags = newTags.stream().map(tagName -> {
+            UserInterestTag tag = new UserInterestTag();
+            tag.setUser(user);
+            tag.setTagName(tagName);
+            return tag;
+        }).toList();
+
+        user.setInterestTags(interestTags);
+
+        userRepository.save(user);
     }
 }

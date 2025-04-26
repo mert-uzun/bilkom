@@ -105,4 +105,10 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving user", e);
         }
     }
+
+    @PutMapping("/{id}/tags")
+    public ResponseEntity<Void> updateUserTags(@PathVariable Long id, @RequestBody List<String> tags) {
+        userService.updateUserTags(id, tags);
+        return ResponseEntity.ok().build();
+    }
 }
