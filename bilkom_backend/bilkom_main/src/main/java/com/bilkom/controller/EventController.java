@@ -65,4 +65,34 @@ public class EventController {
         List<User> users = eventService.getParticipantsForEvent(eventId, principal.getName());
         return ResponseEntity.ok(users);
     }
+
+    @GetMapping("/past")
+    public ResponseEntity<List<Event>> listPastEvents() {
+        List<Event> pastEvents = eventService.listPastEvents();
+        return ResponseEntity.ok(pastEvents);
+    }
+
+    @GetMapping("/created/past")
+    public ResponseEntity<List<Event>> getPastEventsCreatedByUser(Principal principal) {
+        List<Event> events = eventService.getPastEventsCreatedByUser(principal.getName());
+        return ResponseEntity.ok(events);
+    }
+
+    @GetMapping("/joined/past")
+    public ResponseEntity<List<Event>> getPastEventsUserJoined(Principal principal) {
+        List<Event> events = eventService.getPastEventsUserJoined(principal.getName());
+        return ResponseEntity.ok(events);
+    }
+
+    @PostMapping("/{eventId}/done")
+    public ResponseEntity<Void> markEventAsDone(@PathVariable Long eventId, Principal principal) {
+        eventService.markEventAsDone(eventId, principal.getName());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{eventId}/report")
+    public ResponseEntity<Void> reportPastEvent(@PathVariable Long eventId, @RequestBody String reason, Principal principal) {
+        eventService.reportEvent(eventId, principal.getName(), reason);
+        return ResponseEntity.ok().build();
+    }
 }
