@@ -1,35 +1,38 @@
 package com.bilkom.service;
 
-import com.bilkom.dto.NewsDto;
-import com.rometools.rome.feed.synd.*;
-import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.XmlReader;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
+import com.bilkom.dto.NewsDto;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class NewsService {
 
-    public List<NewsDto> fetchFromBilkentNews() {
+    public List<NewsDto> fetchFromBilkentNewsWithJsoup() {
         List<NewsDto> newsList = new ArrayList<>();
         try {
-            URL feedUrl = new URL("https://bilkentnews.bilkent.edu.tr/feed/");
-            SyndFeedInput input = new SyndFeedInput();
-            SyndFeed feed = input.build(new XmlReader(feedUrl));
-
-            for (SyndEntry entry : feed.getEntries()) {
-                String title = entry.getTitle();
-                String link = entry.getLink();
-                String summary = entry.getDescription() != null ? entry.getDescription().getValue() : "";
-                newsList.add(new NewsDto(title, summary, link));
+            Document doc = Jsoup.connect("https://bilkentnews.bilkent.edu.tr/").get();
+    
+            Elements articles = doc.select("h3.entry-title a"); 
+    
+            for (Element article : articles) {
+                String title = article.text();
+                String link = article.absUrl("href");
+    
+                if (title != null && !title.isEmpty() && link != null && !link.isEmpty()) {
+                    newsList.add(new NewsDto(title, link));
+                }
             }
-
         } catch (Exception e) {
+            System.out.println("\n\n");
             e.printStackTrace();
+            System.out.println("\n\n");
         }
         return newsList;
-    }
+    }    
 }

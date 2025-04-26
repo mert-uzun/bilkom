@@ -1,9 +1,11 @@
 package com.bilkom.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import com.bilkom.dto.NewsDto;
 import com.bilkom.service.NewsService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +18,6 @@ public class NewsController {
 
     @GetMapping("/bilkent")
     public List<NewsDto> getBilkentNews() {
-        return newsService.fetchFromBilkentNews();
+        return newsService.fetchFromBilkentNewsWithJsoup();
     }
 }

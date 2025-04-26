@@ -2,15 +2,13 @@ package com.bilkom.dto;
 
 public class NewsDto {
     private String title;
-    private String summary;
     private String link;
 
     public NewsDto() {
     }
 
-    public NewsDto(String title, String summary, String link) {
+    public NewsDto(String title, String link) {
         this.title = title;
-        this.summary = summary;
         this.link = link;
     }
 
@@ -21,15 +19,7 @@ public class NewsDto {
     public void setTitle(String title) {
         this.title = title;
     }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
+    
     public String getLink() {
         return link;
     }
