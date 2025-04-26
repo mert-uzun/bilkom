@@ -102,13 +102,21 @@
             <artifactId>json</artifactId>
             <version>20230618</version>
         </dependency>
-    </dependencies>
+
+        <!-- XML Parsing -->  
+        <dependency>
+            <groupId>com.rometools</groupId>
+            <artifactId>rome</artifactId>
+            <version>1.18.0</version>
+        </dependency>
+        </dependencies>
     
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.1.5</version> 
                 <configuration>
                     <excludes>
                         <exclude>
