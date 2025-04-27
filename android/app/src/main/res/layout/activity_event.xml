@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#222"
+        android:background="@color/card_bg_dark"
         android:padding="16dp">
 
         <!-- Top bar with menu and action buttons -->

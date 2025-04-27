@@ -20,6 +20,7 @@ public class User {
     private boolean isActive;
     private Timestamp lastLogin;
     private String verificationToken;
+    private List<ClubMembership> clubMemberships;
 
     // Getters and Setters
     public Long getUserId() {
@@ -124,5 +125,13 @@ public class User {
 
     public void setVerificationToken(String verificationToken) {
         this.verificationToken = verificationToken;
+    }
+
+    public List<ClubMembership> getClubMemberships() {
+        return clubMemberships;
+    }
+
+    public void setClubMemberships(List<ClubMembership> clubMemberships) {
+        this.clubMemberships = clubMemberships;
     }
 } 

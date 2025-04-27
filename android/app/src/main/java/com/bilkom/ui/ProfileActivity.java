@@ -1,6 +1,8 @@
 package com.bilkom.ui;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bilkom.BaseActivity;
@@ -12,9 +14,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.util.List;
+
 public class ProfileActivity extends BaseActivity {
     private TextView emailText, firstNameText, lastNameText, bilkentIdText, phoneText, bloodTypeText;
     private SecureStorage secureStorage;
+    private LinearLayout clubsContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,7 @@ public class ProfileActivity extends BaseActivity {
         bilkentIdText = findViewById(R.id.profileBilkentId);
         phoneText = findViewById(R.id.profilePhone);
         bloodTypeText = findViewById(R.id.profileBloodType);
+        clubsContainer = findViewById(R.id.clubsContainer);
 
         loadUserProfile();
     }
@@ -55,6 +61,7 @@ public class ProfileActivity extends BaseActivity {
                         bilkentIdText.setText(user.getBilkentId());
                         phoneText.setText(user.getPhoneNumber());
                         bloodTypeText.setText(user.getBloodType());
+                        displayClubs(user.getClubMemberships());
                     } else {
                         Toast.makeText(ProfileActivity.this, "Failed to load profile", Toast.LENGTH_SHORT).show();
                     }
@@ -64,5 +71,25 @@ public class ProfileActivity extends BaseActivity {
                     Toast.makeText(ProfileActivity.this, "Network error", Toast.LENGTH_SHORT).show();
                 }
             });
+    }
+
+    private void displayClubs(List<ClubMembership> clubMemberships) {
+        clubsContainer.removeAllViews();
+        if (clubMemberships == null || clubMemberships.isEmpty()) {
+            TextView noClubs = new TextView(this);
+            noClubs.setText("No club memberships");
+            noClubs.setTextColor(getResources().getColor(R.color.white));
+            clubsContainer.addView(noClubs);
+            return;
+        }
+        LayoutInflater inflater = LayoutInflater.from(this);
+        for (ClubMembership club : clubMemberships) {
+            TextView clubView = new TextView(this);
+            clubView.setText(club.getClubName() + " (" + club.getRole() + ")");
+            clubView.setTextColor(getResources().getColor(R.color.white));
+            clubView.setTextSize(16);
+            clubView.setPadding(0, 8, 0, 8);
+            clubsContainer.addView(clubView);
+        }
     }
 } 

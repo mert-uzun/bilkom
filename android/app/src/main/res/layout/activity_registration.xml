@@ -27,7 +27,7 @@ it extends the ScrollView class to show the registration activity content-->
             <View
                 android:layout_width="1dp"
                 android:layout_height="100dp"
-                android:background="#CCCCCC"
+                android:background="@color/card_bg_dark"
                 android:layout_marginHorizontal="16dp"/>
 
             <ImageView
