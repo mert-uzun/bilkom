@@ -9,6 +9,7 @@ import com.bilkom.model.AuthResponse;
 import com.bilkom.model.User;
 import com.bilkom.model.EmergencyAlert;
 import com.bilkom.model.WeatherForecast;
+import com.bilkom.model.News;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -42,4 +43,7 @@ public interface ApiService {
 
     @GET("weather")
     Call<WeatherForecast> getWeatherForecast();
+
+    @GET("api/news/bilkent")
+    Call<List<News>> getLatestNews();
 }
