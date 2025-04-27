@@ -9,7 +9,8 @@ import com.bilkom.model.AuthResponse;
 import com.bilkom.model.User;
 import com.bilkom.model.EmergencyAlert;
 import com.bilkom.model.WeatherForecast;
-import com.bilkom.model.News;
+import com.bilkom.model.Event;
+import com.bilkom.model.EventRequest;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -46,4 +47,14 @@ public interface ApiService {
 
     @GET("api/news/bilkent")
     Call<List<News>> getLatestNews();
+
+    @GET("events")
+    Call<List<Event>> getEvents(@Header("Authorization") String bearerToken);
+
+    @POST("events")
+    Call<Event> createEvent(@Body EventRequest eventRequest, @Header("Authorization") String bearerToken);
+
+    @POST("events/filter")
+    Call<List<Event>> filterEventsByTags(@Body List<String> tagNames, @Header("Authorization") String bearerToken);
+
 }
