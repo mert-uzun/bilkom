@@ -1,5 +1,6 @@
 package com.bilkom.entity;
 
+import com.bilkom.enums.UserRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -8,6 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +59,10 @@ public class User {
     @Column(name = "last_login", nullable = false, columnDefinition = "TIMESTAMP DEFAULT created_at")
     private Timestamp lastLogin;
     
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_role", nullable = false, columnDefinition = "ENUM('USER', 'CLUB_HEAD', 'ADMIN') DEFAULT 'USER'")
+    private UserRole role = UserRole.USER;
+    
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> tags = new ArrayList<>();
     
@@ -68,9 +75,37 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EventParticipant> eventParticipations = new ArrayList<>();
 
+    @Column(name = "email_notifications", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean emailNotificationsEnabled = true;
+    
+    @Column(name = "sms_notifications", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean smsNotificationsEnabled = false;
+    
+    @Column(name = "profile_visibility", nullable = false, columnDefinition = "VARCHAR(20) DEFAULT 'PUBLIC'")
+    @Enumerated(EnumType.STRING)
+    private ProfileVisibility profileVisibility = ProfileVisibility.PUBLIC;
+    
+    /**
+     * Enum for profile visibility settings.
+     */
+    public enum ProfileVisibility {
+        PUBLIC,     // Visible to everyone
+        MEMBERS,    // Visible only to club members
+        PRIVATE     // Visible only to the user and admins
+    }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserInterestTag> interestTags = new ArrayList<>();
+
+    @Column(name = "fcm_token", columnDefinition = "TEXT")
+    private String fcmToken;
+
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", email=" + email + ", passwordHash=" + passwordHash + ", firstName=" + firstName + ", lastName=" + lastName + ", bilkentId=" + bilkentId + ", phoneNumber=" + phoneNumber + ", bloodType=" + bloodType + ", createdAt=" + createdAt + ", isVerified=" + isVerified + ", isActive=" + isActive + ", lastLogin=" + lastLogin + ", tags=" + tags + ", clubMemberships=" + clubMemberships + ", createdEvents=" + createdEvents + ", eventParticipations=" + eventParticipations + '}';
+        return "User{" + "userId=" + userId + ", email=" + email + ", passwordHash=" + passwordHash + ", firstName=" + firstName + ", lastName=" + lastName 
+                + ", bilkentId=" + bilkentId + ", phoneNumber=" + phoneNumber + ", bloodType=" + bloodType + ", createdAt=" + createdAt + ", isVerified=" 
+                + isVerified + ", isActive=" + isActive + ", lastLogin=" + lastLogin + ", role=" + role + ", tags=" + tags + ", clubMemberships=" 
+                + clubMemberships + ", createdEvents=" + createdEvents + ", eventParticipations=" + eventParticipations + '}';
     }
 
     // GETTERS AND SETTERS
@@ -192,5 +227,53 @@ public class User {
     
     public void setVerificationToken(String verificationToken) {
         this.verificationToken = verificationToken;
+    }
+    
+    public UserRole getRole() {
+        return role;
+    }
+    
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    public boolean isEmailNotificationsEnabled() {
+        return emailNotificationsEnabled;
+    }
+    
+    public void setEmailNotificationsEnabled(boolean emailNotificationsEnabled) {
+        this.emailNotificationsEnabled = emailNotificationsEnabled;
+    }
+    
+    public boolean isSmsNotificationsEnabled() {
+        return smsNotificationsEnabled;
+    }
+    
+    public void setSmsNotificationsEnabled(boolean smsNotificationsEnabled) {
+        this.smsNotificationsEnabled = smsNotificationsEnabled;
+    }
+    
+    public ProfileVisibility getProfileVisibility() {
+        return profileVisibility;
+    }
+    
+    public void setProfileVisibility(ProfileVisibility profileVisibility) {
+        this.profileVisibility = profileVisibility;
+    }
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
+
+    public List<UserInterestTag> getInterestTags() {
+        return interestTags;
+    }
+    
+    public void setInterestTags(List<UserInterestTag> interestTags) {
+        this.interestTags = interestTags;
     }
 }

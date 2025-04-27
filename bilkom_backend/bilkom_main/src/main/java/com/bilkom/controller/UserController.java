@@ -6,10 +6,12 @@ import com.bilkom.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -53,7 +55,7 @@ public class UserController {
         }
     }
 
-    // PUT to update user
+    // PUT to update user (legacy method)
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         try {
@@ -104,5 +106,141 @@ public class UserController {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving user", e);
         }
+    }
+    
+    // --- FIELD-SPECIFIC UPDATE ENDPOINTS ---
+    
+    // Update email
+    @PutMapping("/{id}/email")
+    public ResponseEntity<User> updateEmail(@PathVariable Long id, @RequestBody Map<String, String> payload) {
+        try {
+            String email = payload.get("email");
+            return ResponseEntity.ok(userService.updateEmail(id, email));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating email", e);
+        }
+    }
+    
+    // Update first name
+    @PutMapping("/{id}/firstName")
+    public ResponseEntity<User> updateFirstName(@PathVariable Long id, @RequestBody Map<String, String> payload) {
+        try {
+            String firstName = payload.get("firstName");
+            return ResponseEntity.ok(userService.updateFirstName(id, firstName));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating first name", e);
+        }
+    }
+    
+    // Update last name
+    @PutMapping("/{id}/lastName")
+    public ResponseEntity<User> updateLastName(@PathVariable Long id, @RequestBody Map<String, String> payload) {
+        try {
+            String lastName = payload.get("lastName");
+            return ResponseEntity.ok(userService.updateLastName(id, lastName));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating last name", e);
+        }
+    }
+    
+    // Update Bilkent ID
+    @PutMapping("/{id}/bilkentId")
+    public ResponseEntity<User> updateBilkentId(@PathVariable Long id, @RequestBody Map<String, String> payload) {
+        try {
+            String bilkentId = payload.get("bilkentId");
+            return ResponseEntity.ok(userService.updateBilkentId(id, bilkentId));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating Bilkent ID", e);
+        }
+    }
+    
+    // Update phone number
+    @PutMapping("/{id}/phoneNumber")
+    public ResponseEntity<User> updatePhoneNumber(@PathVariable Long id, @RequestBody Map<String, String> payload) {
+        try {
+            String phoneNumber = payload.get("phoneNumber");
+            return ResponseEntity.ok(userService.updatePhoneNumber(id, phoneNumber));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating phone number", e);
+        }
+    }
+    
+    // Update blood type
+    @PutMapping("/{id}/bloodType")
+    public ResponseEntity<User> updateBloodType(@PathVariable Long id, @RequestBody Map<String, String> payload) {
+        try {
+            String bloodType = payload.get("bloodType");
+            return ResponseEntity.ok(userService.updateBloodType(id, bloodType));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating blood type", e);
+        }
+    }
+    
+    // Update password
+    @PutMapping("/{id}/password")
+    public ResponseEntity<User> updatePassword(@PathVariable Long id, @RequestBody Map<String, String> payload) {
+        try {
+            String currentPassword = payload.get("currentPassword");
+            String newPassword = payload.get("newPassword");
+            return ResponseEntity.ok(userService.updatePassword(id, currentPassword, newPassword));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating password", e);
+        }
+    }
+    
+    // Admin endpoints
+    
+    // Update verification status
+    @PutMapping("/{id}/verification")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<User> updateVerificationStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> payload) {
+        try {
+            Boolean status = payload.get("verified");
+            if (status == null) {
+                throw new BadRequestException("Verification status is required");
+            }
+            return ResponseEntity.ok(userService.updateVerificationStatus(id, status));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating verification status", e);
+        }
+    }
+    
+    // Update active status
+    @PutMapping("/{id}/active")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<User> updateActiveStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> payload) {
+        try {
+            Boolean status = payload.get("active");
+            if (status == null) {
+                throw new BadRequestException("Active status is required");
+            }
+            return ResponseEntity.ok(userService.updateActiveStatus(id, status));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating active status", e);
+        }
+    }
+
+    @PutMapping("/{id}/tags")
+    public ResponseEntity<Void> updateUserTags(@PathVariable Long id, @RequestBody List<String> tags) {
+        userService.updateUserTags(id, tags);
+        return ResponseEntity.ok().build();
     }
 }
