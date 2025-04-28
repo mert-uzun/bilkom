@@ -17,6 +17,7 @@ import com.bilkom.model.EmergencyAlert;
 import com.bilkom.model.News;
 import com.bilkom.model.WeatherForecast;
 import com.bilkom.network.RetrofitClient;
+import com.bilkom.utils.WeatherIconUtils;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +25,7 @@ import retrofit2.Response;
 
 public class HomeActivity extends BaseActivity {
     private LinearLayout newsContainer;
-    private TextView weatherDescription, temperatureText, humidityText, windText;
+    private TextView weatherDescription, temperatureText;
     private ImageView weatherIcon;
 
     @Override
@@ -45,8 +46,6 @@ public class HomeActivity extends BaseActivity {
         newsContainer = findViewById(R.id.newsContainer);
         weatherDescription = findViewById(R.id.weatherDescription);
         temperatureText = findViewById(R.id.temperatureText);
-        humidityText = findViewById(R.id.humidityText);
-        windText = findViewById(R.id.windText);
         weatherIcon = findViewById(R.id.weatherIcon);
     }
 
@@ -64,23 +63,9 @@ public class HomeActivity extends BaseActivity {
                         // Update temperature
                         temperatureText.setText(String.format("%.1f°C", wf.getTemperature()));
                         
-                        // Update humidity
-                        humidityText.setText(String.format("%d%%", wf.getHumidity()));
-                        
-                        // Update wind speed
-                        windText.setText(String.format("%.1f km/h", wf.getWindSpeed()));
-                        
-                        // Update weather icon based on description
-                        String description = wf.getDescription().toLowerCase();
-                        if (description.contains("rain")) {
-                            weatherIcon.setImageResource(R.drawable.ic_rain);
-                        } else if (description.contains("cloud")) {
-                            weatherIcon.setImageResource(R.drawable.ic_cloud);
-                        } else if (description.contains("sun")) {
-                            weatherIcon.setImageResource(R.drawable.ic_sun);
-                        } else {
-                            weatherIcon.setImageResource(R.drawable.ic_weather);
-                        }
+                        // Update weather icon using WeatherIconUtils
+                        int iconResourceId = WeatherIconUtils.getWeatherIconResourceId(HomeActivity.this, wf.getIcon());
+                        weatherIcon.setImageResource(iconResourceId);
                     }
                 }
                 @Override
