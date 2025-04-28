@@ -12,6 +12,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
+import com.bilkom.dto.ClubDTO;
+import com.bilkom.service.ClubMemberService;
+import com.bilkom.service.ClubService;
 
 @RestController
 @RequestMapping("/api/users")
@@ -19,6 +22,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private ClubMemberService clubMemberService;
+
+    @Autowired
+    private ClubService clubService;
 
     // GET all users
     @GetMapping
@@ -202,9 +211,18 @@ public class UserController {
         }
     }
     
-    // Admin endpoints
+    // ADMIN ENDPOINTS
     
-    // Update verification status
+    /**
+     * Updates the verification status of a user.
+     * 
+     * @param id The ID of the user to update
+     * @param payload A map containing the verification status
+     * @return The updated user
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
     @PutMapping("/{id}/verification")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> updateVerificationStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> payload) {
@@ -221,7 +239,16 @@ public class UserController {
         }
     }
     
-    // Update active status
+    /**
+     * Updates the active status of a user.
+     * 
+     * @param id The ID of the user to update
+     * @param payload A map containing the active status
+     * @return The updated user
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
     @PutMapping("/{id}/active")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> updateActiveStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> payload) {
@@ -238,9 +265,183 @@ public class UserController {
         }
     }
 
+    /**
+     * Updates the tags of a user.
+     * 
+     * @param id The ID of the user to update
+     * @param tags The new tags for the user
+     * @return The updated user
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
     @PutMapping("/{id}/tags")
     public ResponseEntity<Void> updateUserTags(@PathVariable Long id, @RequestBody List<String> tags) {
         userService.updateUserTags(id, tags);
         return ResponseEntity.ok().build();
+    }
+
+    /**
+     * Gets all clubs where the currently authenticated user is a member.
+     * 
+     * @return List of clubs where the current user is a member
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @GetMapping("/me/clubs")
+    public ResponseEntity<List<ClubDTO>> getCurrentUserClubs() {
+        try {
+            User currentUser = userService.getCurrentAuthenticatedUser();
+            return ResponseEntity.ok(clubMemberService.getClubsByMember(currentUser.getUserId()));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving user's clubs", e);
+        }
+    }
+    
+    /**
+     * Gets all clubs where the currently authenticated user is an executive.
+     * 
+     * @return List of clubs where the current user is an executive
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @GetMapping("/me/executive-clubs")
+    public ResponseEntity<List<ClubDTO>> getCurrentUserExecutiveClubs() {
+        try {
+            User currentUser = userService.getCurrentAuthenticatedUser();
+            return ResponseEntity.ok(clubService.getClubsByExecutiveId(currentUser.getUserId()));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving user's executive clubs", e);
+        }
+    }
+    
+    /**
+     * Gets all clubs where the currently authenticated user is the club head.
+     * 
+     * @return List of clubs where the current user is the club head
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @GetMapping("/me/head-clubs")
+    public ResponseEntity<List<ClubDTO>> getCurrentUserHeadClubs() {
+        try {
+            User currentUser = userService.getCurrentAuthenticatedUser();
+            return ResponseEntity.ok(clubService.getClubsByHeadId(currentUser.getUserId()));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving user's head clubs", e);
+        }
+    }
+
+    /**
+     * Gets all club associations for the currently authenticated user with their role in each club.
+     * This endpoint provides a comprehensive view of all clubs the user is associated with,
+     * categorized by their role (member, executive, head).
+     * 
+     * @return Map containing all club associations for the current user
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @GetMapping("/me/all-clubs")
+    public ResponseEntity<Map<String, Object>> getAllUserClubAssociations() {
+        try {
+            User currentUser = userService.getCurrentAuthenticatedUser();
+            return ResponseEntity.ok(userService.getAllClubAssociations(currentUser.getUserId()));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving user's club associations", e);
+        }
+    }
+    
+    /**
+     * Gets all clubs where a specific user is a member.
+     * 
+     * @param id The user ID
+     * @return List of clubs where the user is a member
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @GetMapping("/{id}/clubs")
+    public ResponseEntity<List<ClubDTO>> getUserClubs(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(clubMemberService.getClubsByMember(id));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving user's clubs", e);
+        }
+    }
+    
+    /**
+     * Gets all clubs where a specific user is an executive.
+     * 
+     * @param id The user ID
+     * @return List of clubs where the user is an executive
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @GetMapping("/{id}/executive-clubs")
+    public ResponseEntity<List<ClubDTO>> getUserExecutiveClubs(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(clubService.getClubsByExecutiveId(id));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving user's executive clubs", e);
+        }
+    }
+    
+    /**
+     * Gets all clubs where a specific user is the club head.
+     * 
+     * @param id The user ID
+     * @return List of clubs where the user is the club head
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @GetMapping("/{id}/head-clubs")
+    public ResponseEntity<List<ClubDTO>> getUserHeadClubs(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(clubService.getClubsByHeadId(id));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving user's head clubs", e);
+        }
+    }
+    
+    /**
+     * Gets all club associations for a specific user with their role in each club.
+     * This endpoint provides a comprehensive view of all clubs the user is associated with,
+     * categorized by their role (member, executive, head).
+     * 
+     * @param id The user ID
+     * @return Map containing all club associations for the user
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @GetMapping("/{id}/all-clubs")
+    public ResponseEntity<Map<String, Object>> getUserAllClubAssociations(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(userService.getAllClubAssociations(id));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving user's club associations", e);
+        }
     }
 }

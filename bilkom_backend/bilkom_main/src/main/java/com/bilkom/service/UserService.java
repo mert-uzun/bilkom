@@ -2,6 +2,7 @@ package com.bilkom.service;
 
 import com.bilkom.entity.User;
 import com.bilkom.entity.UserInterestTag;
+import com.bilkom.dto.ClubDTO;
 import com.bilkom.exception.BadRequestException;
 import com.bilkom.repository.UserInterestTagRepository;
 import com.bilkom.repository.UserRepository;
@@ -15,6 +16,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.util.Map;
+import java.util.HashMap;
 
 @Service
 public class UserService {
@@ -34,6 +40,9 @@ public class UserService {
 
     @Autowired
     private UserInterestTagRepository userInterestTagRepository;
+
+    @Autowired
+    private ClubService clubService;
 
     public User getUserById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> 
@@ -534,5 +543,53 @@ public class UserService {
         user.setInterestTags(interestTags);
 
         userRepository.save(user);
+    }
+
+    /**
+     * Gets the currently authenticated user.
+     * 
+     * @return The authenticated user
+     * @throws BadRequestException if no user is authenticated or user not found
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    public User getCurrentAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated() || 
+                authentication.getPrincipal().equals("anonymousUser")) {
+            throw new BadRequestException("No authenticated user found");
+        }
+        
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new BadRequestException("User not found"));
+    }
+
+    /**
+     * Gets all club associations for a user with their role in each club.
+     * 
+     * @param userId The user ID
+     * @return Map of clubs with role information
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    public Map<String, Object> getAllClubAssociations(Long userId) {
+        Map<String, Object> result = new HashMap<>();
+        
+        // Get clubs where user is a member and add to the result
+        List<ClubDTO> memberClubs = clubService.getClubsByMemberId(userId);
+        result.put("memberClubs", memberClubs);
+        
+        // Get clubs where user is an executive and add to the result
+        List<ClubDTO> executiveClubs = clubService.getClubsByExecutiveId(userId);
+        result.put("executiveClubs", executiveClubs);
+        
+        // Get clubs where user is the head and add to the result
+        List<ClubDTO> headClubs = clubService.getClubsByHeadId(userId);
+        result.put("headClubs", headClubs);
+        
+        return result;
     }
 }
