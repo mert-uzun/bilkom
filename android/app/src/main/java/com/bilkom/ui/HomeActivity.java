@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,9 +79,37 @@ public class HomeActivity extends BaseActivity {
                 public void onResponse(Call<WeatherForecast> call, Response<WeatherForecast> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         WeatherForecast wf = response.body();
-                        String weatherText = String.format("%s\nPrecipitation: %.1f%%\nHumidity: %d%%\nWind: %.1f km/h",
-                                wf.getDescription(), wf.getPrecipitation(), wf.getHumidity(), wf.getWindSpeed());
-                        ((TextView) findViewById(R.id.weatherText)).setText(weatherText);
+                        
+                        // Update weather description
+                        TextView weatherDescription = findViewById(R.id.weatherDescription);
+                        weatherDescription.setText(wf.getDescription());
+                        
+                        // Update temperature
+                        TextView temperatureText = findViewById(R.id.temperatureText);
+                        temperatureText.setText(String.format("%.1f°C", wf.getTemperature()));
+                        
+                        // Update humidity
+                        TextView humidityText = findViewById(R.id.humidityText);
+                        humidityText.setText(String.format("%d%%", wf.getHumidity()));
+                        
+                        // Update wind speed
+                        TextView windText = findViewById(R.id.windText);
+                        windText.setText(String.format("%.1f km/h", wf.getWindSpeed()));
+                        
+                        // Update weather icon based on description
+                        ImageView weatherIcon = findViewById(R.id.weatherIcon);
+                        String description = wf.getDescription().toLowerCase();
+                        if (description.contains("rain") || description.contains("drizzle")) {
+                            weatherIcon.setImageResource(R.drawable.ic_weather_rainy);
+                        } else if (description.contains("cloud")) {
+                            weatherIcon.setImageResource(R.drawable.ic_weather_cloudy);
+                        } else if (description.contains("sun") || description.contains("clear")) {
+                            weatherIcon.setImageResource(R.drawable.ic_weather_sunny);
+                        } else if (description.contains("snow")) {
+                            weatherIcon.setImageResource(R.drawable.ic_weather_snowy);
+                        } else {
+                            weatherIcon.setImageResource(R.drawable.ic_weather_cloudy);
+                        }
                     }
                 }
                 @Override

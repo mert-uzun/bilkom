@@ -86,33 +86,12 @@ it extends the ScrollView class to show the main activity content-->
         </androidx.cardview.widget.CardView>
 
         <!-- Weather Forecast Widget -->
-        <androidx.cardview.widget.CardView
+        <include
+            android:id="@+id/weatherContainer"
+            layout="@layout/item_weather"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="#1E293B">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Weather Forecast"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-                <TextView
-                    android:id="@+id/weatherText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Loading weather data..."
-                    android:textColor="@color/white"
-                    android:layout_marginTop="4dp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            android:layout_marginBottom="12dp"/>
 
         <!-- News Section -->
         <androidx.cardview.widget.CardView

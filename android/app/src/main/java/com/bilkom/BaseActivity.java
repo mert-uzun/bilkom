@@ -69,12 +69,5 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(new Intent(this, SettingsActivity.class));
             }
         });
-
-        // Logout
-        findViewById(R.id.logoutMenuItem).setOnClickListener(v -> {
-            // TODO: Implement logout logic here (clear session, preferences etc.)
-            startActivity(new Intent(this, LoginActivity.class));
-            finishAffinity();
-        });
     }
 } 
