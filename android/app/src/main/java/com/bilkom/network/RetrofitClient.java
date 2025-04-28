@@ -1,6 +1,3 @@
-// this is the retrofit client class for the api calls
-// it is used to create the retrofit instance and the api service instance
-// not a pojo class
 package com.bilkom.network;
 
 import okhttp3.OkHttpClient;
@@ -12,22 +9,20 @@ public class RetrofitClient {
     private static final String BASE_URL = "http://10.0.2.2:8080/api/";
     private static RetrofitClient instance;
     private final Retrofit retrofit;
-    private final ApiService apiService;
 
     private RetrofitClient() {
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
         OkHttpClient client = new OkHttpClient.Builder()
-            .addInterceptor(logging)
-            .build();
+                .addInterceptor(loggingInterceptor)
+                .build();
 
         retrofit = new Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-
-        apiService = retrofit.create(ApiService.class);
+                .baseUrl(BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 
     public static synchronized RetrofitClient getInstance() {
@@ -38,6 +33,6 @@ public class RetrofitClient {
     }
 
     public ApiService getApiService() {
-        return apiService;
+        return retrofit.create(ApiService.class);
     }
 }

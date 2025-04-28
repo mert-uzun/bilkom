@@ -47,6 +47,7 @@ public class EventActivity extends BaseActivity {
     private Spinner tagSpinner;
     private boolean isTagSpinnerInitialized = false;
     private String selectedTag = null;
+    private SecureStorage secureStorage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -137,7 +138,7 @@ public class EventActivity extends BaseActivity {
     }
 
     private void fetchUserInterestsAndEvents() {
-        SecureStorage secureStorage = new SecureStorage(this);
+        secureStorage = new SecureStorage(this);
         Long userId = secureStorage.getUserId();
         String token = secureStorage.getAuthToken();
         ApiService apiService = RetrofitClient.getInstance().getApiService();
@@ -145,7 +146,7 @@ public class EventActivity extends BaseActivity {
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
             return;
         }
-        apiService.getUserById(userId, "Bearer " + token).enqueue(new Callback<User>() {
+        apiService.getUserById(userId, token).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -179,7 +180,6 @@ public class EventActivity extends BaseActivity {
     private void fetchAllEventsNotJoined() {
         Toast loadingToast = Toast.makeText(this, "Loading events...", Toast.LENGTH_SHORT);
         loadingToast.show();
-        SecureStorage secureStorage = new SecureStorage(this);
         String token = secureStorage.getAuthToken();
         ApiService apiService = RetrofitClient.getInstance().getApiService();
         apiService.getEvents("Bearer " + token).enqueue(new Callback<List<Event>>() {
@@ -233,7 +233,6 @@ public class EventActivity extends BaseActivity {
         }
         Toast loadingToast = Toast.makeText(this, "Loading events by interest...", Toast.LENGTH_SHORT);
         loadingToast.show();
-        SecureStorage secureStorage = new SecureStorage(this);
         String token = secureStorage.getAuthToken();
         ApiService apiService = RetrofitClient.getInstance().getApiService();
         apiService.filterEventsByTags(userInterestTags, "Bearer " + token).enqueue(new Callback<List<Event>>() {
@@ -257,7 +256,6 @@ public class EventActivity extends BaseActivity {
     private void fetchEventsByTag(String tag) {
         Toast loadingToast = Toast.makeText(this, "Loading events by tag...", Toast.LENGTH_SHORT);
         loadingToast.show();
-        SecureStorage secureStorage = new SecureStorage(this);
         String token = secureStorage.getAuthToken();
         ApiService apiService = RetrofitClient.getInstance().getApiService();
         List<String> tagList = new ArrayList<>();

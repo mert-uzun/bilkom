@@ -1,6 +1,5 @@
 //this is the api service interface for the api calls
 // it is used to store the api calls for the login, register, get user by id, get user by email and get user by bilkentId
-// not a pojo class
 package com.bilkom.network;
 
 import com.bilkom.model.LoginRequest;
@@ -28,25 +27,40 @@ public interface ApiService {
     Call<AuthResponse> register(@Body RegistrationRequest registrationRequest);
 
     @GET("users/{id}")
-    Call<User> getUserById(@Path("id") Long id, @Header("Authorization") String bearerToken);
+    Call<User> getUserById(
+        @Path("id") Long id,
+        @Header("Authorization") String bearerToken
+    );
 
     @PUT("users/{id}")
-    Call<User> updateUser(@Path("id") Long id, @Body User user, @Header("Authorization") String bearerToken);
+    Call<User> updateUser(
+        @Path("id") Long id,
+        @Body User user,
+        @Header("Authorization") String bearerToken
+    );
 
     @GET("users/email/{email}")
-    Call<User> getUserByEmail(@Path("email") String email, @Header("Authorization") String bearerToken);
+    Call<User> getUserByEmail(
+        @Path("email") String email,
+        @Header("Authorization") String bearerToken
+    );
 
     @GET("users/bilkentId/{bilkentId}")
-    Call<User> getUserByBilkentId(@Path("bilkentId") String bilkentId, @Header("Authorization") String bearerToken);
+    Call<User> getUserByBilkentId(
+        @Path("bilkentId") String bilkentId,
+        @Header("Authorization") String bearerToken
+    );
 
     @GET("emergency-alerts")
-    Call<List<EmergencyAlert>> getEmergencyAlerts(@Header("Authorization") String bearerToken);
+    Call<List<EmergencyAlert>> getEmergencyAlerts(
+        @Header("Authorization") String bearerToken
+    );
 
     @GET("weather")
     Call<WeatherForecast> getWeatherForecast();
 
-    @GET("api/news/bilkent")
-    Call<List<News>> getLatestNews();
+    @GET("news")
+    Call<List<com.bilkom.model.News>> getLatestNews();
 
     @GET("events")
     Call<List<Event>> getEvents(@Header("Authorization") String bearerToken);

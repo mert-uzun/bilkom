@@ -23,53 +23,31 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeActivity extends BaseActivity {
+    private LinearLayout newsContainer;
+    private TextView weatherDescription, temperatureText, humidityText, windText;
+    private ImageView weatherIcon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         setupNavigationDrawer();
-        getLayoutInflater().inflate(R.layout.activity_main, findViewById(R.id.contentFrame));
+        
+        // Inflate the home content into the content frame
+        getLayoutInflater().inflate(R.layout.activity_home, findViewById(R.id.contentFrame));
 
-        findViewById(R.id.emergencyAlertsButton).setOnClickListener(v -> {
-            startActivity(new Intent(this, EmergencyAlertsActivity.class));
-        });
-        findViewById(R.id.activitySelectionButton).setOnClickListener(v -> {
-            Toast.makeText(this, "Activity Selection coming soon!", Toast.LENGTH_SHORT).show();
-        });
-        findViewById(R.id.clubActivitiesButton).setOnClickListener(v -> {
-            Toast.makeText(this, "Club Activities coming soon!", Toast.LENGTH_SHORT).show();
-        });
-
-        fetchLatestEmergencyAlert();
+        initializeViews();
         fetchWeatherForecast();
         fetchLatestNews();
     }
 
-    private void fetchLatestEmergencyAlert() {
-        RetrofitClient.getInstance().getApiService().getEmergencyAlerts(null)
-            .enqueue(new Callback<List<EmergencyAlert>>() {
-                @Override
-                public void onResponse(Call<List<EmergencyAlert>> call, Response<List<EmergencyAlert>> response) {
-                    if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                        EmergencyAlert alert = response.body().get(0); // latest alert
-                        ((TextView) findViewById(R.id.alertTitle)).setText(alert.getSubject());
-                        ((TextView) findViewById(R.id.alertMessage)).setText(alert.getContent());
-                        if (alert.getPhoneNumber() != null && !alert.getPhoneNumber().isEmpty()) {
-                            findViewById(R.id.contactAlertButton).setVisibility(View.VISIBLE);
-                            findViewById(R.id.contactAlertButton).setOnClickListener(v -> {
-                                // Implement contact action, e.g., open dialer
-                                Toast.makeText(HomeActivity.this, "Contact: " + alert.getPhoneNumber(), Toast.LENGTH_SHORT).show();
-                            });
-                        } else {
-                            findViewById(R.id.contactAlertButton).setVisibility(View.GONE);
-                        }
-                    }
-                }
-                @Override
-                public void onFailure(Call<List<EmergencyAlert>> call, Throwable t) {
-                    // Optionally show error
-                }
-            });
+    private void initializeViews() {
+        newsContainer = findViewById(R.id.newsContainer);
+        weatherDescription = findViewById(R.id.weatherDescription);
+        temperatureText = findViewById(R.id.temperatureText);
+        humidityText = findViewById(R.id.humidityText);
+        windText = findViewById(R.id.windText);
+        weatherIcon = findViewById(R.id.weatherIcon);
     }
 
     private void fetchWeatherForecast() {
@@ -81,40 +59,33 @@ public class HomeActivity extends BaseActivity {
                         WeatherForecast wf = response.body();
                         
                         // Update weather description
-                        TextView weatherDescription = findViewById(R.id.weatherDescription);
                         weatherDescription.setText(wf.getDescription());
                         
                         // Update temperature
-                        TextView temperatureText = findViewById(R.id.temperatureText);
                         temperatureText.setText(String.format("%.1f°C", wf.getTemperature()));
                         
                         // Update humidity
-                        TextView humidityText = findViewById(R.id.humidityText);
                         humidityText.setText(String.format("%d%%", wf.getHumidity()));
                         
                         // Update wind speed
-                        TextView windText = findViewById(R.id.windText);
                         windText.setText(String.format("%.1f km/h", wf.getWindSpeed()));
                         
                         // Update weather icon based on description
-                        ImageView weatherIcon = findViewById(R.id.weatherIcon);
                         String description = wf.getDescription().toLowerCase();
-                        if (description.contains("rain") || description.contains("drizzle")) {
-                            weatherIcon.setImageResource(R.drawable.ic_weather_rainy);
+                        if (description.contains("rain")) {
+                            weatherIcon.setImageResource(R.drawable.ic_rain);
                         } else if (description.contains("cloud")) {
-                            weatherIcon.setImageResource(R.drawable.ic_weather_cloudy);
-                        } else if (description.contains("sun") || description.contains("clear")) {
-                            weatherIcon.setImageResource(R.drawable.ic_weather_sunny);
-                        } else if (description.contains("snow")) {
-                            weatherIcon.setImageResource(R.drawable.ic_weather_snowy);
+                            weatherIcon.setImageResource(R.drawable.ic_cloud);
+                        } else if (description.contains("sun")) {
+                            weatherIcon.setImageResource(R.drawable.ic_sun);
                         } else {
-                            weatherIcon.setImageResource(R.drawable.ic_weather_cloudy);
+                            weatherIcon.setImageResource(R.drawable.ic_weather);
                         }
                     }
                 }
                 @Override
                 public void onFailure(Call<WeatherForecast> call, Throwable t) {
-                    // Optionally show error
+                    Toast.makeText(HomeActivity.this, "Failed to load weather", Toast.LENGTH_SHORT).show();
                 }
             });
     }
@@ -126,7 +97,6 @@ public class HomeActivity extends BaseActivity {
                 public void onResponse(Call<List<News>> call, Response<List<News>> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         List<News> newsList = response.body();
-                        LinearLayout newsContainer = findViewById(R.id.newsContainer);
                         newsContainer.removeAllViews();
                         LayoutInflater inflater = LayoutInflater.from(HomeActivity.this);
                         int count = 0;
@@ -146,7 +116,7 @@ public class HomeActivity extends BaseActivity {
                 }
                 @Override
                 public void onFailure(Call<List<News>> call, Throwable t) {
-                    // Optionally show error
+                    Toast.makeText(HomeActivity.this, "Failed to load news", Toast.LENGTH_SHORT).show();
                 }
             });
     }

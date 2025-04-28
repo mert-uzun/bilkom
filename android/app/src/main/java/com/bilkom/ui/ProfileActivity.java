@@ -73,23 +73,19 @@ public class ProfileActivity extends BaseActivity {
             });
     }
 
-    private void displayClubs(List<ClubMembership> clubMemberships) {
+    private void displayClubs(List<String> clubMemberships) {
         clubsContainer.removeAllViews();
-        if (clubMemberships == null || clubMemberships.isEmpty()) {
-            TextView noClubs = new TextView(this);
-            noClubs.setText("No club memberships");
-            noClubs.setTextColor(getResources().getColor(R.color.white));
-            clubsContainer.addView(noClubs);
-            return;
-        }
-        LayoutInflater inflater = LayoutInflater.from(this);
-        for (ClubMembership club : clubMemberships) {
-            TextView clubView = new TextView(this);
-            clubView.setText(club.getClubName() + " (" + club.getRole() + ")");
-            clubView.setTextColor(getResources().getColor(R.color.white));
-            clubView.setTextSize(16);
-            clubView.setPadding(0, 8, 0, 8);
-            clubsContainer.addView(clubView);
+        if (clubMemberships != null && !clubMemberships.isEmpty()) {
+            for (String club : clubMemberships) {
+                TextView clubText = new TextView(this);
+                clubText.setText(club);
+                clubText.setPadding(0, 0, 0, 16);
+                clubsContainer.addView(clubText);
+            }
+        } else {
+            TextView noClubsText = new TextView(this);
+            noClubsText.setText("No club memberships");
+            clubsContainer.addView(noClubsText);
         }
     }
 } 
