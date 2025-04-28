@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
