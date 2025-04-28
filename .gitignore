@@ -1,0 +1,32 @@
+# Android Studio
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+build/
+
+# Local configuration
+local.properties
+
+# Mac OS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Log files
+*.log
+
+# Other
+captures/
+output.json 
+
+# Backend build output
+bilkom_backend/**/target/
+
+# VS Code settings
+.vscode/
+
+# Environment files
+.env 
