@@ -27,18 +27,26 @@ import retrofit2.Response;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import com.bilkom.model.User;
+import java.util.HashSet;
+import java.util.Set;
+import android.widget.Spinner;
+import android.view.View.OnTouchListener;
+import android.widget.AdapterView;
 
 public class EventActivity extends BaseActivity {
     private RecyclerView eventRecyclerView;
     private Button addActivityButton, viewMyActivitiesButton;
     private ImageButton menuButton;
     private RadioGroup filterRadioGroup;
-    private RadioButton radioMyInterest, radioMostRecent;
+    private RadioButton radioMyInterest;
     private NavigationView navigationView;
     private EventAdapter adapter;
     private List<Event> eventList;
     private ActivityResultLauncher<Intent> createEventLauncher;
     private List<String> userInterestTags = new ArrayList<>();
+    private Spinner tagSpinner;
+    private boolean isTagSpinnerInitialized = false;
+    private String selectedTag = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,8 +60,8 @@ public class EventActivity extends BaseActivity {
         menuButton = findViewById(R.id.menuButton);
         filterRadioGroup = findViewById(R.id.filterRadioGroup);
         radioMyInterest = findViewById(R.id.radioMyInterest);
-        radioMostRecent = findViewById(R.id.radioMostRecent);
         navigationView = findViewById(R.id.navigationView);
+        tagSpinner = findViewById(R.id.tagSpinner);
 
         eventRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         eventList = new ArrayList<>();
@@ -89,6 +97,38 @@ public class EventActivity extends BaseActivity {
                 fetchEventsByInterest();
             } else {
                 fetchAllEvents();
+            }
+        });
+
+        tagSpinner.setSelection(0);
+        tagSpinner.setOnTouchListener((v, event) -> {
+            isTagSpinnerInitialized = true;
+            return false;
+        });
+        tagSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (!isTagSpinnerInitialized) return;
+                String tag = parent.getItemAtPosition(position).toString();
+                if (tag.equals("Select Tag")) {
+                    selectedTag = null;
+                    if (!radioMyInterest.isChecked()) fetchEvents();
+                } else {
+                    selectedTag = tag;
+                    radioMyInterest.setChecked(false);
+                    fetchEventsByTag(selectedTag);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+        radioMyInterest.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                tagSpinner.setSelection(0);
+                selectedTag = null;
+                fetchEventsByInterest();
+            } else if (!isTagSpinnerInitialized || selectedTag == null) {
+                fetchEvents();
             }
         });
 
@@ -133,11 +173,10 @@ public class EventActivity extends BaseActivity {
     }
 
     private void fetchEvents() {
-        // Default: fetch all events (most recent)
-        fetchAllEvents();
+        fetchAllEventsNotJoined();
     }
 
-    private void fetchAllEvents() {
+    private void fetchAllEventsNotJoined() {
         Toast loadingToast = Toast.makeText(this, "Loading events...", Toast.LENGTH_SHORT);
         loadingToast.show();
         SecureStorage secureStorage = new SecureStorage(this);
@@ -146,10 +185,35 @@ public class EventActivity extends BaseActivity {
         apiService.getEvents("Bearer " + token).enqueue(new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-                loadingToast.cancel();
                 if (response.isSuccessful() && response.body() != null) {
-                    adapter.setEventList(response.body());
+                    List<Event> allEvents = response.body();
+                    // Fetch joined events
+                    apiService.getJoinedEvents("Bearer " + token).enqueue(new Callback<List<Event>>() {
+                        @Override
+                        public void onResponse(Call<List<Event>> call2, Response<List<Event>> response2) {
+                            loadingToast.cancel();
+                            Set<Long> joinedIds = new HashSet<>();
+                            if (response2.isSuccessful() && response2.body() != null) {
+                                for (Event joinedEvent : response2.body()) {
+                                    joinedIds.add(joinedEvent.getEventId());
+                                }
+                            }
+                            List<Event> notJoined = new ArrayList<>();
+                            for (Event event : allEvents) {
+                                if (!joinedIds.contains(event.getEventId())) {
+                                    notJoined.add(event);
+                                }
+                            }
+                            adapter.setEventList(notJoined);
+                        }
+                        @Override
+                        public void onFailure(Call<List<Event>> call2, Throwable t2) {
+                            loadingToast.cancel();
+                            Toast.makeText(EventActivity.this, "Network error: " + t2.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 } else {
+                    loadingToast.cancel();
                     Toast.makeText(EventActivity.this, "Failed to load events", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -179,6 +243,57 @@ public class EventActivity extends BaseActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     adapter.setEventList(response.body());
                 } else {
+                    Toast.makeText(EventActivity.this, "Failed to load filtered events", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+                loadingToast.cancel();
+                Toast.makeText(EventActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void fetchEventsByTag(String tag) {
+        Toast loadingToast = Toast.makeText(this, "Loading events by tag...", Toast.LENGTH_SHORT);
+        loadingToast.show();
+        SecureStorage secureStorage = new SecureStorage(this);
+        String token = secureStorage.getAuthToken();
+        ApiService apiService = RetrofitClient.getInstance().getApiService();
+        List<String> tagList = new ArrayList<>();
+        tagList.add(tag);
+        apiService.filterEventsByTags(tagList, "Bearer " + token).enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Event> filteredEvents = response.body();
+                    // Fetch joined events
+                    apiService.getJoinedEvents("Bearer " + token).enqueue(new Callback<List<Event>>() {
+                        @Override
+                        public void onResponse(Call<List<Event>> call2, Response<List<Event>> response2) {
+                            loadingToast.cancel();
+                            Set<Long> joinedIds = new HashSet<>();
+                            if (response2.isSuccessful() && response2.body() != null) {
+                                for (Event joinedEvent : response2.body()) {
+                                    joinedIds.add(joinedEvent.getEventId());
+                                }
+                            }
+                            List<Event> notJoined = new ArrayList<>();
+                            for (Event event : filteredEvents) {
+                                if (!joinedIds.contains(event.getEventId())) {
+                                    notJoined.add(event);
+                                }
+                            }
+                            adapter.setEventList(notJoined);
+                        }
+                        @Override
+                        public void onFailure(Call<List<Event>> call2, Throwable t2) {
+                            loadingToast.cancel();
+                            Toast.makeText(EventActivity.this, "Network error: " + t2.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    loadingToast.cancel();
                     Toast.makeText(EventActivity.this, "Failed to load filtered events", Toast.LENGTH_SHORT).show();
                 }
             }
