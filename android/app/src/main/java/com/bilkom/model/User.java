@@ -9,17 +9,20 @@ import java.util.List;
 public class User {
     private Long userId;
     private String email;
-    private String passwordHash;
     private String firstName;
     private String lastName;
     private String bilkentId;
     private String phoneNumber;
     private String bloodType;
-    private Timestamp createdAt;
     private boolean isVerified;
     private boolean isActive;
+    private Timestamp createdAt;
     private Timestamp lastLogin;
-    private String verificationToken;
+    private String role;
+    private boolean emailNotificationsEnabled;
+    private boolean smsNotificationsEnabled;
+    private String profileVisibility;
+    private List<ClubMembership> clubMemberships;
 
     // Getters and Setters
     public Long getUserId() {
@@ -36,14 +39,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
     }
 
     public String getFirstName() {
@@ -86,14 +81,6 @@ public class User {
         this.bloodType = bloodType;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public boolean isVerified() {
         return isVerified;
     }
@@ -110,6 +97,14 @@ public class User {
         isActive = active;
     }
 
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public Timestamp getLastLogin() {
         return lastLogin;
     }
@@ -118,11 +113,43 @@ public class User {
         this.lastLogin = lastLogin;
     }
 
-    public String getVerificationToken() {
-        return verificationToken;
+    public String getRole() {
+        return role;
     }
 
-    public void setVerificationToken(String verificationToken) {
-        this.verificationToken = verificationToken;
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public boolean isEmailNotificationsEnabled() {
+        return emailNotificationsEnabled;
+    }
+
+    public void setEmailNotificationsEnabled(boolean emailNotificationsEnabled) {
+        this.emailNotificationsEnabled = emailNotificationsEnabled;
+    }
+
+    public boolean isSmsNotificationsEnabled() {
+        return smsNotificationsEnabled;
+    }
+
+    public void setSmsNotificationsEnabled(boolean smsNotificationsEnabled) {
+        this.smsNotificationsEnabled = smsNotificationsEnabled;
+    }
+
+    public String getProfileVisibility() {
+        return profileVisibility;
+    }
+
+    public void setProfileVisibility(String profileVisibility) {
+        this.profileVisibility = profileVisibility;
+    }
+
+    public List<ClubMembership> getClubMemberships() {
+        return clubMemberships;
+    }
+
+    public void setClubMemberships(List<ClubMembership> clubMemberships) {
+        this.clubMemberships = clubMemberships;
     }
 } 

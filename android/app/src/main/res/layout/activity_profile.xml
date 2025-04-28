@@ -4,7 +4,7 @@ it extends the LinearLayout class to show the profile activity content-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="@color/card_bg_dark">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,6 +38,21 @@ it extends the LinearLayout class to show the profile activity content-->
 
         <TextView android:text="Blood Type" style="@style/TextAppearance.AppCompat.Medium" android:textColor="@color/white"/>
         <TextView android:id="@+id/profileBloodType" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/white" android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clubs"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"/>
+        <LinearLayout
+            android:id="@+id/clubsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
 
     </LinearLayout>
 </ScrollView> 

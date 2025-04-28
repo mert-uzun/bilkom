@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="280dp"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/card_bg_dark"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -89,32 +89,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Settings"
-            android:textColor="#9E9E9E"
-            android:textSize="16sp"
-            android:layout_marginStart="16dp"/>
-    </LinearLayout>
-
-    <!-- Log Out Item -->
-    <LinearLayout
-        android:id="@+id/logoutMenuItem"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="12dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?attr/selectableItemBackground">
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_logout"
-            android:tint="#9E9E9E"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Log Out"
             android:textColor="#9E9E9E"
             android:textSize="16sp"
             android:layout_marginStart="16dp"/>

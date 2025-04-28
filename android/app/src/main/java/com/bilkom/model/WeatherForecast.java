@@ -4,14 +4,23 @@
 package com.bilkom.model;
 
 public class WeatherForecast {
-    private double temperature;
     private String description;
+    private double temperature;
+    private double precipitation;
     private int humidity;
     private double windSpeed;
     private String iconCode;
     private String location;
 
     public WeatherForecast() {
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public double getTemperature() {
@@ -22,12 +31,12 @@ public class WeatherForecast {
         this.temperature = temperature;
     }
 
-    public String getDescription() {
-        return description;
+    public double getPrecipitation() {
+        return precipitation;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPrecipitation(double precipitation) {
+        this.precipitation = precipitation;
     }
 
     public int getHumidity() {

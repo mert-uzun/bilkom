@@ -16,9 +16,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SettingsActivity extends BaseActivity {
-    private EditText emailEdit, firstNameEdit, lastNameEdit, bilkentIdEdit, phoneEdit, bloodTypeEdit;
     private EditText newPasswordEdit, confirmPasswordEdit;
-    private MaterialButton saveButton, updateUsernameButton, updatePasswordButton, logoutButton, changeProfilePicButton;
+    private MaterialButton updatePasswordButton, logoutButton, changeProfilePicButton;
     private ImageView profileImageView;
     private SecureStorage secureStorage;
     private Long userId;
@@ -29,113 +28,22 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         setupNavigationDrawer();
-        
-        // Inflate the settings content into the content frame
         getLayoutInflater().inflate(R.layout.activity_settings, findViewById(R.id.contentFrame));
 
         secureStorage = new SecureStorage(this);
         userId = secureStorage.getUserId();
         token = secureStorage.getAuthToken();
 
-        emailEdit = findViewById(R.id.settingsEmail);
-        firstNameEdit = findViewById(R.id.settingsFirstName);
-        lastNameEdit = findViewById(R.id.settingsLastName);
-        bilkentIdEdit = findViewById(R.id.settingsBilkentId);
-        phoneEdit = findViewById(R.id.settingsPhone);
-        bloodTypeEdit = findViewById(R.id.settingsBloodType);
-        saveButton = findViewById(R.id.saveSettingsButton);
         newPasswordEdit = findViewById(R.id.newPasswordEdit);
         confirmPasswordEdit = findViewById(R.id.confirmPasswordEdit);
-        updateUsernameButton = findViewById(R.id.updateUsernameButton);
         updatePasswordButton = findViewById(R.id.updatePasswordButton);
         logoutButton = findViewById(R.id.logoutButton);
         changeProfilePicButton = findViewById(R.id.changeProfilePicButton);
         profileImageView = findViewById(R.id.profileImageView);
 
-        loadUserProfile();
-        saveButton.setOnClickListener(v -> updateUserProfile());
         updatePasswordButton.setOnClickListener(v -> updatePassword());
         logoutButton.setOnClickListener(v -> logout());
         changeProfilePicButton.setOnClickListener(v -> Toast.makeText(this, "Profile picture change not implemented", Toast.LENGTH_SHORT).show());
-    }
-
-    private void loadUserProfile() {
-        if (userId == null || token == null) {
-            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        RetrofitClient.getInstance().getApiService().getUserById(userId, token)
-            .enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        User user = response.body();
-                        emailEdit.setText(user.getEmail());
-                        firstNameEdit.setText(user.getFirstName());
-                        lastNameEdit.setText(user.getLastName());
-                        bilkentIdEdit.setText(user.getBilkentId());
-                        phoneEdit.setText(user.getPhoneNumber());
-                        bloodTypeEdit.setText(user.getBloodType());
-                    } else {
-                        Toast.makeText(SettingsActivity.this, "Failed to load profile", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
-                    Toast.makeText(SettingsActivity.this, "Network error", Toast.LENGTH_SHORT).show();
-                }
-            });
-    }
-
-    private void updateUserProfile() {
-        User updatedUser = new User();
-        updatedUser.setEmail(emailEdit.getText().toString().trim());
-        updatedUser.setFirstName(firstNameEdit.getText().toString().trim());
-        updatedUser.setLastName(lastNameEdit.getText().toString().trim());
-        updatedUser.setBilkentId(bilkentIdEdit.getText().toString().trim());
-        updatedUser.setPhoneNumber(phoneEdit.getText().toString().trim());
-        updatedUser.setBloodType(bloodTypeEdit.getText().toString().trim());
-
-        RetrofitClient.getInstance().getApiService().updateUser(userId, updatedUser, token)
-            .enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        Toast.makeText(SettingsActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(SettingsActivity.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
-                    Toast.makeText(SettingsActivity.this, "Network error", Toast.LENGTH_SHORT).show();
-                }
-            });
-    }
-
-    private void updateUsername() {
-        String newUsername = newUsernameEdit.getText().toString().trim();
-        if (newUsername.isEmpty()) {
-            newUsernameEdit.setError("Username cannot be empty");
-            return;
-        }
-        User updatedUser = new User();
-        updatedUser.setFirstName(newUsername); // Assuming username is firstName, adjust if needed
-        RetrofitClient.getInstance().getApiService().updateUser(userId, updatedUser, token)
-            .enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        Toast.makeText(SettingsActivity.this, "Username updated", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(SettingsActivity.this, "Failed to update username", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
-                    Toast.makeText(SettingsActivity.this, "Network error", Toast.LENGTH_SHORT).show();
-                }
-            });
     }
 
     private void updatePassword() {
