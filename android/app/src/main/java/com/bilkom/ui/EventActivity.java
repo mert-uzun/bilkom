@@ -32,6 +32,7 @@ import java.util.Set;
 import android.widget.Spinner;
 import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
+import java.util.stream.Collectors;
 
 public class EventActivity extends BaseActivity {
     private RecyclerView eventRecyclerView;
@@ -187,6 +188,10 @@ public class EventActivity extends BaseActivity {
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Event> allEvents = response.body();
+                    // Filter out club events
+                    allEvents = allEvents.stream()
+                            .filter(event -> !event.isClubEvent())
+                            .collect(Collectors.toList());
                     // Fetch joined events
                     apiService.getJoinedEvents("Bearer " + token).enqueue(new Callback<List<Event>>() {
                         @Override
@@ -240,7 +245,10 @@ public class EventActivity extends BaseActivity {
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 loadingToast.cancel();
                 if (response.isSuccessful() && response.body() != null) {
-                    adapter.setEventList(response.body());
+                    List<Event> filteredEvents = response.body().stream()
+                            .filter(event -> !event.isClubEvent())
+                            .collect(Collectors.toList());
+                    adapter.setEventList(filteredEvents);
                 } else {
                     Toast.makeText(EventActivity.this, "Failed to load filtered events", Toast.LENGTH_SHORT).show();
                 }
@@ -264,7 +272,9 @@ public class EventActivity extends BaseActivity {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Event> filteredEvents = response.body();
+                    List<Event> filteredEvents = response.body().stream()
+                            .filter(event -> !event.isClubEvent())
+                            .collect(Collectors.toList());
                     // Fetch joined events
                     apiService.getJoinedEvents("Bearer " + token).enqueue(new Callback<List<Event>>() {
                         @Override

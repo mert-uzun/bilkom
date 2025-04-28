@@ -33,12 +33,22 @@
 
             <Button
                 android:id="@+id/addActivityButton"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Add Activity"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:text="Add General Event"
+                style="@style/Widget.MaterialComponents.Button"
                 android:textAllCaps="false" />
+
+            <TextView
+                android:id="@+id/eventTypeInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="General Events (Club events can be found in Club Activities)"
+                android:textColor="#fff"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="12sp"
+                android:alpha="0.7" />
 
             <Space
                 android:layout_width="8dp"
