@@ -1,0 +1,58 @@
+<!-- this is the activity_profile.xml file for the profile activity
+it extends the LinearLayout class to show the profile activity content-->
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/card_bg_dark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView android:text="Email" style="@style/TextAppearance.AppCompat.Medium" android:textColor="@color/white"/>
+        <TextView android:id="@+id/profileEmail" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/white" android:layout_marginBottom="16dp"/>
+
+        <TextView android:text="First Name" style="@style/TextAppearance.AppCompat.Medium" android:textColor="@color/white"/>
+        <TextView android:id="@+id/profileFirstName" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/white" android:layout_marginBottom="16dp"/>
+
+        <TextView android:text="Last Name" style="@style/TextAppearance.AppCompat.Medium" android:textColor="@color/white"/>
+        <TextView android:id="@+id/profileLastName" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/white" android:layout_marginBottom="16dp"/>
+
+        <TextView android:text="Bilkent ID" style="@style/TextAppearance.AppCompat.Medium" android:textColor="@color/white"/>
+        <TextView android:id="@+id/profileBilkentId" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/white" android:layout_marginBottom="16dp"/>
+
+        <TextView android:text="Phone Number" style="@style/TextAppearance.AppCompat.Medium" android:textColor="@color/white"/>
+        <TextView android:id="@+id/profilePhone" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/white" android:layout_marginBottom="16dp"/>
+
+        <TextView android:text="Blood Type" style="@style/TextAppearance.AppCompat.Medium" android:textColor="@color/white"/>
+        <TextView android:id="@+id/profileBloodType" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/white" android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clubs"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"/>
+        <LinearLayout
+            android:id="@+id/clubsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+    </LinearLayout>
+</ScrollView> 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BILKOM</string>
+    <string name="emergency_alerts">Emergency Alerts</string>
+    <string name="contact">Contact</string>
+    <string name="weather_forecast">Weather Forecast</string>
+    <string name="latest_news">Latest News</string>
+    <string name="activity_selection">Activity Selection</string>
+    <string name="club_activities">Club Activities</string>
+    <string name="welcome_to">WELCOME TO</string>
+</resources> 

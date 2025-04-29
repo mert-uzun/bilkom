@@ -13,6 +13,8 @@ import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.CascadeType;
+import com.bilkom.enums.ClubRegistrationStatus;
+import java.util.Objects;
 
 @Entity
 @Table(name = "clubs")
@@ -46,4 +48,132 @@ public class Club {
 
     @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClubExecutive> clubExecutives = new ArrayList<>();  
+
+    @Column(name = "status", nullable = false, columnDefinition = "ENUM('PENDING', 'APPROVED', 'REJECTED') DEFAULT 'PENDING'")
+    private ClubRegistrationStatus status;
+
+    public Club() {}
+
+    public Club(String clubName, String clubDescription, User clubHead) {
+        this.clubName = clubName;
+        this.clubDescription = clubDescription;
+        this.clubHead = clubHead;
+        this.status = ClubRegistrationStatus.PENDING;
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+    }
+
+    @Override
+    public String toString() {
+        return "Club{" +
+                "clubId=" + clubId +
+                ", clubName='" + clubName + '\'' +
+                ", clubDescription='" + clubDescription + '\'' +
+                ", clubHead=" + clubHead +
+                ", createdAt=" + createdAt +
+                ", isActive=" + isActive +
+                ", clubMembers=" + clubMembers +
+                ", events=" + events +
+                ", clubExecutives=" + clubExecutives +
+                ", status=" + status +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o){
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()){
+            return false;
+        }
+
+        Club club = (Club) o;
+        return clubId.equals(club.clubId);  
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(clubId);
+    }
+
+    //GETTERS AND SETTERS
+    public Long getClubId() {
+        return clubId;
+    }
+
+    public void setClubId(Long clubId) {
+        this.clubId = clubId;
+    }
+
+    public String getClubName() {
+        return clubName;
+    }
+    
+    public void setClubName(String clubName) {
+        this.clubName = clubName;
+    }
+    
+    public String getClubDescription() {
+        return clubDescription;
+    }
+    
+    public void setClubDescription(String clubDescription) {
+        this.clubDescription = clubDescription;
+    }
+    
+    public User getClubHead() {
+        return clubHead;
+    }
+    
+    public void setClubHead(User clubHead) {
+        this.clubHead = clubHead;
+    }
+    
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+    
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+    
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+    
+    public List<ClubMember> getClubMembers() {
+        return clubMembers;
+    }
+    
+    public void setClubMembers(List<ClubMember> clubMembers) {
+        this.clubMembers = clubMembers;
+    }
+    
+    public List<Event> getEvents() {
+        return events;
+    }
+    
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+    
+    public List<ClubExecutive> getClubExecutives() {
+        return clubExecutives;
+    }
+    
+    public void setClubExecutives(List<ClubExecutive> clubExecutives) {
+        this.clubExecutives = clubExecutives;
+    }
+    
+    public ClubRegistrationStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ClubRegistrationStatus status) {
+        this.status = status;
+    }
 }

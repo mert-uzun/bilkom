@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Club Registration Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+        }
+        .info-block {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid #003366;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            color: white;
+        }
+        .approve {
+            background-color: #28a745;
+        }
+        .reject {
+            background-color: #dc3545;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>New Club Registration Request</h1>
+        </div>
+        <div class="content">
+            <p>Dear Administrator,</p>
+            
+            <p>A new club registration request has been submitted on the Bilkom platform. Please review the details below:</p>
+            
+            <div class="info-block">
+                <h2>Club Details</h2>
+                <p><strong>Club Name:</strong> <span th:text="${clubName}">Club Name</span></p>
+                <p><strong>Description:</strong> <span th:text="${clubDescription}">Club Description</span></p>
+            </div>
+            
+            <div class="info-block">
+                <h2>Executive Details</h2>
+                <p><strong>Name:</strong> <span th:text="${executiveName}">Executive Name</span></p>
+                <p><strong>Email:</strong> <span th:text="${executiveEmail}">executive@bilkent.edu.tr</span></p>
+                <p><strong>Position:</strong> <span th:text="${executivePosition}">Position</span></p>
+            </div>
+            
+            <div class="info-block">
+                <h2>Additional Information</h2>
+                <p><strong>Verification Document:</strong> <a th:href="${verificationDocumentUrl}" target="_blank">View Document</a></p>
+                <p><strong>Additional Notes:</strong> <span th:text="${additionalInfo}">No additional information provided</span></p>
+            </div>
+            
+            <p>Please verify the information and take appropriate action:</p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a th:href="${approveUrl}" class="button approve">Approve Club</a>
+                <a th:href="${rejectUrl}" class="button reject">Reject Club</a>
+            </div>
+            
+            <p>Note: You can provide a reason for rejection after clicking the reject button.</p>
+        </div>
+        <div class="footer">
+            <p>This is an automated message from the Bilkom platform. Please do not reply to this email.</p>
+            <p>&copy; 2025 Bilkom - Bilkent University Club Management System</p>
+        </div>
+    </div>
+</body>
+</html>
