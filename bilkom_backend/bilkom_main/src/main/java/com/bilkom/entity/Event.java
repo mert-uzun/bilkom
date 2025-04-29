@@ -161,4 +161,9 @@ public class Event {
     public List<EventParticipant> getParticipants() {
         return participants;
     }
+
+    public void setTags(List<Tag> tags2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setTags'");
+    }
 }

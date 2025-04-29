@@ -27,9 +27,10 @@ public class EventService {
 
     @Autowired
     private PastEventReportRepository pastEventReportRepository;
-
+    
     @Autowired
     private ClubRepository clubRepository;
+
     public Event createEvent(EventDto dto, String creatorEmail) {
         User creator = userRepository.findByEmail(creatorEmail)
                 .orElseThrow(() -> new BadRequestException("User not found"));
@@ -102,7 +103,6 @@ public class EventService {
         eventRepository.save(event);
     }
     
-
     public List<Event> listAllEvents() {
         return eventRepository.findAll().stream()
             .filter(Event::isActive)

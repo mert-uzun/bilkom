@@ -74,4 +74,14 @@ public class EventDto {
     public void setTags(List<String> tags) {
         this.tags = tags;
     }
+
+    public Object getQuota() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getQuota'");
+    }
+
+    public boolean isClubEvent() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isClubEvent'");
+    }
 }

@@ -266,22 +266,6 @@ public class UserController {
     }
 
     /**
-     * Updates the tags of a user.
-     * 
-     * @param id The ID of the user to update
-     * @param tags The new tags for the user
-     * @return The updated user
-     * 
-     * @author Mert Uzun
-     * @version 1.0
-     */
-    @PutMapping("/{id}/tags")
-    public ResponseEntity<Void> updateUserTags(@PathVariable Long id, @RequestBody List<String> tags) {
-        userService.updateUserTags(id, tags);
-        return ResponseEntity.ok().build();
-    }
-
-    /**
      * Gets all clubs where the currently authenticated user is a member.
      * 
      * @return List of clubs where the current user is a member
