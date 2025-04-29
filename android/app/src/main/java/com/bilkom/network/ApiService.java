@@ -71,4 +71,12 @@ public interface ApiService {
     @POST("events/filter")
     Call<List<Event>> filterEventsByTags(@Body List<String> tagNames, @Header("Authorization") String bearerToken);
 
+    @GET("events/joined")
+    Call<List<Event>> getJoinedEvents(@Header("Authorization") String bearerToken);
+
+    @POST("events/{eventId}/join")
+    Call<Void> joinEvent(@Path("eventId") Long eventId, @Header("Authorization") String bearerToken);
+
+    @POST("events/{eventId}/withdraw")
+    Call<Void> withdrawFromEvent(@Path("eventId") Long eventId, @Header("Authorization") String bearerToken);
 }
