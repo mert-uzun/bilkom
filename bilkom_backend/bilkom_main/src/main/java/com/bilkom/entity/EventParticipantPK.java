@@ -3,7 +3,13 @@ package com.bilkom.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-// PRIMARY KEY CLASS
+/**
+ * EventParticipantPK is a composite primary key class for the EventParticipant entity.
+ * It contains two fields: event and user, which together uniquely identify an EventParticipant.
+ * 
+ * @author Elif Bozkurt
+* @version 1.0
+*/
 public class EventParticipantPK implements Serializable {
     private Long event;
     private Long user;
@@ -35,19 +41,10 @@ public class EventParticipantPK implements Serializable {
     }
 
     // GETTERS AND SETTERS
-    public Long getEvent() {
-        return event;
-    }
+    public Long getEvent() { return event; }
+    public void setEvent(Long event) { this.event = event; }
 
-    public void setEvent(Long event) {
-        this.event = event;
-    }
+    public Long getUser() { return user; }
 
-    public Long getUser() {
-        return user;
-    }
-
-    public void setUser(Long user) {
-        this.user = user;
-    }
+    public void setUser(Long user) { this.user = user; }
 }

@@ -3,6 +3,14 @@ package com.bilkom.entity;
 import jakarta.persistence.*;
 import java.util.Date;
 
+/**
+ * EmergencyAlert is an entity class representing an emergency alert in the system.
+ * It contains information about the alert such as subject, content, blood type, phone number, and sent date.
+ * The class also includes methods to extract blood type and phone number from the content.
+ *
+ * @author Elif Bozkurt
+ * @version 1.0
+ */
 @Entity
 @Table(name = "emergency_alerts")
 public class EmergencyAlert {
@@ -42,6 +50,16 @@ public class EmergencyAlert {
         this.isActive = true;
     }
 
+    /**
+     * Extracts the blood type from the content using regular expressions.
+     * The method looks for various patterns that represent blood types and returns the first match found.
+     *
+     * @param content The content from which to extract the blood type
+     * @return The extracted blood type or an empty string if not found
+     * 
+     * @author Elif Bozkurt
+     * @version 1.0
+     */
     private String extractBloodType(String content) {
         if (content == null || content.isEmpty()) return "";
 
@@ -72,6 +90,16 @@ public class EmergencyAlert {
         return "";
     }
 
+    /**
+     * Extracts the phone number from the content using regular expressions.
+     * The method looks for various patterns that represent phone numbers and returns the first match found.
+     *
+     * @param content The content from which to extract the phone number
+     * @return The extracted phone number or an empty string if not found
+     * 
+     * @author Elif Bozkurt
+     * @version 1.0
+     */
     private String extractPhoneNumber(String content) {
         if (content == null || content.isEmpty()) return "";
 

@@ -9,6 +9,13 @@ import com.bilkom.service.NewsService;
 
 import java.util.List;
 
+/**
+ * NewsController is responsible for handling HTTP requests related to news.
+ * It provides an endpoint for fetching news from Bilkent University.
+ *
+ * @author Elif Bozkurt
+ * @version 1.0
+ */
 @RestController
 @RequestMapping("/api/news")
 public class NewsController {
@@ -16,8 +23,16 @@ public class NewsController {
     @Autowired
     private NewsService newsService;
 
-    @GetMapping("/bilkent")
+    /**
+     * Fetches news from Bilkent University.
+     * 
+     * @return List of NewsDto objects containing news details
+     * 
+     * @author Elif Bozkurt
+     * @version 1.0
+     */
+    @GetMapping("/news")
     public List<NewsDto> getBilkentNews() {
-        return newsService.fetchFromBilkentNewsWithJsoup();
+        return newsService.fetchFromBilkentNews();
     }
 }

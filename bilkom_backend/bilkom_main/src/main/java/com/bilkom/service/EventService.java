@@ -13,6 +13,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * EventService is responsible for handling business logic related to events.
+ * It provides methods for creating, joining, withdrawing from, and listing events.
+ * 
+ * @author Elif Bozkurt
+ * @version 1.0
+ */
 @Service
 public class EventService {
 
@@ -31,6 +38,16 @@ public class EventService {
     @Autowired
     private ClubRepository clubRepository;
 
+    /**
+     * Creates a new event based on the provided EventDto and the creator's email.
+     * 
+     * @param dto EventDto containing event details
+     * @param creatorEmail Email of the user creating the event
+     * @return Created Event object
+     * 
+     * @author Elif Bozkurt
+     * @version 1.0
+     */
     public Event createEvent(EventDto dto, String creatorEmail) {
         User creator = userRepository.findByEmail(creatorEmail)
                 .orElseThrow(() -> new BadRequestException("User not found"));
@@ -62,6 +79,16 @@ public class EventService {
         return eventRepository.save(event);
     }
 
+    /**
+     * Updates an existing event based on the provided EventDto and the event ID.
+     * 
+     * @param dto EventDto containing updated event details
+     * @param eventId ID of the event to be updated
+     * @return Updated Event object
+     * 
+     * @author Elif Bozkurt
+     * @version 1.0
+     */
     public void joinEvent(Long eventId, String userEmail) {
         Event event = eventRepository.findById(eventId)
             .orElseThrow(() -> new BadRequestException("Event not found"));
@@ -86,6 +113,15 @@ public class EventService {
         eventRepository.save(event); 
     }
     
+    /**
+     * Withdraws a user from an event based on the provided event ID and user email.
+     * 
+     * @param eventId ID of the event to withdraw from
+     * @param userEmail Email of the user withdrawing from the event
+     * 
+     * @author Elif Bozkurt
+     * @version 1.0
+     */
     public void withdrawFromEvent(Long eventId, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
             .orElseThrow(() -> new BadRequestException("User not found"));
@@ -181,6 +217,15 @@ public class EventService {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Marks an event as done based on the provided event ID and creator's email.
+     * 
+     * @param eventId ID of the event to be marked as done
+     * @param creatorEmail Email of the user who created the event
+     * 
+     * @author Elif Bozkurt
+     * @version 1.0
+     */
     public void markEventAsDone(Long eventId, String creatorEmail) {
         Event event = eventRepository.findById(eventId)
             .orElseThrow(() -> new BadRequestException("Event not found"));
@@ -193,6 +238,16 @@ public class EventService {
         eventRepository.save(event);
     }
 
+    /**
+     * Reports an event based on the provided event ID, reporter's email, and reason.
+     * 
+     * @param eventId ID of the event to be reported
+     * @param reporterEmail Email of the user reporting the event
+     * @param reason Reason for reporting the event
+     * 
+     * @author Elif Bozkurt
+     * @version 1.0
+     */
     public void reportEvent(Long eventId, String reporterEmail, String reason) {
         Event event = eventRepository.findById(eventId)
             .orElseThrow(() -> new BadRequestException("Event not found"));

@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import java.sql.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 import jakarta.persistence.ManyToOne;
@@ -14,9 +15,18 @@ import java.util.List;
 import java.util.ArrayList;
 import jakarta.persistence.CascadeType;
 
+/**
+ * Event is an entity class representing an event in the system.
+ * It contains information about the event such as name, description, location, date, and participants.
+ * The class also includes methods to manage tags and participants associated with the event.
+ *
+ * @author Elif Bozkurt
+ * @version 1.0
+ */
 @Entity
 @Table(name = "events")
 public class Event {
+    // FIELDS
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "event_id", nullable = false, columnDefinition = "BIGINT")
@@ -66,104 +76,41 @@ public class Event {
     }
 
     // GETTERS AND SETTERS
-    public Long getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
-    }   
-
-    public String getEventName() {
-        return eventName;
-    }
-
-    public void setEventName(String eventName) {    
-        this.eventName = eventName;
-    }
-
-    public String getEventDescription() {
-        return eventDescription;
-    }
-
-    public void setEventDescription(String eventDescription) {
-        this.eventDescription = eventDescription;
-    }
-
-    public User getCreator() {
-        return creator;
-    }
-
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }
-
-    public Club getClub() {
-        return club;
-    }
-
-    public void setClub(Club club) {
-        this.club = club;
-    }
-
-    public boolean isClubEvent() {
-        return isClubEvent;
-    }
-
-    public void setIsClubEvent(boolean isClubEvent) {
-        this.isClubEvent = isClubEvent;
-    }
-
-    public int getMaxParticipants() {
-        return maxParticipants;
-    }
-
-    public void setMaxParticipants(int maxParticipants) {
-        this.maxParticipants = maxParticipants;
-    }
-
-    public int getCurrentParticipantsNumber() {
-        return currentParticipantsNumber;
-    }
-
-    public void setCurrentParticipantsNumber(int currentParticipants) {
-        this.currentParticipantsNumber = currentParticipants;
-    }
-
-    public String getEventLocation() {
-        return eventLocation;
-    }
-
-    public void setEventLocation(String eventLocation) {
-        this.eventLocation = eventLocation;
-    }
-
-    public Date getEventDate() {
-        return eventDate;
-    }
-
-    public void setEventDate(Date eventDate) {
-        this.eventDate = eventDate;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean isActive) {  
-        this.isActive = isActive;
-    }
-
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public List<EventParticipant> getParticipants() {
-        return participants;
-    }
-
-    public void setTags(List<Tag> tags2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setTags'");
-    }
+    public Long getEventId() { return eventId; }
+    public void setEventId(Long eventId) { this.eventId = eventId; }
+    
+    public String getEventName() { return eventName; }
+    public void setEventName(String eventName) { this.eventName = eventName; }
+    
+    public String getEventDescription() { return eventDescription; }
+    public void setEventDescription(String eventDescription) { this.eventDescription = eventDescription; }
+    
+    public User getCreator() { return creator; }
+    public void setCreator(User creator) { this.creator = creator; }
+    
+    public Club getClub() { return club; }
+    public void setClub(Club club) { this.club = club; }
+    
+    public boolean isClubEvent() { return isClubEvent; }
+    public void setIsClubEvent(boolean isClubEvent) { this.isClubEvent = isClubEvent; }
+    
+    public int getMaxParticipants() { return maxParticipants; }
+    public void setMaxParticipants(int maxParticipants) { this.maxParticipants = maxParticipants; }
+    
+    public int getCurrentParticipantsNumber() { return currentParticipantsNumber; }
+    public void setCurrentParticipantsNumber(int currentParticipants) { this.currentParticipantsNumber = currentParticipants; }
+    
+    public String getEventLocation() { return eventLocation; }
+    public void setEventLocation(String eventLocation) { this.eventLocation = eventLocation; }
+    
+    public Date getEventDate() { return eventDate; }
+    public void setEventDate(Date eventDate) { this.eventDate = eventDate; }
+    
+    public boolean isActive() { return isActive; }
+    public void setActive(boolean isActive) { this.isActive = isActive; }
+    
+    public List<Tag> getTags() { return tags; }
+    public void setTags(List<Tag> tags) { this.tags = tags; }
+    
+    public List<EventParticipant> getParticipants() { return participants; }    
 }

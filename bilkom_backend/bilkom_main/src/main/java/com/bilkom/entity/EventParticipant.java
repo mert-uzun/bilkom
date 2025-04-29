@@ -7,6 +7,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.IdClass;
 
+/**
+ * EventParticipant is an entity class representing a participant in an event.
+ * It contains references to the event and the user participating in it.
+ * The class uses a composite primary key consisting of event ID and user ID.
+ *
+ * @author Elif Bozkurt
+ * @version 1.0
+ */
 @Entity
 @Table(name = "event_participants")
 @IdClass(EventParticipantPK.class)
@@ -22,20 +30,9 @@ public class EventParticipant {
     private User user;
 
     // GETTERS AND SETTERS
-    public Event getEvent() {
-        return event;
-    }
+    public Event getEvent() { return event; }
+    public void setEvent(Event event) { this.event = event;}
     
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-    
-    public User getUser() {
-        return user;
-    }
-    
-    public void setUser(User user) {
-        this.user = user;
-    }
-    
+    public User getUser() { return user;}
+    public void setUser(User user) { this.user = user;}
 }

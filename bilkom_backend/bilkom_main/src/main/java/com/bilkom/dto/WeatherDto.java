@@ -1,5 +1,12 @@
 package com.bilkom.dto;
 
+/**
+ * WeatherDto is a Data Transfer Object (DTO) that represents weather information.
+ * It contains the description, temperature, and icon of the weather.
+ * 
+ * @author Elif Bozkurt
+ * @version 1.0
+ */
 public class WeatherDto {
     private String description;
     private double temperature;

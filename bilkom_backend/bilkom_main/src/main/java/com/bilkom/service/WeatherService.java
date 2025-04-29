@@ -6,6 +6,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONObject;
 
+/**
+ * WeatherService is responsible for fetching weather data from the OpenWeatherMap API.
+ * It retrieves the current weather information for Bilkent, Turkey.
+ *
+ * @author Elif Bozkurt
+ * @version 1.0
+ */ 
 @Service
 public class WeatherService {
 
