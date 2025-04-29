@@ -9,9 +9,18 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 
+/**
+ * Tag is an entity class representing a tag associated with an event and a user.
+ * It contains information about the tag such as tag ID, tag name, event, and user.
+ * The class includes methods to get and set these attributes.
+ *
+ * @author Elif Bozkurt
+ * @version 1.0
+ */
 @Entity
 @Table(name = "tags")
 public class Tag {
+    // FIELDS
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tag_id", nullable = false, columnDefinition = "BIGINT")
@@ -33,38 +42,16 @@ public class Tag {
         return "Tag{" + "tagId=" + tagId + ", tagName=" + tagName + ", event=" + event + ", user=" + user + '}';
     }
     
-    // Getters and setters
-    public Long getTagId() {
-        return tagId;
-    }
+    // GETTERS AND SETTERS
+    public Long getTagId() { return tagId; }
+    public void setTagId(Long tagId) { this.tagId = tagId; }
 
-    public void setTagId(Long tagId) {
-        this.tagId = tagId;
-    }
+    public String getTagName() { return tagName; }
+    public void setTagName(String tagName) { this.tagName = tagName; }
 
-    public String getTagName() {
-        return tagName;
-    }
+    public Event getEvent() { return event; }
+    public void setEvent(Event event) { this.event = event; }
 
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 }
-
-

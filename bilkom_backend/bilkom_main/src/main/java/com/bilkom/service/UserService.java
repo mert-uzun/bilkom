@@ -1,12 +1,11 @@
 package com.bilkom.service;
 
 import com.bilkom.entity.User;
-import com.bilkom.entity.UserInterestTag;
 import com.bilkom.dto.ClubDTO;
 import com.bilkom.exception.BadRequestException;
-import com.bilkom.repository.UserInterestTagRepository;
 import com.bilkom.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -16,6 +15,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,11 +37,9 @@ public class UserService {
     
     // Valid blood types
     private static final Set<String> VALID_BLOOD_TYPES = new HashSet<>(
-        Arrays.asList("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
+        Arrays.asList("A Rh (+)", "A Rh (-)", "B Rh (+)", "B Rh (-)", 
+                      "AB Rh (+)", "AB Rh (-)", "O Rh (+)", "O Rh (-)")
     );
-
-    @Autowired
-    private UserInterestTagRepository userInterestTagRepository;
 
     @Autowired
     private ClubService clubService;
@@ -525,24 +525,6 @@ public class UserService {
         
         user.setActive(active);
         return userRepository.save(user);
-    }
-
-    @Transactional
-    public void updateUserTags(Long userId, List<String> newTags) {
-        User user = getUserById(userId);
-
-        userInterestTagRepository.deleteAll(user.getInterestTags());
-
-        List<UserInterestTag> interestTags = newTags.stream().map(tagName -> {
-            UserInterestTag tag = new UserInterestTag();
-            tag.setUser(user);
-            tag.setTagName(tagName);
-            return tag;
-        }).toList();
-
-        user.setInterestTags(interestTags);
-
-        userRepository.save(user);
     }
 
     /**

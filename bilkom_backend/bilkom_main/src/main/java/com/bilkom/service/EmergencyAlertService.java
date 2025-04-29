@@ -22,9 +22,15 @@ import java.time.Instant;
 import java.util.Date;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * Service for fetching and processing emergency alerts from Gmail.
+ * It connects to the Gmail IMAP server, retrieves messages, and sends notifications to users based on blood type.
+ * 
+ * @author Elif Bozkurt
+ * @version 1.0
+ */
 @Service
 public class EmergencyAlertService {
-
     private static final Logger log = LoggerFactory.getLogger(EmergencyAlertService.class);
 
     @Autowired
@@ -39,6 +45,14 @@ public class EmergencyAlertService {
     @Value("${gmail.password}")
     private String appPassword;
 
+    /**
+     * Fetches emergency alerts from Gmail and sends notifications to users based on blood type.
+     * 
+     * @return List of EmergencyAlert objects
+     * 
+     * @author Elif Bozkurt
+     * @version 1.0
+     */
     public List<EmergencyAlert> fetchEmergencyAlerts() {
         List<EmergencyAlert> result = new ArrayList<>();
 
@@ -99,12 +113,28 @@ public class EmergencyAlertService {
         return result;
     }
 
+    /**
+     * Scheduled method to check for new emergency alerts every minute.
+     * 
+     * @author Elif Bozkurt
+     * @version 1.0
+     */
     @Scheduled(fixedRate = 60000)
     public void scheduledMailCheck() {
         List<EmergencyAlert> newAlerts = fetchEmergencyAlerts();
         log.info("Checked mail at {} — found {} emergency alerts", java.time.LocalTime.now(), newAlerts.size());
     }
 
+    /**
+     * Extracts text content from a message, handling both plain text and multipart messages.
+     * 
+     * @param message The message from which to extract text
+     * @return The extracted text content
+     * @throws Exception if an error occurs while extracting the content
+     * 
+     * @author Elif Bozkurt
+     * @version 1.0
+     */
     private String getTextFromMessage(Message message) throws Exception {
         if (message.isMimeType("text/plain")) {
             return message.getContent().toString();
