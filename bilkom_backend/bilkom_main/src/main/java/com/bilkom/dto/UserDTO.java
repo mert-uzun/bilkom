@@ -25,6 +25,8 @@ public class UserDTO {
     private boolean emailNotificationsEnabled;
     private boolean smsNotificationsEnabled;
     private String profileVisibility;
+    private String avatarName;
+    private String avatarPath;
 
     /**
      * Constructor for UserDTO.
@@ -48,6 +50,8 @@ public class UserDTO {
         this.emailNotificationsEnabled = user.isEmailNotificationsEnabled();
         this.smsNotificationsEnabled = user.isSmsNotificationsEnabled();
         this.profileVisibility = user.getProfileVisibility().name();
+        this.avatarName = user.getAvatarPath().name();
+        this.avatarPath = user.getAvatarPath().getPath();
     }
 
     // GETTERS AND SETTERS
@@ -169,5 +173,21 @@ public class UserDTO {
     
     public void setRole(UserRole role) {
         this.role = role;
+    }
+    
+    public String getAvatarName() {
+        return avatarName;
+    }
+    
+    public void setAvatarName(String avatarName) {
+        this.avatarName = avatarName;
+    }
+    
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+    
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 }

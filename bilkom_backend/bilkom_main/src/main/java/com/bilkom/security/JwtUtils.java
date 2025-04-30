@@ -40,14 +40,12 @@ public class JwtUtils {
      *
      * @param userDetails User details for whom to generate token
      * @return JWT token string
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     public String generateToken(UserDetails userDetails) {
-        return Jwts.builder()
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
-                .compact();
+        return Jwts.builder().setSubject(userDetails.getUsername()).setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs)).signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 
     /**
@@ -55,14 +53,12 @@ public class JwtUtils {
      *
      * @param token Input JWT token string
      * @return Username extracted from token
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     public String getUsernameFromToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody().getSubject();
     }
 
     /**
@@ -71,6 +67,9 @@ public class JwtUtils {
      *
      * @param token Input JWT token string
      * @return true if the token is valid and not blacklisted
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     public boolean validateToken(String token) {
         try {
@@ -81,10 +80,7 @@ public class JwtUtils {
             }
             
             // Then proceed with normal validation
-            Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
             return true;
         } catch (SignatureException e) {
             logger.error("Invalid JWT signature: {}", e.getMessage());
@@ -105,14 +101,13 @@ public class JwtUtils {
      * Blacklists a token.
      *
      * @param token The token to blacklist
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     public void blacklistToken(String token) {
         try {
-            Claims claims = Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+            Claims claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
             
             long expiryTime = claims.getExpiration().getTime();
             tokenBlacklistService.blacklistToken(token, expiryTime);
@@ -127,20 +122,21 @@ public class JwtUtils {
      *
      * @param token Input JWT token string
      * @return The expiration date
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     public Date getExpirationDateFromToken(String token) {
-        return Jwts.parserBuilder()
-            .setSigningKey(getSigningKey())
-            .build()
-            .parseClaimsJws(token)
-            .getBody()
-            .getExpiration();
+        return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody().getExpiration();
     }
     
     /**
      * Gets the signing key for JWT tokens.
      *
      * @return The signing key
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));

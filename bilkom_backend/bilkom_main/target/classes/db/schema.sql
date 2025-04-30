@@ -16,6 +16,7 @@ CREATE TABLE users (
     email_notifications BOOLEAN DEFAULT TRUE,
     sms_notifications BOOLEAN DEFAULT FALSE,
     profile_visibility ENUM('PUBLIC', 'MEMBERS', 'PRIVATE') DEFAULT 'PUBLIC',
+    avatar_path ENUM('AVATAR_1', 'AVATAR_2', 'AVATAR_3', 'AVATAR_4', 'AVATAR_5', 'AVATAR_6', 'AVATAR_7', 'AVATAR_8', 'AVATAR_9', 'AVATAR_10', 'AVATAR_11', 'AVATAR_12', 'AVATAR_13', 'AVATAR_14', 'AVATAR_15', 'AVATAR_16') DEFAULT 'AVATAR_1',
     verification_token VARCHAR(255)
 );
 

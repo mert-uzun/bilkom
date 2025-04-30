@@ -5,7 +5,6 @@ import com.bilkom.dto.ClubDTO;
 import com.bilkom.exception.BadRequestException;
 import com.bilkom.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -15,14 +14,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Map;
 import java.util.HashMap;
+import com.bilkom.enums.AvatarRelativePaths;
 
 @Service
 public class UserService {
@@ -85,6 +82,14 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    /**
+     * Deletes a user by their ID.
+     * 
+     * @param id The ID of the user to delete
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
     public void deleteUser(Long id) {
         if (!isUserExists(id)) {
             throw new BadRequestException("User not found with id: " + id);
@@ -92,26 +97,81 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    /**
+     * Checks if a user exists by their ID.
+     * 
+     * @param id The ID of the user to check
+     * @return true if the user exists, false otherwise
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
     public boolean isUserExists(Long id) {
         return userRepository.existsById(id);
     }
 
+    /**
+     * Checks if a user exists by their email.
+     * 
+     * @param email The email of the user to check
+     * @return true if the user exists, false otherwise
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
     public boolean isEmailExists(String email) {
         return userRepository.existsByEmail(email);
     }
 
+    /**
+     * Checks if a user exists by their Bilkent ID.
+     * 
+     * @param bilkentId The Bilkent ID of the user to check
+     * @return true if the user exists, false otherwise
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
     public boolean isBilkentIdExists(String bilkentId) {
         return userRepository.existsByBilkentId(bilkentId);
     }
 
+    /**
+     * Checks if a user exists by their phone number.
+     * 
+     * @param phoneNumber The phone number of the user to check
+     * @return true if the user exists, false otherwise
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
     public boolean isPhoneNumberExists(String phoneNumber) {
         return userRepository.existsByPhoneNumber(phoneNumber);
     }
 
+    /**
+     * Checks if a user exists by their full name.
+     * 
+     * @param firstName The first name of the user to check
+     * @param lastName The last name of the user to check
+     * @return true if the user exists, false otherwise
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
     public boolean isFullNameExists(String firstName, String lastName) {
         return userRepository.existsByFirstNameAndLastName(firstName, lastName);
     }
 
+    /**
+     * Checks if a user is verified.
+     * 
+     * @param id The ID of the user to check
+     * @return true if the user is verified, false otherwise
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
     public boolean isUserVerified(Long id) {
         User user = getUserById(id);
         return user != null && user.isVerified();
@@ -282,6 +342,13 @@ public class UserService {
     
     /**
      * Simplified update method for backward compatibility
+     * 
+     * @param id The ID of the user to update
+     * @param userDetails The user object with fields to update
+     * @return The updated user
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     @Transactional
     public User updateUser(Long id, User userDetails) {
@@ -293,6 +360,9 @@ public class UserService {
      * @param userId User ID
      * @param email New email
      * @return Updated user
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     @Transactional
     public User updateEmail(Long userId, String email) {
@@ -338,6 +408,9 @@ public class UserService {
      * @param userId User ID
      * @param firstName New first name
      * @return Updated user
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     @Transactional
     public User updateFirstName(Long userId, String firstName) {
@@ -360,6 +433,9 @@ public class UserService {
      * @param userId User ID
      * @param lastName New last name
      * @return Updated user
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     @Transactional
     public User updateLastName(Long userId, String lastName) {
@@ -382,6 +458,9 @@ public class UserService {
      * @param userId User ID
      * @param bilkentId New Bilkent ID
      * @return Updated user
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     @Transactional
     public User updateBilkentId(Long userId, String bilkentId) {
@@ -413,6 +492,9 @@ public class UserService {
      * @param userId User ID
      * @param phoneNumber New phone number
      * @return Updated user
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     @Transactional
     public User updatePhoneNumber(Long userId, String phoneNumber) {
@@ -444,6 +526,9 @@ public class UserService {
      * @param userId User ID
      * @param bloodType New blood type
      * @return Updated user
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     @Transactional
     public User updateBloodType(Long userId, String bloodType) {
@@ -472,6 +557,9 @@ public class UserService {
      * @param currentPassword Current password for verification
      * @param newPassword New password
      * @return Updated user
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     @Transactional
     public User updatePassword(Long userId, String currentPassword, String newPassword) {
@@ -498,8 +586,14 @@ public class UserService {
     /**
      * Updates a user's verification status
      * This is typically an admin function, not a user-facing one
+     * 
+     * @param userId The ID of the user to update
+     * @param verified The new verification status
+     * @return The updated user
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
-    @Transactional
     public User updateVerificationStatus(Long userId, boolean verified) {
         User user = getUserById(userId);
         
@@ -514,6 +608,13 @@ public class UserService {
     /**
      * Updates a user's active status
      * This is typically an admin function, not a user-facing one
+     * 
+     * @param userId The ID of the user to update
+     * @param active The new active status
+     * @return The updated user
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     @Transactional
     public User updateActiveStatus(Long userId, boolean active) {
@@ -544,8 +645,7 @@ public class UserService {
         }
         
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return userRepository.findByEmail(userDetails.getUsername())
-                .orElseThrow(() -> new BadRequestException("User not found"));
+        return userRepository.findByEmail(userDetails.getUsername()).orElseThrow(() -> new BadRequestException("User not found"));
     }
 
     /**
@@ -573,5 +673,28 @@ public class UserService {
         result.put("headClubs", headClubs);
         
         return result;
+    }
+
+    /**
+     * Updates a user's avatar.
+     * 
+     * @param userId The ID of the user to update
+     * @param avatarPathName The name of the avatar path enum value
+     * @return The updated user
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @Transactional
+    public User updateAvatar(Long userId, String avatarPathName) {
+        User user = getUserById(userId);
+        
+        try {
+            AvatarRelativePaths avatarPath = AvatarRelativePaths.valueOf(avatarPathName);
+            user.setAvatarPath(avatarPath);
+            return userRepository.save(user);
+        } catch (IllegalArgumentException e) {
+            throw new BadRequestException("Invalid avatar path: " + avatarPathName + ". Valid values are: " + Arrays.toString(AvatarRelativePaths.values()));
+        }
     }
 }

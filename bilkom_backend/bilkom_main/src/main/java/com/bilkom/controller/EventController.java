@@ -1,17 +1,23 @@
 package com.bilkom.controller;
 
 import com.bilkom.dto.EventDto;
-import com.bilkom.entity.*;
+import com.bilkom.entity.Event;
+import com.bilkom.entity.User;
 import com.bilkom.enums.UserRole;
 import com.bilkom.exception.BadRequestException;
-import com.bilkom.service.*;
+import com.bilkom.service.EventService;
+import com.bilkom.service.UserService;
+import com.bilkom.service.ClubSecurityService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * EventController is responsible for handling HTTP requests related to events.
@@ -29,11 +35,14 @@ public class EventController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ClubSecurityService clubSecurityService;
+
     /**
-     * * Creates a new event.
+     * Creates a new event.
      * The event details are provided in the request body.
-     * @param dto
-     * @param principal
+     * @param dto The event details
+     * @param principal The authenticated user
      * @return ResponseEntity containing the created event.
      * 
      * @author Elif Bozkurt
@@ -45,10 +54,10 @@ public class EventController {
     }
 
     /**
-     * 
-     * @param eventId
-     * @param principal
-     * @return ResponseEntity containing the event details.
+     * Joins an event.
+     * @param eventId The ID of the event
+     * @param principal The authenticated user
+     * @return ResponseEntity indicating success or failure.
      * 
      * @author Elif Bozkurt
      */
@@ -227,5 +236,95 @@ public class EventController {
     
         Event event = eventService.createEvent(eventDto, principal.getName());
         return ResponseEntity.ok(new EventDto(event));
+    }
+
+    /**
+     * Gets all events for a specific club.
+     * 
+     * @param clubId The ID of the club
+     * @return ResponseEntity containing the list of all events for the club
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @GetMapping("/clubs/{clubId}/events")
+    @PreAuthorize("hasRole('ADMIN') or @clubSecurityService.isUserClubExecutiveOrHead(authentication.principal.userId, #clubId)")
+    public ResponseEntity<List<Event>> getClubEvents(@PathVariable Long clubId) {
+        return ResponseEntity.ok(eventService.getClubEvents(clubId));
+    }
+    
+    /**
+     * Gets current events for a specific club.
+     * 
+     * @param clubId The ID of the club
+     * @return ResponseEntity containing the list of current events for the club
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @GetMapping("/clubs/{clubId}/events/current")
+    @PreAuthorize("hasRole('ADMIN') or @clubSecurityService.isUserClubExecutiveOrHead(authentication.principal.userId, #clubId)")
+    public ResponseEntity<List<Event>> getCurrentClubEvents(@PathVariable Long clubId) {
+        return ResponseEntity.ok(eventService.getCurrentClubEvents(clubId));
+    }
+    
+    /**
+     * Gets past events for a specific club.
+     * 
+     * @param clubId The ID of the club
+     * @return ResponseEntity containing the list of past events for the club
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @GetMapping("/clubs/{clubId}/events/past")
+    @PreAuthorize("hasRole('ADMIN') or @clubSecurityService.isUserClubExecutiveOrHead(authentication.principal.userId, #clubId)")
+    public ResponseEntity<List<Event>> getPastClubEvents(@PathVariable Long clubId) {
+        return ResponseEntity.ok(eventService.getPastClubEvents(clubId));
+    }
+    
+    /**
+     * Gets all events for clubs where the current user is a club executive or head.
+     * 
+     * @return ResponseEntity containing a map of club IDs to event lists
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @GetMapping("/my-club-events")
+    @PreAuthorize("hasAnyRole('CLUB_HEAD', 'CLUB_EXECUTIVE')")
+    public ResponseEntity<Map<Long, List<Event>>> getMyClubEvents() {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok(eventService.getAllEventsForClubExecutive(currentUser.getUserId()));
+    }
+    
+    /**
+     * Gets current events for clubs where the current user is a club executive or head.
+     * 
+     * @return ResponseEntity containing a map of club IDs to current event lists
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @GetMapping("/my-club-events/current")
+    @PreAuthorize("hasAnyRole('CLUB_HEAD', 'CLUB_EXECUTIVE')")
+    public ResponseEntity<Map<Long, List<Event>>> getMyCurrentClubEvents() {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok(eventService.getCurrentEventsForClubExecutive(currentUser.getUserId()));
+    }
+    
+    /**
+     * Gets past events for clubs where the current user is a club executive or head.
+     * 
+     * @return ResponseEntity containing a map of club IDs to past event lists
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @GetMapping("/my-club-events/past")
+    @PreAuthorize("hasAnyRole('CLUB_HEAD', 'CLUB_EXECUTIVE')")
+    public ResponseEntity<Map<Long, List<Event>>> getMyPastClubEvents() {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok(eventService.getPastEventsForClubExecutive(currentUser.getUserId()));
     }
 }

@@ -9,7 +9,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Service for managing blacklisted JWT tokens.
- * In a production environment, this should be implemented with Redis or another distributed cache.
+ * We should implement a Redis-based blacklist service for production use. 
+ * But we use in-memory map for now.
  * 
  * @author Mert Uzun
  * @version 1.0
@@ -25,6 +26,9 @@ public class TokenBlacklistService {
     
     /**
      * Constructor initializes the token cleanup task.
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     public TokenBlacklistService() {
         cleanupExecutor = Executors.newSingleThreadScheduledExecutor();
@@ -36,6 +40,9 @@ public class TokenBlacklistService {
      * 
      * @param token The token to blacklist
      * @param expiryTimeMillis The expiry time of the token in milliseconds since epoch
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     public void blacklistToken(String token, long expiryTimeMillis) {
         blacklistedTokens.put(token, expiryTimeMillis);
@@ -46,6 +53,9 @@ public class TokenBlacklistService {
      * 
      * @param token The token to check
      * @return true if the token is blacklisted, false otherwise
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     public boolean isBlacklisted(String token) {
         Long expiryTime = blacklistedTokens.get(token);
@@ -55,17 +65,18 @@ public class TokenBlacklistService {
         
         // Token is in the blacklist, check if it's expired
         if (System.currentTimeMillis() > expiryTime) {
-            // Token has expired, remove it from the blacklist
             blacklistedTokens.remove(token);
             return false;
         }
         
-        // Token is blacklisted and not expired
         return true;
     }
     
     /**
      * Cleans up expired tokens from the blacklist.
+     * 
+     * @author Mert Uzun
+     * @version 1.0
      */
     private void cleanupExpiredTokens() {
         long currentTime = System.currentTimeMillis();

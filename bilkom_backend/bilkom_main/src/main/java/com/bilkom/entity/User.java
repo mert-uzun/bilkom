@@ -1,6 +1,7 @@
 package com.bilkom.entity;
 
 import com.bilkom.enums.UserRole;
+import com.bilkom.enums.AvatarRelativePaths;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -85,6 +86,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private ProfileVisibility profileVisibility = ProfileVisibility.PUBLIC;
     
+    @Enumerated(EnumType.STRING)
+    @Column(name = "avatar_path", nullable = false, columnDefinition = "ENUM('AVATAR_1', 'AVATAR_2', 'AVATAR_3', 'AVATAR_4', 'AVATAR_5', 'AVATAR_6', 'AVATAR_7', 'AVATAR_8', 'AVATAR_9', 'AVATAR_10', 'AVATAR_11', 'AVATAR_12', 'AVATAR_13', 'AVATAR_14', 'AVATAR_15', 'AVATAR_16') DEFAULT 'AVATAR_1'")
+    private AvatarRelativePaths avatarPath = AvatarRelativePaths.AVATAR_1;
+    
     /**
      * Enum for profile visibility settings.
      */
@@ -101,7 +106,7 @@ public class User {
     public String toString() {
         return "User{" + "userId=" + userId + ", email=" + email + ", passwordHash=" + passwordHash + ", firstName=" + firstName + ", lastName=" + lastName 
                 + ", bilkentId=" + bilkentId + ", phoneNumber=" + phoneNumber + ", bloodType=" + bloodType + ", createdAt=" + createdAt + ", isVerified=" 
-                + isVerified + ", isActive=" + isActive + ", lastLogin=" + lastLogin + ", role=" + role + ", tags=" + tags + ", clubMemberships=" 
+                + isVerified + ", isActive=" + isActive + ", lastLogin=" + lastLogin + ", role=" + role + ", avatarPath=" + avatarPath + ", tags=" + tags + ", clubMemberships=" 
                 + clubMemberships + ", createdEvents=" + createdEvents + ", eventParticipations=" + eventParticipations + '}';
     }
 
@@ -264,5 +269,13 @@ public class User {
 
     public void setFcmToken(String fcmToken) {
         this.fcmToken = fcmToken;
+    }
+    
+    public AvatarRelativePaths getAvatarPath() {
+        return avatarPath;
+    }
+    
+    public void setAvatarPath(AvatarRelativePaths avatarPath) {
+        this.avatarPath = avatarPath;
     }
 }

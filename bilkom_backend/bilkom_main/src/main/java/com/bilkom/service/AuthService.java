@@ -170,8 +170,8 @@ public class AuthService {
      * @version 1.0
      */
     public AuthResponse logout(Long userId, String token) {
-        // Validate user
-        User user = userRepository.findById(userId).orElseThrow(() -> new BadRequestException("User not found"));
+        // Validate user exists
+        userRepository.findById(userId).orElseThrow(() -> new BadRequestException("User not found"));
         
         // Blacklist the token if provided
         if (token != null && !token.isEmpty()) {

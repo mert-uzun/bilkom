@@ -1,7 +1,9 @@
 package com.bilkom.service;
 
 import com.bilkom.dto.EventDto;
+import com.bilkom.dto.ClubDTO;
 import com.bilkom.entity.*;
+import com.bilkom.enums.UserRole;
 import com.bilkom.exception.BadRequestException;
 import com.bilkom.repository.*;
 
@@ -10,8 +12,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * EventService is responsible for handling business logic related to events.
@@ -37,6 +43,9 @@ public class EventService {
     
     @Autowired
     private ClubRepository clubRepository;
+
+    @Autowired
+    private ClubService clubService;
 
     /**
      * Creates a new event based on the provided EventDto and the creator's email.
@@ -262,5 +271,192 @@ public class EventService {
         report.setReportedAt(LocalDateTime.now());
 
         pastEventReportRepository.save(report);
+    }
+
+    /**
+     * Retrieves all events associated with a specific club.
+     * 
+     * @param clubId The ID of the club
+     * @return List of all events for the club
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    public List<Event> getClubEvents(Long clubId) {
+        // Check if club exists
+        clubRepository.findById(clubId).orElseThrow(() -> new BadRequestException("Club not found"));
+            
+        return eventRepository.findByClubClubId(clubId);
+    }
+    
+    /**
+     * Retrieves current (active and upcoming) events associated with a specific club.
+     * 
+     * @param clubId The ID of the club
+     * @return List of current events for the club
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    public List<Event> getCurrentClubEvents(Long clubId) {
+        // Check if club exists
+        clubRepository.findById(clubId).orElseThrow(() -> new BadRequestException("Club not found"));
+            
+        Date today = new Date(System.currentTimeMillis());
+        return eventRepository.findByClubClubIdAndEventDateGreaterThanEqual(clubId, today).stream().filter(Event::isActive).collect(Collectors.toList());
+    }
+    
+    /**
+     * Retrieves past events associated with a specific club.
+     * 
+     * @param clubId The ID of the club
+     * @return List of past events for the club
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    public List<Event> getPastClubEvents(Long clubId) {
+        // Check if club exists
+        clubRepository.findById(clubId).orElseThrow(() -> new BadRequestException("Club not found"));
+            
+        Date today = new Date(System.currentTimeMillis());
+        List<Event> pastByDate = eventRepository.findByClubClubIdAndEventDateBefore(clubId, today);
+        List<Event> inactiveEvents = eventRepository.findByClubClubIdAndIsActiveTrue(clubId).stream().filter(event -> !event.isActive()).collect(Collectors.toList());
+            
+        // Combine past by date and inactive events, removing duplicates
+        List<Event> allPastEvents = new ArrayList<>(pastByDate);
+        for (Event event : inactiveEvents) {
+            if (!allPastEvents.contains(event)) {
+                allPastEvents.add(event);
+            }
+        }
+        
+        return allPastEvents;
+    }
+    
+    /**
+     * Retrieves all events across clubs where the user is a club executive.
+     * 
+     * @param userId The ID of the user
+     * @return Map containing event lists categorized by club ID
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    public Map<Long, List<Event>> getAllEventsForClubExecutive(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new BadRequestException("User not found"));
+            
+        // Verify user is a club executive or head
+        if (user.getRole() != UserRole.CLUB_EXECUTIVE && user.getRole() != UserRole.CLUB_HEAD) {
+            throw new BadRequestException("User is not a club executive or head");
+        }
+        
+        Map<Long, List<Event>> result = new HashMap<>();
+        
+        // Get clubs where user is an executive
+        List<ClubDTO> executiveClubs = clubService.getClubsByExecutiveId(userId);
+        
+        for (ClubDTO club : executiveClubs) {
+            List<Event> clubEvents = getClubEvents(club.getClubId());
+            result.put(club.getClubId(), clubEvents);
+        }
+        
+        // If user is a club head, add those clubs too
+        if (user.getRole() == UserRole.CLUB_HEAD) {
+            List<ClubDTO> headClubs = clubService.getClubsByHeadId(userId);
+            
+            for (ClubDTO club : headClubs) {
+                if (!result.containsKey(club.getClubId())) {
+                    List<Event> clubEvents = getClubEvents(club.getClubId());
+                    result.put(club.getClubId(), clubEvents);
+                }
+            }
+        }
+        
+        return result;
+    }
+    
+    /**
+     * Retrieves current events across clubs where the user is a club executive.
+     * 
+     * @param userId The ID of the user
+     * @return Map containing current event lists categorized by club ID
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    public Map<Long, List<Event>> getCurrentEventsForClubExecutive(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new BadRequestException("User not found"));
+            
+        // Verify user is a club executive or head
+        if (user.getRole() != UserRole.CLUB_EXECUTIVE && user.getRole() != UserRole.CLUB_HEAD) {
+            throw new BadRequestException("User is not a club executive or head");
+        }
+        
+        Map<Long, List<Event>> result = new HashMap<>();
+        
+        // Get clubs where user is an executive
+        List<ClubDTO> executiveClubs = clubService.getClubsByExecutiveId(userId);
+        
+        for (ClubDTO club : executiveClubs) {
+            List<Event> clubEvents = getCurrentClubEvents(club.getClubId());
+            result.put(club.getClubId(), clubEvents);
+        }
+        
+        // If user is a club head, add those clubs too
+        if (user.getRole() == UserRole.CLUB_HEAD) {
+            List<ClubDTO> headClubs = clubService.getClubsByHeadId(userId);
+            
+            for (ClubDTO club : headClubs) {
+                if (!result.containsKey(club.getClubId())) {
+                    List<Event> clubEvents = getCurrentClubEvents(club.getClubId());
+                    result.put(club.getClubId(), clubEvents);
+                }
+            }
+        }
+        
+        return result;
+    }
+    
+    /**
+     * Retrieves past events across clubs where the user is a club executive.
+     * 
+     * @param userId The ID of the user
+     * @return Map containing past event lists categorized by club ID
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    public Map<Long, List<Event>> getPastEventsForClubExecutive(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new BadRequestException("User not found"));
+            
+        // Verify user is a club executive or head
+        if (user.getRole() != UserRole.CLUB_EXECUTIVE && user.getRole() != UserRole.CLUB_HEAD) {
+            throw new BadRequestException("User is not a club executive or head");
+        }
+        
+        Map<Long, List<Event>> result = new HashMap<>();
+        
+        // Get clubs where user is an executive
+        List<ClubDTO> executiveClubs = clubService.getClubsByExecutiveId(userId);
+        
+        for (ClubDTO club : executiveClubs) {
+            List<Event> clubEvents = getPastClubEvents(club.getClubId());
+            result.put(club.getClubId(), clubEvents);
+        }
+        
+        // If user is a club head, add those clubs too
+        if (user.getRole() == UserRole.CLUB_HEAD) {
+            List<ClubDTO> headClubs = clubService.getClubsByHeadId(userId);
+            
+            for (ClubDTO club : headClubs) {
+                if (!result.containsKey(club.getClubId())) { // Avoid duplicates
+                    List<Event> clubEvents = getPastClubEvents(club.getClubId());
+                    result.put(club.getClubId(), clubEvents);
+                }
+            }
+        }
+        
+        return result;
     }
 }

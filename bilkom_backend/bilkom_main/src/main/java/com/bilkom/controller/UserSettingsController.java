@@ -2,6 +2,8 @@ package com.bilkom.controller;
 
 import com.bilkom.dto.AuthResponse;
 import com.bilkom.dto.UserDTO;
+import com.bilkom.dto.AvatarUpdateRequest;
+import com.bilkom.dto.AvatarListResponse;
 import com.bilkom.entity.User;
 import com.bilkom.exception.BadRequestException;
 import com.bilkom.service.AuthService;
@@ -91,9 +93,7 @@ public class UserSettingsController {
      */
     @PostMapping("/change-password/{userId}")
     @PreAuthorize("authentication.principal.username == @userService.getUserById(#userId).email")
-    public ResponseEntity<AuthResponse> changePassword(
-            @PathVariable("userId") Long userId,
-            @RequestBody Map<String, String> passwordData) {
+    public ResponseEntity<AuthResponse> changePassword(@PathVariable("userId") Long userId, @RequestBody Map<String, String> passwordData) {
         
         String currentPassword = passwordData.get("currentPassword");
         String newPassword = passwordData.get("newPassword");
@@ -117,9 +117,7 @@ public class UserSettingsController {
      */
     @PostMapping("/logout/{userId}")
     @PreAuthorize("authentication.principal.username == @userService.getUserById(#userId).email")
-    public ResponseEntity<AuthResponse> logout(
-            @PathVariable("userId") Long userId,
-            @RequestHeader(value = "Authorization", required = false) String authHeader) {
+    public ResponseEntity<AuthResponse> logout(@PathVariable("userId") Long userId, @RequestHeader(value = "Authorization", required = false) String authHeader) {
         return ResponseEntity.ok(authService.logout(userId, authHeader));
     }
     
@@ -135,9 +133,7 @@ public class UserSettingsController {
      */
     @PutMapping("/notifications/{userId}")
     @PreAuthorize("authentication.principal.username == @userService.getUserById(#userId).email")
-    public ResponseEntity<UserDTO> updateNotificationPreferences(
-            @PathVariable("userId") Long userId,
-            @RequestBody Map<String, Boolean> preferences) {
+    public ResponseEntity<UserDTO> updateNotificationPreferences(@PathVariable("userId") Long userId, @RequestBody Map<String, Boolean> preferences) {
         
         User user = userService.getUserById(userId);
         
@@ -166,9 +162,7 @@ public class UserSettingsController {
      */
     @PutMapping("/privacy/{userId}")
     @PreAuthorize("authentication.principal.username == @userService.getUserById(#userId).email")
-    public ResponseEntity<UserDTO> updatePrivacySettings(
-            @PathVariable("userId") Long userId,
-            @RequestBody Map<String, String> settings) {
+    public ResponseEntity<UserDTO> updatePrivacySettings(@PathVariable("userId") Long userId, @RequestBody Map<String, String> settings) {
         
         User user = userService.getUserById(userId);
         
@@ -183,6 +177,41 @@ public class UserSettingsController {
         }
         
         User updatedUser = userService.updateUser(userId, user);
+        return ResponseEntity.ok(new UserDTO(updatedUser));
+    }
+    
+    /**
+     * Gets all available avatars.
+     * 
+     * @return List of all available avatars with paths
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @GetMapping("/avatars")
+    public ResponseEntity<AvatarListResponse> getAvatars() {
+        return ResponseEntity.ok(new AvatarListResponse());
+    }
+    
+    /**
+     * Updates the user's avatar.
+     * 
+     * @param userId The user ID
+     * @param request The avatar update request containing the avatar path
+     * @return The updated user profile
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    @PutMapping("/avatar/{userId}")
+    @PreAuthorize("authentication.principal.username == @userService.getUserById(#userId).email")
+    public ResponseEntity<UserDTO> updateAvatar(@PathVariable("userId") Long userId, @RequestBody AvatarUpdateRequest request) {
+        
+        if (request.getAvatarPath() == null || request.getAvatarPath().isEmpty()) {
+            throw new BadRequestException("Avatar path is required");
+        }
+        
+        User updatedUser = userService.updateAvatar(userId, request.getAvatarPath());
         return ResponseEntity.ok(new UserDTO(updatedUser));
     }
 } 
