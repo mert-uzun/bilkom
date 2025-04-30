@@ -36,7 +36,7 @@ public class EventController {
     private UserService userService;
 
     @Autowired
-    private ClubSecurityService clubSecurityService;
+    private ClubSecurityService clubSecurityService; // Do not remove! This is used at runtime.
 
     /**
      * Creates a new event.
