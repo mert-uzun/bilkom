@@ -455,7 +455,7 @@ public class UserService {
         
         // Validate blood type
         if (!VALID_BLOOD_TYPES.contains(bloodType)) {
-            throw new BadRequestException("Invalid blood type. Valid types are: A+, A-, B+, B-, AB+, AB-, O+, O-");
+            throw new BadRequestException("Invalid blood type. Valid types are: A Rh (+), A Rh (-), B Rh (+), B Rh (-), AB Rh (+), AB Rh (-), O Rh (+), O Rh (-)");
         }
         
         user.setBloodType(bloodType);
