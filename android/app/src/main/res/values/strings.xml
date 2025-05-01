@@ -8,4 +8,5 @@
     <string name="activity_selection">Activity Selection</string>
     <string name="club_activities">Club Activities</string>
     <string name="welcome_to">WELCOME TO</string>
+    <string name="select_tag">Select a tag</string>
 </resources> 
