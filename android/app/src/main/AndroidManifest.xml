@@ -17,6 +17,10 @@ it is used to store the permissions, activities, application, etc.-->
         android:theme="@style/Theme.Bilkom"
         android:usesCleartextTraffic="true">
 
+        <!-- Base Activity -->
+        <activity android:name=".ui.BaseActivity" />
+
+        <!-- Auth Activities -->
         <activity
             android:name=".ui.LoginActivity"
             android:exported="true">
@@ -25,12 +29,26 @@ it is used to store the permissions, activities, application, etc.-->
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".ui.RegistrationActivity" />
+
+        <!-- Main Activities -->
         <activity android:name=".ui.HomeActivity" />
         <activity android:name=".ui.ProfileActivity" />
         <activity android:name=".ui.SettingsActivity" />
         <activity android:name=".ui.EmergencyAlertsActivity" />
+
+        <!-- Club Activities -->
+        <activity android:name=".ui.ClubListActivity" />
+        <activity android:name=".ui.ClubDetailsActivity" />
+        <activity android:name=".ui.AddClubActivity" />
+        <activity android:name=".ui.ClubActivitiesActivity" />
+
+        <!-- Event Activities -->
+        <activity android:name=".ui.EventListActivity" />
+        <activity android:name=".ui.EventDetailsActivity" />
+        <activity android:name=".ui.CreateEventActivity" />
+        <activity android:name=".ui.MyActivitiesActivity" />
+        <activity android:name=".ui.ReportActivity" />
 
     </application>
 </manifest> 

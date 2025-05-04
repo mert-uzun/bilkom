@@ -16,9 +16,10 @@ import retrofit2.Response;
 
 public class ReportActivity extends BaseActivity {
 
-    private EditText eventIdEditText, reasonEditText;
+    private EditText reasonEditText;
     private Button submitReportButton;
     private SecureStorage secureStorage;
+    private Long eventId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,36 +28,47 @@ public class ReportActivity extends BaseActivity {
         setupNavigationDrawer();
         getLayoutInflater().inflate(R.layout.activity_report, findViewById(R.id.contentFrame));
 
-        eventIdEditText = findViewById(R.id.eventIdEditText);
+        // Get event ID from intent
+        eventId = getIntent().getLongExtra("eventId", -1);
+        if (eventId == -1) {
+            Toast.makeText(this, "Invalid event", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
         reasonEditText = findViewById(R.id.reasonEditText);
         submitReportButton = findViewById(R.id.submitReportButton);
         secureStorage = new SecureStorage(this);
 
         submitReportButton.setOnClickListener(v -> {
-            String reason = reasonEditText.getText().toString();
-            Long eventId;
-            try {
-                eventId = Long.parseLong(eventIdEditText.getText().toString());
-            } catch (NumberFormatException e) {
-                Toast.makeText(this, "Invalid Event ID", Toast.LENGTH_SHORT).show();
+            String reason = reasonEditText.getText().toString().trim();
+            
+            if (reason.isEmpty()) {
+                reasonEditText.setError("Please provide a reason");
                 return;
             }
+
+            String token = secureStorage.getAuthToken();
+            Toast loadingToast = Toast.makeText(this, "Submitting report...", Toast.LENGTH_SHORT);
+            loadingToast.show();
 
             RetrofitClient.getInstance().getApiService()
                 .reportPastEvent(eventId, reason)
                 .enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
+                        loadingToast.cancel();
                         if (response.isSuccessful()) {
-                            Toast.makeText(ReportActivity.this, "Report submitted", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ReportActivity.this, "Report submitted successfully", Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
-                            Toast.makeText(ReportActivity.this, "Failed to submit", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ReportActivity.this, "Failed to submit report", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
+                        loadingToast.cancel();
                         Toast.makeText(ReportActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });

@@ -5,12 +5,20 @@
     android:orientation="vertical"
     android:padding="24dp">
 
-    <EditText
-        android:id="@+id/eventIdEditText"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Event ID"
-        android:inputType="number" />
+        android:text="Report Event"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please provide a reason for reporting this event"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp"/>
 
     <EditText
         android:id="@+id/reasonEditText"
@@ -19,12 +27,16 @@
         android:hint="Reason for report"
         android:minLines="4"
         android:gravity="top"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"/>
 
     <Button
         android:id="@+id/submitReportButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Submit Report"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/red"/>
+
 </LinearLayout>

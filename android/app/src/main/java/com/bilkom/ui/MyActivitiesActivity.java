@@ -1,5 +1,6 @@
 package com.bilkom.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
@@ -198,7 +199,8 @@ public class MyActivitiesActivity extends BaseActivity {
     }
 
     private void reportEvent(Event event) {
-        // TODO: Show report dialog
-        Toast.makeText(this, "Report functionality coming soon", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, ReportActivity.class);
+        intent.putExtra("eventId", event.getEventId());
+        startActivity(intent);
     }
 } 
