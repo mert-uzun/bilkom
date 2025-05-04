@@ -11,6 +11,7 @@ import com.bilkom.model.WeatherForecast;
 import com.bilkom.model.Event;
 import com.bilkom.model.EventRequest;
 import java.util.List;
+import java.util.Map;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -71,12 +72,49 @@ public interface ApiService {
     @POST("events/filter")
     Call<List<Event>> filterEventsByTags(@Body List<String> tagNames, @Header("Authorization") String bearerToken);
 
+    @GET("events/clubs/{clubId}/events/current")
+    Call<List<Event>> getClubEventsByClubId(@Path("clubId") Long clubId, @Header("Authorization") String token);
+
     @GET("events/joined")
-    Call<List<Event>> getJoinedEvents(@Header("Authorization") String bearerToken);
+    Call<List<Event>> getJoinedEvents(@Header("Authorization") String token);
+
+    @GET("events/my-club-events/current")
+    Call<Map<Long, List<Event>>> getMyClubsEvents(@Header("Authorization") String token);
+
+    @GET("events/clubs/current")
+    Call<List<Event>> getAllClubEvents(@Header("Authorization") String token);
 
     @POST("events/{eventId}/join")
     Call<Void> joinEvent(@Path("eventId") Long eventId, @Header("Authorization") String bearerToken);
 
     @POST("events/{eventId}/withdraw")
     Call<Void> withdrawFromEvent(@Path("eventId") Long eventId, @Header("Authorization") String bearerToken);
+
+    @GET("user-settings/profile/{id}")
+    Call<User> getProfile(@Path("id") Long userId);
+
+    @PUT("user-settings/profile/{id}")
+    Call<Void> updateProfile(@Path("id") Long userId, @Body User user);
+
+    @PUT("user-settings/avatar/{id}")
+    Call<Void> updateAvatar(@Path("id") Long userId, @Body RequestBody avatarImage);
+
+    @POST("user-settings/change-password/{id}")
+    Call<Void> changePassword(@Path("id") Long userId, @Body Map<String, String> passwordMap);
+
+    @POST("user-settings/logout/{id}")
+    Call<Void> logout(@Path("id") Long userId);
+
+    @POST("events/report/{eventId}")
+    Call<Void> reportPastEvent(@Path("eventId") Long eventId, @Body String reason);
+
+    @GET("events/clubs/{clubId}/events")
+    Call<List<Event>> getClubEventsByClubId(@Path("clubId") Long clubId, @Header("Authorization") String token);
+
+    @GET("users/me/clubs")
+    Call<List<Club>> getMyClubs(@Header("Authorization") String token);
+
+    @POST("events/{eventId}/cancel")
+    Call<Void> cancelClubEvent(@Path("eventId") String eventId, @Header("Authorization") String token);
+
 }
