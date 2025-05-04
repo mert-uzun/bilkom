@@ -79,4 +79,22 @@ public interface ApiService {
 
     @POST("events/{eventId}/withdraw")
     Call<Void> withdrawFromEvent(@Path("eventId") Long eventId, @Header("Authorization") String bearerToken);
+
+    @GET("user-settings/profile/{id}")
+    Call<User> getProfile(@Path("id") Long userId);
+
+    @PUT("user-settings/profile/{id}")
+    Call<Void> updateProfile(@Path("id") Long userId, @Body User user);
+
+    @PUT("user-settings/avatar/{id}")
+    Call<Void> updateAvatar(@Path("id") Long userId, @Body RequestBody avatarImage);
+
+    @POST("user-settings/change-password/{id}")
+    Call<Void> changePassword(@Path("id") Long userId, @Body Map<String, String> passwordMap);
+
+    @POST("user-settings/logout/{id}")
+    Call<Void> logout(@Path("id") Long userId);
+
+    @POST("events/report/{eventId}")
+    Call<Void> reportPastEvent(@Path("eventId") Long eventId, @Body String reason);
 }
