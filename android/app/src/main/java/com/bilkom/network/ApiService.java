@@ -76,7 +76,6 @@ public interface ApiService {
     Call<List<Event>> getClubEventsByClubId(@Path("clubId") Long clubId, @Header("Authorization") String token);
 
     @GET("events/joined")
-    Call<List<Event>> getJoinedEvents(@Header("Authorization") String bearerToken);
     Call<List<Event>> getJoinedEvents(@Header("Authorization") String token);
 
     @GET("events/my-club-events/current")
@@ -116,4 +115,6 @@ public interface ApiService {
     Call<List<Club>> getMyClubs(@Header("Authorization") String token);
 
     @POST("events/{eventId}/cancel")
+    Call<Void> cancelClubEvent(@Path("eventId") String eventId, @Header("Authorization") String token);
+
 }
