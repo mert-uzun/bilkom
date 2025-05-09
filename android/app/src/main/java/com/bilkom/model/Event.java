@@ -1,21 +1,60 @@
 package com.bilkom.model;
 
+import com.google.gson.annotations.SerializedName;
+import java.util.Date;
 import java.util.List;
 
+import com.bilkom.utils.DateUtils;
+
+/**
+ * Data model for events
+ * 
+ * @author Mert Uzun
+ * @version 2.0
+ * @since 2025-05-09
+ */
 public class Event {
+    @SerializedName("eventId")
     private Long eventId;
+    
+    @SerializedName("eventName")
     private String eventName;
+    
+    @SerializedName("eventDescription")
     private String eventDescription;
+    
+    @SerializedName("maxParticipants")
     private int maxParticipants;
+    
+    @SerializedName("currentParticipantsNumber")
     private int currentParticipantsNumber;
+    
+    @SerializedName("eventLocation")
     private String eventLocation;
-    private String eventDate; // Use String for easier JSON mapping; parse as needed
+    
+    @SerializedName("eventDate")
+    private String eventDate; // Stored as String for easier JSON mapping
+    
+    @SerializedName("isActive")
     private boolean isActive;
+    
+    @SerializedName("tags")
     private List<String> tags;
+    
+    @SerializedName("clubId")
+    private Long clubId;
+    
+    @SerializedName("creatorId")
+    private Long creatorId;
+    
+    @SerializedName("isClubEvent")
+    private boolean isClubEvent;
 
     public Event() {}
 
-    public Event(Long eventId, String eventName, String eventDescription, int maxParticipants, int currentParticipantsNumber, String eventLocation, String eventDate, boolean isActive, List<String> tags) {
+    public Event(Long eventId, String eventName, String eventDescription, int maxParticipants, 
+                int currentParticipantsNumber, String eventLocation, String eventDate, 
+                boolean isActive, List<String> tags) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.eventDescription = eventDescription;
@@ -45,12 +84,51 @@ public class Event {
     public String getEventLocation() { return eventLocation; }
     public void setEventLocation(String eventLocation) { this.eventLocation = eventLocation; }
 
+    /**
+     * Get the raw event date string as stored from the API
+     * @return The raw event date string
+     */
     public String getEventDate() { return eventDate; }
     public void setEventDate(String eventDate) { this.eventDate = eventDate; }
+
+    /**
+     * Get the event date as a Date object
+     * @return The event date as a Date object, or null if parsing fails
+     */
+    public Date getEventDateAsDate() {
+        return DateUtils.parseApiDate(eventDate);
+    }
+    
+    /**
+     * Get the event date in a user-friendly format (e.g., "May 9, 2025")
+     * @return The formatted date string
+     */
+    public String getFormattedEventDate() {
+        Date date = getEventDateAsDate();
+        return DateUtils.formatUserFriendlyDate(date);
+    }
+    
+    /**
+     * Get the event date and time in a user-friendly format (e.g., "May 9, 2025 14:30")
+     * @return The formatted date and time string
+     */
+    public String getFormattedEventDateTime() {
+        Date date = getEventDateAsDate();
+        return DateUtils.formatUserFriendlyDateTime(date);
+    }
 
     public boolean isActive() { return isActive; }
     public void setActive(boolean active) { isActive = active; }
 
     public List<String> getTags() { return tags; }
     public void setTags(List<String> tags) { this.tags = tags; }
+    
+    public Long getClubId() { return clubId; }
+    public void setClubId(Long clubId) { this.clubId = clubId; }
+    
+    public Long getCreatorId() { return creatorId; }
+    public void setCreatorId(Long creatorId) { this.creatorId = creatorId; }
+    
+    public boolean isClubEvent() { return isClubEvent; }
+    public void setClubEvent(boolean clubEvent) { isClubEvent = clubEvent; }
 } 

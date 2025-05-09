@@ -43,6 +43,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         holder.messageTextView.setText(event.getEventName());
         holder.detailsTextView.setText(event.getEventDescription());
         holder.quotaTextView.setText("Activity Quota: " + event.getCurrentParticipantsNumber() + "/" + event.getMaxParticipants());
+        
+        // Display formatted date and location
+        String dateTimeLocation = event.getFormattedEventDate() + " • " + event.getEventLocation();
+        holder.dateLocationTextView.setText(dateTimeLocation);
+        holder.dateLocationTextView.setVisibility(View.VISIBLE);
 
         // Clear previous tags
         holder.tagsContainer.removeAllViews();
@@ -81,7 +86,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
     static class EventViewHolder extends RecyclerView.ViewHolder {
         ImageView avatarImageView;
-        TextView messageTextView, detailsTextView, quotaTextView;
+        TextView messageTextView, detailsTextView, quotaTextView, dateLocationTextView;
         LinearLayout tagsContainer;
         Button joinButton;
 
@@ -91,6 +96,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             messageTextView = itemView.findViewById(R.id.messageTextView);
             detailsTextView = itemView.findViewById(R.id.detailsTextView);
             quotaTextView = itemView.findViewById(R.id.quotaTextView);
+            dateLocationTextView = itemView.findViewById(R.id.dateLocationTextView);
             tagsContainer = itemView.findViewById(R.id.tagsContainer);
             joinButton = itemView.findViewById(R.id.joinButton);
         }

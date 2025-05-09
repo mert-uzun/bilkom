@@ -1,30 +1,77 @@
 // this is a pojo class for the user 
 // it is used to store the user data from the server using userId, email, passwordHash, firstName, 
-//lastName, bilkentId, phoneNumber, bloodType, createdAt, isVerified, isActive, lastLogin and verificationToken    
+// lastName, bilkentId, phoneNumber, bloodType, createdAt, isVerified, isActive, lastLogin and verificationToken    
 package com.bilkom.model;
 
-import java.sql.Timestamp;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
+/**
+ * Data model for users, synchronized with the backend User entity.
+ * Updated to properly match backend User entity.
+ * 
+ * @author Mert Uzun
+ * @version 2.0
+ * @since 2025-05-09
+ */
 public class User {
+    @SerializedName("userId")
     private Long userId;
+    
+    @SerializedName("email")
     private String email;
+    
+    @SerializedName("firstName")
     private String firstName;
+    
+    @SerializedName("lastName")
     private String lastName;
+    
+    @SerializedName("bilkentId")
     private String bilkentId;
+    
+    @SerializedName("phoneNumber")
     private String phoneNumber;
+    
+    @SerializedName("bloodType")
     private String bloodType;
+    
+    @SerializedName("isVerified")
     private boolean isVerified;
+    
+    @SerializedName("isActive")
     private boolean isActive;
-    private Timestamp createdAt;
-    private Timestamp lastLogin;
+    
+    @SerializedName("createdAt")
+    private String createdAt;
+    
+    @SerializedName("lastLogin")
+    private String lastLogin;
+    
+    @SerializedName("role")
     private String role;
+    
+    @SerializedName("emailNotificationsEnabled")
     private boolean emailNotificationsEnabled;
+    
+    @SerializedName("smsNotificationsEnabled")
     private boolean smsNotificationsEnabled;
+    
+    @SerializedName("profileVisibility")
     private String profileVisibility;
-    private List<ClubMembership> clubMemberships;
+    
+    @SerializedName("avatarPath")
+    private String avatarPath;
+    
+    @SerializedName("clubMemberships")
+    private List<ClubMember> clubMemberships;
+    
+    @SerializedName("fcmToken")
+    private String fcmToken;
 
-    // Getters and Setters
+    public User() {}
+
+    // GETTERS AND SETTERS
     public Long getUserId() {
         return userId;
     }
@@ -97,19 +144,19 @@ public class User {
         isActive = active;
     }
 
-    public Timestamp getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Timestamp getLastLogin() {
+    public String getLastLogin() {
         return lastLogin;
     }
 
-    public void setLastLogin(Timestamp lastLogin) {
+    public void setLastLogin(String lastLogin) {
         this.lastLogin = lastLogin;
     }
 
@@ -145,11 +192,46 @@ public class User {
         this.profileVisibility = profileVisibility;
     }
 
-    public List<ClubMembership> getClubMemberships() {
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
+    }
+
+    public List<ClubMember> getClubMemberships() {
         return clubMemberships;
     }
 
-    public void setClubMemberships(List<ClubMembership> clubMemberships) {
+    public void setClubMemberships(List<ClubMember> clubMemberships) {
         this.clubMemberships = clubMemberships;
+    }
+    
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
+    
+    /**
+     * Gets the full name of the user (first name + last name)
+     * @return The full name
+     */
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+    
+    /**
+     * Get the avatar URL for this user
+     * @return Full URL to the avatar image
+     */
+    public String getAvatarUrl() {
+        if (avatarPath == null || avatarPath.isEmpty()) {
+            return "https://bilkom-api.bilkent.edu.tr/api/assets/avatars/AVATAR_1.png";
+        }
+        return "https://bilkom-api.bilkent.edu.tr/api/assets/avatars/" + avatarPath + ".png";
     }
 } 

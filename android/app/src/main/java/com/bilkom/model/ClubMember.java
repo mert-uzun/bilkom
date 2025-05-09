@@ -3,22 +3,21 @@ package com.bilkom.model;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Data model for club memberships (simplified version of ClubMember)
- * Aim of this class is to be backward compatible with our old implementation of ClubMember model
+ * Data model for club members, matching with the backend ClubMember entity
  * 
  * @author Mert Uzun
  * @version 1.0
  * @since 2025-05-09
  */
-public class ClubMembership {
+public class ClubMember {
     @SerializedName("userId")
     private Long userId;
     
     @SerializedName("clubId")
     private Long clubId;
     
-    @SerializedName("club")
-    private Club club;
+    @SerializedName("user")
+    private User user;
     
     @SerializedName("joinDate")
     private String joinDate;
@@ -26,15 +25,16 @@ public class ClubMembership {
     @SerializedName("isActive")
     private boolean isActive;
 
-    public ClubMembership() {
+    public ClubMember() {
     }
 
-    public ClubMembership(Long userId, Long clubId) {
+    public ClubMember(Long userId, Long clubId) {
         this.userId = userId;
         this.clubId = clubId;
         this.isActive = true;
     }
 
+    // GETTERS AND SETTERS
     public Long getUserId() {
         return userId;
     }
@@ -51,12 +51,12 @@ public class ClubMembership {
         this.clubId = clubId;
     }
 
-    public Club getClub() {
-        return club;
+    public User getUser() {
+        return user;
     }
 
-    public void setClub(Club club) {
-        this.club = club;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getJoinDate() {

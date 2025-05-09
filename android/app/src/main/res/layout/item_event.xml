@@ -42,13 +42,22 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/dateLocationTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="May 9, 2025 • Bilkent Main Campus"
+                android:textColor="#ddd"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp" />
+
+            <TextView
                 android:id="@+id/detailsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="This part contains details entered by the creator regarding the activity"
                 android:textColor="#ccc"
                 android:textSize="13sp"
-                android:layout_marginTop="2dp" />
+                android:layout_marginTop="4dp" />
 
             <LinearLayout
                 android:id="@+id/tagsContainer"

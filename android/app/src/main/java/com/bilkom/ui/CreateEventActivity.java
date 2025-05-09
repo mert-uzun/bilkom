@@ -1,5 +1,6 @@
 package com.bilkom.ui;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,12 +13,15 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import com.bilkom.model.EventRequest;
 import com.bilkom.network.ApiService;
 import com.bilkom.network.RetrofitClient;
+import com.bilkom.utils.DateUtils;
 import com.bilkom.utils.SecureStorage;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,6 +45,9 @@ public class CreateEventActivity extends BaseActivity {
         eventDescriptionEdit = findViewById(R.id.eventDescriptionEdit);
         tagsContainer = findViewById(R.id.tagsContainer);
         submitEventButton = findViewById(R.id.submitEventButton);
+        
+        // Set up date picker for eventDateEdit
+        setupDatePicker();
 
         // Sample tags (replace with dynamic tags if needed)
         List<String> tagList = new ArrayList<>();
@@ -87,7 +94,7 @@ public class CreateEventActivity extends BaseActivity {
             // Validate form
             String name = eventNameEdit.getText().toString().trim();
             String location = eventLocationEdit.getText().toString().trim();
-            String date = eventDateEdit.getText().toString().trim();
+            String dateStr = eventDateEdit.getText().toString().trim();
             String maxParticipantsStr = maxParticipantsEdit.getText().toString().trim();
             String description = eventDescriptionEdit.getText().toString().trim();
             List<String> tags = new ArrayList<>(selectedTags);
@@ -99,8 +106,10 @@ public class CreateEventActivity extends BaseActivity {
             if (location.isEmpty()) {
                 eventLocationEdit.setError("Required"); valid = false;
             }
-            if (date.isEmpty()) {
+            if (dateStr.isEmpty()) {
                 eventDateEdit.setError("Required"); valid = false;
+            } else if (!DateUtils.isValidDateFormat(dateStr)) {
+                eventDateEdit.setError("Invalid date format (YYYY-MM-DD)"); valid = false;
             }
             if (maxParticipantsStr.isEmpty()) {
                 maxParticipantsEdit.setError("Required"); valid = false;
@@ -123,8 +132,12 @@ public class CreateEventActivity extends BaseActivity {
             }
             if (!valid) return;
 
+            // Format date for API
+            Date eventDate = DateUtils.parseUserInputDate(dateStr);
+            String formattedDate = DateUtils.formatApiDate(eventDate);
+            
             // Prepare request
-            EventRequest request = new EventRequest(name, description, location, date, maxParticipants, tags);
+            EventRequest request = new EventRequest(name, description, location, formattedDate, maxParticipants, tags);
             SecureStorage secureStorage = new SecureStorage(this);
             String token = secureStorage.getAuthToken();
             ApiService apiService = RetrofitClient.getInstance().getApiService();
@@ -148,6 +161,34 @@ public class CreateEventActivity extends BaseActivity {
                     Toast.makeText(CreateEventActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
+        });
+    }
+    
+    /**
+     * Set up a date picker dialog for the event date field
+     */
+    private void setupDatePicker() {
+        eventDateEdit.setOnClickListener(v -> {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new DatePickerDialog and show it
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    this,
+                    (view, selectedYear, selectedMonth, selectedDay) -> {
+                        // Format the date in YYYY-MM-DD format
+                        String formattedDate = String.format("%04d-%02d-%02d", 
+                                selectedYear, selectedMonth + 1, selectedDay);
+                        eventDateEdit.setText(formattedDate);
+                    },
+                    year, month, day);
+            
+            // Set min date to today
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+            datePickerDialog.show();
         });
     }
 } 
