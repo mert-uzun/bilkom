@@ -43,8 +43,8 @@ public class Event {
     private User creator;
 
     @ManyToOne
-    @JoinColumn(name = "club_id", nullable = false, columnDefinition = "BIGINT")
-    private Club club;
+    @JoinColumn(name = "club_id", nullable = false)
+    private Club club;  
 
     @Column(name = "is_club_event", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean isClubEvent;

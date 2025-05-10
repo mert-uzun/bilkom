@@ -39,10 +39,10 @@ public class EmergencyAlertService {
     @Autowired
     private NotificationService notificationService;
 
-    @Value("${gmail.username}")
+    @Value("${spring.mail.username}")
     private String email;
 
-    @Value("${gmail.password}")
+    @Value("${spring.mail.password}")
     private String appPassword;
 
     /**

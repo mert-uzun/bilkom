@@ -48,14 +48,14 @@ public interface ClubMembershipRequestRepository extends JpaRepository<ClubMembe
     /**
      * Finds a membership request by member and club.
      * 
-     * @param member The member
+     * @param user The member
      * @param club The club
      * @return the membership request
      * 
      * @author Mert Uzun
      * @version 1.0
      */
-    ClubMembershipRequest findByMemberandClub(User member, Club club);
+    ClubMembershipRequest findByUserAndClub(User user, Club club);
     
     /**
      * Finds all membership requests with a specific status from a user.

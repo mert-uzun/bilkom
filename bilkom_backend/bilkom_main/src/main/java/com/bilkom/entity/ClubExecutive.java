@@ -8,19 +8,23 @@ import java.sql.Timestamp;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
+
 import java.util.Objects;
 
 @Entity
 @Table(name = "club_executives")
+@IdClass(ClubExecutivePK.class)
 public class ClubExecutive {
     @Id
     @OneToOne
     @JoinColumn(name = "executive_id", referencedColumnName = "user_id", nullable = false, columnDefinition = "BIGINT")
     private User user;
 
+    @Id
     @ManyToOne
-    @JoinColumn(name = "club_id", nullable = false, columnDefinition = "BIGINT")
-    private Club club;
+    @JoinColumn(name = "club_id", nullable = false)
+    private Club club;    
 
     @Column(name = "position", nullable = false, columnDefinition = "VARCHAR(255)")
     private String position;
