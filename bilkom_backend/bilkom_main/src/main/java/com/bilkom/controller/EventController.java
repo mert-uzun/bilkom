@@ -26,7 +26,7 @@ import java.util.Map;
  * @author Elif Bozkurt
  */
 @RestController
-@RequestMapping("/api/events")
+@RequestMapping("/events")
 public class EventController {
 
     @Autowired

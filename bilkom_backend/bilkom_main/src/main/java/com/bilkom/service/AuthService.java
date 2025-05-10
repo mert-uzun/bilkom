@@ -61,9 +61,9 @@ public class AuthService {
      */
     public AuthResponse register(RegistrationRequest request) {
         // Check if email already exists
-        if (userRepository.existsByEmail(request.getEmail())) {
+        /*if (userRepository.existsByEmail(request.getEmail())) {
             throw new BadRequestException("Email already registered");
-        }
+        }*/ // for testing purposes, we are not checking email existence
 
         // Check if Bilkent ID exists
         if (userRepository.existsByBilkentId(request.getBilkentId())) {
@@ -71,9 +71,9 @@ public class AuthService {
         }
 
         // Check if phone number exists
-        if (userRepository.existsByPhoneNumber(request.getPhoneNumber())) {
+        /*if (userRepository.existsByPhoneNumber(request.getPhoneNumber())) {
             throw new BadRequestException("Phone number already registered");
-        }
+        }*/ // for testing purposes, we are not checking phone number existence
         
         // Validate phone number format
         if (!request.getPhoneNumber().matches("^[+]?\\d{10,15}$")) {

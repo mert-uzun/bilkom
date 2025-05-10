@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/admin")
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 

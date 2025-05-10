@@ -37,17 +37,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private CustomUserDetailsService userDetailsService;
 
     /**
-     * Filter implementation that validates JWT tokens and sets authentication.
+     * Filters incoming requests to check for JWT token in the Authorization header.
+     * If a valid token is found, it sets the authentication in the security context.
+     * This method is called for every request to the application.
      * 
-     * @param request The HTTP request
-     * @param response The HTTP response
-     * @param filterChain The filter chain
-     * @throws ServletException If a servlet exception occurs
-     * @throws IOException If an I/O exception occurs
+     * @author Elif Bozkurt
+     * @version 2.0
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+        String path = request.getServletPath();
+
+        // Skip authentication for public endpoints
+        if (path.startsWith("/api/auth") || path.startsWith("/ws")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         try {
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateToken(jwt)) {
@@ -63,9 +70,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             logger.error("Cannot set user authentication: {}", e.getMessage());
         }
-        
+
         filterChain.doFilter(request, response);
     }
+
 
     /**
      * Extracts JWT token from Authorization header.

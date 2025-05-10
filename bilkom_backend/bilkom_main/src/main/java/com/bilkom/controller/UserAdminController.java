@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/api/admin/users")
+@RequestMapping("/admin/users")
 @PreAuthorize("hasRole('ADMIN')")
 public class UserAdminController {
 

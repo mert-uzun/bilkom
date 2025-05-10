@@ -20,7 +20,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/api/clubs/membership-requests")
+@RequestMapping("/clubs/membership-requests")
 public class ClubMembershipRequestController {
     
     @Autowired
