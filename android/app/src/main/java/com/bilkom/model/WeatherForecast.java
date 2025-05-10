@@ -3,18 +3,49 @@
 // temperature, description, humidity, windSpeed, iconCode and location
 package com.bilkom.model;
 
+import com.google.gson.annotations.SerializedName;
+
+/**
+ * Data model for weather forecast information.
+ * Designed to match the backend WeatherDto.
+ * Updated to match the backend WeatherDto.
+ * 
+ * @author Mert Uzun and Elif Bozkurt
+ * @version 2.0
+ * @since 2025-05-09
+ */
 public class WeatherForecast {
+    @SerializedName("description")
     private String description;
+    
+    @SerializedName("temperature")
     private double temperature;
-    private double precipitation;
+    
+    @SerializedName("feelsLike")
+    private double feelsLike;
+    
+    @SerializedName("humidity")
     private int humidity;
+    
+    @SerializedName("windSpeed")
     private double windSpeed;
+    
+    @SerializedName("windDirection")
+    private String windDirection;
+    
+    @SerializedName("iconCode")
     private String iconCode;
+    
+    @SerializedName("location")
     private String location;
+    
+    @SerializedName("timestamp")
+    private String timestamp;
 
     public WeatherForecast() {
     }
 
+    // GETTERS AND SETTERS
     public String getDescription() {
         return description;
     }
@@ -31,12 +62,12 @@ public class WeatherForecast {
         this.temperature = temperature;
     }
 
-    public double getPrecipitation() {
-        return precipitation;
+    public double getFeelsLike() {
+        return feelsLike;
     }
 
-    public void setPrecipitation(double precipitation) {
-        this.precipitation = precipitation;
+    public void setFeelsLike(double feelsLike) {
+        this.feelsLike = feelsLike;
     }
 
     public int getHumidity() {
@@ -55,6 +86,14 @@ public class WeatherForecast {
         this.windSpeed = windSpeed;
     }
 
+    public String getWindDirection() {
+        return windDirection;
+    }
+
+    public void setWindDirection(String windDirection) {
+        this.windDirection = windDirection;
+    }
+
     public String getIconCode() {
         return iconCode;
     }
@@ -69,5 +108,25 @@ public class WeatherForecast {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+    
+    /**
+     * Get icon URL based on the icon code
+     * @return Full URL to the weather icon
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     * @since 2025-05-09
+     */
+    public String getIconUrl() {
+        return "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
     }
 } 
