@@ -13,16 +13,16 @@ import jakarta.persistence.Column;
 @Entity
 @Table(name = "club_members")
 @IdClass(ClubMemberPK.class)
-public class ClubMember {
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "club_id", nullable = false, columnDefinition = "INT")
-    private Club club;
-
+public class ClubMember {  
     @Id
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false, columnDefinition = "BIGINT")
     private User member;
+
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "club_id", nullable = false)
+    private Club club;  
 
     @Column(name = "join_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp joinDate;

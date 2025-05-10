@@ -21,8 +21,8 @@ import java.util.Objects;
 public class Club {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "club_id", nullable = false, columnDefinition = "INT")
-    private Long clubId;
+    @Column(name = "club_id")
+    private Long clubId;      
 
     @Column(name = "club_name", nullable = false, columnDefinition = "VARCHAR(255)")
     private String clubName;

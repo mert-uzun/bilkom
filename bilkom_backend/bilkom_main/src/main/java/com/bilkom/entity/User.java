@@ -57,8 +57,8 @@ public class User {
     @Column(name = "is_active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean isActive = true;
 
-    @Column(name = "last_login", nullable = false, columnDefinition = "TIMESTAMP DEFAULT created_at")
-    private Timestamp lastLogin;
+    @Column(name = "last_login", nullable = false)
+    private Timestamp lastLogin;    
     
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role", nullable = false, columnDefinition = "ENUM('USER', 'CLUB_HEAD', 'ADMIN') DEFAULT 'USER'")
@@ -101,6 +101,12 @@ public class User {
 
     @Column(name = "fcm_token", columnDefinition = "TEXT")
     private String fcmToken;
+
+    @jakarta.persistence.PrePersist
+    protected void onCreate() {
+        if (createdAt == null) createdAt = new Timestamp(System.currentTimeMillis());
+        if (lastLogin == null) lastLogin = createdAt;
+    }
 
     @Override
     public String toString() {

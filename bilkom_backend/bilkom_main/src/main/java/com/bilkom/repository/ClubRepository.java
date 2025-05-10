@@ -31,5 +31,4 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
     List<Club> findByIsActiveTrueAndStatus(ClubRegistrationStatus status);
     List<Club> findByIsActiveFalseAndStatus(ClubRegistrationStatus status);
     List<Club> findByStatusAndIsActive(ClubRegistrationStatus status, boolean isActive);
-    List<Club> findByUserUserIdAndClubClubIdAndIsActiveTrue(Long userId, Long clubId);
 }

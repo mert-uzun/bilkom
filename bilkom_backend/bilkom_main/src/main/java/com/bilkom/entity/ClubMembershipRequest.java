@@ -25,7 +25,7 @@ public class ClubMembershipRequest {
     
     @ManyToOne
     @JoinColumn(name = "club_id", nullable = false)
-    private Club club;
+    private Club club;  
     
     @Column(name = "request_message", columnDefinition = "TEXT")
     private String requestMessage;
