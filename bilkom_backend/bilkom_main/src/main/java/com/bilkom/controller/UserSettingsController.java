@@ -23,7 +23,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/api/user-settings")
+@RequestMapping("/user-settings")
 public class UserSettingsController {
 
     @Autowired

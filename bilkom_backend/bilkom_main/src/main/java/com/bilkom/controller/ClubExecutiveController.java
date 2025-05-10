@@ -21,7 +21,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/api/clubs/executives")
+@RequestMapping("/clubs/executives")
 public class ClubExecutiveController {
 
     @Autowired

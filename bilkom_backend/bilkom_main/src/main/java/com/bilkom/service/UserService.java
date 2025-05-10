@@ -34,8 +34,7 @@ public class UserService {
     
     // Valid blood types
     private static final Set<String> VALID_BLOOD_TYPES = new HashSet<>(
-        Arrays.asList("A Rh (+)", "A Rh (-)", "B Rh (+)", "B Rh (-)", 
-                      "AB Rh (+)", "AB Rh (-)", "O Rh (+)", "O Rh (-)")
+        Arrays.asList("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
     );
 
     @Autowired

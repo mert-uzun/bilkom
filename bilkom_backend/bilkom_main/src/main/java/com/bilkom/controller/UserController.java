@@ -17,7 +17,7 @@ import com.bilkom.service.ClubMemberService;
 import com.bilkom.service.ClubService;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired

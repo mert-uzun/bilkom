@@ -16,7 +16,7 @@ import java.util.List;
  * @version 1.0
  */
 @RestController
-@RequestMapping(path = "/api/v1/emergency-alerts")
+@RequestMapping(path = "/v1/emergency-alerts")
 public class EmergencyAlertController {
     private final EmergencyAlertService emergencyAlertService;
 

@@ -6,14 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * WeatherController is responsible for handling HTTP requests related to weather information.
+ * WeatherController is responsible for handling HTTP requests related to
+ * weather information.
  * It provides an endpoint for fetching the current weather data.
  *
  * @author Elif Bozkurt
  * @version 1.0
  */
 @RestController
-@RequestMapping("/api/weather")
+@RequestMapping("/weather")
 public class WeatherController {
 
     @Autowired

@@ -19,7 +19,7 @@ import jakarta.validation.Valid;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/api/clubs/registration")
+@RequestMapping("/clubs/registration")
 public class ClubRegistrationController {
 
     @Autowired

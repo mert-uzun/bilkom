@@ -17,7 +17,7 @@ import java.util.List;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/api/news")
+@RequestMapping("/news")
 public class NewsController {
 
     @Autowired
