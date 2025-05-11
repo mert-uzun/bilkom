@@ -9,18 +9,20 @@ import com.bilkom.exception.BadRequestException;
 import com.bilkom.service.AuthService;
 import com.bilkom.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 
 /**
  * Controller for user settings operations.
- * Provides endpoints for users to update their profile, change password, and logout.
+ * Provides endpoints for users to update their profile, password, preferences, and privacy settings.
  * 
- * @author Mert Uzun
- * @version 1.0
+ * @author Elif Bozkurt
+ * @version 2.0
  */
 @RestController
 @RequestMapping("/user-settings")
@@ -28,145 +30,148 @@ public class UserSettingsController {
 
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private AuthService authService;
-    
+
     /**
-     * Gets the current user's profile.
+     * Verifies that the currently authenticated user is allowed to access the given userId.
      * 
-     * @param userId The user ID
-     * @return The user's profile
+     * @param userId the ID of the user being accessed
+     * @throws ResponseStatusException if the authenticated user is not authorized
      * 
-     * @author Mert Uzun
-     * @version 1.0
+     * @author Elif Bozkurt
+     * @version 2.0
+     */
+    private void verifyUserAccess(Long userId) {
+        String currentEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        String targetEmail = userService.getUserById(userId).getEmail();
+        if (!currentEmail.equals(targetEmail)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
+        }
+    }
+
+    /**
+     * Retrieves the profile of a specific user.
+     *
+     * @param userId the user ID
+     * @return the user's profile
+     * 
+     * @author Elif Bozkurt
+     * @version 2.0
      */
     @GetMapping("/profile/{userId}")
-    @PreAuthorize("authentication.principal.username == @userService.getUserById(#userId).email")
     public ResponseEntity<UserDTO> getUserProfile(@PathVariable("userId") Long userId) {
+        verifyUserAccess(userId);
         User user = userService.getUserById(userId);
         return ResponseEntity.ok(new UserDTO(user));
     }
-    
+
     /**
-     * Updates the user's profile information.
+     * Updates a user's profile information.
+     *
+     * @param userId the user ID
+     * @param userDetails the updated user information
+     * @return the updated user profile
      * 
-     * @param userId The user ID
-     * @param userDetails The updated user details
-     * @return The updated user profile
-     * 
-     * @author Mert Uzun
-     * @version 1.0
+     * @author Elif Bozkurt
+     * @version 2.0
      */
     @PutMapping("/profile/{userId}")
-    @PreAuthorize("authentication.principal.username == @userService.getUserById(#userId).email")
     public ResponseEntity<UserDTO> updateProfile(@PathVariable("userId") Long userId, @RequestBody User userDetails) {
+        verifyUserAccess(userId);
         User user = userService.getUserById(userId);
-        
-        // Only update allowed fields (not allowing email change here for security)
-        if (userDetails.getFirstName() != null){
-            user.setFirstName(userDetails.getFirstName());  
-        }
-        if (userDetails.getLastName() != null){
-            user.setLastName(userDetails.getLastName());
-        }
-        if (userDetails.getPhoneNumber() != null){
-            user.setPhoneNumber(userDetails.getPhoneNumber());
-        }
-        if (userDetails.getBloodType() != null){
-            user.setBloodType(userDetails.getBloodType());
-        }
-        
+
+        if (userDetails.getFirstName() != null) user.setFirstName(userDetails.getFirstName());
+        if (userDetails.getLastName() != null) user.setLastName(userDetails.getLastName());
+        if (userDetails.getPhoneNumber() != null) user.setPhoneNumber(userDetails.getPhoneNumber());
+        if (userDetails.getBloodType() != null) user.setBloodType(userDetails.getBloodType());
+
         User updatedUser = userService.updateUser(userId, user);
         return ResponseEntity.ok(new UserDTO(updatedUser));
     }
-    
+
     /**
      * Changes the user's password.
+     *
+     * @param userId the user ID
+     * @param passwordData a map containing "currentPassword" and "newPassword"
+     * @return an authentication response
      * 
-     * @param userId The user ID
-     * @param passwordData Map containing current and new password
-     * @return Response indicating success or failure
-     * 
-     * @author Mert Uzun
-     * @version 1.0
+     * @author Elif Bozkurt
+     * @version 2.0
      */
     @PostMapping("/change-password/{userId}")
-    @PreAuthorize("authentication.principal.username == @userService.getUserById(#userId).email")
     public ResponseEntity<AuthResponse> changePassword(@PathVariable("userId") Long userId, @RequestBody Map<String, String> passwordData) {
-        
+        verifyUserAccess(userId);
+
         String currentPassword = passwordData.get("currentPassword");
         String newPassword = passwordData.get("newPassword");
-        
+
         if (currentPassword == null || newPassword == null) {
             throw new BadRequestException("Current password and new password are required");
         }
-        
+
         return ResponseEntity.ok(authService.changePassword(userId, currentPassword, newPassword));
     }
-    
+
     /**
-     * Logs out the current user.
+     * Logs out the current user by invalidating the JWT token.
+     *
+     * @param userId the user ID
+     * @param authHeader the Authorization header containing the JWT
+     * @return an authentication response
      * 
-     * @param userId The user ID
-     * @param authHeader The Authorization header containing the JWT token
-     * @return Response indicating success
-     * 
-     * @author Mert Uzun
-     * @version 1.0
+     * @author Elif Bozkurt
+     * @version 2.0
      */
     @PostMapping("/logout/{userId}")
-    @PreAuthorize("authentication.principal.username == @userService.getUserById(#userId).email")
     public ResponseEntity<AuthResponse> logout(@PathVariable("userId") Long userId, @RequestHeader(value = "Authorization", required = false) String authHeader) {
+        verifyUserAccess(userId);
         return ResponseEntity.ok(authService.logout(userId, authHeader));
     }
-    
+
     /**
-     * Updates the user's notification preferences.
+     * Updates the user's email and SMS notification preferences.
+     *
+     * @param userId the user ID
+     * @param preferences a map containing "emailNotifications" and/or "smsNotifications"
+     * @return the updated user profile
      * 
-     * @param userId The user ID
-     * @param preferences Map of notification preferences
-     * @return The updated user profile
-     * 
-     * @author Mert Uzun
-     * @version 1.0
+     * @author Elif Bozkurt
+     * @version 2.0
      */
     @PutMapping("/notifications/{userId}")
-    @PreAuthorize("authentication.principal.username == @userService.getUserById(#userId).email")
     public ResponseEntity<UserDTO> updateNotificationPreferences(@PathVariable("userId") Long userId, @RequestBody Map<String, Boolean> preferences) {
-        
+        verifyUserAccess(userId);
         User user = userService.getUserById(userId);
-        
-        // Update notification preferences using the added fields
+
         if (preferences.containsKey("emailNotifications")) {
             user.setEmailNotificationsEnabled(preferences.get("emailNotifications"));
         }
-        
         if (preferences.containsKey("smsNotifications")) {
             user.setSmsNotificationsEnabled(preferences.get("smsNotifications"));
         }
-        
+
         User updatedUser = userService.updateUser(userId, user);
         return ResponseEntity.ok(new UserDTO(updatedUser));
     }
-    
+
     /**
      * Updates the user's privacy settings.
+     *
+     * @param userId the user ID
+     * @param settings a map containing the "profileVisibility" setting
+     * @return the updated user profile
      * 
-     * @param userId The user ID
-     * @param settings Map of privacy settings
-     * @return The updated user profile
-     * 
-     * @author Mert Uzun
-     * @version 1.0
+     * @author Elif Bozkurt
+     * @version 2.0
      */
     @PutMapping("/privacy/{userId}")
-    @PreAuthorize("authentication.principal.username == @userService.getUserById(#userId).email")
     public ResponseEntity<UserDTO> updatePrivacySettings(@PathVariable("userId") Long userId, @RequestBody Map<String, String> settings) {
-        
+        verifyUserAccess(userId);
         User user = userService.getUserById(userId);
-        
-        // Update privacy settings using the added enum
+
         if (settings.containsKey("profileVisibility")) {
             try {
                 User.ProfileVisibility visibility = User.ProfileVisibility.valueOf(settings.get("profileVisibility").toUpperCase());
@@ -175,43 +180,43 @@ public class UserSettingsController {
                 throw new BadRequestException("Invalid profile visibility value. Valid values are: PUBLIC, MEMBERS, PRIVATE");
             }
         }
-        
+
         User updatedUser = userService.updateUser(userId, user);
         return ResponseEntity.ok(new UserDTO(updatedUser));
     }
-    
+
     /**
-     * Gets all available avatars.
+     * Retrieves the list of all available avatar image paths.
+     *
+     * @return a list of avatar paths
      * 
-     * @return List of all available avatars with paths
-     * 
-     * @author Mert Uzun
-     * @version 1.0
+     * @author Elif Bozkurt
+     * @version 2.0
      */
     @GetMapping("/avatars")
     public ResponseEntity<AvatarListResponse> getAvatars() {
         return ResponseEntity.ok(new AvatarListResponse());
     }
-    
+
     /**
-     * Updates the user's avatar.
+     * Updates the user's avatar image path.
+     *
+     * @param userId the user ID
+     * @param request the avatar update request
+     * @return the updated user profile
      * 
-     * @param userId The user ID
-     * @param request The avatar update request containing the avatar path
-     * @return The updated user profile
-     * 
-     * @author Mert Uzun
-     * @version 1.0
+     * @author Elif Bozkurt
+     * @version 2.0
      */
     @PutMapping("/avatar/{userId}")
-    @PreAuthorize("authentication.principal.username == @userService.getUserById(#userId).email")
     public ResponseEntity<UserDTO> updateAvatar(@PathVariable("userId") Long userId, @RequestBody AvatarUpdateRequest request) {
-        
+        verifyUserAccess(userId);
+
         if (request.getAvatarPath() == null || request.getAvatarPath().isEmpty()) {
             throw new BadRequestException("Avatar path is required");
         }
-        
+
         User updatedUser = userService.updateAvatar(userId, request.getAvatarPath());
         return ResponseEntity.ok(new UserDTO(updatedUser));
     }
-} 
+}

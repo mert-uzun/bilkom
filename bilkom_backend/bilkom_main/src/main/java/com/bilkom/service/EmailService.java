@@ -132,9 +132,8 @@ public class EmailService {
         context.setVariable("rejectUrl", rejectUrl);
         
         // Process the template
-        String emailContent = templateEngine.process("bilkom_backend\\bilkom_main\\src\\main\\resources\\email_templates\\club-registration-verification.html", context);
-        
-        // Create and send the email
+        String emailContent = templateEngine.process("club-registration-verification", context);
+
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
         

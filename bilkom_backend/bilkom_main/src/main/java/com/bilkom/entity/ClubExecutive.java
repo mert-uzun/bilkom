@@ -12,6 +12,8 @@ import jakarta.persistence.IdClass;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "club_executives")
 @IdClass(ClubExecutivePK.class)
@@ -19,11 +21,13 @@ public class ClubExecutive {
     @Id
     @OneToOne
     @JoinColumn(name = "executive_id", referencedColumnName = "user_id", nullable = false, columnDefinition = "BIGINT")
+    @JsonIgnore
     private User user;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "club_id", nullable = false)
+    @JsonIgnore
     private Club club;    
 
     @Column(name = "position", nullable = false, columnDefinition = "VARCHAR(255)")
