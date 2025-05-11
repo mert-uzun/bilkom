@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * ReportRequest class for reporting a user or a post
  * 
- * @author Mert Uzun
+ * @author Mert Uzun and Sıla Bozkurt
  * @version 1.0
  * @since 2025-05-09
  */
@@ -19,7 +19,7 @@ public class ReportRequest {
     @SerializedName("reporterComments")
     private String reporterComments;
 
-    // CONSTRUCTORS
+    
     public ReportRequest() {
     }
 
@@ -33,7 +33,6 @@ public class ReportRequest {
         this.reporterComments = reporterComments;
     }
 
-    // GETTERS AND SETTERS
     public String getReason() {
         return reason;
     }

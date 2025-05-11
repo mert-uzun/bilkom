@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
  * Updated to match the backend WeatherDto.
  * 
  * @author Mert Uzun and Elif Bozkurt
- * @version 2.0
+ * @version 1.0
  * @since 2025-05-09
  */
 public class WeatherForecast {
@@ -45,7 +45,6 @@ public class WeatherForecast {
     public WeatherForecast() {
     }
 
-    // GETTERS AND SETTERS
     public String getDescription() {
         return description;
     }

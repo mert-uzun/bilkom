@@ -2,80 +2,54 @@
 // it is used to store the email, password, firstName, lastName, bilkentId, phoneNumber and bloodType from the user 
 package com.bilkom.model;
 
+import com.google.gson.annotations.SerializedName;
+
+/**
+ * RegistrationRequest class for user registration
+ * 
+ * @author Sıla Bozkurt
+ * @version 1.0
+ * @since 2025-05-11
+ */
+
 public class RegistrationRequest {
-    private String email;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private String bilkentId;
-    private String phoneNumber;
-    private String bloodType;
 
-    public RegistrationRequest(String email, String password, String firstName, String lastName, 
-                             String bilkentId, String phoneNumber, String bloodType) {
-        this.email = email;
-        this.password = password;
+    @SerializedName("firstName") private String firstName;
+    @SerializedName("lastName")  private String lastName;
+    @SerializedName("email")     private String email;
+    @SerializedName("password")  private String password;
+    @SerializedName("bilkentId") private String bilkentId;
+    @SerializedName("phone")     private String phone;
+
+    public RegistrationRequest() { }
+
+    public RegistrationRequest(String firstName, String lastName,
+                               String email, String password,
+                               String bilkentId, String phone) {
         this.firstName = firstName;
-        this.lastName = lastName;
+        this.lastName  = lastName;
+        this.email     = email;
+        this.password  = password;
         this.bilkentId = bilkentId;
-        this.phoneNumber = phoneNumber;
-        this.bloodType = bloodType;
+        this.phone     = phone;
     }
 
-    // Getters and Setters
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getFirstName() { return firstName; }
+    public void   setFirstName(String firstName) { this.firstName = firstName; }
 
-    public String getPassword() {
-        return password;
-    }
+    public String getLastName()  { return lastName; }
+    public void   setLastName(String lastName)  { this.lastName = lastName; }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public String getEmail()     { return email; }
+    public void   setEmail(String email) { this.email = email; }
 
-    public String getFirstName() {
-        return firstName;
-    }
+    public String getPassword()  { return password; }
+    public void   setPassword(String password) { this.password = password; }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    public String getBilkentId() { return bilkentId; }
+    public void   setBilkentId(String bilkentId) { this.bilkentId = bilkentId; }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getBilkentId() {
-        return bilkentId;
-    }
-
-    public void setBilkentId(String bilkentId) {
-        this.bilkentId = bilkentId;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getBloodType() {
-        return bloodType;
-    }
-
-    public void setBloodType(String bloodType) {
-        this.bloodType = bloodType;
-    }
-} 
+    public String getPhone()     { return phone; }
+    public void   setPhone(String phone) { this.phone = phone; }
+}

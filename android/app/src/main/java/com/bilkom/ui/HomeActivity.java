@@ -1,6 +1,11 @@
-// this is the home activity class for the home page
-// it is used to store the home page content
-// it extends the BaseActivity class to show the menu 
+/**
+ * @author Sıla Bozkurt
+ * @version 1.0
+ * 
+ * This is the home activity class for the home page.
+ * It is used to store the home page content.
+ * It extends the BaseActivity class to show the menu.
+ */
 package com.bilkom.ui;
 
 import android.content.Intent;
@@ -33,8 +38,7 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         setupNavigationDrawer();
-        
-        // Inflate the home content into the content frame
+      
         getLayoutInflater().inflate(R.layout.activity_home, findViewById(R.id.contentFrame));
 
         initializeViews();
@@ -105,4 +109,4 @@ public class HomeActivity extends BaseActivity {
                 }
             });
     }
-} 
+}

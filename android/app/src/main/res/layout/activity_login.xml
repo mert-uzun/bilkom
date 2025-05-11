@@ -1,76 +1,84 @@
 <!--this is the activity_login.xml file for the login activity
 it extends the LinearLayout class to show the login activity content-->
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/login_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center">
+    android:layout_height="match_parent"    
+    android:background="@color/card_bg_dark"      
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="24dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginBottom="32dp">
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:contentDescription="@string/app_logo"
+        android:src="@drawable/ic_bilkom_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/bilkom_logo"
-            android:contentDescription="Bilkom Logo"/>
-    </LinearLayout>
-
+    <!-- E-mail -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emailLayout"
-        android:layout_width="match_parent"
+        android:id="@+id/til_email"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
+        app:layout_constraintTop_toBottomOf="@id/img_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/emailInput"
+            android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Bilkent Email"
-            android:inputType="textEmailAddress"/>
+            android:hint="@string/email"
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Password -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordLayout"
-        android:layout_width="match_parent"
+        android:id="@+id/til_password"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp">
+        app:layout_constraintTop_toBottomOf="@id/til_email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/passwordInput"
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"/>
+            android:hint="@string/password"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Log-in -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/loginButton"
-        android:layout_width="match_parent"
+        android:id="@+id/btn_login"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:padding="12dp"/>
+        android:text="@string/login"
+        app:layout_constraintTop_toBottomOf="@id/til_password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
 
+    <!-- Register link -->
     <TextView
-        android:id="@+id/registerText"
+        android:id="@+id/tv_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No account? Register"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/design_default_color_primary"/>
+        android:text="@string/no_account_register"
+        app:layout_constraintTop_toBottomOf="@id/btn_login"
+        app:layout_constraintEnd_toEndOf="@id/btn_login"
+        android:layout_marginTop="12dp" />
 
-    <TextView
-        android:id="@+id/forgotPasswordText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Forgot password?"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/design_default_color_primary"/>
-
-</LinearLayout> 
+</androidx.constraintlayout.widget.ConstraintLayout>
