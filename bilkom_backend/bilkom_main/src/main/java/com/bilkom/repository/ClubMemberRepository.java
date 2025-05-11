@@ -148,6 +148,7 @@ public interface ClubMemberRepository extends JpaRepository<ClubMember, ClubMemb
      * @version 1.0
      */
     boolean existsByMemberUserIdAndClubClubIdAndIsActiveTrue(Long userId, Long clubId);
+    
 
     /**
      * Counts all active club members by club.

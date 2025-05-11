@@ -35,9 +35,6 @@ By bringing all these features together, Bilkom not only enhances the social and
 - **Emergency Alerts & Community Response:**  
   Get instant notifications during emergencies such as fires, accidents, or urgent health situations.
 
-- **Carpooling & Travel Coordination:**  
-  Organize rides for daily commutes or weekend trips, fostering a culture of shared transportation and sustainability.
-
 - **Real-Time Weather & News Feed:**  
   Stay updated with accurate weather forecasts and the latest Bilkent University news directly from the homepage.
 
@@ -55,10 +52,10 @@ By bringing all these features together, Bilkom not only enhances the social and
 - **Real-Time Communication:** WebSockets for emergency alerts and messaging
 
 ### Frontend
-- **Core Technologies:** Android Studio (Java), Android SDK, XML Layouts
-- **Styling:** Material Components, custom themes (colors.xml, themes.xml), vector drawables with tinting , optional shape-based styles for elevation and corner radius.
+- **Core Technologies:** Android Studio (Java), Android SDK, XML Layouts  
+- **Styling:** Material Components, custom themes (`colors.xml`, `themes.xml`), vector drawables with tinting, optional shape-based styles for elevation and corner radius  
 - **APIs:**  
-  - Google Maps API / OpenStreetMap API for carpooling and location services  
+  - Google Maps API / OpenStreetMap API for location services  
   - OpenWeatherMap API for real-time weather updates  
   - RSS Feed Parsing/JSoup for integrating Bilkent news
 
@@ -85,7 +82,6 @@ By bringing all these features together, Bilkom not only enhances the social and
 - Fire, accident, blood donation, etc.  
 - Uses WebSocket for instant broadcast
 
-
 ### News & Weather Feed
 - Pulls news from:
   - [https://bilkentnews.bilkent.edu.tr/](https://bilkentnews.bilkent.edu.tr/)
@@ -98,8 +94,8 @@ By bringing all these features together, Bilkom not only enhances the social and
 
 **Group0 – CS102 (Spring 2024/2025)**
 
-- **Salih Mert Uzun**
-- **Sıla Bozkurt**
-- **Elif Bozkurt**   
-- **Ali İhsan Sevindi** 
-
+- **Salih Mert Uzun**  
+- **Sıla Bozkurt**  
+- **Elif Bozkurt**  
+- **Utku Kabukçu**  
+- **Ali İhsan Sevindi**

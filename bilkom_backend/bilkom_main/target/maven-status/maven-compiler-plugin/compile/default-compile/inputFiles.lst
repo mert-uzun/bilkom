@@ -13,6 +13,7 @@ C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\c
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\dto\ClubMemberDTO.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\service\WeatherService.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\entity\Tag.java
+C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\exception\ApiError.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\entity\User.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\repository\EventParticipantRepository.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\service\NotificationService.java
@@ -30,6 +31,7 @@ C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\c
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\entity\ClubMemberPK.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\service\ClubMemberService.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\controller\EmergencyAlertController.java
+C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\exception\GlobalExceptionHandler.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\entity\EventParticipant.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\controller\ClubExecutiveController.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\config\WebConfig.java
@@ -49,6 +51,7 @@ C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\c
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\repository\ClubRepository.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\dto\ClubDTO.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\dto\AvatarListResponse.java
+C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\exception\NotFoundException.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\dto\LoginRequest.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\config\EmailConfig.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\dto\AvatarUpdateRequest.java
@@ -56,6 +59,7 @@ C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\c
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\entity\Event.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\enums\AvatarRelativePaths.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\service\TokenBlacklistService.java
+C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\config\CacheConfig.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\controller\ClubController.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\dto\ApiResponse.java
 C:\Users\2007e\Desktop\Project\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\security\CustomUserDetailsService.java

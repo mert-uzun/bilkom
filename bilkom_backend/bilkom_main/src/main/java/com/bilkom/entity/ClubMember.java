@@ -8,6 +8,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import java.sql.Timestamp;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 
 @Entity
@@ -17,6 +20,7 @@ public class ClubMember {
     @Id
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false, columnDefinition = "BIGINT")
+    @JsonIgnore
     private User member;
 
     @Id
