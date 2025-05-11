@@ -35,9 +35,6 @@ By bringing all these features together, Bilkom not only enhances the social and
 - **Emergency Alerts & Community Response:**  
   Get instant notifications during emergencies such as fires, accidents, or urgent health situations.
 
-- **Carpooling & Travel Coordination:**  
-  Organize rides for daily commutes or weekend trips, fostering a culture of shared transportation and sustainability.
-
 - **Real-Time Weather & News Feed:**  
   Stay updated with accurate weather forecasts and the latest Bilkent University news directly from the homepage.
 
@@ -84,11 +81,6 @@ By bringing all these features together, Bilkom not only enhances the social and
 ### Emergency Alerts
 - Fire, accident, blood donation, etc.  
 - Uses WebSocket for instant broadcast
-
-### Carpooling
-- Offer/request ride → verified only  
-- Includes GPS + messaging + report button  
-- Optional: share live location
 
 ### News & Weather Feed
 - Pulls news from:
