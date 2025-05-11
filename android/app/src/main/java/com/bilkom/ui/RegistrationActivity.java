@@ -1,4 +1,9 @@
-// this is the registration activity class for the registration page
+/**
+ * This is the registration activity class for the registration page.
+ * 
+ * @author Sıla Bozkurt
+ * @version 1.0
+ */
 package com.bilkom.ui;
 
 import android.content.Intent;
@@ -56,8 +61,6 @@ public class RegistrationActivity extends AppCompatActivity {
         String email = emailInput.getText().toString().trim();
         String password = passwordInput.getText().toString().trim();
         String firstName = firstNameInput.getText().toString().trim();
-        String lastName = lastNameInput.getText().toString().trim();
-        String bilkentId = bilkentIdInput.getText().toString().trim();
         String phoneNumber = phoneNumberInput.getText().toString().trim();
         String bloodType = bloodTypeInput.getText().toString().trim();
 

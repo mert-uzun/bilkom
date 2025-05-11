@@ -20,6 +20,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * LoginActivity handles the login functionality for the application.
+ * It validates user inputs, communicates with the API for authentication,
+ * and navigates to the main screen upon successful login.
+ * 
+ * @author : Sıla Bozkurt
+ */
 public class LoginActivity extends AppCompatActivity {
     private TextInputEditText emailInput, passwordInput;
     private TextInputLayout emailLayout, passwordLayout;

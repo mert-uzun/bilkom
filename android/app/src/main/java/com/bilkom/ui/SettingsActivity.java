@@ -11,10 +11,13 @@ import com.bilkom.model.User;
 import com.bilkom.network.RetrofitClient;
 import com.bilkom.utils.SecureStorage;
 import com.google.android.material.button.MaterialButton;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
+import retrofit2.*;
+/**
+ * SettingsActivity handles user settings such as updating passwords and logging out.
+ * 
+ * @author Sıla Bozkurt
+ * @version 1.0
+ */
 public class SettingsActivity extends BaseActivity {
     private EditText newPasswordEdit, confirmPasswordEdit;
     private MaterialButton updatePasswordButton, logoutButton, changeProfilePicButton;
@@ -88,4 +91,4 @@ public class SettingsActivity extends BaseActivity {
         startActivity(intent);
         finish();
     }
-} 
+}

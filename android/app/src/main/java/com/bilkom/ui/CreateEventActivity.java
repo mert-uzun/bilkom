@@ -2,30 +2,18 @@ package com.bilkom.ui;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.annotation.Nullable;
 import com.bilkom.BaseActivity;
 import com.bilkom.R;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import com.bilkom.model.EventRequest;
-import com.bilkom.network.ApiService;
-import com.bilkom.network.RetrofitClient;
-import com.bilkom.utils.DateUtils;
-import com.bilkom.utils.SecureStorage;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.bilkom.network.*;
+import com.bilkom.utils.*;
+import retrofit2.*;
 
 public class CreateEventActivity extends BaseActivity {
     private EditText eventNameEdit, eventLocationEdit, eventDateEdit, maxParticipantsEdit, eventDescriptionEdit;

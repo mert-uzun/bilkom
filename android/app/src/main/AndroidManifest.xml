@@ -50,6 +50,6 @@ it is used to store the permissions, activities, application, etc.-->
         <activity android:name=".ui.CreateEventActivity" />
         <activity android:name=".ui.MyActivitiesActivity" />
         <activity android:name=".ui.ReportActivity" />
-
+        
     </application>
 </manifest> 
