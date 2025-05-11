@@ -55,8 +55,8 @@ By bringing all these features together, Bilkom not only enhances the social and
 - **Real-Time Communication:** WebSockets for emergency alerts and messaging
 
 ### Frontend
-- **Core Technologies:** HTML, CSS, and JavaScript  
-- **Styling:** Bootstrap or Tailwind CSS (with optional future enhancements using React.js)  
+- **Core Technologies:** Android Studio (Java), Android SDK, XML Layouts
+- **Styling:** Material Components, custom themes (colors.xml, themes.xml), vector drawables with tinting , optional shape-based styles for elevation and corner radius.
 - **APIs:**  
   - Google Maps API / OpenStreetMap API for carpooling and location services  
   - OpenWeatherMap API for real-time weather updates  
@@ -85,10 +85,6 @@ By bringing all these features together, Bilkom not only enhances the social and
 - Fire, accident, blood donation, etc.  
 - Uses WebSocket for instant broadcast
 
-### Carpooling
-- Offer/request ride → verified only  
-- Includes GPS + messaging + report button  
-- Optional: share live location
 
 ### News & Weather Feed
 - Pulls news from:
@@ -104,7 +100,6 @@ By bringing all these features together, Bilkom not only enhances the social and
 
 - **Salih Mert Uzun**
 - **Sıla Bozkurt**
-- **Elif Bozkurt** 
-- **Utku Kabukçu**   
+- **Elif Bozkurt**   
 - **Ali İhsan Sevindi** 
 
