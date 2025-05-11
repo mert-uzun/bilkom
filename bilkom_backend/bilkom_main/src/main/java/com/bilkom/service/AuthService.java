@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -47,7 +48,7 @@ public class AuthService {
     
     // Admin emails - typically would be in configuration
     private static final Set<String> ADMIN_EMAILS = new HashSet<>(
-        Arrays.asList("mert.uzun@ug.bilkent.edu.tr", "silab@ug.bilkent.edu.tr")
+        Arrays.asList("mert.uzun@ug.bilkent.edu.tr", "silab@ug.bilkent.edu.tr, elif.bozkurt@ug.bilkent.edu.tr")
     );
 
     /**
@@ -61,10 +62,18 @@ public class AuthService {
      */
     public AuthResponse register(RegistrationRequest request) {
         // Check if email already exists
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new BadRequestException("Email already registered");
+        Optional<User> existingUserOpt = userRepository.findByEmail(request.getEmail());
+
+        if (existingUserOpt.isPresent()) {
+            User existingUser = existingUserOpt.get();
+
+            if (!existingUser.isActive()) {
+                throw new BadRequestException("This email belongs to a deactivated account. Contact support to reactivate.");
+            } else {
+                throw new BadRequestException("Email already registered");
+            }
         }
-        
+
         // Check if Bilkent ID exists
         if (userRepository.existsByBilkentId(request.getBilkentId())) {
             throw new BadRequestException("Bilkent ID already registered");
@@ -128,7 +137,7 @@ public class AuthService {
      * @author Mert Uzun
      * @version 1.0
      */
-    public AuthResponse login(LoginRequest request) {
+    /*public AuthResponse login(LoginRequest request) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
@@ -153,6 +162,46 @@ public class AuthService {
         } catch (BadRequestException e) {
             throw e;
         } catch (Exception e) {
+            throw new BadRequestException("Invalid email or password");
+        }
+    }*/
+    //DEBUG
+    public AuthResponse login(LoginRequest request) {
+        System.out.println("Login requested for: " + request.getEmail());
+
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+            );
+
+            System.out.println("Authentication succeeded");
+
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+            User user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new BadRequestException("User not found"));
+
+            if (!user.isVerified()) {
+                System.out.println("User not verified");
+                throw new BadRequestException("Please verify your email before logging in");
+            }
+
+            if (!user.isActive()) {
+                System.out.println("User is deactivated");
+                throw new BadRequestException("Your account has been deactivated. Contact an administrator.");
+            }
+
+            user.updateLastLogin();
+            userRepository.save(user);
+
+            String jwt = jwtUtils.generateToken(userDetails);
+
+            return new AuthResponse(true, "Login successful", jwt, user.getUserId());
+
+        } catch (BadRequestException e) {
+            throw e;
+        } catch (Exception e) {
+            System.out.println("Authentication failed: " + e.getClass().getSimpleName() + " - " + e.getMessage());
             throw new BadRequestException("Invalid email or password");
         }
     }
