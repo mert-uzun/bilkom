@@ -1,6 +1,8 @@
 package com.bilkom.entity;
 
 import com.bilkom.enums.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.bilkom.enums.AvatarRelativePaths;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -68,6 +70,7 @@ public class User {
     private List<Tag> tags = new ArrayList<>();
     
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<ClubMember> clubMemberships = new ArrayList<>();
     
     @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
