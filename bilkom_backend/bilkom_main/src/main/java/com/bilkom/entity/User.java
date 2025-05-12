@@ -60,46 +60,53 @@ public class User {
     private boolean isActive = true;
 
     @Column(name = "last_login", nullable = false)
-    private Timestamp lastLogin;    
-    
+    private Timestamp lastLogin;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role", nullable = false, columnDefinition = "ENUM('USER', 'CLUB_HEAD', 'ADMIN') DEFAULT 'USER'")
     private UserRole role = UserRole.USER;
-    
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Tag> tags = new ArrayList<>();
-    
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<ClubMember> clubMemberships = new ArrayList<>();
-    
+
     @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Event> createdEvents = new ArrayList<>();
-    
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<EventParticipant> eventParticipations = new ArrayList<>();
 
     @Column(name = "email_notifications", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean emailNotificationsEnabled = true;
-    
+
     @Column(name = "sms_notifications", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean smsNotificationsEnabled = false;
-    
+
     @Column(name = "profile_visibility", nullable = false, columnDefinition = "VARCHAR(20) DEFAULT 'PUBLIC'")
     @Enumerated(EnumType.STRING)
     private ProfileVisibility profileVisibility = ProfileVisibility.PUBLIC;
-    
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<ClubExecutive> clubExecutives = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     @Column(name = "avatar_path", nullable = false, columnDefinition = "ENUM('AVATAR_1', 'AVATAR_2', 'AVATAR_3', 'AVATAR_4', 'AVATAR_5', 'AVATAR_6', 'AVATAR_7', 'AVATAR_8', 'AVATAR_9', 'AVATAR_10', 'AVATAR_11', 'AVATAR_12', 'AVATAR_13', 'AVATAR_14', 'AVATAR_15', 'AVATAR_16') DEFAULT 'AVATAR_1'")
     private AvatarRelativePaths avatarPath = AvatarRelativePaths.AVATAR_1;
-    
+
     /**
      * Enum for profile visibility settings.
      */
     public enum ProfileVisibility {
-        PUBLIC,     // Visible to everyone
-        MEMBERS,    // Visible only to club members
-        PRIVATE     // Visible only to the user and admins
+        PUBLIC, // Visible to everyone
+        MEMBERS, // Visible only to club members
+        PRIVATE // Visible only to the user and admins
     }
 
     @Column(name = "fcm_token", columnDefinition = "TEXT")
@@ -107,16 +114,22 @@ public class User {
 
     @jakarta.persistence.PrePersist
     protected void onCreate() {
-        if (createdAt == null) createdAt = new Timestamp(System.currentTimeMillis());
-        if (lastLogin == null) lastLogin = createdAt;
+        if (createdAt == null)
+            createdAt = new Timestamp(System.currentTimeMillis());
+        if (lastLogin == null)
+            lastLogin = createdAt;
     }
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", email=" + email + ", passwordHash=" + passwordHash + ", firstName=" + firstName + ", lastName=" + lastName 
-                + ", bilkentId=" + bilkentId + ", phoneNumber=" + phoneNumber + ", bloodType=" + bloodType + ", createdAt=" + createdAt + ", isVerified=" 
-                + isVerified + ", isActive=" + isActive + ", lastLogin=" + lastLogin + ", role=" + role + ", avatarPath=" + avatarPath + ", tags=" + tags + ", clubMemberships=" 
-                + clubMemberships + ", createdEvents=" + createdEvents + ", eventParticipations=" + eventParticipations + '}';
+        return "User{" + "userId=" + userId + ", email=" + email + ", passwordHash=" + passwordHash + ", firstName="
+                + firstName + ", lastName=" + lastName
+                + ", bilkentId=" + bilkentId + ", phoneNumber=" + phoneNumber + ", bloodType=" + bloodType
+                + ", createdAt=" + createdAt + ", isVerified="
+                + isVerified + ", isActive=" + isActive + ", lastLogin=" + lastLogin + ", role=" + role
+                + ", avatarPath=" + avatarPath + ", tags=" + tags + ", clubMemberships="
+                + clubMemberships + ", createdEvents=" + createdEvents + ", eventParticipations=" + eventParticipations
+                + '}';
     }
 
     // GETTERS AND SETTERS
@@ -235,15 +248,15 @@ public class User {
     public String getVerificationToken() {
         return verificationToken;
     }
-    
+
     public void setVerificationToken(String verificationToken) {
         this.verificationToken = verificationToken;
     }
-    
+
     public UserRole getRole() {
         return role;
     }
-    
+
     public void setRole(UserRole role) {
         this.role = role;
     }
@@ -251,23 +264,23 @@ public class User {
     public boolean isEmailNotificationsEnabled() {
         return emailNotificationsEnabled;
     }
-    
+
     public void setEmailNotificationsEnabled(boolean emailNotificationsEnabled) {
         this.emailNotificationsEnabled = emailNotificationsEnabled;
     }
-    
+
     public boolean isSmsNotificationsEnabled() {
         return smsNotificationsEnabled;
     }
-    
+
     public void setSmsNotificationsEnabled(boolean smsNotificationsEnabled) {
         this.smsNotificationsEnabled = smsNotificationsEnabled;
     }
-    
+
     public ProfileVisibility getProfileVisibility() {
         return profileVisibility;
     }
-    
+
     public void setProfileVisibility(ProfileVisibility profileVisibility) {
         this.profileVisibility = profileVisibility;
     }
@@ -279,12 +292,20 @@ public class User {
     public void setFcmToken(String fcmToken) {
         this.fcmToken = fcmToken;
     }
-    
+
     public AvatarRelativePaths getAvatarPath() {
         return avatarPath;
     }
-    
+
     public void setAvatarPath(AvatarRelativePaths avatarPath) {
         this.avatarPath = avatarPath;
+    }
+
+    public List<ClubExecutive> getClubExecutives() {
+        return clubExecutives;
+    }
+
+    public void setClubExecutives(List<ClubExecutive> clubExecutives) {
+        this.clubExecutives = clubExecutives;
     }
 }

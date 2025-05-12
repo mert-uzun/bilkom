@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.CascadeType;
 import com.bilkom.enums.ClubRegistrationStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Objects;
 
 @Entity
@@ -34,6 +36,7 @@ public class Club {
 
     @ManyToOne
     @JoinColumn(name = "club_head", nullable = false, columnDefinition = "BIGINT")
+    @JsonIgnore
     private User clubHead;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -43,12 +46,15 @@ public class Club {
     private boolean isActive = true;
 
     @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<ClubMember> clubMembers = new ArrayList<>();
 
     @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Event> events = new ArrayList<>();
 
     @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<ClubExecutive> clubExecutives = new ArrayList<>();  
 
     @Enumerated(EnumType.STRING)
