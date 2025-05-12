@@ -192,7 +192,7 @@ public class ClubExecutiveService {
     public ClubExecutiveDTO reactivateExecutive(Long userId, Long clubId, String position) {
         
         // Find the executive record (including inactive records)
-        ClubExecutive executive = clubExecutiveRepository.findByUserUserIdAndClubClubIdAndIsActiveTrue(userId, clubId)
+        ClubExecutive executive = clubExecutiveRepository.findByUserUserIdAndClubClubId(userId, clubId)
                 .orElseThrow(() -> new BadRequestException("User was never an executive in this club"));
         
         // Check if already active

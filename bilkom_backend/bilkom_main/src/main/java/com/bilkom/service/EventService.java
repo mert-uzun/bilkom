@@ -58,35 +58,54 @@ public class EventService {
      * @version 1.0
      */
     public Event createEvent(EventDto dto, String creatorEmail) {
+        System.out.println("Creating event for user: " + creatorEmail);
+        System.out.println("Incoming EventDto: " + dto);
+
         User creator = userRepository.findByEmail(creatorEmail)
                 .orElseThrow(() -> new BadRequestException("User not found"));
-    
+        System.out.println("Creator found: " + creator.getEmail());
+
         Event event = new Event();
-        event.setEventName(dto.getName()); 
+        event.setEventName(dto.getName());
         event.setEventDescription(dto.getDescription());
         event.setEventLocation(dto.getLocation());
         event.setEventDate(dto.getEventDate());
         event.setMaxParticipants(dto.getMaxParticipants());
         event.setCurrentParticipantsNumber(0);
         event.setCreator(creator);
-        event.setIsClubEvent(dto.getClubId() != null);
+
+        boolean isClub = dto.isClubEvent();
+        event.setIsClubEvent(isClub);
         event.setActive(true);
-    
-        if (dto.getClubId() != null) {
+        System.out.println("isClubEvent: " + isClub);
+
+        if (isClub) {
+            if (dto.getClubId() == null) {
+                System.out.println("Error: Club ID is required for club events.");
+                throw new BadRequestException("Club ID is required for club events.");
+            }
             Club club = clubRepository.findById(dto.getClubId())
                     .orElseThrow(() -> new BadRequestException("Club not found"));
             event.setClub(club);
+            System.out.println("Club set: " + club.getClubName());
+        } else {
+            event.setClub(null);
+            System.out.println("Club is not set (public event)");
         }
-    
+
         for (String tagName : dto.getTags()) {
             Tag tag = new Tag();
             tag.setTagName(tagName);
             tag.setEvent(event);
             event.getTags().add(tag);
-        }        
-    
-        return eventRepository.save(event);
+            System.out.println("Tag added: " + tagName);
+        }
+
+        Event saved = eventRepository.save(event);
+        System.out.println("Event saved with ID: " + saved.getEventId());
+        return saved;
     }
+
 
     /**
      * Updates an existing event based on the provided EventDto and the event ID.

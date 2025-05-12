@@ -5,6 +5,9 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
@@ -26,11 +29,12 @@ public class Tag {
     @Column(name = "tag_id", nullable = false, columnDefinition = "BIGINT")
     private Long tagId;
     
-    @Column(name = "tag_name", nullable = false, unique = true, columnDefinition = "VARCHAR(255)")
+    @Column(name = "tag_name", nullable = false, columnDefinition = "VARCHAR(255)")
     private String tagName;
     
     @ManyToOne
     @JoinColumn(name = "event_id", columnDefinition = "BIGINT")
+    @JsonIgnore 
     private Event event;
 
     @ManyToOne
@@ -39,9 +43,10 @@ public class Tag {
 
     @Override
     public String toString() {
-        return "Tag{" + "tagId=" + tagId + ", tagName=" + tagName + ", event=" + event + ", user=" + user + '}';
+        System.out.println("Calling Tag.toString() on tagId: " + tagId);
+        return "Tag{" + "tagId=" + tagId + ", tagName=" + tagName + "}";
     }
-    
+
     // GETTERS AND SETTERS
     public Long getTagId() { return tagId; }
     public void setTagId(Long tagId) { this.tagId = tagId; }

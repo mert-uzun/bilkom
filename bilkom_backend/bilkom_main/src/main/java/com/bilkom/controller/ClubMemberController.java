@@ -115,8 +115,8 @@ public class ClubMemberController {
      * @param details Map containing a list of user IDs
      * @return List of successfully added members
      * 
-     * @author Mert Uzun
-     * @version 1.0
+     * @author Elif Bozkurt
+     * @version 1.1
      */
     @PostMapping("/club/{clubId}/batch")
     @PreAuthorize("hasRole('CLUB_HEAD') or hasRole('ADMIN')")
@@ -124,10 +124,12 @@ public class ClubMemberController {
         if (!details.containsKey("userIds")) {
             throw new BadRequestException("List of user IDs is required");
         }
-        
-        @SuppressWarnings("unchecked")
-        List<Long> userIds = (List<Long>) details.get("userIds");
-        
+
+        List<?> rawUserIds = (List<?>) details.get("userIds");
+        List<Long> userIds = rawUserIds.stream()
+            .map(id -> Long.valueOf(id.toString()))
+            .toList();
+
         return ResponseEntity.ok(clubMemberService.addMembers(clubId, userIds));
     }
     

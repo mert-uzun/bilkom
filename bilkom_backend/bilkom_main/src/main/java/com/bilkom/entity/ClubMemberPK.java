@@ -18,9 +18,6 @@ public class ClubMemberPK implements Serializable {
     private Long club; 
     private Long member;
     
-    /**
-     * Default constructor for ClubMemberPK.
-     */
     public ClubMemberPK() {}
     
     /**
