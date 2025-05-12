@@ -11,9 +11,9 @@ it is used to store the permissions, activities, application, etc.-->
     <application
         android:name=".BilkomApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/Bilkom"
+        android:icon="@drawable/bilkom_logo"
+        android:roundIcon="@drawable/bilkom_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Bilkom"
         android:usesCleartextTraffic="true">
