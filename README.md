@@ -52,10 +52,10 @@ By bringing all these features together, Bilkom not only enhances the social and
 - **Real-Time Communication:** WebSockets for emergency alerts and messaging
 
 ### Frontend
-- **Core Technologies:** HTML, CSS, and JavaScript  
-- **Styling:** Bootstrap or Tailwind CSS (with optional future enhancements using React.js)  
+- **Core Technologies:** Android Studio (Java), Android SDK, XML Layouts  
+- **Styling:** Material Components, custom themes (`colors.xml`, `themes.xml`), vector drawables with tinting, optional shape-based styles for elevation and corner radius  
 - **APIs:**  
-  - Google Maps API / OpenStreetMap API for carpooling and location services  
+  - Google Maps API / OpenStreetMap API for location services  
   - OpenWeatherMap API for real-time weather updates  
   - RSS Feed Parsing/JSoup for integrating Bilkent news
 
@@ -94,9 +94,8 @@ By bringing all these features together, Bilkom not only enhances the social and
 
 **Group0 – CS102 (Spring 2024/2025)**
 
-- **Salih Mert Uzun**
-- **Sıla Bozkurt**
-- **Elif Bozkurt** 
-- **Utku Kabukçu**   
-- **Ali İhsan Sevindi** 
-
+- **Salih Mert Uzun**  
+- **Sıla Bozkurt**  
+- **Elif Bozkurt**  
+- **Utku Kabukçu**  
+- **Ali İhsan Sevindi**

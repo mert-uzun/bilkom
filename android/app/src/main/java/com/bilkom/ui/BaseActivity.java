@@ -11,11 +11,14 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.bilkom.ui.HomeActivity;
-import com.bilkom.ui.LoginActivity;
-import com.bilkom.ui.ProfileActivity;
-import com.bilkom.ui.SettingsActivity;
+import com.bilkom.ui.*;
 
+/**
+ * BaseActivity class for managing common functionality across activities.
+ * 
+ * @author Sıla Bozkurt
+ * @version 1.0
+ */
 public class BaseActivity extends AppCompatActivity {
     protected DrawerLayout drawerLayout;
     protected View navView;

@@ -1,55 +1,59 @@
-// this class is used to store the response from the server
-// it is used to store the success, message, token and userId from the server 
-// for example this is a pojo class just like other pojo classes in the model package
 package com.bilkom.model;
 
+import com.google.gson.annotations.SerializedName;
+import java.util.Date;
+import com.bilkom.utils.DateUtils;
+
+/**
+ * Server response returned by <code>POST&nbsp;/auth/login</code> and
+ * <code>POST&nbsp;/auth/register</code>. Holds the JWT that the client
+ * must send as <kbd>Authorization: Bearer&nbsp;&lt;token&gt;</kbd> in
+ * subsequent requests.
+ *
+ * Use {@link #getToken()} to persist the JWT (e.g., via
+ * {@code TokenProvider.saveToken()}), and {@link #getExpiresDate()}
+ * if you need to schedule a proactive refresh.
+ *
+ * @author  Sıla Bozkurt
+ * @version 1.0
+ * @since   2025-05-11
+ */
 public class AuthResponse {
-    private boolean success;
-    private String message;
-    private String token;
-    private Long userId;
 
-    public AuthResponse(boolean success, String message) {
-        this.success = success;
-        this.message = message;
-    }
+    @SerializedName("token")        private String token;
+    @SerializedName("refreshToken") private String refreshToken;
+    @SerializedName("expiresAt")    private String expiresAt; 
+    @SerializedName("userId")       private Long   userId;
+    @SerializedName("role")         private String role;
 
-    public AuthResponse(boolean success, String message, String token, Long userId) {
-        this.success = success;
-        this.message = message;
+    public AuthResponse() { }
+
+    public AuthResponse(String token, String refreshToken,
+                        String expiresAt, Long userId, String role) {
         this.token = token;
+        this.refreshToken = refreshToken;
+        this.expiresAt = expiresAt;
         this.userId = userId;
+        this.role = role;
     }
 
-    public boolean isSuccess() {
-        return success;
-    }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
+    public String getToken()         { return token; }
+    public void   setToken(String t) { this.token = t; }
 
-    public String getMessage() {
-        return message;
-    }
+    public String getRefreshToken()          { return refreshToken; }
+    public void   setRefreshToken(String rt) { this.refreshToken = rt; }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+    public String getExpiresAt()          { return expiresAt; }
+    public void   setExpiresAt(String ea) { this.expiresAt = ea; }
 
-    public String getToken() {
-        return token;
-    }
+    public Long   getUserId()        { return userId; }
+    public void   setUserId(Long id) { this.userId = id; }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+    public String getRole()          { return role; }
+    public void   setRole(String r)  { this.role = r; }
 
-    public Long getUserId() {
-        return userId;
+    public Date getExpiresDate() {
+        return DateUtils.parseApiDate(expiresAt);
     }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-} 
+}

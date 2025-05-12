@@ -1,7 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--so what does android manifest do?
 it is used to store the android manifest content which is basically the main file for the android app
-it is used to store the permissions, activities, application, etc.--> 
-<?xml version="1.0" encoding="utf-8"?>
+it is used to store the permissions, activities, application, etc.-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bilkom">
 
@@ -11,9 +11,9 @@ it is used to store the permissions, activities, application, etc.-->
     <application
         android:name=".BilkomApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/Bilkom"
+        android:icon="@drawable/bilkom_logo"
+        android:roundIcon="@drawable/bilkom_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Bilkom"
         android:usesCleartextTraffic="true">
@@ -50,6 +50,6 @@ it is used to store the permissions, activities, application, etc.-->
         <activity android:name=".ui.CreateEventActivity" />
         <activity android:name=".ui.MyActivitiesActivity" />
         <activity android:name=".ui.ReportActivity" />
-
+        
     </application>
 </manifest> 

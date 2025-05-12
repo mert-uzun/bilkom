@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
@@ -7,4 +6,7 @@
     <color name="red_alert">#FF4444</color>
     <color name="card_bg_dark">#1E1E1E</color>
     <color name="weather_card_bg">#1E1E1E</color>
+    <color name="bilkom_bg">#1E1E1E</color>   
+    <color name="bilkom_on_bg">#FFFFFF</color>
+
 </resources> 
