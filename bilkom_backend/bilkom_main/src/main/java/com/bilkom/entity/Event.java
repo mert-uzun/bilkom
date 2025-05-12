@@ -12,6 +12,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import jakarta.persistence.CascadeType;
 
@@ -43,8 +46,9 @@ public class Event {
     private User creator;
 
     @ManyToOne
-    @JoinColumn(name = "club_id", nullable = false)
-    private Club club;  
+    @JoinColumn(name = "club_id", nullable = true)
+    @JsonIgnore
+    private Club club;
 
     @Column(name = "is_club_event", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean isClubEvent;
@@ -72,7 +76,14 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Event{" + "eventId=" + eventId + ", eventName=" + eventName + ", eventDescription=" + eventDescription + ", creator=" + creator + ", club=" + club + ", isClubEvent=" + isClubEvent + ", maxParticipants=" + maxParticipants + ", currentParticipants=" + currentParticipantsNumber + ", eventLocation=" + eventLocation + ", eventDate=" + eventDate + ", isActive=" + isActive + ", tags=" + tags + ", participants=" + participants + '}';
+        System.out.println("Calling Event.toString() on eventId: " + eventId);
+        return "Event{" +
+            "eventId=" + eventId +
+            ", eventName=" + eventName +
+            ", maxParticipants=" + maxParticipants +
+            ", tagCount=" + (tags != null ? tags.size() : 0) +
+            ", participantCount=" + (participants != null ? participants.size() : 0) +
+            '}';
     }
 
     // GETTERS AND SETTERS

@@ -1,138 +1,124 @@
 package com.bilkom.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import java.sql.Timestamp;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-
-import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "club_executives")
-@IdClass(ClubExecutivePK.class)
 public class ClubExecutive {
-    @Id
-    @OneToOne
-    @JoinColumn(name = "executive_id", referencedColumnName = "user_id", nullable = false, columnDefinition = "BIGINT")
-    @JsonIgnore
+
+    @EmbeddedId
+    private ClubExecutiveId id;
+
+    @ManyToOne
+    @MapsId("userId")
+    @JoinColumn(name = "executive_id", nullable = false)
     private User user;
 
-    @Id
     @ManyToOne
+    @MapsId("clubId")
     @JoinColumn(name = "club_id", nullable = false)
-    @JsonIgnore
-    private Club club;    
+    private Club club;
 
-    @Column(name = "position", nullable = false, columnDefinition = "VARCHAR(255)")
+    @Column(name = "position", nullable = false)
     private String position;
 
-    @Column(name = "join_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "join_date", nullable = false)
     private Timestamp joinDate;
 
-    @Column(name = "leave_date", nullable = true)
+    @Column(name = "leave_date")
     private Timestamp leaveDate;
 
-    @Column(name = "is_active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private boolean isActive; 
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
 
-    public ClubExecutive() {}
+    public ClubExecutive() {
+    }
 
-    public ClubExecutive(User user, Club club, String position)
-    {
+    public ClubExecutive(User user, Club club, String position) {
         this.user = user;
         this.club = club;
+        this.id = new ClubExecutiveId(user.getUserId(), club.getClubId());
         this.position = position;
         this.joinDate = new Timestamp(System.currentTimeMillis());
         this.leaveDate = null;
         this.isActive = true;
     }
 
-    @Override
-    public String toString() {
-        return "ClubExecutive{" +
-                "user=" + user +
-                ", club=" + club +
-                ", position='" + position + '\'' +
-                ", joinDate=" + joinDate +
-                ", leaveDate=" + leaveDate +
-                ", isActive=" + isActive +
-                '}';
+    // === GETTERS AND SETTERS ===
+
+    public ClubExecutiveId getId() {
+        return id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o){
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()){
-            return false;
-        }
-        
-        ClubExecutive that = (ClubExecutive) o;
-        return user.equals(that.user) && club.equals(that.club);
+    public void setId(ClubExecutiveId id) {
+        this.id = id;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(user, club);
-    }
-    
-    //GETTERS AND SETTERS
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+        if (this.id == null)
+            this.id = new ClubExecutiveId();
+        this.id.setUserId(user.getUserId());
     }
-    
+
     public Club getClub() {
         return club;
     }
-    
+
     public void setClub(Club club) {
         this.club = club;
+        if (this.id == null)
+            this.id = new ClubExecutiveId();
+        this.id.setClubId(club.getClubId());
     }
-    
+
     public String getPosition() {
         return position;
     }
-    
+
     public void setPosition(String position) {
         this.position = position;
     }
-    
+
     public Timestamp getJoinDate() {
         return joinDate;
     }
-    
-    public void setJoinDate(Timestamp createdAt) {
-        this.joinDate = createdAt;
+
+    public void setJoinDate(Timestamp joinDate) {
+        this.joinDate = joinDate;
     }
 
     public Timestamp getLeaveDate() {
-        if (leaveDate == null) {
-            return Timestamp.valueOf("2099-12-31 23:59:59");
-        }
         return leaveDate;
     }
 
     public void setLeaveDate(Timestamp leaveDate) {
         this.leaveDate = leaveDate;
     }
-    
+
     public boolean isActive() {
         return isActive;
     }
-    
+
     public void setActive(boolean active) {
-        isActive = active;
+        this.isActive = active;
+    }
+
+    @Override
+    public String toString() {
+        return "ClubExecutive{" +
+                "id=" + id +
+                ", user=" + user +
+                ", club=" + club +
+                ", position='" + position + '\'' +
+                ", joinDate=" + joinDate +
+                ", leaveDate=" + leaveDate +
+                ", isActive=" + isActive +
+                '}';
     }
 }
