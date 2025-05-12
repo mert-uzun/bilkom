@@ -10,9 +10,9 @@ import java.util.List;
  * Data model for users, synchronized with the backend User entity.
  * Updated to properly match backend User entity.
  * 
- * @author Mert Uzun
- * @version 2.0
- * @since 2025-05-09
+ * @author Mert Uzun and Sıla Bozkurt
+ * @version 1.0
+ * @since 2025-05-11
  */
 public class User {
     @SerializedName("userId")
@@ -71,7 +71,6 @@ public class User {
 
     public User() {}
 
-    // GETTERS AND SETTERS
     public Long getUserId() {
         return userId;
     }

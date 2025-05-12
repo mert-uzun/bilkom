@@ -1,316 +1,186 @@
-//this is the api service interface for the api calls
-// it is used to store the api calls for the login, register, get user by id, get user by email and get user by bilkentId
 package com.bilkom.network;
 
-import com.bilkom.model.LoginRequest;
-import com.bilkom.model.RegistrationRequest;
-import com.bilkom.model.AuthResponse;
-import com.bilkom.model.User;
-import com.bilkom.model.EmergencyAlert;
-import com.bilkom.model.WeatherForecast;
-import com.bilkom.model.Event;
-import com.bilkom.model.EventRequest;
-import com.bilkom.model.Club;
-import com.bilkom.model.ReportRequest;
-import com.bilkom.model.ClubRequest;
-import com.bilkom.model.ClubMembershipRequest;
-import com.bilkom.model.ClubMember;
-import com.bilkom.model.PageResponse;
-
-import java.util.List;
-import java.util.Map;
-
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
+import com.bilkom.model.*;
+import java.util.*;
+import okhttp3.*;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Multipart;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Part;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
+import retrofit2.http.*;
 
+/**
+ * ApiService interface defines the REST API endpoints for the application.
+ * It includes methods for user authentication, user management, club management,
+ * event management, and other related operations.
+ * 
+ * <p>Each method is annotated with appropriate HTTP method annotations
+ * (e.g., @GET, @POST, @PUT, @DELETE) and specifies the endpoint path,
+ * request body, and path/query parameters as needed.
+ * 
+ * <p>This interface is intended to be used with Retrofit for making HTTP requests.
+ * 
+ * @author Sıla Bozkurt
+ */
 public interface ApiService {
-    @POST("auth/login")
-    Call<AuthResponse> login(@Body LoginRequest loginRequest);
 
-    @POST("auth/register")
-    Call<AuthResponse> register(@Body RegistrationRequest registrationRequest);
+    @POST("/auth/login")
+    Call<AuthResponse> login(@Body LoginRequest body);
 
-    @GET("users/{id}")
-    Call<User> getUserById(
-        @Path("id") Long id,
-        @Header("Authorization") String bearerToken
-    );
+    @POST("/auth/register")
+    Call<AuthResponse> register(@Body RegistrationRequest body);
 
-    @PUT("users/{id}")
-    Call<User> updateUser(
-        @Path("id") Long id,
-        @Body User user,
-        @Header("Authorization") String bearerToken
-    );
+    @GET("/users")
+    Call<List<User>> listUsers();
 
-    @GET("users/email/{email}")
-    Call<User> getUserByEmail(
-        @Path("email") String email,
-        @Header("Authorization") String bearerToken
-    );
+    @POST("/users")
+    Call<User> createUser(@Body User body);
 
-    @GET("users/bilkentId/{bilkentId}")
-    Call<User> getUserByBilkentId(
-        @Path("bilkentId") String bilkentId,
-        @Header("Authorization") String bearerToken
-    );
+    @GET("/users/{id}")
+    Call<User> getUser(@Path("id") Long id);
 
-    @GET("emergency-alerts")
-    Call<List<EmergencyAlert>> getEmergencyAlerts(
-        @Header("Authorization") String bearerToken
-    );
+    @PUT("/users/{id}")
+    Call<User> updateUser(@Path("id") Long id, @Body User body);
 
-    @GET("emergency-alerts/paged")
-    Call<PageResponse<EmergencyAlert>> getPagedEmergencyAlerts(
-        @Query("page") int page,
-        @Query("size") int size,
-        @Header("Authorization") String bearerToken
-    );
+    @DELETE("/users/{id}")
+    Call<Void> deleteUser(@Path("id") Long id);
 
-    @GET("weather")
-    Call<WeatherForecast> getWeatherForecast();
+    @PUT("/users/{id}/active")
+    Call<Void> setUserActive(@Path("id") Long id, @Body Map<String, Boolean> payload);
 
-    @GET("news")
-    Call<List<com.bilkom.model.News>> getLatestNews();
+    @GET("/users/me/all-clubs")
+    Call<List<Club>> getMyClubsAll();
 
-    @GET("news/paged")
-    Call<PageResponse<com.bilkom.model.News>> getPagedNews(
+    @GET("/users/{id}/all-clubs")
+    Call<List<Club>> getUserClubsAll(@Path("id") Long id);
+
+    @GET("/admin/users")
+    Call<List<User>> adminListUsers();
+
+    @PUT("/admin/users/{id}/verified")
+    Call<Void> adminVerify(@Path("id") Long id);
+
+    @GET("/clubs")
+    Call<List<Club>> listClubs();
+
+    @POST("/clubs")
+    Call<Club> createClub(@Body ClubRequest body);
+
+    @GET("/clubs/{id}")
+    Call<Club> getClub(@Path("id") Long id);
+
+    @PUT("/clubs/{id}")
+    Call<Club> updateClub(@Path("id") Long id, @Body Club body);
+
+    @DELETE("/clubs/{id}")
+    Call<Void> deleteClub(@Path("id") Long id);
+
+    @PUT("/clubs/{id}/reactivate")
+    Call<Void> reactivateClub(@Path("id") Long id);
+
+    @POST("/clubs/registration")
+    Call<ClubRegistrationRequest> registerClub(@Body ClubRegistrationRequest body);
+
+    @GET("/clubs/registration/pending/{adminId}")
+    Call<List<ClubRegistrationRequest>> getPendingRegistrations(@Path("adminId") Long adminId);
+
+    @POST("/clubs/membership-requests")
+    Call<ClubMembershipRequest> createMembershipRequest(@Body ClubMembershipRequest body);
+
+    @GET("/clubs/membership-requests/club/{clubId}")
+    Call<List<ClubMembershipRequest>> getClubMembershipRequests(@Path("clubId") Long clubId);
+
+    @GET("/clubs/membership-requests/club/{clubId}/pending")
+    Call<List<ClubMembershipRequest>> getPendingClubMembershipRequests(@Path("clubId") Long clubId);
+
+    @PUT("/clubs/{clubId}/membership-requests/{reqId}/approve")
+    Call<Void> approveMembership(@Path("clubId") Long clubId, @Path("reqId") Long reqId);
+
+    @PUT("/clubs/{clubId}/membership-requests/{reqId}/reject")
+    Call<Void> rejectMembership(@Path("clubId") Long clubId, @Path("reqId") Long reqId);
+
+    @GET("/clubs/members/club/{clubId}")
+    Call<List<ClubMember>> listMembers(@Path("clubId") Long clubId);
+
+    @POST("/clubs/{clubId}/members")
+    Call<Void> joinClub(@Path("clubId") Long clubId);
+
+    @DELETE("/clubs/{clubId}/members/{userId}")
+    Call<Void> removeMember(@Path("clubId") Long clubId, @Path("userId") Long userId);
+
+    @POST("/clubs/executives/club/{clubId}")
+    Call<Void> addExecutive(@Path("clubId") Long clubId, @Body ClubMember body);
+
+    @GET("/clubs/executives/club/{clubId}")
+    Call<List<ClubMember>> listExecutives(@Path("clubId") Long clubId);
+
+    @PUT("/clubs/executives/{userId}/club/{clubId}")
+    Call<Void> changeExecutive(@Path("userId") Long userId, @Path("clubId") Long clubId);
+
+    @GET("/events")
+    Call<List<Event>> listEvents();
+
+    @POST("/events")
+    Call<Event> createEvent(@Body EventRequest body);
+
+    @GET("/events/{id}")
+    Call<Event> getEvent(@Path("id") Long id);
+
+    @PUT("/events/{id}")
+    Call<Event> updateEvent(@Path("id") Long id, @Body Event body);
+
+    @DELETE("/events/{id}")
+    Call<Void> deleteEvent(@Path("id") Long id);
+
+    @GET("/events/created")
+    Call<List<Event>> getMyCreatedEvents();
+
+    @GET("/events/created/past")
+    Call<List<Event>> getMyCreatedPast();
+
+    @GET("/events/joined/past")
+    Call<List<Event>> getMyJoinedPast();
+
+    @GET("/events/my-club-events/past")
+    Call<List<Event>> getPastOfMyClubs();
+
+    @GET("/events/clubs/{clubId}/events")
+    Call<List<Event>> getClubEvents(@Path("clubId") Long clubId);
+
+    @GET("/events/clubs/{clubId}/events/current")
+    Call<List<Event>> getClubCurrentEvents(@Path("clubId") Long clubId);
+
+    @POST("/events/filter")
+    Call<PageResponse<Event>> filterEvents(@Body EventRequest body);
+
+    @POST("/events/filter/paged")
+    Call<PageResponse<Event>> filterEventsPaged(
+        @Body EventRequest body,
         @Query("page") int page,
         @Query("size") int size
     );
 
-    @GET("events")
-    Call<List<Event>> getEvents(@Header("Authorization") String bearerToken);
+    @POST("/events/{eventId}/join")
+    Call<Void> joinEvent(@Path("eventId") Long eventId);
 
-    @GET("events/paged")
-    Call<PageResponse<Event>> getPagedEvents(
+    @POST("/events/{eventId}/withdraw")
+    Call<Void> withdrawEvent(@Path("eventId") Long eventId);
+
+    @POST("/events/report/{eventId}")
+    Call<Void> reportEvent(@Path("eventId") Long eventId, @Body ReportRequest body);
+
+    @GET("/weather")
+    Call<WeatherForecast> getWeather();
+
+    @GET("/news")
+    Call<List<News>> getNews();
+
+    @GET("/emergency-alerts")
+    Call<List<EmergencyAlert>> getAlerts();
+
+    @GET("/emergency-alerts/paged")
+    Call<PageResponse<EmergencyAlert>> getAlertsPaged(
         @Query("page") int page,
-        @Query("size") int size,
-        @Header("Authorization") String bearerToken
+        @Query("size") int size
     );
 
-    @POST("events")
-    Call<Event> createEvent(@Body EventRequest eventRequest, @Header("Authorization") String bearerToken);
-
-    @POST("events/filter")
-    Call<List<Event>> filterEventsByTags(@Body List<String> tagNames, @Header("Authorization") String bearerToken);
-
-    @POST("events/filter/paged")
-    Call<PageResponse<Event>> filterPagedEventsByTags(
-        @Body List<String> tagNames,
-        @Query("page") int page,
-        @Query("size") int size,
-        @Header("Authorization") String bearerToken
-    );
-
-    @GET("events/clubs/{clubId}/events/current")
-    Call<List<Event>> getClubCurrentEvents(@Path("clubId") Long clubId, @Header("Authorization") String token);
-
-    @GET("events/clubs/{clubId}/events/current/paged")
-    Call<PageResponse<Event>> getPagedClubCurrentEvents(
-        @Path("clubId") Long clubId,
-        @Query("page") int page,
-        @Query("size") int size,
-        @Header("Authorization") String token
-    );
-
-    @GET("events/joined")
-    Call<List<Event>> getJoinedEvents(@Header("Authorization") String token);
-
-    @GET("events/joined/paged")
-    Call<PageResponse<Event>> getPagedJoinedEvents(
-        @Query("page") int page,
-        @Query("size") int size,
-        @Header("Authorization") String token
-    );
-
-    @GET("events/my-club-events/current")
-    Call<Map<Long, List<Event>>> getMyClubsEvents(@Header("Authorization") String token);
-
-    @GET("events/clubs/current")
-    Call<List<Event>> getAllClubEvents(@Header("Authorization") String token);
-
-    @GET("events/clubs/current/paged")
-    Call<PageResponse<Event>> getPagedAllClubEvents(
-        @Query("page") int page,
-        @Query("size") int size,
-        @Header("Authorization") String token
-    );
-
-    @POST("events/{eventId}/join")
-    Call<Void> joinEvent(@Path("eventId") Long eventId, @Header("Authorization") String bearerToken);
-
-    @POST("events/{eventId}/withdraw")
-    Call<Void> withdrawFromEvent(@Path("eventId") Long eventId, @Header("Authorization") String bearerToken);
-
-    @GET("user-settings/profile/{id}")
-    Call<User> getProfile(
-        @Path("id") Long userId,
-        @Header("Authorization") String bearerToken
-    );
-
-    @PUT("user-settings/profile/{id}")
-    Call<Void> updateProfile(
-        @Path("id") Long userId,
-        @Body User user,
-        @Header("Authorization") String bearerToken
-    );
-
-    @Multipart
-    @PUT("user-settings/avatar/{id}")
-    Call<Void> updateAvatar(
-        @Path("id") Long userId,
-        @Part MultipartBody.Part avatarImage,
-        @Header("Authorization") String bearerToken
-    );
-
-    @POST("user-settings/change-password/{id}")
-    Call<Void> changePassword(
-        @Path("id") Long userId,
-        @Body Map<String, String> passwordMap,
-        @Header("Authorization") String bearerToken
-    );
-
-    @POST("user-settings/logout/{id}")
-    Call<Void> logout(
-        @Path("id") Long userId,
-        @Header("Authorization") String bearerToken
-    );
-
-    @POST("events/report/{eventId}")
-    Call<Void> reportPastEvent(
-        @Path("eventId") Long eventId,
-        @Body ReportRequest reportRequest,
-        @Header("Authorization") String bearerToken
-    );
-
-    @GET("events/clubs/{clubId}/events")
-    Call<List<Event>> getAllClubEvents(
-        @Path("clubId") Long clubId,
-        @Header("Authorization") String token
-    );
-
-    @GET("events/clubs/{clubId}/events/paged")
-    Call<PageResponse<Event>> getPagedClubEvents(
-        @Path("clubId") Long clubId,
-        @Query("page") int page,
-        @Query("size") int size,
-        @Header("Authorization") String token
-    );
-
-    @POST("events/{eventId}/cancel")
-    Call<Void> cancelClubEvent(
-        @Path("eventId") Long eventId,
-        @Header("Authorization") String token
-    );
-
-    @GET("clubs")
-    Call<List<Club>> getAllClubs(@Header("Authorization") String token);
-    
-    @GET("clubs/paged")
-    Call<PageResponse<Club>> getPagedClubs(
-        @Query("page") int page,
-        @Query("size") int size,
-        @Header("Authorization") String token
-    );
-    
-    @GET("clubs/{clubId}")
-    Call<Club> getClubById(
-        @Path("clubId") Long clubId,
-        @Header("Authorization") String token
-    );
-    
-    @POST("clubs")
-    Call<Club> createClub(
-        @Body ClubRequest clubRequest,
-        @Header("Authorization") String token
-    );
-    
-    @PUT("clubs/{clubId}")
-    Call<Club> updateClub(
-        @Path("clubId") Long clubId,
-        @Body Club club,
-        @Header("Authorization") String token
-    );
-    
-    @DELETE("clubs/{clubId}")
-    Call<Void> deleteClub(
-        @Path("clubId") Long clubId,
-        @Header("Authorization") String token
-    );
-    
-    @GET("users/me/clubs")
-    Call<List<Club>> getMyClubs(@Header("Authorization") String token);
-    
-    @GET("clubs/{clubId}/members")
-    Call<List<ClubMember>> getClubMembers(
-        @Path("clubId") Long clubId,
-        @Header("Authorization") String token
-    );
-    
-    @GET("clubs/{clubId}/members/paged")
-    Call<PageResponse<ClubMember>> getPagedClubMembers(
-        @Path("clubId") Long clubId,
-        @Query("page") int page,
-        @Query("size") int size,
-        @Header("Authorization") String token
-    );
-    
-    @POST("clubs/{clubId}/members")
-    Call<Void> joinClub(
-        @Path("clubId") Long clubId,
-        @Header("Authorization") String token
-    );
-    
-    @DELETE("clubs/{clubId}/members/{userId}")
-    Call<Void> removeClubMember(
-        @Path("clubId") Long clubId,
-        @Path("userId") Long userId,
-        @Header("Authorization") String token
-    );
-    
-    @GET("clubs/{clubId}/membership-requests")
-    Call<List<ClubMembershipRequest>> getClubMembershipRequests(
-        @Path("clubId") Long clubId,
-        @Header("Authorization") String token
-    );
-    
-    @GET("clubs/{clubId}/membership-requests/paged")
-    Call<PageResponse<ClubMembershipRequest>> getPagedClubMembershipRequests(
-        @Path("clubId") Long clubId,
-        @Query("page") int page,
-        @Query("size") int size,
-        @Header("Authorization") String token
-    );
-    
-    @POST("clubs/{clubId}/membership-requests")
-    Call<Void> requestClubMembership(
-        @Path("clubId") Long clubId,
-        @Header("Authorization") String token
-    );
-    
-    @PUT("clubs/{clubId}/membership-requests/{requestId}/approve")
-    Call<Void> approveClubMembershipRequest(
-        @Path("clubId") Long clubId,
-        @Path("requestId") Long requestId,
-        @Header("Authorization") String token
-    );
-    
-    @PUT("clubs/{clubId}/membership-requests/{requestId}/reject")
-    Call<Void> rejectClubMembershipRequest(
-        @Path("clubId") Long clubId,
-        @Path("requestId") Long requestId,
-        @Header("Authorization") String token
-    );
+    @GET("/")
+    Call<ApiResponse> ping();
 }

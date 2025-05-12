@@ -8,32 +8,49 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Retrofit client for API requests
  * 
- * @author Mert Uzun
+ * @author Mert Uzun and Sıla Bozkurt
  * @version 1.0
  * @since 2025-05-09
  */
-public class RetrofitClient {
-    private static final String BASE_URL = "http://10.0.2.2:8080/api/";
-    private static RetrofitClient instance;
-    private final Retrofit retrofit;
+public final class RetrofitClient {
 
-    private RetrofitClient() {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+    private static final String BASE_URL = "http://10.0.2.2:8080/api/"; //localhost
+    private static volatile Retrofit retrofit;
+    private static volatile ApiService apiService;
 
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(loggingInterceptor).build();
+    private RetrofitClient() { }
 
-        retrofit = new Retrofit.Builder().baseUrl(BASE_URL).client(client).addConverterFactory(GsonConverterFactory.create()).build();
-    }
+    private static Retrofit getRetrofit() {
+        if (retrofit == null) {
+            synchronized (RetrofitClient.class) {
+                if (retrofit == null) {
+                    HttpLoggingInterceptor log = new HttpLoggingInterceptor()
+                            .setLevel(HttpLoggingInterceptor.Level.BODY);
 
-    public static synchronized RetrofitClient getInstance() {
-        if (instance == null) {
-            instance = new RetrofitClient();
+                    OkHttpClient okHttp = new OkHttpClient.Builder()
+                            .addInterceptor(new AuthInterceptor())
+                            .addInterceptor(log)
+                            .build();
+
+                    retrofit = new Retrofit.Builder()
+                            .baseUrl(BASE_URL)
+                            .client(okHttp)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+                }
+            }
         }
-        return instance;
+        return retrofit;
     }
 
-    public ApiService getApiService() {
-        return retrofit.create(ApiService.class);
+    public static ApiService getApiService() {
+        if (apiService == null) {
+            synchronized (RetrofitClient.class) {
+                if (apiService == null) {
+                    apiService = getRetrofit().create(ApiService.class);
+                }
+            }
+        }
+        return apiService;
     }
 }

@@ -10,7 +10,7 @@ import com.bilkom.utils.DateUtils;
  * Data model for events
  * 
  * @author Mert Uzun
- * @version 2.0
+ * @version 1.0
  * @since 2025-05-09
  */
 public class Event {
@@ -33,7 +33,7 @@ public class Event {
     private String eventLocation;
     
     @SerializedName("eventDate")
-    private String eventDate; // Stored as String for easier JSON mapping
+    private String eventDate; 
     
     @SerializedName("isActive")
     private boolean isActive;
