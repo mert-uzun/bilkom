@@ -59,8 +59,15 @@ public class SecurityConfig {
             .cors(withDefaults())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/public/**").permitAll()
+                .requestMatchers("/ws/**").permitAll()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/clubs/*/executives/**").hasAnyRole("CLUB_HEAD", "CLUB_EXECUTIVE", "ADMIN")
+                .requestMatchers("/api/clubs/membership-requests/**").hasAnyRole("CLUB_HEAD", "CLUB_EXECUTIVE", "ADMIN")
+                .anyRequest().authenticated()
                 // for testing allow all requests, change the above line to this
-                .anyRequest().permitAll()
+                //.anyRequest().permitAll()
             );
         
         // Add JWT filter before processing the request
