@@ -8,5 +8,6 @@
     <color name="weather_card_bg">#1E1E1E</color>
     <color name="bilkom_bg">#1E1E1E</color>   
     <color name="bilkom_on_bg">#FFFFFF</color>
-
+    <color name="cream">#FFF5E1</color>
+    <color name="red">#FF0000</color>
 </resources> 

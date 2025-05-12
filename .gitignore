@@ -36,3 +36,7 @@ bilkom_backend/**/target/
 
 # Environment files
 .env target/
+
+# Build output
+/build/
+
