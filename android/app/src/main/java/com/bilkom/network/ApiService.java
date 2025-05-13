@@ -155,10 +155,10 @@ public interface ApiService {
     @GET("news")
     Call<List<News>> getNews();
 
-    @GET("/emergency-alerts")
+    @GET("/v1/emergency-alerts")
     Call<List<EmergencyAlert>> getAlerts();
 
-    @GET("/emergency-alerts/paged")
+    @GET("/v1/emergency-alerts/paged")
     Call<PageResponse<EmergencyAlert>> getAlertsPaged(
         @Query("page") int page,
         @Query("size") int size

@@ -11,16 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="00a52cc1-713b-4f1b-9450-05d60fb8392c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/src/main/java/com/bilkom/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/src/main/java/com/bilkom/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/src/main/java/com/bilkom/controller/PasswordResetFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/src/main/java/com/bilkom/controller/PasswordResetFormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/src/main/java/com/bilkom/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/src/main/java/com/bilkom/service/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/src/main/java/com/bilkom/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/src/main/java/com/bilkom/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/src/main/resources/db/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/src/main/resources/db/schema.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/src/main/resources/email_templates/password-reset-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/src/main/resources/email_templates/password-reset-form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/src/test/java/com/bilkom/EmergencyAlertTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/src/test/java/com/bilkom/EmergencyAlertTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/target/classes/db/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/target/classes/db/schema.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/../bilkom_backend/bilkom_main/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bilkom/network/ApiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bilkom/network/ApiService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
