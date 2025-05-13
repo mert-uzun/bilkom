@@ -7,6 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bilkom.BaseActivity;
 import com.bilkom.R;
+import com.bilkom.model.ClubMember;
 import com.bilkom.model.User;
 import com.bilkom.network.RetrofitClient;
 import com.bilkom.utils.SecureStorage;
@@ -49,7 +50,7 @@ public class ProfileActivity extends BaseActivity {
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
             return;
         }
-        RetrofitClient.getInstance().getApiService().getUserById(userId, token)
+        RetrofitClient.getInstance().getApiService().getUser(userId)
             .enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
@@ -73,12 +74,16 @@ public class ProfileActivity extends BaseActivity {
             });
     }
 
-    private void displayClubs(List<String> clubMemberships) {
+    private void displayClubs(List<ClubMember> clubMemberships) {
         clubsContainer.removeAllViews();
         if (clubMemberships != null && !clubMemberships.isEmpty()) {
-            for (String club : clubMemberships) {
+            for (ClubMember member : clubMemberships) {
                 TextView clubText = new TextView(this);
-                clubText.setText(club);
+                // Display user's club info - use name from User object if available
+                String clubInfo = member.getUser() != null ? 
+                    member.getUser().getFullName() : 
+                    "Club ID: " + member.getClubId();
+                clubText.setText(clubInfo);
                 clubText.setPadding(0, 0, 0, 16);
                 clubsContainer.addView(clubText);
             }
