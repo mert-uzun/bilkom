@@ -16,7 +16,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @since 2025-05-09
  */
 public final class RetrofitClient {
-
     private static final String BASE_URL = "http://10.0.2.2:8080/api/"; //localhost
     private static volatile Retrofit retrofit;
     private static volatile ApiService apiService;
@@ -27,14 +26,13 @@ public final class RetrofitClient {
 
     private RetrofitClient() { }
 
-    // Add getInstance method - This was missing
-    public static RetrofitClient getInstance() {
-        return RetrofitClientHolder.INSTANCE;
-    }
-
     // Singleton holder pattern
     private static class RetrofitClientHolder {
         private static final RetrofitClient INSTANCE = new RetrofitClient();
+    }
+
+    public static RetrofitClient getInstance() {
+        return RetrofitClientHolder.INSTANCE;
     }
 
     private static Retrofit getRetrofit() {
@@ -60,7 +58,7 @@ public final class RetrofitClient {
         return retrofit;
     }
 
-    public static ApiService getApiService() {
+    public ApiService getApiService() {
         if (apiService == null) {
             synchronized (RetrofitClient.class) {
                 if (apiService == null) {
@@ -73,13 +71,5 @@ public final class RetrofitClient {
 
     public static Retrofit getRetrofit() {
         return retrofit;
-    }
-
-    public static RetrofitClient getInstance() {
-        return RetrofitClientHolder.INSTANCE;
-    }
-
-    private static class RetrofitClientHolder {
-        private static final RetrofitClient INSTANCE = new RetrofitClient();
     }
 }
