@@ -1,55 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/card_bg_dark">
+    android:padding="16dp">
 
-    <!-- Top Bar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:layout_marginBottom="16dp">
 
-        <!-- Add Club Activity Button -->
-        <Button
-            android:id="@+id/addClubActivityButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add Club Activity"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#4CAF50"
-            android:layout_marginEnd="16dp"/>
-
-        <!-- My Clubs Button -->
-        <Button
-            android:id="@+id/myClubsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="My Clubs"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#2196F3"
-            android:layout_marginEnd="16dp"/>
-
-        <!-- Club Filter Spinner -->
         <Spinner
             android:id="@+id/clubSpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/spinner_background"
-            android:padding="12dp"/>
+            android:layout_marginEnd="8dp" />
 
+        <Button
+            android:id="@+id/addClubActivityButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Activity" />
     </LinearLayout>
 
-    <!-- Club Activities List -->
+    <Button
+        android:id="@+id/myClubsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My Clubs Activities"
+        android:layout_marginBottom="16dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/clubActivitiesRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp"
-        android:clipToPadding="false"/>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout> 

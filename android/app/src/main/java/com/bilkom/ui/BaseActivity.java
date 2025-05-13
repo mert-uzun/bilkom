@@ -1,7 +1,7 @@
 // this is the base activity class for the home, profile and settings activities
 // it is used to store the base activity content
 // it extends the AppCompatActivity class to show the menu 
-package com.bilkom;
+package com.bilkom.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,15 +11,13 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.bilkom.ui.*;
-
 /**
  * BaseActivity class for managing common functionality across activities.
  * 
  * @author Sıla Bozkurt
  * @version 1.0
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     protected DrawerLayout drawerLayout;
     protected View navView;
     protected ImageButton menuButton;
