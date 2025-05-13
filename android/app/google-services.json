@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "567237993009",
+    "project_id": "bilkomapp",
+    "storage_bucket": "bilkomapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:567237993009:android:5f5c177b1cbeb79e512b10",
+        "android_client_info": {
+          "package_name": "com.bilkom"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK3xocXh518Fdt23XVC-n05M27MvIveK4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
