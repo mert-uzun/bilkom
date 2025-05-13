@@ -146,10 +146,10 @@ public interface ApiService {
     @POST("/events/report/{eventId}")
     Call<Void> reportEvent(@Path("eventId") Long eventId, @Body ReportRequest body);
 
-    @GET("/weather")
+    @GET("weather")
     Call<WeatherForecast> getWeather();
 
-    @GET("/news")
+    @GET("news")
     Call<List<News>> getNews();
 
     @GET("/emergency-alerts")
@@ -169,4 +169,10 @@ public interface ApiService {
 
     @POST("/clubs/{id}/reject") 
     Call<Void> rejectClub(@Path("id") Long id);
+
+    @GET("weather")
+    Call<WeatherForecast> getWeatherForecast();
+
+    @GET("news")
+    Call<List<News>> getLatestNews();
 }

@@ -15,11 +15,17 @@ import com.google.gson.annotations.SerializedName;
  * @since 2025-05-09
  */
 public class WeatherForecast {
+    @SerializedName("temperature")
+    private float temperature;
+    
     @SerializedName("description")
     private String description;
     
-    @SerializedName("temperature")
-    private double temperature;
+    @SerializedName("icon")
+    private String icon;
+    
+    @SerializedName("location")
+    private String location;
     
     @SerializedName("feelsLike")
     private double feelsLike;
@@ -32,12 +38,6 @@ public class WeatherForecast {
     
     @SerializedName("windDirection")
     private String windDirection;
-    
-    @SerializedName("iconCode")
-    private String iconCode;
-    
-    @SerializedName("location")
-    private String location;
     
     @SerializedName("timestamp")
     private String timestamp;
@@ -126,6 +126,6 @@ public class WeatherForecast {
      * @since 2025-05-09
      */
     public String getIconUrl() {
-        return "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+        return "https://openweathermap.org/img/wn/" + icon + "@2x.png";
     }
 } 

@@ -1,6 +1,8 @@
 package com.bilkom.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +19,20 @@ import com.bilkom.R;
 import com.bilkom.model.Event;
 import com.bilkom.network.ApiService;
 import com.bilkom.network.RetrofitClient;
+import com.bilkom.utils.DateUtils;
+import com.bilkom.utils.SecureStorage;
+import com.bilkom.utils.VoidCb;
 import com.bilkom.utils.ApiErrorHandler;
 import com.bilkom.utils.SessionManager;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Fragment to display event details with properly formatted date
@@ -28,6 +42,7 @@ import com.bilkom.utils.SessionManager;
  * @since 2025-05-09
  */
 public class EventDetailsFragment extends Fragment {
+    private static final String TAG = "EventDetailsFragment";
     private static final String ARG_EVENT = "event";
     
     private Event event;
@@ -39,6 +54,9 @@ public class EventDetailsFragment extends Fragment {
     private LinearLayout tagsContainer;
     private Button joinButton;
     private Button withdrawButton;
+    private ApiService apiService;
+    private SecureStorage secureStorage;
+    private String token;
     
     /**
      * Create a new instance of the fragment with the provided event
@@ -55,11 +73,17 @@ public class EventDetailsFragment extends Fragment {
     }
     
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null && event == null) {
             event = (Event) getArguments().getSerializable(ARG_EVENT);
+        } else if (savedInstanceState != null && event == null) {
+            event = (Event) savedInstanceState.getSerializable(ARG_EVENT);
         }
+        
+        apiService = RetrofitClient.getInstance().getApiService();
+        secureStorage = new SecureStorage(requireContext());
+        token = secureStorage.getAuthToken();
     }
     
     @Nullable
@@ -76,6 +100,9 @@ public class EventDetailsFragment extends Fragment {
         joinButton = view.findViewById(R.id.join_button);
         withdrawButton = view.findViewById(R.id.withdraw_button);
         
+        joinButton.setOnClickListener(v -> joinEvent());
+        withdrawButton.setOnClickListener(v -> withdrawFromEvent());
+        
         return view;
     }
     
@@ -83,81 +110,118 @@ public class EventDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         
-        if (event != null) {
-            titleTextView.setText(event.getEventName());
+        displayEventDetails();
+        updateJoinStatus();
+    }
+    
+    private void displayEventDetails() {
+        if (event == null) return;
+        
+        titleTextView.setText(event.getEventName());
+        locationTextView.setText(event.getEventLocation());
+        descriptionTextView.setText(event.getEventDescription());
+        
+        try {
+            Date eventDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
+                .parse(event.getEventDate());
+            String formattedDate = new SimpleDateFormat("MMM dd, yyyy 'at' HH:mm", Locale.US)
+                .format(eventDate);
+            dateTextView.setText(formattedDate);
+        } catch (Exception e) {
+            dateTextView.setText(event.getEventDate());
+        }
+        
+        participantsTextView.setText(event.getCurrentParticipants() + "/" + event.getMaxParticipants());
+        
+        displayTags(event.getTags());
+    }
+    
+    private void displayTags(List<String> tags) {
+        tagsContainer.removeAllViews();
+        if (tags == null || tags.isEmpty()) return;
+        
+        for (String tag : tags) {
+            TextView tagView = new TextView(requireContext());
+            tagView.setText(tag);
+            tagView.setTextColor(Color.WHITE);
+            tagView.setBackgroundResource(R.drawable.tag_chip_bg);
+            tagView.setPadding(24, 8, 24, 8);
             
-            // Use the formatted date from DateUtils
-            dateTextView.setText(event.getFormattedEventDateTime());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0, 0, 16, 0);
+            tagView.setLayoutParams(params);
             
-            locationTextView.setText(event.getEventLocation());
-            descriptionTextView.setText(event.getEventDescription());
-            
-            // Show participants count
-            String participantsText = String.format("Participants: %d/%d", 
-                    event.getCurrentParticipantsNumber(), 
-                    event.getMaxParticipants());
-            participantsTextView.setText(participantsText);
-            
-            // Add event tags
-            if (event.getTags() != null && !event.getTags().isEmpty()) {
-                tagsContainer.removeAllViews();
-                for (String tag : event.getTags()) {
-                    TextView tagView = new TextView(requireContext());
-                    tagView.setText(tag);
-                    tagView.setPadding(16, 8, 16, 8);
-                    tagView.setBackgroundResource(R.drawable.tag_chip_bg);
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT);
-                    params.setMargins(0, 0, 16, 0);
-                    tagView.setLayoutParams(params);
-                    tagsContainer.addView(tagView);
-                }
-            }
-            
-            // Set up join/withdraw buttons
-            setupButtons();
+            tagsContainer.addView(tagView);
         }
     }
     
-    private void setupButtons() {
-        ApiService apiService = RetrofitClient.getInstance().getApiService();
-        String token = SessionManager.getInstance(requireContext()).getAuthToken();
+    private void updateJoinStatus() {
+        if (event == null) return;
         
-        joinButton.setOnClickListener(v -> {
-            apiService.joinEvent(event.getEventId(), "Bearer " + token)
-                    .enqueue(new ApiErrorHandler.ApiCallback<>(
-                            requireContext(),
-                            response -> {
-                                Toast.makeText(requireContext(), "Successfully joined event", Toast.LENGTH_SHORT).show();
-                                // Update UI
-                                joinButton.setVisibility(View.GONE);
-                                withdrawButton.setVisibility(View.VISIBLE);
-                            },
-                            (message, errorCode) -> {
-                                // Handle error
-                                ApiErrorHandler.handleUnauthorized(requireContext(), errorCode);
-                            },
-                            "Failed to join event"
-                    ));
-        });
+        boolean isJoined = event.isJoined();
+        joinButton.setVisibility(isJoined ? View.GONE : View.VISIBLE);
+        withdrawButton.setVisibility(isJoined ? View.VISIBLE : View.GONE);
+    }
+    
+    private void joinEvent() {
+        joinButton.setEnabled(false);
         
-        withdrawButton.setOnClickListener(v -> {
-            apiService.withdrawFromEvent(event.getEventId(), "Bearer " + token)
-                    .enqueue(new ApiErrorHandler.ApiCallback<>(
-                            requireContext(),
-                            response -> {
-                                Toast.makeText(requireContext(), "Successfully withdrew from event", Toast.LENGTH_SHORT).show();
-                                // Update UI
-                                joinButton.setVisibility(View.VISIBLE);
-                                withdrawButton.setVisibility(View.GONE);
-                            },
-                            (message, errorCode) -> {
-                                // Handle error
-                                ApiErrorHandler.handleUnauthorized(requireContext(), errorCode);
-                            },
-                            "Failed to withdraw from event"
-                    ));
+        apiService.joinEvent(event.getEventId()).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                joinButton.setEnabled(true);
+                if (response.isSuccessful()) {
+                    Toast.makeText(requireContext(), "Successfully joined the event", Toast.LENGTH_SHORT).show();
+                    event.setJoined(true);
+                    event.setCurrentParticipants(event.getCurrentParticipants() + 1);
+                    updateJoinStatus();
+                    displayEventDetails();
+                } else {
+                    Toast.makeText(requireContext(), "Failed to join: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                joinButton.setEnabled(true);
+                Toast.makeText(requireContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         });
+    }
+    
+    private void withdrawFromEvent() {
+        withdrawButton.setEnabled(false);
+        
+        apiService.withdrawEvent(event.getEventId()).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                withdrawButton.setEnabled(true);
+                if (response.isSuccessful()) {
+                    Toast.makeText(requireContext(), "Successfully withdrawn from the event", Toast.LENGTH_SHORT).show();
+                    event.setJoined(false);
+                    event.setCurrentParticipants(Math.max(0, event.getCurrentParticipants() - 1));
+                    updateJoinStatus();
+                    displayEventDetails();
+                } else {
+                    Toast.makeText(requireContext(), "Failed to withdraw: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                withdrawButton.setEnabled(true);
+                Toast.makeText(requireContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (event != null) {
+            outState.putSerializable(ARG_EVENT, event);
+        }
     }
 } 
