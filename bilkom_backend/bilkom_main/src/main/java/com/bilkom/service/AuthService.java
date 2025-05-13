@@ -278,7 +278,7 @@ public class AuthService {
         userRepository.save(user);
         
         // Send password reset email
-        String resetUrl = "http://localhost:8080/api/auth/reset-password/confirm?token=" + resetToken;
+        String resetUrl = "http://localhost:8080/api/reset-password-form?token=" + resetToken;
         sendPasswordResetEmail(user.getEmail(), resetUrl);
         
         return true;
