@@ -61,6 +61,8 @@ public class RegistrationActivity extends AppCompatActivity {
         String email = emailInput.getText().toString().trim();
         String password = passwordInput.getText().toString().trim();
         String firstName = firstNameInput.getText().toString().trim();
+        String lastName = lastNameInput.getText().toString().trim();
+        String bilkentId = bilkentIdInput.getText().toString().trim();
         String phoneNumber = phoneNumberInput.getText().toString().trim();
         String bloodType = bloodTypeInput.getText().toString().trim();
 
@@ -98,27 +100,35 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private void performRegistration() {
         registerButton.setEnabled(false);
+        
+        String email = emailInput.getText().toString().trim();
+        String password = passwordInput.getText().toString().trim();
+        String firstName = firstNameInput.getText().toString().trim();
+        String lastName = lastNameInput.getText().toString().trim();
+        String bilkentId = bilkentIdInput.getText().toString().trim();
+        String phoneNumber = phoneNumberInput.getText().toString().trim();
+        
+        // Constructor only takes 6 parameters - blood type is not in the model
         RegistrationRequest req = new RegistrationRequest(
-            emailInput.getText().toString().trim(),
-            passwordInput.getText().toString().trim(),
-            firstNameInput.getText().toString().trim(),
-            lastNameInput.getText().toString().trim(),
-            bilkentIdInput.getText().toString().trim(),
-            phoneNumberInput.getText().toString().trim(),
-            bloodTypeInput.getText().toString().trim()
+            firstName,
+            lastName,
+            email, 
+            password,
+            bilkentId,
+            phoneNumber
         );
 
         apiService.register(req).enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                 registerButton.setEnabled(true);
-                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                if (response.isSuccessful() && response.body() != null && response.body().getToken() != null) {
                     Toast.makeText(RegistrationActivity.this,
                         "Registration successful. Check your email to verify.", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
                     finish();
                 } else {
-                    String msg = response.body() != null ? response.body().getMessage() : "Registration failed";
+                    String msg = "Registration failed";
                     Toast.makeText(RegistrationActivity.this, msg, Toast.LENGTH_SHORT).show();
                 }
             }
