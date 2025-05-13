@@ -172,4 +172,9 @@ public interface ApiService {
 
     @GET("events/club/my")
     Call<Map<Long, List<Event>>> getMyClubsEvents(@Header("Authorization") String token);
+    @POST("/clubs/{id}/approve")
+    Call<Void> approveClub(@Path("id") Long id);
+
+    @POST("/clubs/{id}/reject") 
+    Call<Void> rejectClub(@Path("id") Long id);
 }
