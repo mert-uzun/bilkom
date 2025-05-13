@@ -4,52 +4,53 @@ package com.bilkom.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 public class SecureStorage {
-    private static final String PREF_FILE = "bilkom_secure_prefs";
-    private static final String KEY_AUTH_TOKEN = "auth_token";
-    private static final String KEY_USER_ID = "user_id";
-    
-    private final SharedPreferences securePrefs;
-    
+    private SharedPreferences preferences;
+    private static final String FILE_NAME = "bilkom_secure_prefs";
+    private static final String AUTH_TOKEN_KEY = "auth_token";
+    private static final String USER_ID_KEY = "user_id";
+
     public SecureStorage(Context context) {
         try {
             MasterKey masterKey = new MasterKey.Builder(context)
                     .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
                     .build();
 
-            securePrefs = EncryptedSharedPreferences.create(
+            preferences = EncryptedSharedPreferences.create(
                     context,
-                    PREF_FILE,
+                    FILE_NAME,
                     masterKey,
                     EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
                     EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             );
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to initialize secure storage", e);
+        } catch (GeneralSecurityException | IOException e) {
+            // Fallback to regular SharedPreferences if encryption fails
+            preferences = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         }
     }
-    
+
     public void saveAuthToken(String token) {
-        securePrefs.edit().putString(KEY_AUTH_TOKEN, token).apply();
+        preferences.edit().putString(AUTH_TOKEN_KEY, token).apply();
     }
-    
+
     public String getAuthToken() {
-        return securePrefs.getString(KEY_AUTH_TOKEN, null);
+        return preferences.getString(AUTH_TOKEN_KEY, "");
     }
-    
+
     public void saveUserId(long userId) {
-        securePrefs.edit().putLong(KEY_USER_ID, userId).apply();
+        preferences.edit().putLong(USER_ID_KEY, userId).apply();
     }
-    
-    public Long getUserId() {
-        return securePrefs.getLong(KEY_USER_ID, -1);
+
+    public long getUserId() {
+        return preferences.getLong(USER_ID_KEY, -1);
     }
-    
+
     public void clearAll() {
-        securePrefs.edit().clear().apply();
+        preferences.edit().clear().apply();
     }
 } 

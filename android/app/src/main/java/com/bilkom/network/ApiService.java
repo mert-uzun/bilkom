@@ -163,4 +163,10 @@ public interface ApiService {
 
     @GET("/")
     Call<ApiResponse> ping();
+
+    @POST("/clubs/{id}/approve")
+    Call<Void> approveClub(@Path("id") Long id);
+
+    @POST("/clubs/{id}/reject") 
+    Call<Void> rejectClub(@Path("id") Long id);
 }
