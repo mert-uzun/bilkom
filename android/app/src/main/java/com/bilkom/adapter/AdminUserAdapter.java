@@ -4,18 +4,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bilkom.R;
 import com.bilkom.model.AdminUser;
+import com.bilkom.model.User;
 import com.bilkom.network.ApiService;
 import com.bilkom.network.RetrofitClient;
 import com.bilkom.utils.VoidCb;
 import java.util.HashMap;
 import java.util.Map;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 class AdminUserAdapter extends ListAdapter<AdminUser, AdminUserAdapter.VH> {
     AdminUserAdapter(){ super(DIFF); }
@@ -47,26 +51,40 @@ class AdminUserAdapter extends ListAdapter<AdminUser, AdminUserAdapter.VH> {
         // For toggling user role (since there's no direct method in API)
         h.btnRole.setOnClickListener(v-> {
             // Get the user first
-            api.getUser(u.getId()).enqueue(new retrofit2.Callback<com.bilkom.model.User>() {
+            api.getUser(u.getId()).enqueue(new Callback<User>() {
                 @Override
-                public void onResponse(Call<com.bilkom.model.User> call, retrofit2.Response<com.bilkom.model.User> response) {
+                public void onResponse(Call<User> call, Response<User> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        com.bilkom.model.User user = response.body();
+                        User user = response.body();
                         // Toggle between USER and ADMIN roles
                         String newRole = "USER";
                         if (u.getRole().equals("USER")) {
                             newRole = "ADMIN";
                         }
                         user.setRole(newRole);
+                        
                         // Update the user with new role
-                        api.updateUser(u.getId(), user).enqueue(VoidCb.get(v));
+                        api.updateUser(u.getId(), user).enqueue(new Callback<User>() {
+                            @Override
+                            public void onResponse(Call<User> call, Response<User> response) {
+                                if (response.isSuccessful()) {
+                                    Toast.makeText(v.getContext(), "Role updated successfully", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(v.getContext(), "Error: " + response.code(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            
+                            @Override
+                            public void onFailure(Call<User> call, Throwable t) {
+                                Toast.makeText(v.getContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 }
                 
                 @Override
-                public void onFailure(Call<com.bilkom.model.User> call, Throwable t) {
-                    // Handle failure
-                    VoidCb.get(v).onFailure(null, t);
+                public void onFailure(Call<User> call, Throwable t) {
+                    Toast.makeText(v.getContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         });
