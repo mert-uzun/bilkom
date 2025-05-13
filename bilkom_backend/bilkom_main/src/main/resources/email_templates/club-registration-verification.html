@@ -2,101 +2,784 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Club Registration Verification</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #0046AA;
+            --primary-dark: #003366;
+            --secondary: #FF5E3A;
+            --success: #28a745;
+            --danger: #dc3545;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+        }
+        
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) translateZ(30px); }
+            50% { transform: translateY(-10px) translateZ(40px); }
+            100% { transform: translateY(0px) translateZ(30px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -100% 0; }
+            100% { background-position: 100% 0; }
+        }
+        
+        @keyframes rotate3d {
+            0% { transform: rotate3d(0, 1, 0, 0deg); }
+            50% { transform: rotate3d(0, 1, 0, 5deg); }
+            100% { transform: rotate3d(0, 1, 0, 0deg); }
+        }
+        
+        @keyframes complexRotate {
+            0% { transform: rotate3d(1, 0.5, 0.2, 0deg); }
+            25% { transform: rotate3d(1, 0.5, 0.2, 5deg); }
+            50% { transform: rotate3d(0.5, 1, 0.5, 3deg); }
+            75% { transform: rotate3d(0.2, 0.8, 1, 5deg); }
+            100% { transform: rotate3d(1, 0.5, 0.2, 0deg); }
+        }
+        
+        @keyframes morph {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+        
+        @keyframes floatSine {
+            0% { transform: translateY(0) translateX(0) translateZ(30px); }
+            25% { transform: translateY(-15px) translateX(5px) translateZ(40px); }
+            50% { transform: translateY(0) translateX(10px) translateZ(45px); }
+            75% { transform: translateY(15px) translateX(5px) translateZ(40px); }
+            100% { transform: translateY(0) translateX(0) translateZ(30px); }
+        }
+        
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 10px rgba(0, 70, 170, 0.5), 0 0 20px rgba(0, 70, 170, 0); }
+            50% { box-shadow: 0 0 15px rgba(0, 70, 170, 0.8), 0 0 30px rgba(0, 70, 170, 0.4); }
+            100% { box-shadow: 0 0 10px rgba(0, 70, 170, 0.5), 0 0 20px rgba(0, 70, 170, 0); }
+        }
+        
+        @keyframes shadowMovement {
+            0% { box-shadow: 15px 15px 25px rgba(0, 0, 0, 0.2); }
+            50% { box-shadow: 5px 25px 25px rgba(0, 0, 0, 0.1); }
+            100% { box-shadow: 15px 15px 25px rgba(0, 0, 0, 0.2); }
+        }
+        
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            perspective: 1000px;
+        }
+        
         .container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
-            padding: 20px;
-        }
-        .header {
-            background-color: #003366;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        .content {
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-top: none;
-        }
-        .info-block {
-            background-color: #f9f9f9;
-            padding: 15px;
+            background-color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            margin-top: 20px;
             margin-bottom: 20px;
-            border-left: 4px solid #003366;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            animation: float 6s ease-in-out infinite, shadowMovement 8s ease-in-out infinite;
+            position: relative;
         }
+        
+        .wrapper-3d {
+            transform-style: preserve-3d;
+            position: relative;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease infinite;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transform: translateZ(30px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform-style: preserve-3d;
+        }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+            background-size: 200% 100%;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transform: translateZ(20px);
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        .header .logo {
+            margin-bottom: 20px;
+            transform: translateZ(40px);
+        }
+        
+        .logo-img {
+            width: 80px;
+            height: 80px;
+            background: #fff;
+            border-radius: 50%;
+            padding: 15px;
+            margin: 0 auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            animation: complexRotate 12s ease-in-out infinite, glowPulse 4s infinite;
+            transform-style: preserve-3d;
+        }
+        
+        .logo-img svg {
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        .path-animation {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: dash 3s ease-in-out forwards;
+            animation-iteration-count: infinite;
+        }
+        
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        .content {
+            padding: 35px;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            position: relative;
+            z-index: 1;
+            transform-style: preserve-3d;
+        }
+        
+        .content p {
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 16px;
+        }
+        
+        .info-block {
+            background: #fff;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 70, 170, 0.07);
+            border-left: 4px solid var(--primary);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateZ(0);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+        
+        .info-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 70, 170, 0.03) 0%, rgba(255, 255, 255, 0) 50%);
+            z-index: -1;
+        }
+        
+        .info-block:hover {
+            box-shadow: 0 15px 30px rgba(0, 70, 170, 0.15);
+            transform: translateY(-8px) translateZ(20px) rotateX(2deg) rotateY(1deg);
+        }
+        
+        .info-block h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(0, 70, 170, 0.1);
+            padding-bottom: 10px;
+            position: relative;
+        }
+        
+        .info-block h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 10px;
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+        }
+        
+        .info-block:hover h2::after {
+            transform: scaleX(1);
+        }
+        
+        .info-block p {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        
+        .info-block p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .info-block strong {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        .button-container {
+            text-align: center;
+            margin: 40px 0;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+        
         .button {
             display: inline-block;
-            padding: 10px 20px;
-            margin: 10px 5px;
+            padding: 14px 28px;
+            margin: 10px 12px;
             text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
             color: white;
+            letter-spacing: 0.5px;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transform-style: preserve-3d;
         }
+        
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+        
+        .button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%);
+            transform: rotate(90deg);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        
+        .button:hover {
+            transform: translateY(-6px) rotateX(10deg) rotateY(5deg);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .button:hover::before {
+            transform: translateY(0);
+        }
+        
+        .button:hover::after {
+            opacity: 1;
+        }
+        
         .approve {
-            background-color: #28a745;
+            background: linear-gradient(135deg, var(--success) 0%, #219a38 100%);
+            background-size: 200% 100%;
+            animation: gradientShift 5s ease infinite;
         }
+        
+        .approve::after {
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%), 
+                        linear-gradient(90deg, rgba(40,167,69,0) 0%, rgba(40,167,69,0.2) 50%, rgba(40,167,69,0) 100%);
+        }
+        
         .reject {
-            background-color: #dc3545;
+            background: linear-gradient(135deg, var(--danger) 0%, #c82333 100%);
+            background-size: 200% 100%;
+            animation: gradientShift 5s ease infinite;
         }
+        
+        .reject::after {
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%), 
+                        linear-gradient(90deg, rgba(220,53,69,0) 0%, rgba(220,53,69,0.2) 50%, rgba(220,53,69,0) 100%);
+        }
+        
+        .note {
+            text-align: center;
+            font-style: italic;
+            color: var(--gray);
+            margin-top: 20px;
+        }
+        
         .footer {
             margin-top: 20px;
-            font-size: 12px;
-            color: #777;
+            background: linear-gradient(135deg, #f9f9f9 0%, #f1f1f1 100%);
+            padding: 20px;
             text-align: center;
+            border-top: 1px solid #eee;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            transform: translateZ(-5px);
+            position: relative;
+        }
+        
+        .footer p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #888;
+        }
+        
+        .divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgba(0, 70, 170, 0.2), transparent);
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+            animation: shimmer 3s infinite;
+        }
+        
+        .highlight {
+            color: var(--primary);
+            font-weight: 500;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.5s ease;
+        }
+        
+        .highlight:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        .detail-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            transform: translateZ(0);
+            padding: 6px 0;
+            transform-style: preserve-3d;
+        }
+        
+        .detail-row:hover {
+            transform: translateX(5px) translateZ(15px) rotateY(2deg);
+            padding-left: 5px;
+        }
+        
+        .detail-label {
+            min-width: 120px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            position: relative;
+        }
+        
+        .detail-label::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--primary);
+            transform: translateY(-50%) scale(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .detail-row:hover .detail-label::before {
+            transform: translateY(-50%) scale(1);
+        }
+        
+        .detail-value {
+            flex: 1;
+            color: #555;
+        }
+        
+        .ribbon {
+            position: absolute;
+            top: -10px;
+            right: 30px;
+            z-index: 1;
+            background: linear-gradient(135deg, var(--secondary) 0%, #ff2f00 100%);
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(255, 94, 58, 0.3);
+            transform: rotate(3deg) translateZ(20px);
+            border-radius: 3px;
+            animation: pulse 2s ease-in-out infinite, glowPulse 3s ease-in-out infinite;
+        }
+        
+        .ribbon::before, .ribbon::after {
+            content: '';
+            position: absolute;
+            background: inherit;
+            z-index: -1;
+        }
+        
+        .ribbon::before {
+            width: 10px;
+            height: 10px;
+            bottom: -5px;
+            right: 0;
+            transform: skewY(-45deg);
+        }
+        
+        .floating-icon {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .floating-icon.bell {
+            top: 20px;
+            left: 20px;
+            animation-delay: 0.5s;
+        }
+        
+        .floating-icon.check {
+            bottom: -10px;
+            right: 30px;
+            animation-delay: 1s;
+        }
+        
+        .floating-icon i {
+            font-size: 20px;
+            color: var(--primary);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+            position: relative;
+            top: -2px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            color: white;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .doc-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary) !important;
+            text-decoration: none !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background-color: rgba(0, 70, 170, 0.08);
+        }
+        
+        .doc-link:hover {
+            background-color: rgba(0, 70, 170, 0.15);
+            transform: translateX(3px);
+        }
+        
+        .doc-link svg {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+        }
+        
+        /* Add particle system */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            transform-style: preserve-3d;
+        }
+        
+        .p1 { top: 10%; left: 10%; width: 6px; height: 6px; animation: floatSine 20s ease-in-out infinite; }
+        .p2 { top: 20%; left: 85%; width: 8px; height: 8px; animation: floatSine 15s ease-in-out infinite reverse; }
+        .p3 { top: 35%; left: 15%; width: 10px; height: 10px; animation: floatSine 18s ease-in-out infinite; animation-delay: 2s; }
+        .p4 { top: 70%; left: 90%; width: 5px; height: 5px; animation: floatSine 12s ease-in-out infinite; animation-delay: 1s; }
+        .p5 { top: 85%; left: 5%; width: 7px; height: 7px; animation: floatSine 22s ease-in-out infinite reverse; animation-delay: 3s; }
+        .p6 { top: 40%; left: 50%; width: 6px; height: 6px; animation: floatSine 17s ease-in-out infinite; animation-delay: 2.5s; }
+        
+        /* Add morphing shapes */
+        .morph-shape {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(0,70,170,0.05) 0%, rgba(0,70,170,0.1) 100%);
+            animation: morph 15s ease-in-out infinite, float 20s ease-in-out infinite;
+            transform-style: preserve-3d;
+            z-index: -1;
+        }
+        
+        .shape1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            right: -150px;
+            animation-delay: 0s;
+        }
+        
+        .shape2 {
+            width: 200px;
+            height: 200px;
+            bottom: 0%;
+            left: -100px;
+            animation-delay: 5s;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content {
+                padding: 25px 20px;
+            }
+            
+            .info-block {
+                padding: 20px 15px;
+            }
+            
+            .detail-row {
+                flex-direction: column;
+            }
+            
+            .detail-label {
+                margin-bottom: 5px;
+            }
+            
+            .button {
+                display: block;
+                margin: 15px auto;
+                max-width: 220px;
+            }
+            
+            .floating-icon {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .floating-icon.bell {
+                top: 10px;
+                left: 10px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>New Club Registration Request</h1>
+        <div class="particles-container">
+            <div class="particle p1"></div>
+            <div class="particle p2"></div>
+            <div class="particle p3"></div>
+            <div class="particle p4"></div>
+            <div class="particle p5"></div>
+            <div class="particle p6"></div>
         </div>
-        <div class="content">
-            <p>Dear Administrator,</p>
-            
-            <p>A new club registration request has been submitted on the Bilkom platform. Please review the details below:</p>
-            
-            <div class="info-block">
-                <h2>Club Details</h2>
-                <p><strong>Club Name:</strong> <span th:text="${clubName}">Club Name</span></p>
-                <p><strong>Description:</strong> <span th:text="${clubDescription}">Club Description</span></p>
+        
+        <div class="morph-shape shape1"></div>
+        <div class="morph-shape shape2"></div>
+        
+        <div class="wrapper-3d">
+            <div class="header">
+                <div class="floating-icon bell">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path class="path-animation" d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path class="path-animation" d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="logo">
+                    <div class="logo-img">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path class="path-animation" d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path class="path-animation" d="M2 17L12 22L22 17" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path class="path-animation" d="M2 12L12 17L22 12" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="ribbon">New Request</div>
+                <h1>Club Registration Request</h1>
             </div>
             
-            <div class="info-block">
-                <h2>Executive Details</h2>
-                <p><strong>Name:</strong> <span th:text="${executiveName}">Executive Name</span></p>
-                <p><strong>Email:</strong> <span th:text="${executiveEmail}">executive@bilkent.edu.tr</span></p>
-                <p><strong>Position:</strong> <span th:text="${executivePosition}">Position</span></p>
+            <div class="content">
+                <p>Dear Administrator,</p>
+                
+                <p>A new <span class="highlight">club registration request</span> has been submitted on the Bilkom platform. Please review the details below:</p>
+                
+                <div class="info-block">
+                    <h2>Club Details <span class="badge">New</span></h2>
+                    <div class="detail-row">
+                        <div class="detail-label">Club Name:</div>
+                        <div class="detail-value" th:text="${clubName}">Club Name</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Description:</div>
+                        <div class="detail-value" th:text="${clubDescription}">Club Description</div>
+                    </div>
+                </div>
+                
+                <div class="info-block">
+                    <h2>Executive Details</h2>
+                    <div class="detail-row">
+                        <div class="detail-label">Name:</div>
+                        <div class="detail-value" th:text="${executiveName}">Executive Name</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Email:</div>
+                        <div class="detail-value" th:text="${executiveEmail}">executive@bilkent.edu.tr</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Position:</div>
+                        <div class="detail-value" th:text="${executivePosition}">Position</div>
+                    </div>
+                </div>
+                
+                <div class="info-block">
+                    <h2>Additional Information</h2>
+                    <div class="detail-row">
+                        <div class="detail-label">Verification:</div>
+                        <div class="detail-value">
+                            <a th:href="${verificationDocumentUrl}" target="_blank" class="doc-link">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M14 2V8H20" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16 13H8" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16 17H8" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10 9H9H8" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                View Document
+                            </a>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Notes:</div>
+                        <div class="detail-value" th:text="${additionalInfo}">No additional information provided</div>
+                    </div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <p>Please verify the information and take appropriate action:</p>
+                
+                <div class="button-container">
+                    <a th:href="${approveUrl}" class="button approve">Approve Club</a>
+                    <a th:href="${rejectUrl}" class="button reject">Reject Club</a>
+                </div>
+                
+                <p class="note">Note: You can provide a reason for rejection after clicking the reject button.</p>
             </div>
             
-            <div class="info-block">
-                <h2>Additional Information</h2>
-                <p><strong>Verification Document:</strong> <a th:href="${verificationDocumentUrl}" target="_blank">View Document</a></p>
-                <p><strong>Additional Notes:</strong> <span th:text="${additionalInfo}">No additional information provided</span></p>
+            <div class="floating-icon check">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class="path-animation" d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18457 2.99721 7.13633 4.39828 5.49707C5.79935 3.85782 7.69279 2.71538 9.79619 2.24015C11.8996 1.76491 14.1003 1.98234 16.07 2.86" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path class="path-animation" d="M22 4L12 14.01L9 11.01" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
             </div>
             
-            <p>Please verify the information and take appropriate action:</p>
-            
-            <div style="text-align: center; margin: 30px 0;">
-                <a th:href="${approveUrl}" class="button approve">Approve Club</a>
-                <a th:href="${rejectUrl}" class="button reject">Reject Club</a>
+            <div class="footer">
+                <p>This is an automated message from the Bilkom platform. Please do not reply to this email.</p>
+                <p>&copy; 2025 Bilkom - Bilkent University Club Management System</p>
             </div>
-            
-            <p>Note: You can provide a reason for rejection after clicking the reject button.</p>
-        </div>
-        <div class="footer">
-            <p>This is an automated message from the Bilkom platform. Please do not reply to this email.</p>
-            <p>&copy; 2025 Bilkom - Bilkent University Club Management System</p>
         </div>
     </div>
 </body>

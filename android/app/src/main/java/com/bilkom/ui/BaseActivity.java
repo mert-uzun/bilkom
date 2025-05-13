@@ -13,10 +13,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
-
-import com.bilkom.R;
 import com.bilkom.utils.SecureStorage;
 import com.google.android.material.navigation.NavigationView;
+
 
 /**
  * BaseActivity class for managing common functionality across activities.
@@ -24,7 +23,7 @@ import com.google.android.material.navigation.NavigationView;
  * @author Sıla Bozkurt
  * @version 1.0
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     protected DrawerLayout drawerLayout;
     protected View navView;
     protected ImageButton menuButton;

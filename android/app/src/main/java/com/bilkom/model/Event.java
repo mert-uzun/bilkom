@@ -1,6 +1,7 @@
 package com.bilkom.model;
 
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import com.bilkom.utils.DateUtils;
  * @version 1.0
  * @since 2025-05-09
  */
-public class Event {
+public class Event implements Serializable {
     @SerializedName("eventId")
     private Long eventId;
     
