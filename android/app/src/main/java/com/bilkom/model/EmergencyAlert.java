@@ -9,9 +9,6 @@ import com.bilkom.utils.DateUtils;
  * Represents a real-time emergency alert fetched from
  * <code>/emergency-alerts</code>.
  *
- * <p>Most fields come straight from the backend JSON; the helper
- * methods convert the <em>createdAt</em> ISO string into user-friendly
- * date and date-time formats.</p>
  *
  * @author  Sıla Bozkurt
  * @version 1.0

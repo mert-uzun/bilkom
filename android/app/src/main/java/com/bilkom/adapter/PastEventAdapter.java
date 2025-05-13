@@ -48,7 +48,6 @@ public class PastEventAdapter extends EventAdapter {
         }
 
         public void setupReportButton(Event event) {
-            // Change button to report button
             joinButton.setText("Report");
             joinButton.setBackgroundTintList(ColorStateList.valueOf(
                 itemView.getContext().getColor(R.color.red)));

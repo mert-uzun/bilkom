@@ -45,7 +45,6 @@ public class ClubEventAdapter extends EventAdapter {
         }
 
         public void setupCancelButton(Event event) {
-            // Change button to cancel button
             joinButton.setText("Cancel Activity");
             joinButton.setBackgroundTintList(ColorStateList.valueOf(
                 itemView.getContext().getColor(R.color.red)));
