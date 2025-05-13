@@ -428,4 +428,18 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving user's club associations", e);
         }
     }
+    
+    @PutMapping("/{id}/fcm-token")
+    public ResponseEntity<User> updateFcmToken(@PathVariable Long id, @RequestBody Map<String, String> payload) {
+        try {
+            String fcmToken = payload.get("fcmToken");
+            User user = userService.getUserById(id);
+            user.setFcmToken(fcmToken);
+            return ResponseEntity.ok(userService.updateUser(id, user));
+        } catch (BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating FCM token", e);
+        }
+    }
 }
