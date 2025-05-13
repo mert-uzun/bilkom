@@ -53,6 +53,40 @@
             100% { transform: rotate3d(0, 1, 0, 0deg); }
         }
         
+        @keyframes complexRotate {
+            0% { transform: rotate3d(1, 0.5, 0.2, 0deg); }
+            25% { transform: rotate3d(1, 0.5, 0.2, 5deg); }
+            50% { transform: rotate3d(0.5, 1, 0.5, 3deg); }
+            75% { transform: rotate3d(0.2, 0.8, 1, 5deg); }
+            100% { transform: rotate3d(1, 0.5, 0.2, 0deg); }
+        }
+        
+        @keyframes morph {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+        
+        @keyframes floatSine {
+            0% { transform: translateY(0) translateX(0) translateZ(30px); }
+            25% { transform: translateY(-15px) translateX(5px) translateZ(40px); }
+            50% { transform: translateY(0) translateX(10px) translateZ(45px); }
+            75% { transform: translateY(15px) translateX(5px) translateZ(40px); }
+            100% { transform: translateY(0) translateX(0) translateZ(30px); }
+        }
+        
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 10px rgba(0, 70, 170, 0.5), 0 0 20px rgba(0, 70, 170, 0); }
+            50% { box-shadow: 0 0 15px rgba(0, 70, 170, 0.8), 0 0 30px rgba(0, 70, 170, 0.4); }
+            100% { box-shadow: 0 0 10px rgba(0, 70, 170, 0.5), 0 0 20px rgba(0, 70, 170, 0); }
+        }
+        
+        @keyframes shadowMovement {
+            0% { box-shadow: 15px 15px 25px rgba(0, 0, 0, 0.2); }
+            50% { box-shadow: 5px 25px 25px rgba(0, 0, 0, 0.1); }
+            100% { box-shadow: 15px 15px 25px rgba(0, 0, 0, 0.2); }
+        }
+        
         body {
             font-family: 'Poppins', Arial, sans-serif;
             line-height: 1.6;
@@ -74,7 +108,13 @@
             margin-bottom: 20px;
             transform-style: preserve-3d;
             perspective: 1000px;
-            animation: float 6s ease-in-out infinite;
+            animation: float 6s ease-in-out infinite, shadowMovement 8s ease-in-out infinite;
+            position: relative;
+        }
+        
+        .wrapper-3d {
+            transform-style: preserve-3d;
+            position: relative;
         }
         
         .header {
@@ -88,6 +128,7 @@
             overflow: hidden;
             transform: translateZ(30px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform-style: preserve-3d;
         }
         
         .header::before {
@@ -126,7 +167,8 @@
             padding: 15px;
             margin: 0 auto;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            animation: rotate3d 8s ease-in-out infinite;
+            animation: complexRotate 12s ease-in-out infinite, glowPulse 4s infinite;
+            transform-style: preserve-3d;
         }
         
         .logo-img svg {
@@ -172,6 +214,7 @@
             transform: translateZ(0);
             position: relative;
             overflow: hidden;
+            transform-style: preserve-3d;
         }
         
         .info-block::before {
@@ -187,7 +230,7 @@
         
         .info-block:hover {
             box-shadow: 0 15px 30px rgba(0, 70, 170, 0.15);
-            transform: translateY(-8px) translateZ(20px) rotateX(2deg);
+            transform: translateY(-8px) translateZ(20px) rotateX(2deg) rotateY(1deg);
         }
         
         .info-block h2 {
@@ -236,6 +279,7 @@
             text-align: center;
             margin: 40px 0;
             perspective: 1000px;
+            transform-style: preserve-3d;
         }
         
         .button {
@@ -284,8 +328,8 @@
         }
         
         .button:hover {
-            transform: translateY(-6px) rotateX(10deg);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-6px) rotateX(10deg) rotateY(5deg);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.1);
         }
         
         .button:hover::before {
@@ -302,10 +346,20 @@
             animation: gradientShift 5s ease infinite;
         }
         
+        .approve::after {
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%), 
+                        linear-gradient(90deg, rgba(40,167,69,0) 0%, rgba(40,167,69,0.2) 50%, rgba(40,167,69,0) 100%);
+        }
+        
         .reject {
             background: linear-gradient(135deg, var(--danger) 0%, #c82333 100%);
             background-size: 200% 100%;
             animation: gradientShift 5s ease infinite;
+        }
+        
+        .reject::after {
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%), 
+                        linear-gradient(90deg, rgba(220,53,69,0) 0%, rgba(220,53,69,0.2) 50%, rgba(220,53,69,0) 100%);
         }
         
         .note {
@@ -384,10 +438,11 @@
             transition: all 0.3s ease;
             transform: translateZ(0);
             padding: 6px 0;
+            transform-style: preserve-3d;
         }
         
         .detail-row:hover {
-            transform: translateX(5px) translateZ(5px);
+            transform: translateX(5px) translateZ(15px) rotateY(2deg);
             padding-left: 5px;
         }
         
@@ -433,7 +488,7 @@
             box-shadow: 0 5px 15px rgba(255, 94, 58, 0.3);
             transform: rotate(3deg) translateZ(20px);
             border-radius: 3px;
-            animation: pulse 2s ease-in-out infinite;
+            animation: pulse 2s ease-in-out infinite, glowPulse 3s ease-in-out infinite;
         }
         
         .ribbon::before, .ribbon::after {
@@ -520,6 +575,58 @@
             margin-right: 6px;
         }
         
+        /* Add particle system */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            transform-style: preserve-3d;
+        }
+        
+        .p1 { top: 10%; left: 10%; width: 6px; height: 6px; animation: floatSine 20s ease-in-out infinite; }
+        .p2 { top: 20%; left: 85%; width: 8px; height: 8px; animation: floatSine 15s ease-in-out infinite reverse; }
+        .p3 { top: 35%; left: 15%; width: 10px; height: 10px; animation: floatSine 18s ease-in-out infinite; animation-delay: 2s; }
+        .p4 { top: 70%; left: 90%; width: 5px; height: 5px; animation: floatSine 12s ease-in-out infinite; animation-delay: 1s; }
+        .p5 { top: 85%; left: 5%; width: 7px; height: 7px; animation: floatSine 22s ease-in-out infinite reverse; animation-delay: 3s; }
+        .p6 { top: 40%; left: 50%; width: 6px; height: 6px; animation: floatSine 17s ease-in-out infinite; animation-delay: 2.5s; }
+        
+        /* Add morphing shapes */
+        .morph-shape {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(0,70,170,0.05) 0%, rgba(0,70,170,0.1) 100%);
+            animation: morph 15s ease-in-out infinite, float 20s ease-in-out infinite;
+            transform-style: preserve-3d;
+            z-index: -1;
+        }
+        
+        .shape1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            right: -150px;
+            animation-delay: 0s;
+        }
+        
+        .shape2 {
+            width: 200px;
+            height: 200px;
+            bottom: 0%;
+            left: -100px;
+            animation-delay: 5s;
+            opacity: 0.7;
+        }
+        
         @media (max-width: 640px) {
             .header h1 {
                 font-size: 1.8rem;
@@ -561,104 +668,118 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="floating-icon bell">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path class="path-animation" d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path class="path-animation" d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
-            <div class="logo">
-                <div class="logo-img">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path class="path-animation" d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path class="path-animation" d="M2 17L12 22L22 17" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path class="path-animation" d="M2 12L12 17L22 12" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <div class="particles-container">
+            <div class="particle p1"></div>
+            <div class="particle p2"></div>
+            <div class="particle p3"></div>
+            <div class="particle p4"></div>
+            <div class="particle p5"></div>
+            <div class="particle p6"></div>
+        </div>
+        
+        <div class="morph-shape shape1"></div>
+        <div class="morph-shape shape2"></div>
+        
+        <div class="wrapper-3d">
+            <div class="header">
+                <div class="floating-icon bell">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path class="path-animation" d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path class="path-animation" d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-            </div>
-            <div class="ribbon">New Request</div>
-            <h1>Club Registration Request</h1>
-        </div>
-        
-        <div class="content">
-            <p>Dear Administrator,</p>
-            
-            <p>A new <span class="highlight">club registration request</span> has been submitted on the Bilkom platform. Please review the details below:</p>
-            
-            <div class="info-block">
-                <h2>Club Details <span class="badge">New</span></h2>
-                <div class="detail-row">
-                    <div class="detail-label">Club Name:</div>
-                    <div class="detail-value" th:text="${clubName}">Club Name</div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">Description:</div>
-                    <div class="detail-value" th:text="${clubDescription}">Club Description</div>
-                </div>
-            </div>
-            
-            <div class="info-block">
-                <h2>Executive Details</h2>
-                <div class="detail-row">
-                    <div class="detail-label">Name:</div>
-                    <div class="detail-value" th:text="${executiveName}">Executive Name</div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">Email:</div>
-                    <div class="detail-value" th:text="${executiveEmail}">executive@bilkent.edu.tr</div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-label">Position:</div>
-                    <div class="detail-value" th:text="${executivePosition}">Position</div>
-                </div>
-            </div>
-            
-            <div class="info-block">
-                <h2>Additional Information</h2>
-                <div class="detail-row">
-                    <div class="detail-label">Verification:</div>
-                    <div class="detail-value">
-                        <a th:href="${verificationDocumentUrl}" target="_blank" class="doc-link">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M14 2V8H20" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M16 13H8" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M16 17H8" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M10 9H9H8" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            View Document
-                        </a>
+                <div class="logo">
+                    <div class="logo-img">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path class="path-animation" d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path class="path-animation" d="M2 17L12 22L22 17" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path class="path-animation" d="M2 12L12 17L22 12" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
                 </div>
-                <div class="detail-row">
-                    <div class="detail-label">Notes:</div>
-                    <div class="detail-value" th:text="${additionalInfo}">No additional information provided</div>
+                <div class="ribbon">New Request</div>
+                <h1>Club Registration Request</h1>
+            </div>
+            
+            <div class="content">
+                <p>Dear Administrator,</p>
+                
+                <p>A new <span class="highlight">club registration request</span> has been submitted on the Bilkom platform. Please review the details below:</p>
+                
+                <div class="info-block">
+                    <h2>Club Details <span class="badge">New</span></h2>
+                    <div class="detail-row">
+                        <div class="detail-label">Club Name:</div>
+                        <div class="detail-value" th:text="${clubName}">Club Name</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Description:</div>
+                        <div class="detail-value" th:text="${clubDescription}">Club Description</div>
+                    </div>
                 </div>
+                
+                <div class="info-block">
+                    <h2>Executive Details</h2>
+                    <div class="detail-row">
+                        <div class="detail-label">Name:</div>
+                        <div class="detail-value" th:text="${executiveName}">Executive Name</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Email:</div>
+                        <div class="detail-value" th:text="${executiveEmail}">executive@bilkent.edu.tr</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Position:</div>
+                        <div class="detail-value" th:text="${executivePosition}">Position</div>
+                    </div>
+                </div>
+                
+                <div class="info-block">
+                    <h2>Additional Information</h2>
+                    <div class="detail-row">
+                        <div class="detail-label">Verification:</div>
+                        <div class="detail-value">
+                            <a th:href="${verificationDocumentUrl}" target="_blank" class="doc-link">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M14 2V8H20" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16 13H8" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16 17H8" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10 9H9H8" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                View Document
+                            </a>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Notes:</div>
+                        <div class="detail-value" th:text="${additionalInfo}">No additional information provided</div>
+                    </div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <p>Please verify the information and take appropriate action:</p>
+                
+                <div class="button-container">
+                    <a th:href="${approveUrl}" class="button approve">Approve Club</a>
+                    <a th:href="${rejectUrl}" class="button reject">Reject Club</a>
+                </div>
+                
+                <p class="note">Note: You can provide a reason for rejection after clicking the reject button.</p>
             </div>
             
-            <div class="divider"></div>
-            
-            <p>Please verify the information and take appropriate action:</p>
-            
-            <div class="button-container">
-                <a th:href="${approveUrl}" class="button approve">Approve Club</a>
-                <a th:href="${rejectUrl}" class="button reject">Reject Club</a>
+            <div class="floating-icon check">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class="path-animation" d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18457 2.99721 7.13633 4.39828 5.49707C5.79935 3.85782 7.69279 2.71538 9.79619 2.24015C11.8996 1.76491 14.1003 1.98234 16.07 2.86" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path class="path-animation" d="M22 4L12 14.01L9 11.01" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
             </div>
             
-            <p class="note">Note: You can provide a reason for rejection after clicking the reject button.</p>
-        </div>
-        
-        <div class="floating-icon check">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path class="path-animation" d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18457 2.99721 7.13633 4.39828 5.49707C5.79935 3.85782 7.69279 2.71538 9.79619 2.24015C11.8996 1.76491 14.1003 1.98234 16.07 2.86" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path class="path-animation" d="M22 4L12 14.01L9 11.01" stroke="#0046AA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </div>
-        
-        <div class="footer">
-            <p>This is an automated message from the Bilkom platform. Please do not reply to this email.</p>
-            <p>&copy; 2025 Bilkom - Bilkent University Club Management System</p>
+            <div class="footer">
+                <p>This is an automated message from the Bilkom platform. Please do not reply to this email.</p>
+                <p>&copy; 2025 Bilkom - Bilkent University Club Management System</p>
+            </div>
         </div>
     </div>
 </body>
