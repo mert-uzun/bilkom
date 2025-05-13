@@ -12,7 +12,7 @@
     <string name="Bilkom">Bilkom</string>
     <string name="event_name">Event Name</string>
     <string name="event_description">Description</string>
-    <string name="select_date_time">Select Date & Time</string>
+    <string name="select_date_time">Select Date &amp; Time</string>
     <string name="create">Create</string>
     <string name="emergency_alert_logo">Emergency</string>
     <string name="app_logo">BILKOM</string>

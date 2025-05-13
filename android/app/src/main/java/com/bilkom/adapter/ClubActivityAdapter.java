@@ -2,7 +2,7 @@ package com.bilkom.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.ColorStateList;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bilkom.R;
 import com.bilkom.model.Event;
-import com.bilkom.service.ApiService;
-import com.bilkom.service.RetrofitClient;
-import com.bilkom.service.SecureStorage;
+import com.bilkom.network.ApiService;
+import com.bilkom.network.RetrofitClient;
+import com.bilkom.utils.SecureStorage;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,7 +63,7 @@ public class ClubActivityAdapter extends EventAdapter {
         public ClubActivityViewHolder(@NonNull View itemView) {
             super(itemView);
             secureStorage = new SecureStorage(itemView.getContext());
-            apiService = RetrofitClient.getInstance().getApiService();
+            apiService = RetrofitClient.getApiService();
             tagsContainer = itemView.findViewById(R.id.tagsContainer);
         }
 
@@ -114,7 +114,7 @@ public class ClubActivityAdapter extends EventAdapter {
 
         private void joinEvent(Event event) {
             String token = secureStorage.getAuthToken();
-            apiService.joinEvent(event.getEventId(), "Bearer " + token).enqueue(new Callback<Void>() {
+            apiService.joinEvent(event.getEventId()).enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Call<Void> call, Response<Void> response) {
                     if (response.isSuccessful()) {
@@ -138,7 +138,7 @@ public class ClubActivityAdapter extends EventAdapter {
 
         private void leaveEvent(Event event) {
             String token = secureStorage.getAuthToken();
-            apiService.withdrawFromEvent(event.getEventId(), "Bearer " + token).enqueue(new Callback<Void>() {
+            apiService.withdrawEvent(event.getEventId()).enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Call<Void> call, Response<Void> response) {
                     if (response.isSuccessful()) {
