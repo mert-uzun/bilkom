@@ -1,0 +1,25 @@
+# Set default behavior for all files to auto-normalize line endings
+* text=auto
+
+# Ensure consistent LF endings for common code files
+*.java text eol=lf
+*.kt text eol=lf
+*.xml text eol=lf
+*.gradle text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+
+# Binary files - do not modify line endings
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.jar binary
+*.keystore binary
+*.mp3 binary
+*.mp4 binary
+*.wav binary
+
+# IntelliJ/Android Studio config
+*.iml text eol=lf
