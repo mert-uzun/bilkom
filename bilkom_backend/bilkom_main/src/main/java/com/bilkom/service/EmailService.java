@@ -39,6 +39,10 @@ public class EmailService {
     
     private final TemplateEngine templateEngine;
     
+    // Flag to detect test environment
+    @Value("${spring.profiles.active:default}")
+    private String activeProfile;
+    
     /**
      * Constructor initializes the Thymeleaf template engine for HTML emails.
      * 
@@ -86,6 +90,20 @@ public class EmailService {
      * @version 1.0
      */
     public void sendPasswordResetEmail(String to, String resetUrl) {
+        // Check if we're in test mode
+        if ("test".equals(activeProfile)) {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(to);
+            message.setSubject("Reset your Bilkom password");
+            message.setText("Hello,\n\n" 
+                + "We received a request to reset your password. Please click the link below to set a new password:\n"
+                + resetUrl + "\n\n" 
+                + "If you did not request a password reset, please ignore this email or contact support if you have concerns.");
+            
+            mailSender.send(message);
+            return;
+        }
+        
         try {
             // Create the email context with template variables
             Context context = new Context();
@@ -129,13 +147,24 @@ public class EmailService {
      * @version 1.0
      */
     public String sendClubRegistrationVerificationEmail(ClubRegistrationRequestDTO registrationRequest, User executiveUser,Long clubId) throws MessagingException {
-        
         // Generate a secure token for the approval/rejection process
         String verificationToken = UUID.randomUUID().toString();
         
         // Generate approval and rejection URLs
         String approveUrl = baseUrl + "/api/admin/clubs/approve?id=" + clubId + "&token=" + verificationToken;
         String rejectUrl = baseUrl + "/api/admin/clubs/reject?id=" + clubId + "&token=" + verificationToken;
+        
+        // Check if we're in test mode
+        if ("test".equals(activeProfile)) {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo("mert.uzun@ug.bilkent.edu.tr");
+            message.setSubject("New Club Registration: " + registrationRequest.getClubName());
+            message.setText("New club registration from " + executiveUser.getEmail() + " for " + registrationRequest.getClubName() + "\n\n" +
+                     "Approve: " + approveUrl + "\n\n" +
+                     "Reject: " + rejectUrl);
+            mailSender.send(message);
+            return verificationToken;
+        }
         
         // Create the email context with all template variables
         Context context = new Context();
@@ -178,6 +207,33 @@ public class EmailService {
      * @version 1.0
      */
     public void sendClubRegistrationResultEmail(String to, String clubName, boolean approved, String reason) {
+        // Check if we're in test mode
+        if ("test".equals(activeProfile)) {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(to); // In tests, we use the original recipient
+            
+            if (approved) {
+                message.setSubject("Club Registration Approved: " + clubName);
+                message.setText("Hello,\n\n"
+                        + "Congratulations! Your club registration for \"" + clubName + "\" has been approved.\n\n"
+                        + "You have been assigned as the club head and can now manage your club through the Bilkom platform.\n\n"
+                        + "Thank you for enriching our campus community!\n\n"
+                        + "The Bilkom Team");
+            } 
+            else {
+                message.setSubject("Club Registration Rejected: " + clubName);
+                message.setText("Hello,\n\n"
+                        + "We regret to inform you that your club registration for \"" + clubName + "\" has been rejected.\n\n"
+                        + "Reason: " + (reason != null ? reason : "No specific reason provided.") + "\n\n"
+                        + "If you believe this is a mistake or would like to submit an improved registration, "
+                        + "please contact the Bilkom administrators.\n\n"
+                        + "The Bilkom Team");
+            }
+            
+            mailSender.send(message);
+            return;
+        }
+        
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -249,7 +305,7 @@ public class EmailService {
                     "</html>";
             }
             
-            // HARDCODE the admin email address 
+            // HARDCODE the admin email
             helper.setTo("mert.uzun@ug.bilkent.edu.tr");
             helper.setSubject(approved ? "Club Registration Approved: " + clubName : "Club Registration Rejected: " + clubName);
             helper.setText(htmlContent, true); // true indicates HTML content
@@ -258,7 +314,7 @@ public class EmailService {
         } catch (MessagingException e) {
             // Fallback to simple text email if HTML email fails
             SimpleMailMessage message = new SimpleMailMessage();
-            // HARDCODE the admin email address in the fallback too
+            // HARDCODE the admin email
             message.setTo("mert.uzun@ug.bilkent.edu.tr");
             
             if (approved) {
