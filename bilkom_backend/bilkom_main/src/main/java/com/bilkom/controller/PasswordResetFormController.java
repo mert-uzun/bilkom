@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * Controller responsible for rendering the password reset form.
  * 
- * @author Elif
+ * @author Elif Bozkurt
  * @version 1.0
  */
 @Controller
@@ -24,6 +24,6 @@ public class PasswordResetFormController {
     @GetMapping("reset-password-form")
     public String showResetPasswordForm(@RequestParam("token") String token, Model model) {
         model.addAttribute("token", token);
-        return "reset-password-form"; 
+        return "password-reset-form";
     }
 }
