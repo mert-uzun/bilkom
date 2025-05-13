@@ -1,5 +1,8 @@
 package com.bilkom.network;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -14,11 +17,25 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public final class RetrofitClient {
 
-    //private static final String BASE_URL = "http://10.0.2.2:8080/api/"; //localhost
+    private static final String BASE_URL = "http://10.0.2.2:8080/api/"; //localhost
     private static volatile Retrofit retrofit;
     private static volatile ApiService apiService;
+    private static final Gson gson = new GsonBuilder()
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX") 
+        .create();
 
     private RetrofitClient() { }
+
+    // Add getInstance method - This was missing
+    public static RetrofitClient getInstance() {
+        return RetrofitClientHolder.INSTANCE;
+    }
+
+    // Singleton holder pattern
+    private static class RetrofitClientHolder {
+        private static final RetrofitClient INSTANCE = new RetrofitClient();
+    }
 
     private static Retrofit getRetrofit() {
         if (retrofit == null) {
@@ -33,7 +50,7 @@ public final class RetrofitClient {
                             .build();
 
                     retrofit = new Retrofit.Builder()
-                            .baseUrl(BuildConfig.BASE_URL)
+                            .baseUrl(BASE_URL)
                             .client(okHttp)
                             .addConverterFactory(GsonConverterFactory.create(gson))
                             .build();
@@ -54,12 +71,15 @@ public final class RetrofitClient {
         return apiService;
     }
 
-    Gson gson = new GsonBuilder()
-        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX") 
-        .create();
-
     public static Retrofit getRetrofit() {
         return retrofit;
+    }
+
+    public static RetrofitClient getInstance() {
+        return RetrofitClientHolder.INSTANCE;
+    }
+
+    private static class RetrofitClientHolder {
+        private static final RetrofitClient INSTANCE = new RetrofitClient();
     }
 }

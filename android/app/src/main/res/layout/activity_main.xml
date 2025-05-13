@@ -42,7 +42,7 @@ it extends the ScrollView class to show the main activity content-->
             android:backgroundTint="#FF4444"
             android:textColor="@color/white"
             android:icon="@drawable/ic_warning"
-            android:iconPadding="8dp"
+            android:padding="8dp"
             android:layout_marginBottom="8dp"/>
 
         <!-- Latest Emergency Alert Preview -->

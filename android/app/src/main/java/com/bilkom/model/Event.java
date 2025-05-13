@@ -50,6 +50,9 @@ public class Event {
     @SerializedName("isClubEvent")
     private boolean isClubEvent;
 
+    @SerializedName("isJoined")
+    private boolean isJoined;
+
     public Event() {}
 
     public Event(Long eventId, String eventName, String eventDescription, int maxParticipants, 
@@ -131,4 +134,7 @@ public class Event {
     
     public boolean isClubEvent() { return isClubEvent; }
     public void setClubEvent(boolean clubEvent) { isClubEvent = clubEvent; }
+
+    public boolean isJoined() { return isJoined; }
+    public void setJoined(boolean joined) { isJoined = joined; }
 } 
