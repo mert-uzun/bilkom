@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -118,11 +119,11 @@ public class HomeActivity extends BaseActivity {
         
         try {
             // Icon handling with null safety
-            String icon = wf.getIcon();
+            String icon = wf.getIconUrl();
             weatherIcon.setImageResource(WeatherIconUtils.getWeatherIconResourceId(this, icon));
             
             // Temperature formatting with default if needed
-            float temperature = wf.getTemperature();
+            float temperature = (float) wf.getTemperature();
             weatherTemp.setText(String.format(Locale.getDefault(), "%.1f°C", temperature));
             
             // Description with null check

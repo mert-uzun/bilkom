@@ -22,9 +22,12 @@ public class SecureStorage {
     private static final String AUTH_TOKEN_KEY = "auth_token";
     private static final String USER_ID_KEY = "user_id";
     
+    private final Context context;
     private final SharedPreferences preferences;
     
     public SecureStorage(Context context) {
+        this.context = context;
+        SharedPreferences tempPreferences = null;
         try {
             // Create or get the master key
             MasterKey masterKey = new MasterKey.Builder(context)
@@ -32,7 +35,7 @@ public class SecureStorage {
                     .build();
 
             // Create encrypted shared preferences
-            preferences = EncryptedSharedPreferences.create(
+            tempPreferences = EncryptedSharedPreferences.create(
                     context,
                     FILE_NAME,
                     masterKey,
@@ -42,8 +45,9 @@ public class SecureStorage {
         } catch (GeneralSecurityException | IOException e) {
             // If encryption fails, fall back to regular SharedPreferences
             // This is less secure but ensures the app doesn't crash
-            preferences = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+            tempPreferences = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         }
+        this.preferences = tempPreferences;
     }
     
     /**
