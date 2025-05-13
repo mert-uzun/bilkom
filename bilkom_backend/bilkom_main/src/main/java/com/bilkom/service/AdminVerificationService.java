@@ -122,12 +122,30 @@ public class AdminVerificationService {
             throw new BadRequestException("Club is not in pending status");
         }
         
+        // Get the club head
+        User clubHead = club.getClubHead();
+        
         // Update status to REJECTED
         club.setStatus(ClubRegistrationStatus.REJECTED);
+        club.setActive(false); // Set club to inactive when rejected
         club = clubRepository.save(club);
         
+        // Ensure user role remains USER if they were a USER
+        if (clubHead.getRole() == UserRole.USER) {
+            // No change needed, leave as USER
+        } else if (clubHead.getRole() == UserRole.CLUB_HEAD) {
+            // Check if the user is head of other clubs
+            long otherActiveClubsCount = clubRepository.countByClubHeadAndStatusAndIsActive(
+                clubHead, ClubRegistrationStatus.APPROVED, true);
+            
+            // Only downgrade to USER if this was their only club
+            if (otherActiveClubsCount == 0) {
+                clubHead.setRole(UserRole.USER);
+                userRepository.save(clubHead);
+            }
+        }
+        
         // Send notification email to club head
-        User clubHead = club.getClubHead();
         emailService.sendClubRegistrationResultEmail(
                 clubHead.getEmail(), club.getClubName(), false, reason);
         
@@ -167,5 +185,19 @@ public class AdminVerificationService {
         if (tokenClubId == null || !tokenClubId.equals(clubId)) {
             throw new BadRequestException("Invalid verification token");
         }
+    }
+    
+    /**
+     * Method to set a verification token directly for testing purposes only.
+     * This should not be used in production code.
+     * 
+     * @param token The token
+     * @param clubId The club ID
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    public void setTestToken(String token, Long clubId) {
+        clubRegistrationService.setTestToken(token, clubId);
     }
 }

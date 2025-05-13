@@ -9,6 +9,7 @@ import com.bilkom.repository.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -131,21 +132,33 @@ public class EventService {
      * @author Elif Bozkurt
      * @version 1.0
      */
+    @Transactional
     public void withdrawFromEvent(Long eventId, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
             .orElseThrow(() -> new BadRequestException("User not found"));
     
-        EventParticipantPK eventParticipantPK = new EventParticipantPK(eventId, user.getUserId());
-        EventParticipant participant = participantRepository.findById(eventParticipantPK)
-            .orElseThrow(() -> new BadRequestException("User is not a participant of the event"));
-    
-        participantRepository.delete(participant);
-    
         Event event = eventRepository.findById(eventId)
             .orElseThrow(() -> new BadRequestException("Event not found"));
     
-        event.setCurrentParticipantsNumber(event.getCurrentParticipantsNumber() - 1);
+        EventParticipantPK eventParticipantPK = EventParticipantPK.fromEntities(event, user);
+        
+        if (!participantRepository.existsById(eventParticipantPK)) {
+            throw new BadRequestException("User is not a participant of the event");
+        }
+        
+        // First remove the participant from the event's collection
+        event.getParticipants().removeIf(participant -> 
+            participant.getUser().getUserId().equals(user.getUserId())
+        );
+        
+        // Update the count
+        event.setCurrentParticipantsNumber(Math.max(0, event.getCurrentParticipantsNumber() - 1));
+        
+        // Save the event to persist the changes to the collection
         eventRepository.save(event);
+        
+        // Then delete from the repository directly
+        participantRepository.deleteById(eventParticipantPK);
     }
     
     public List<Event> listAllEvents() {

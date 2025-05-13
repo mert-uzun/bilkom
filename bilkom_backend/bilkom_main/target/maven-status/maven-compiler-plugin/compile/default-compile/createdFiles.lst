@@ -26,7 +26,6 @@ com\bilkom\entity\Tag.class
 com\bilkom\service\ClubMemberService.class
 com\bilkom\exception\GlobalExceptionHandler.class
 com\bilkom\controller\ClubExecutiveController.class
-com\bilkom\entity\ClubMembershipRequest$RequestStatus.class
 com\bilkom\service\EventService.class
 com\bilkom\controller\NewsController.class
 com\bilkom\BilkomApplication.class
@@ -42,7 +41,7 @@ com\bilkom\service\WeatherService.class
 com\bilkom\controller\ClubController.class
 com\bilkom\entity\Club.class
 com\bilkom\dto\EventDto.class
-com\bilkom\entity\ClubMembershipRequest.class
+com\bilkom\repository\EmergencyAlertRepository.class
 com\bilkom\enums\AvatarRelativePaths.class
 com\bilkom\security\CustomUserDetailsService.class
 com\bilkom\entity\EventParticipantPK.class
@@ -58,15 +57,12 @@ com\bilkom\dto\ClubMemberDTO.class
 com\bilkom\repository\ClubExecutiveRepository.class
 com\bilkom\service\UserService.class
 com\bilkom\entity\EmergencyAlert.class
-com\bilkom\controller\ClubMembershipRequestController.class
 com\bilkom\exception\NotFoundException.class
 com\bilkom\dto\LoginRequest.class
 com\bilkom\enums\ClubRegistrationStatus.class
-com\bilkom\dto\ClubMembershipRequestDTO.class
 com\bilkom\exception\ApiError.class
 com\bilkom\repository\EventParticipantRepository.class
 com\bilkom\controller\UserController.class
-com\bilkom\repository\ClubMembershipRequestRepository.class
 com\bilkom\dto\AvatarUpdateRequest.class
 com\bilkom\controller\AdminController.class
 com\bilkom\dto\AvatarListResponse$AvatarInfo.class
@@ -79,7 +75,7 @@ com\bilkom\dto\ClubRegistrationRequestDTO.class
 com\bilkom\exception\BadRequestException.class
 com\bilkom\repository\ClubMemberRepository.class
 com\bilkom\repository\EventRepository.class
-com\bilkom\service\ClubMembershipRequestService.class
+com\bilkom\service\EventSchedulerService.class
 com\bilkom\config\EmailConfig.class
 com\bilkom\security\JwtUtils.class
 com\bilkom\service\EmailService.class

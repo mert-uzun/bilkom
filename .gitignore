@@ -8,6 +8,7 @@
 # Gradle
 .gradle/
 build/
+/build/
 
 # Local configuration
 local.properties

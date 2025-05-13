@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.bilkom.entity.EmergencyAlert;
 import com.bilkom.entity.User;
+import com.bilkom.repository.EmergencyAlertRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +39,60 @@ public class EmergencyAlertService {
 
     @Autowired
     private NotificationService notificationService;
+    
+    @Autowired
+    private EmergencyAlertRepository emergencyAlertRepository;
 
     @Value("${spring.mail.username}")
     private String email;
 
     @Value("${spring.mail.password}")
     private String appPassword;
+    
+    /**
+     * Gets all active emergency alerts from the repository.
+     * 
+     * @return List of active EmergencyAlert objects
+     */
+    public List<EmergencyAlert> getActiveEmergencyAlerts() {
+        return emergencyAlertRepository.findByIsActiveTrue();
+    }
+    
+    /**
+     * Creates a new emergency alert and notifies matching users.
+     * 
+     * @param subject The alert subject
+     * @param content The alert content
+     * @param bloodType The required blood type
+     * @return The created EmergencyAlert object
+     */
+    public EmergencyAlert createEmergencyAlert(String subject, String content, String bloodType) {
+        EmergencyAlert alert = new EmergencyAlert();
+        alert.setSubject(subject);
+        alert.setContent(content);
+        alert.setBloodType(bloodType);
+        alert.setActive(true);
+        alert.setSentDate(new Date());
+        
+        // Save the alert
+        alert = emergencyAlertRepository.save(alert);
+        
+        // Notify users with matching blood type
+        if (bloodType != null && !bloodType.isEmpty()) {
+            List<User> matchingUsers = userService.getUsersByBloodType(bloodType);
+            for (User user : matchingUsers) {
+                if (user.getFcmToken() != null && !user.getFcmToken().isEmpty()) {
+                    notificationService.sendFcm(
+                            user.getFcmToken(),
+                            bloodType + " BLOOD NEEDED",
+                            content + "\n\n");
+                    log.info("Notified {} for blood type {}", user.getEmail(), bloodType);
+                }
+            }
+        }
+        
+        return alert;
+    }
 
     /**
      * Fetches emergency alerts from Gmail and sends notifications to users based on blood type.
@@ -86,6 +135,9 @@ public class EmergencyAlertService {
                 if (subject != null && subject.contains("ACİL KAN İHTİYACI")) {
                     String content = getTextFromMessage(message);
                     EmergencyAlert emergencyAlert = new EmergencyAlert(subject, content, sentDate);
+                    
+                    // Save the alert to the database
+                    emergencyAlert = emergencyAlertRepository.save(emergencyAlert);
                     result.add(emergencyAlert);
 
                     String bloodType = emergencyAlert.getBloodType();

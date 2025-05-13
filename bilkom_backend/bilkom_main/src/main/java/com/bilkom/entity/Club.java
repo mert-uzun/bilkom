@@ -1,5 +1,6 @@
 package com.bilkom.entity;
 
+import com.bilkom.enums.UserRole;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -63,6 +64,11 @@ public class Club {
         this.clubHead = clubHead;
         this.status = ClubRegistrationStatus.PENDING;
         this.createdAt = new Timestamp(System.currentTimeMillis());
+        
+        // Update user role to CLUB_HEAD if not already an ADMIN
+        if (clubHead != null && clubHead.getRole() != UserRole.ADMIN) {
+            clubHead.setRole(UserRole.CLUB_HEAD);
+        }
     }
 
     @Override
@@ -130,6 +136,11 @@ public class Club {
     
     public void setClubHead(User clubHead) {
         this.clubHead = clubHead;
+        
+        // Update user role to CLUB_HEAD if not already an ADMIN
+        if (clubHead != null && clubHead.getRole() != UserRole.ADMIN) {
+            clubHead.setRole(UserRole.CLUB_HEAD);
+        }
     }
     
     public Timestamp getCreatedAt() {

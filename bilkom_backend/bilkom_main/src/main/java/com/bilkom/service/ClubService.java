@@ -178,6 +178,12 @@ public class ClubService {
         }
 
         User clubHead = findUserById(clubHeadId);
+        
+        // Set the user's role to CLUB_HEAD if they're not already an admin
+        if (clubHead.getRole() != UserRole.ADMIN) {
+            clubHead.setRole(UserRole.CLUB_HEAD);
+            userRepository.save(clubHead);
+        }
 
         // Create the club
         Club club = new Club(clubName, clubDescription, clubHead);
@@ -403,6 +409,20 @@ public class ClubService {
         executive.setActive(false);
         executive.setLeaveDate(new Timestamp(System.currentTimeMillis()));
         clubExecutiveRepository.save(executive);
+        
+        // Update user role if they're not a club head or executive in any other club
+        User user = executive.getUser();
+        if (user.getRole() == UserRole.CLUB_EXECUTIVE) {
+            // Check if user is still an executive in any other club
+            boolean isStillExecutiveInOtherClubs = clubExecutiveRepository.existsByUserUserIdAndIsActiveTrueAndClubClubIdNot(userId, clubId);
+            boolean isClubHeadInOtherClubs = clubRepository.existsByClubHeadUserIdAndClubIdNot(userId, clubId);
+            
+            if (!isStillExecutiveInOtherClubs && !isClubHeadInOtherClubs) {
+                // Demote to regular user
+                user.setRole(UserRole.USER);
+                userRepository.save(user);
+            }
+        }
     }
 
     /**

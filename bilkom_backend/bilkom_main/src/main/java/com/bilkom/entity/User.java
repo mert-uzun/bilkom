@@ -2,7 +2,6 @@ package com.bilkom.entity;
 
 import com.bilkom.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.bilkom.enums.AvatarRelativePaths;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -63,7 +62,7 @@ public class User {
     private Timestamp lastLogin;    
     
     @Enumerated(EnumType.STRING)
-    @Column(name = "user_role", nullable = false, columnDefinition = "ENUM('USER', 'CLUB_HEAD', 'ADMIN') DEFAULT 'USER'")
+    @Column(name = "user_role", nullable = false, columnDefinition = "ENUM('USER', 'CLUB_EXECUTIVE', 'CLUB_HEAD', 'ADMIN') DEFAULT 'USER'")
     private UserRole role = UserRole.USER;
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

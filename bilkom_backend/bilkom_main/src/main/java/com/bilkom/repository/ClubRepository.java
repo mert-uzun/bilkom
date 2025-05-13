@@ -31,4 +31,30 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
     List<Club> findByIsActiveTrueAndStatus(ClubRegistrationStatus status);
     List<Club> findByIsActiveFalseAndStatus(ClubRegistrationStatus status);
     List<Club> findByStatusAndIsActive(ClubRegistrationStatus status, boolean isActive);
+    boolean existsByClubNameIgnoreCase(String clubName);
+    
+    /**
+     * Counts clubs by club head, status, and active status.
+     *
+     * @param clubHead the club head user
+     * @param status the club registration status
+     * @param isActive whether the club is active
+     * @return the count of clubs matching the criteria
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    long countByClubHeadAndStatusAndIsActive(User clubHead, ClubRegistrationStatus status, boolean isActive);
+
+    /**
+     * Checks if a user is a club head in any club other than the specified one.
+     *
+     * @param userId the user ID
+     * @param clubId the club ID to exclude
+     * @return true if the user is a club head in any other club
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    boolean existsByClubHeadUserIdAndClubIdNot(Long userId, Long clubId);
 }

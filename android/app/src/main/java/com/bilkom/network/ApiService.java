@@ -81,21 +81,6 @@ public interface ApiService {
     @GET("/clubs/registration/pending/{adminId}")
     Call<List<ClubRegistrationRequest>> getPendingRegistrations(@Path("adminId") Long adminId);
 
-    @POST("/clubs/membership-requests")
-    Call<ClubMembershipRequest> createMembershipRequest(@Body ClubMembershipRequest body);
-
-    @GET("/clubs/membership-requests/club/{clubId}")
-    Call<List<ClubMembershipRequest>> getClubMembershipRequests(@Path("clubId") Long clubId);
-
-    @GET("/clubs/membership-requests/club/{clubId}/pending")
-    Call<List<ClubMembershipRequest>> getPendingClubMembershipRequests(@Path("clubId") Long clubId);
-
-    @PUT("/clubs/{clubId}/membership-requests/{reqId}/approve")
-    Call<Void> approveMembership(@Path("clubId") Long clubId, @Path("reqId") Long reqId);
-
-    @PUT("/clubs/{clubId}/membership-requests/{reqId}/reject")
-    Call<Void> rejectMembership(@Path("clubId") Long clubId, @Path("reqId") Long reqId);
-
     @GET("/clubs/members/club/{clubId}")
     Call<List<ClubMember>> listMembers(@Path("clubId") Long clubId);
 

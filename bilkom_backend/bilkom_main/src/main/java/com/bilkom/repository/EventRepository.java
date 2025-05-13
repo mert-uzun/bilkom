@@ -58,4 +58,14 @@ public interface EventRepository extends JpaRepository<Event, Long> {
      * @version 1.0
      */
     List<Event> findByClubClubIdAndEventDateGreaterThanEqual(Long clubId, Date date);
+    
+    /**
+     * Returns all events that have a date before the given date and are still marked as active
+     * @param date the date to compare with
+     * @return a list of events that are past but still marked as active
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    List<Event> findByEventDateBeforeAndIsActiveTrue(Date date);
 }

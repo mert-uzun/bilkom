@@ -133,4 +133,16 @@ public interface ClubExecutiveRepository extends JpaRepository<ClubExecutive, Us
      * @version 1.0
      */
     List<ClubExecutive> findByClub(Club club);
+
+    /**
+     * Checks if a user is an active executive in any club other than the specified one.
+     * 
+     * @param userId the user ID
+     * @param clubId the club ID to exclude
+     * @return true if the user is an active executive in any other club
+     * 
+     * @author Mert Uzun
+     * @version 1.0
+     */
+    boolean existsByUserUserIdAndIsActiveTrueAndClubClubIdNot(Long userId, Long clubId);
 }

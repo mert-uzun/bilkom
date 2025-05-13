@@ -22,6 +22,11 @@ public class EventParticipantPK implements Serializable {
         this.user = user;
     }
     
+    // Create from Event and User objects
+    public static EventParticipantPK fromEntities(Event event, User user) {
+        return new EventParticipantPK(event.getEventId(), user.getUserId());
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,6 +50,5 @@ public class EventParticipantPK implements Serializable {
     public void setEvent(Long event) { this.event = event; }
 
     public Long getUser() { return user; }
-
     public void setUser(Long user) { this.user = user; }
 }

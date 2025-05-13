@@ -18,7 +18,9 @@ import jakarta.persistence.JoinColumn;
  * @version 1.0
  */
 @Entity
-@Table(name = "tags")
+@Table(name = "tags", uniqueConstraints = {
+    @jakarta.persistence.UniqueConstraint(columnNames = {"tag_name", "event_id"})
+})
 public class Tag {
     // FIELDS
     @Id
@@ -26,7 +28,7 @@ public class Tag {
     @Column(name = "tag_id", nullable = false, columnDefinition = "BIGINT")
     private Long tagId;
     
-    @Column(name = "tag_name", nullable = false, unique = true, columnDefinition = "VARCHAR(255)")
+    @Column(name = "tag_name", nullable = false, columnDefinition = "VARCHAR(255)")
     private String tagName;
     
     @ManyToOne

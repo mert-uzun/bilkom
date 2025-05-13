@@ -98,7 +98,7 @@ CREATE TABLE event_participants (
 CREATE TABLE emergency_alerts  (
     alert_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     alert_type VARCHAR(255) NOT NULL DEFAULT "Blood Infusion",
-    blood_type VARCHAR(5) NOT NULL,
+    blood_type VARCHAR(10) NOT NULL,
     phone_number VARCHAR(15) NOT NULL,
     alert_description TEXT NOT NULL,
     alert_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

@@ -3,6 +3,8 @@ package com.bilkom.controller;
 import com.bilkom.dto.ClubDTO;
 import com.bilkom.exception.BadRequestException;
 import com.bilkom.service.ClubService;
+import com.bilkom.service.UserService;
+import com.bilkom.entity.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.security.Principal;
 
 /**
  * Controller for general club operations.
@@ -25,6 +28,9 @@ public class ClubController {
 
     @Autowired
     private ClubService clubService;
+    
+    @Autowired
+    private UserService userService;
     
     /**
      * Gets all approved and active clubs.
@@ -208,10 +214,9 @@ public class ClubController {
     
     /**
      * Adds a user as a member of a club.
-     * Current implementation allows any authenticated user to join a club.
+     * Any authenticated user can join a club directly without approval.
      * 
      * @param clubId The club ID
-     * @param details Map containing the user ID
      * @return Success message
      * 
      * @author Mert Uzun
@@ -219,15 +224,12 @@ public class ClubController {
      */
     @PostMapping("/{clubId}/members")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<String> joinClub(@PathVariable("clubId") Long clubId, @RequestBody Map<String, Object> details) {
-        if (!details.containsKey("userId")) {
-            throw new BadRequestException("User ID is required");
-        }
+    public ResponseEntity<String> joinClub(@PathVariable("clubId") Long clubId, Principal principal) {
+        // Get the authenticated user
+        User user = userService.getUserByEmail(principal.getName());
         
-        Long userId = Long.valueOf(details.get("userId").toString());
+        clubService.addClubMember(clubId, user.getUserId());
         
-        clubService.addClubMember(clubId, userId);
-        
-        return ResponseEntity.ok("User successfully joined the club");
+        return ResponseEntity.ok("You have successfully joined the club");
     }
 }

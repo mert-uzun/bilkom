@@ -172,8 +172,33 @@ public class ClubExecutiveService {
      * @version 1.0
      */
     @Transactional
-    public void removeExecutive(Long clubId, Long userId) {
-        clubService.removeClubExecutive(clubId, userId);
+    public void removeExecutive(Long userId, Long clubId) {
+        Club club = findClubById(clubId);
+        
+        // Prevent removing club head as executive
+        if (club.getClubHead().getUserId().equals(userId)) {
+            throw new BadRequestException("Cannot remove the club head as an executive");
+        }
+        
+        ClubExecutive executive = clubExecutiveRepository.findByUserUserIdAndClubClubIdAndIsActiveTrue(userId, clubId).orElseThrow(() -> new BadRequestException("User is not an active executive in this club"));
+        
+        executive.setActive(false);
+        executive.setLeaveDate(new Timestamp(System.currentTimeMillis()));
+        clubExecutiveRepository.save(executive);
+        
+        // Update user role if no longer an executive or club head in any club
+        User user = executive.getUser();
+        if (user.getRole() == UserRole.CLUB_EXECUTIVE) {
+            // Check if user is still an executive in any other club
+            boolean isStillExecutiveInOtherClubs = clubExecutiveRepository.existsByUserUserIdAndIsActiveTrueAndClubClubIdNot(userId, clubId);
+            boolean isClubHeadInOtherClubs = clubRepository.existsByClubHeadUserIdAndClubIdNot(userId, clubId);
+            
+            if (!isStillExecutiveInOtherClubs && !isClubHeadInOtherClubs) {
+                // Demote to regular user
+                user.setRole(UserRole.USER);
+                userRepository.save(user);
+            }
+        }
     }
     
     /**

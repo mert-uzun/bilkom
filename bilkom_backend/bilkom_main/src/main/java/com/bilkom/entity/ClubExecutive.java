@@ -1,5 +1,6 @@
 package com.bilkom.entity;
 
+import com.bilkom.enums.UserRole;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
@@ -52,6 +53,11 @@ public class ClubExecutive {
         this.joinDate = new Timestamp(System.currentTimeMillis());
         this.leaveDate = null;
         this.isActive = true;
+        
+        // Update user role to CLUB_EXECUTIVE if it's USER and not already a CLUB_HEAD or ADMIN
+        if (user != null && user.getRole() == UserRole.USER) {
+            user.setRole(UserRole.CLUB_EXECUTIVE);
+        }
     }
 
     @Override
@@ -133,6 +139,20 @@ public class ClubExecutive {
     }
     
     public void setActive(boolean active) {
-        isActive = active;
+        // If deactivating and previously was active
+        if (!active && this.isActive) {
+            // Set leave date if setting to inactive
+            this.leaveDate = new Timestamp(System.currentTimeMillis());
+        
+            // Handle role reversion (only if user is not a club head)
+            if (user != null && club != null && user.getRole() == UserRole.CLUB_EXECUTIVE) {
+                if (!Objects.equals(club.getClubHead() == null ? null : club.getClubHead().getUserId(), user.getUserId())) {
+                    // Only change role if no other active executive or club head positions
+                    user.setRole(UserRole.USER);
+                }
+            }
+        }
+        
+        this.isActive = active;
     }
 }
