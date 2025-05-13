@@ -168,7 +168,7 @@ public class EventDetailsFragment extends Fragment {
     private void joinEvent() {
         joinButton.setEnabled(false);
         
-        apiService.joinEvent(event.getEventId()).enqueue(new Callback<Void>() {
+        apiService.joinEvent(event.getEventId(), "Bearer " + token).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 joinButton.setEnabled(true);
@@ -194,7 +194,7 @@ public class EventDetailsFragment extends Fragment {
     private void withdrawFromEvent() {
         withdrawButton.setEnabled(false);
         
-        apiService.withdrawEvent(event.getEventId()).enqueue(new Callback<Void>() {
+        apiService.withdrawEvent(event.getEventId(), "Bearer " + token).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 withdrawButton.setEnabled(true);
