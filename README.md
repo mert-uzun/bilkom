@@ -48,7 +48,6 @@ By bringing all these features together, Bilkom not only enhances the social and
 - **Database:** MySQL
 - **ORM:** Hibernate (JPA)  
 - **Authentication:** JWT-based authentication using Bilkent email verification  
-- **Hosting:** Cloud platforms (AWS, DigitalOcean, or Heroku)  
 - **Real-Time Communication:** WebSockets for emergency alerts and messaging
 
 ### Frontend
@@ -97,5 +96,4 @@ By bringing all these features together, Bilkom not only enhances the social and
 - **Salih Mert Uzun**  
 - **Sıla Bozkurt**  
 - **Elif Bozkurt**  
-- **Utku Kabukçu**  
 - **Ali İhsan Sevindi**

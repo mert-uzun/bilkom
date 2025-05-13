@@ -1,4 +1,4 @@
-package com.bilkom.ui;
+package com.bilkom.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -16,7 +16,7 @@ import com.bilkom.model.Event;
 import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
-    private List<Event> eventList;
+    protected List<Event> eventList;
     private Context context;
     private OnJoinClickListener joinClickListener;
 
@@ -40,33 +40,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
         Event event = eventList.get(position);
-        holder.messageTextView.setText(event.getEventName());
-        holder.detailsTextView.setText(event.getEventDescription());
-        holder.quotaTextView.setText("Activity Quota: " + event.getCurrentParticipantsNumber() + "/" + event.getMaxParticipants());
+        holder.bind(event);
         
-        // Display formatted date and location
-        String dateTimeLocation = event.getFormattedEventDate() + " • " + event.getEventLocation();
-        holder.dateLocationTextView.setText(dateTimeLocation);
-        holder.dateLocationTextView.setVisibility(View.VISIBLE);
-
-        // Clear previous tags
-        holder.tagsContainer.removeAllViews();
-        if (event.getTags() != null) {
-            for (String tag : event.getTags()) {
-                TextView tagView = new TextView(context);
-                tagView.setText(tag);
-                tagView.setTextColor(Color.WHITE);
-                tagView.setBackgroundResource(R.drawable.tag_chip_bg); // Create a drawable for tag background
-                tagView.setPadding(24, 8, 24, 8);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-                params.setMargins(0, 0, 16, 0);
-                tagView.setLayoutParams(params);
-                holder.tagsContainer.addView(tagView);
-            }
-        }
-
         holder.joinButton.setOnClickListener(v -> {
             if (joinClickListener != null) {
                 joinClickListener.onJoinClick(event);
@@ -99,6 +74,35 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             dateLocationTextView = itemView.findViewById(R.id.dateLocationTextView);
             tagsContainer = itemView.findViewById(R.id.tagsContainer);
             joinButton = itemView.findViewById(R.id.joinButton);
+        }
+
+        public void bind(Event event) {
+            messageTextView.setText(event.getEventName());
+            detailsTextView.setText(event.getEventDescription());
+            quotaTextView.setText("Activity Quota: " + event.getCurrentParticipantsNumber() + "/" + event.getMaxParticipants());
+            
+            // Display formatted date and location
+            String dateTimeLocation = event.getFormattedEventDate() + " • " + event.getEventLocation();
+            dateLocationTextView.setText(dateTimeLocation);
+            dateLocationTextView.setVisibility(View.VISIBLE);
+
+            // Clear previous tags
+            tagsContainer.removeAllViews();
+            if (event.getTags() != null) {
+                for (String tag : event.getTags()) {
+                    TextView tagView = new TextView(itemView.getContext());
+                    tagView.setText(tag);
+                    tagView.setTextColor(Color.WHITE);
+                    tagView.setBackgroundResource(R.drawable.tag_chip_bg);
+                    tagView.setPadding(24, 8, 24, 8);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+                    params.setMargins(0, 0, 16, 0);
+                    tagView.setLayoutParams(params);
+                    tagsContainer.addView(tagView);
+                }
+            }
         }
     }
 } 
