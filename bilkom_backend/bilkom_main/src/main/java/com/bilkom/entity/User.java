@@ -46,7 +46,7 @@ public class User {
     @Column(name = "phone_number", nullable = false, unique = true, columnDefinition = "VARCHAR(15)")
     private String phoneNumber;
 
-    @Column(name = "blood_type", nullable = false, columnDefinition = "VARCHAR(5)")
+    @Column(name = "blood_type", nullable = false, columnDefinition = "VARCHAR(10)")
     private String bloodType;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
