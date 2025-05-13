@@ -44,7 +44,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
             holder.temperatureText.setText(String.format("%.1f°C", weatherForecast.getTemperature()));
             
             // Set weather icon
-            int iconResourceId = WeatherIconUtils.getWeatherIconResourceId(context, weatherForecast.getIcon());
+            int iconResourceId = WeatherIconUtils.getWeatherIconResourceId(context, weatherForecast.getIconUrl());
             holder.weatherIcon.setImageResource(iconResourceId);
         }
     }

@@ -21,6 +21,9 @@ public class WeatherForecast {
     @SerializedName("description")
     private String description;
     
+    @SerializedName("iconCode")
+    private String iconCode;
+    
     @SerializedName("icon")
     private String icon;
     
@@ -58,7 +61,7 @@ public class WeatherForecast {
     }
 
     public void setTemperature(double temperature) {
-        this.temperature = temperature;
+        this.temperature = (float) temperature;
     }
 
     public double getFeelsLike() {

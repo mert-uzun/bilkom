@@ -552,17 +552,11 @@ public class SettingsActivity extends BaseActivity {
         }
     }
 
-    private void logout() {
-        try {
+    @Override
+    protected void logout() {
         secureStorage.clearAll();
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        startActivity(new Intent(this, LoginActivity.class));
         finish();
-        } catch (Exception e) {
-            Log.e(TAG, "Error during logout", e);
-            Toast.makeText(this, "Error during logout", Toast.LENGTH_SHORT).show();
-        }
     }
     
     // Helper method to find resource IDs

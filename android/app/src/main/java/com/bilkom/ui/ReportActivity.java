@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.bilkom.BaseActivity;
+import com.bilkom.ui.BaseActivity;
 import com.bilkom.R;
+import com.bilkom.model.ReportRequest;
 import com.bilkom.network.RetrofitClient;
 import com.bilkom.utils.SecureStorage;
 
@@ -53,7 +54,7 @@ public class ReportActivity extends BaseActivity {
             loadingToast.show();
 
             RetrofitClient.getInstance().getApiService()
-                .reportPastEvent(eventId, reason)
+                .reportEvent(eventId, new ReportRequest(reason))
                 .enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {

@@ -95,9 +95,9 @@ public class EventActivity extends BaseActivity {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Event> allEvents = response.body();
+                    final List<Event> allEvents = response.body();
                     // Filter out club events
-                    allEvents = allEvents.stream()
+                    List<Event> filteredEvents = allEvents.stream()
                             .filter(event -> !event.isClubEvent())
                             .collect(Collectors.toList());
                     // Fetch joined events
@@ -112,7 +112,7 @@ public class EventActivity extends BaseActivity {
                                 }
                             }
                             List<Event> notJoined = new ArrayList<>();
-                            for (Event event : allEvents) {
+                            for (Event event : filteredEvents) {
                                 if (!joinedIds.contains(event.getEventId())) {
                                     notJoined.add(event);
                                 }
@@ -149,7 +149,9 @@ public class EventActivity extends BaseActivity {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Event> filteredEvents = response.body().stream()
+                    final List<Event> allEvents = response.body();
+                    // Filter out club events
+                    List<Event> filteredEvents = allEvents.stream()
                             .filter(event -> !event.isClubEvent())
                             .collect(Collectors.toList());
                     // Fetch joined events
