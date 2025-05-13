@@ -12,7 +12,7 @@ import com.bilkom.adapter.PastEventAdapter;
 import com.bilkom.model.Event;
 import com.bilkom.network.ApiService;
 import com.bilkom.network.RetrofitClient;
-import com.bilkom.storage.SecureStorage;
+import com.bilkom.utils.SecureStorage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -88,7 +88,7 @@ public class MyActivitiesActivity extends BaseActivity {
         Toast loadingToast = Toast.makeText(this, "Loading current activities...", Toast.LENGTH_SHORT);
         loadingToast.show();
 
-        apiService.getMyCurrentEvents("Bearer " + token).enqueue(new Callback<List<Event>>() {
+        apiService.getJoinedEvents("Bearer " + token).enqueue(new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 loadingToast.cancel();
@@ -147,7 +147,7 @@ public class MyActivitiesActivity extends BaseActivity {
         Toast loadingToast = Toast.makeText(this, "Loading past activities...", Toast.LENGTH_SHORT);
         loadingToast.show();
 
-        apiService.getMyPastEvents("Bearer " + token).enqueue(new Callback<List<Event>>() {
+        apiService.getMyJoinedPast().enqueue(new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 loadingToast.cancel();
@@ -175,7 +175,7 @@ public class MyActivitiesActivity extends BaseActivity {
         Toast loadingToast = Toast.makeText(this, "Withdrawing from event...", Toast.LENGTH_SHORT);
         loadingToast.show();
 
-        apiService.withdrawFromEvent(event.getEventId(), "Bearer " + token).enqueue(new Callback<Void>() {
+        apiService.withdrawEvent(event.getEventId(), "Bearer " + token).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 loadingToast.cancel();

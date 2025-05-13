@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bilkom.R;
 import com.bilkom.model.AuthResponse;
 import com.bilkom.model.LoginRequest;
-import com.bilkom.network.ApiError;
 import com.bilkom.network.ApiService;
 import com.bilkom.network.RetrofitClient;
 import com.bilkom.utils.SecureStorage;
@@ -141,12 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                         navigateToMainActivity();
                     } else {
                         // Try different methods if getMessage doesn't exist
-                        String message = "";
-                        try {
-                            message = auth.getMessage();
-                        } catch (Exception e) {
-                            message = "Login failed";
-                        }
+                        String message = "Login failed";
                         Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
                 } else {

@@ -17,12 +17,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener;
-import androidx.drawerlayout.widget.DrawerLayout.GravityCompat;
 import com.bilkom.utils.SecureStorage;
 import com.google.android.material.navigation.NavigationView;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.Toast;
+import com.bilkom.R;
+import com.bilkom.model.User;
+import com.bilkom.network.ApiService;
+import com.bilkom.network.RetrofitClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -31,13 +37,16 @@ import android.widget.Toast;
  * @author Sıla Bozkurt
  * @version 1.0
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "BaseActivity";
     protected DrawerLayout drawerLayout;
     protected View navView;
     protected ImageButton menuButton;
     protected NavigationView navigationView;
     protected Toolbar toolbar;
     protected FrameLayout contentFrame;
+    protected SecureStorage secureStorage;
+    protected ApiService apiService;
 
     private static final int NAV_HOME = 0x7f0900a1;      
     private static final int NAV_EVENTS = 0x7f0900a2;   
@@ -76,22 +85,32 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         setupCornerMenu();
+
+        secureStorage = new SecureStorage(this);
+        apiService = RetrofitClient.getInstance().getApiService();
     }
     
     private void setupUserInfo() {
         try {
             View headerView = navigationView.getHeaderView(0);
-            if (headerView != null) {
-                TextView navUsername = headerView.findViewById(getNavHeaderUsernameId());
-                if (navUsername != null) {
-                    SecureStorage secureStorage = new SecureStorage(this);
-                    String token = secureStorage.getAuthToken();
-                    if (token != null && !token.isEmpty()) {
-                        navUsername.setText("User #" + secureStorage.getUserId());
-                    } else {
-                        navUsername.setText("Guest");
+            TextView nameTextView = headerView.findViewById(R.id.nav_header_username);
+
+            String token = secureStorage.getAuthToken();
+            if (token != null && !token.isEmpty()) {
+                apiService.getUser(secureStorage.getUserId()).enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            User user = response.body();
+                            nameTextView.setText(user.getFirstName() + " " + user.getLastName());
+                        }
                     }
-                }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        Log.e(TAG, "Error setting up user info", t);
+                    }
+                });
             }
         } catch (Exception e) {
             Log.e(TAG, "Error setting up user info", e);
@@ -163,7 +182,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             } else if (id == NAV_SETTINGS && !(this instanceof SettingsActivity)) {
                 startActivity(new Intent(this, SettingsActivity.class));
             } else if (id == NAV_LOGOUT) {
-                performLogout();
+                handleLogout();
             }
 
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -182,9 +201,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
     
-    private void performLogout() {
+    private void handleLogout() {
         try {
-            SecureStorage secureStorage = new SecureStorage(this);
             secureStorage.clearAll();
             
             Intent intent = new Intent(this, LoginActivity.class);
@@ -209,18 +227,26 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void setupCornerMenu() {
         try {
-
-            int menuButtonId = getResources().getIdentifier("menuButton", "id", getPackageName());
-            if (menuButtonId != 0) {
-                menuButton = findViewById(menuButtonId);
-                if (menuButton != null) {
-                    menuButton.setOnClickListener(v -> showMenu(v));
-                } else {
-                    Log.e(TAG, "Menu button not found in layout");
-                }
-            } else {
-                Log.e(TAG, "Menu button ID not found in resources");
+            ImageButton menuButton = findViewById(R.id.toolbar);
+            if (menuButton == null) {
+                Log.e(TAG, "Menu button not found in layout");
+                return;
             }
+
+            menuButton.setOnClickListener(v -> {
+                try {
+                    if (drawerLayout != null) {
+                        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                            drawerLayout.closeDrawer(GravityCompat.START);
+                        } else {
+                            drawerLayout.openDrawer(GravityCompat.START);
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "Error showing menu", e);
+                    Toast.makeText(this, "Error showing menu: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         } catch (Exception e) {
             Log.e(TAG, "Error setting up corner menu", e);
         }
@@ -292,7 +318,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     
     protected void logout() {
         try {
-            SecureStorage secureStorage = new SecureStorage(this);
             secureStorage.clearAll();
             
             Intent intent = new Intent(this, LoginActivity.class);
