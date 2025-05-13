@@ -14,6 +14,8 @@ public class News {
     @SerializedName("source")      private String source;
     @SerializedName("publishedAt") private String publishedAt;
     @SerializedName("imageUrl")    private String imageUrl;
+    @SerializedName("link")        private String link;
+    @SerializedName("date")        private String date;
 
     public News() { }
 
@@ -24,7 +26,38 @@ public class News {
         this.imageUrl = imageUrl;
     }
 
-
     public Date getPublishedDate() { return DateUtils.parseApiDate(publishedAt); }
     public String getFormattedPublished() { return DateUtils.formatUserFriendlyDate(getPublishedDate()); }
+
+    public String getTitle() {
+        return title;
+    }
+    
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    
+    public String getLink() {
+        return link;
+    }
+    
+    public void setLink(String link) {
+        this.link = link;
+    }
+    
+    public String getDate() {
+        return date;
+    }
+    
+    public void setDate(String date) {
+        this.date = date;
+    }
+    
+    public String getSource() {
+        return source;
+    }
+    
+    public void setSource(String source) {
+        this.source = source;
+    }
 }

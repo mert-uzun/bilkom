@@ -9,104 +9,209 @@
 package com.bilkom.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.bilkom.BaseActivity;
+
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import com.bilkom.ui.BaseActivity;
 import com.bilkom.R;
 import com.bilkom.model.EmergencyAlert;
 import com.bilkom.model.News;
 import com.bilkom.model.WeatherForecast;
+import com.bilkom.network.ApiService;
 import com.bilkom.network.RetrofitClient;
 import com.bilkom.utils.WeatherIconUtils;
-import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeActivity extends BaseActivity {
-    private LinearLayout newsContainer;
-    private TextView weatherDescription, temperatureText;
+    private static final String TAG = "HomeActivity";
+    
+    private TextView weatherTemp;
+    private TextView weatherDesc;
     private ImageView weatherIcon;
+    private LinearLayout newsContainer;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
+        
+        // Try-catch to handle potential inflation issues
+        try {
+            View contentFrame = findViewById(R.id.contentFrame);
+            if (contentFrame instanceof FrameLayout) {
+                getLayoutInflater().inflate(R.layout.activity_home, (FrameLayout)contentFrame);
+            } else {
+                Log.w(TAG, "contentFrame not found or not a FrameLayout");
+                setContentView(R.layout.activity_home);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error inflating layout", e);
+            setContentView(R.layout.activity_home);
+        }
+        
         setupNavigationDrawer();
-      
-        getLayoutInflater().inflate(R.layout.activity_home, findViewById(R.id.contentFrame));
-
-        initializeViews();
-        fetchWeatherForecast();
-        fetchLatestNews();
-    }
-
-    private void initializeViews() {
-        newsContainer = findViewById(R.id.newsContainer);
-        weatherDescription = findViewById(R.id.weatherDescription);
-        temperatureText = findViewById(R.id.temperatureText);
+        
+        // Initialize views
+        weatherTemp = findViewById(R.id.weatherTemp);
+        weatherDesc = findViewById(R.id.weatherDesc);
         weatherIcon = findViewById(R.id.weatherIcon);
+        newsContainer = findViewById(R.id.newsContainer);
+        
+        if (weatherTemp == null || weatherDesc == null || weatherIcon == null || newsContainer == null) {
+            Log.e(TAG, "Failed to initialize views");
+            return;
+        }
+        
+        // Load data
+        loadWeatherData();
+        loadNewsData();
     }
 
-    private void fetchWeatherForecast() {
-        RetrofitClient.getInstance().getApiService().getWeatherForecast()
-            .enqueue(new Callback<WeatherForecast>() {
-                @Override
-                public void onResponse(Call<WeatherForecast> call, Response<WeatherForecast> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        WeatherForecast wf = response.body();
-                        
-                        // Update weather description
-                        weatherDescription.setText(wf.getDescription());
-                        
-                        // Update temperature
-                        temperatureText.setText(String.format("%.1f°C", wf.getTemperature()));
-                        
-                        // Update weather icon using WeatherIconUtils
-                        int iconResourceId = WeatherIconUtils.getWeatherIconResourceId(HomeActivity.this, wf.getIcon());
-                        weatherIcon.setImageResource(iconResourceId);
-                    }
-                }
-                @Override
-                public void onFailure(Call<WeatherForecast> call, Throwable t) {
-                    Toast.makeText(HomeActivity.this, "Failed to load weather", Toast.LENGTH_SHORT).show();
-                }
-            });
+    @Override
+    protected int getNavigationMenuItemId() {
+        return R.id.nav_home;
     }
 
-    private void fetchLatestNews() {
-        RetrofitClient.getInstance().getApiService().getLatestNews()
-            .enqueue(new Callback<List<News>>() {
-                @Override
-                public void onResponse(Call<List<News>> call, Response<List<News>> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        List<News> newsList = response.body();
-                        newsContainer.removeAllViews();
-                        LayoutInflater inflater = LayoutInflater.from(HomeActivity.this);
-                        int count = 0;
-                        for (News news : newsList) {
-                            if (count++ >= 10) break;
-                            View newsItem = inflater.inflate(R.layout.item_news, newsContainer, false);
-                            ((TextView) newsItem.findViewById(R.id.newsTitle)).setText(news.getTitle());
-                            newsItem.setOnClickListener(v -> {
-                                // Open news link in browser
-                                Intent intent = new Intent(Intent.ACTION_VIEW);
-                                intent.setData(android.net.Uri.parse(news.getLink()));
-                                startActivity(intent);
-                            });
-                            newsContainer.addView(newsItem);
-                        }
+    private void loadWeatherData() {
+        ApiService apiService = RetrofitClient.getInstance().getApiService();
+        apiService.getWeatherForecast().enqueue(new Callback<WeatherForecast>() {
+            @Override
+            public void onResponse(Call<WeatherForecast> call, Response<WeatherForecast> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    WeatherForecast wf = response.body();
+                    updateWeatherUI(wf);
+                } else {
+                    weatherTemp.setText("Weather data unavailable");
+                }
+            }
+            
+            @Override
+            public void onFailure(Call<WeatherForecast> call, Throwable t) {
+                Log.e(TAG, "Failed to load weather data", t);
+                weatherTemp.setText("Weather data unavailable");
+            }
+        });
+    }
+
+    private void updateWeatherUI(WeatherForecast wf) {
+        if (wf == null) {
+            weatherTemp.setText("Weather data unavailable");
+            return;
+        }
+        
+        try {
+            // Icon handling with null safety
+            String icon = wf.getIcon();
+            weatherIcon.setImageResource(WeatherIconUtils.getWeatherIconResourceId(this, icon));
+            
+            // Temperature formatting with default if needed
+            float temperature = wf.getTemperature();
+            weatherTemp.setText(String.format(Locale.getDefault(), "%.1f°C", temperature));
+            
+            // Description with null check
+            String description = wf.getDescription();
+            weatherDesc.setText(description != null ? description : "");
+        } catch (Exception e) {
+            Log.e(TAG, "Error updating weather UI", e);
+            weatherTemp.setText("Weather data unavailable");
+        }
+    }
+
+    private void loadNewsData() {
+        ApiService apiService = RetrofitClient.getInstance().getApiService();
+        apiService.getLatestNews().enqueue(new Callback<List<News>>() {
+            @Override
+            public void onResponse(Call<List<News>> call, Response<List<News>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    updateNewsUI(response.body());
+                } else {
+                    showNewsError();
+                }
+            }
+            
+            @Override
+            public void onFailure(Call<List<News>> call, Throwable t) {
+                Log.e(TAG, "Failed to load news data", t);
+                showNewsError();
+            }
+        });
+    }
+
+    private void updateNewsUI(List<News> newsList) {
+        // Clear existing content
+        newsContainer.removeAllViews();
+        
+        // Check for null or empty list
+        if (newsList == null || newsList.isEmpty()) {
+            TextView emptyView = new TextView(this);
+            emptyView.setText("No news available at the moment");
+            emptyView.setPadding(16, 16, 16, 16);
+            newsContainer.addView(emptyView);
+            return;
+        }
+        
+        LayoutInflater inflater = getLayoutInflater();
+        for (News news : newsList) {
+            // Skip null news items
+            if (news == null) continue;
+            
+            View newsItem = inflater.inflate(R.layout.item_news, newsContainer, false);
+            
+            // Set title with null check
+            TextView titleView = newsItem.findViewById(R.id.newsTitle);
+            String title = news.getTitle();
+            titleView.setText(title != null ? title : "");
+            
+            // Set date with null check
+            TextView dateView = newsItem.findViewById(R.id.newsDate);
+            String date = news.getDate();
+            if (date != null) {
+                dateView.setText(date);
+            } else {
+                dateView.setVisibility(View.GONE);
+            }
+            
+            // Set click listener with null check for link
+            final String link = news.getLink();
+            if (link != null && !link.isEmpty()) {
+                newsItem.setOnClickListener(v -> {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(link));
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error opening link: " + link, e);
+                        Toast.makeText(HomeActivity.this, "Cannot open link", Toast.LENGTH_SHORT).show();
                     }
-                }
-                @Override
-                public void onFailure(Call<List<News>> call, Throwable t) {
-                    Toast.makeText(HomeActivity.this, "Failed to load news", Toast.LENGTH_SHORT).show();
-                }
-            });
+                });
+            }
+            
+            newsContainer.addView(newsItem);
+        }
+    }
+
+    private void showNewsError() {
+        newsContainer.removeAllViews();
+        TextView errorView = new TextView(this);
+        errorView.setText("Unable to load news");
+        errorView.setPadding(16, 16, 16, 16);
+        newsContainer.addView(errorView);
     }
 }

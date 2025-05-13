@@ -138,4 +138,7 @@ public class Event implements Serializable {
 
     public boolean isJoined() { return isJoined; }
     public void setJoined(boolean joined) { isJoined = joined; }
+
+    public int getCurrentParticipants() { return currentParticipantsNumber; }
+    public void setCurrentParticipants(int currentParticipants) { this.currentParticipantsNumber = currentParticipants; }
 } 

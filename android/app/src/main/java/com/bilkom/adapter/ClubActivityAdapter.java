@@ -55,19 +55,27 @@ public class ClubActivityAdapter extends EventAdapter {
         }
     }
 
-    class ClubActivityViewHolder extends EventViewHolder {
+    private class ClubActivityViewHolder extends EventViewHolder {
+        private Button joinButton;
         private SecureStorage secureStorage;
         private ApiService apiService;
         private LinearLayout tagsContainer;
 
         public ClubActivityViewHolder(@NonNull View itemView) {
             super(itemView);
+            joinButton = itemView.findViewById(R.id.joinButton);
             secureStorage = new SecureStorage(itemView.getContext());
             apiService = RetrofitClient.getInstance().getApiService();
             tagsContainer = itemView.findViewById(R.id.tagsContainer);
         }
 
         public void setupJoinButton(Event event) {
+            String token = secureStorage.getAuthToken();
+            if (token == null) {
+                joinButton.setVisibility(View.GONE);
+                return;
+            }
+
             super.bind(event);
             
             // Clear previous tags
@@ -113,51 +121,62 @@ public class ClubActivityAdapter extends EventAdapter {
         }
 
         private void joinEvent(Event event) {
-            String token = secureStorage.getAuthToken();
-            apiService.joinEvent(event.getEventId()).enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if (response.isSuccessful()) {
-                        event.setJoined(true);
-                        event.setCurrentParticipantsNumber(event.getCurrentParticipantsNumber() + 1);
-                        updateJoinButtonState(event);
-                        quotaTextView.setText("Activity Quota: " + event.getCurrentParticipantsNumber() + "/" + event.getMaxParticipants());
-                    } else {
-                        Toast.makeText(itemView.getContext(), 
-                            "Failed to join event", Toast.LENGTH_SHORT).show();
-                    }
-                }
+            apiService.joinEvent(event.getEventId(), "Bearer " + secureStorage.getAuthToken())
+                    .enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                // Remove the event from the list
+                                int position = eventList.indexOf(event);
+                                if (position != -1) {
+                                    eventList.remove(position);
+                                    notifyItemRemoved(position);
+                                }
+                                Toast.makeText(itemView.getContext(), 
+                                        "Successfully joined event", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(itemView.getContext(), 
+                                        "Failed to join event: " + response.message(), 
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
 
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    Toast.makeText(itemView.getContext(), 
-                        "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                        @Override
+                        public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                            Toast.makeText(itemView.getContext(), 
+                                    "Error: " + t.getMessage(), 
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
 
         private void leaveEvent(Event event) {
-            String token = secureStorage.getAuthToken();
-            apiService.withdrawEvent(event.getEventId()).enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if (response.isSuccessful()) {
-                        event.setJoined(false);
-                        event.setCurrentParticipantsNumber(event.getCurrentParticipantsNumber() - 1);
-                        updateJoinButtonState(event);
-                        quotaTextView.setText("Activity Quota: " + event.getCurrentParticipantsNumber() + "/" + event.getMaxParticipants());
-                    } else {
-                        Toast.makeText(itemView.getContext(), 
-                            "Failed to leave event", Toast.LENGTH_SHORT).show();
-                    }
-                }
+            apiService.withdrawEvent(event.getEventId(), "Bearer " + secureStorage.getAuthToken())
+                    .enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                event.setJoined(false);
+                                event.setCurrentParticipantsNumber(event.getCurrentParticipantsNumber() - 1);
+                                updateJoinButtonState(event);
+                                quotaTextView.setText("Activity Quota: " + event.getCurrentParticipantsNumber() + "/" + event.getMaxParticipants());
+                                Toast.makeText(itemView.getContext(), 
+                                        "Successfully left event", Toast.LENGTH_SHORT).show();
+                                joinButton.setVisibility(View.VISIBLE);
+                            } else {
+                                Toast.makeText(itemView.getContext(), 
+                                        "Failed to leave event: " + response.message(), 
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
 
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    Toast.makeText(itemView.getContext(), 
-                        "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                        @Override
+                        public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                            Toast.makeText(itemView.getContext(), 
+                                    "Error: " + t.getMessage(), 
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
     }
 } 

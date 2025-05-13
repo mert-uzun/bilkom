@@ -71,10 +71,10 @@ public interface ApiService {
     Call<Void> reactivateClub(@Path("id") Long id);
 
     @POST("/clubs/registration")
-    Call<ClubRegistrationRequest> registerClub(@Body ClubRegistrationRequest body);
+    Call<Club> registerClub(@Body ClubRequest body);
 
     @GET("/clubs/registration/pending/{adminId}")
-    Call<List<ClubRegistrationRequest>> getPendingRegistrations(@Path("adminId") Long adminId);
+    Call<List<Club>> getPendingRegistrations(@Path("adminId") Long adminId);
 
     @GET("/clubs/members/club/{clubId}")
     Call<List<ClubMember>> listMembers(@Path("clubId") Long clubId);
@@ -99,6 +99,9 @@ public interface ApiService {
 
     @POST("/events")
     Call<Event> createEvent(@Body EventRequest body, @Header("Authorization") String token);
+
+    @POST("/events/club")
+    Call<Event> createClubEvent(@Body EventRequest body, @Header("Authorization") String token);
 
     @GET("/events/{id}")
     Call<Event> getEvent(@Path("id") Long id);
@@ -138,18 +141,18 @@ public interface ApiService {
     );
 
     @POST("/events/{eventId}/join")
-    Call<Void> joinEvent(@Path("eventId") Long eventId);
+    Call<Void> joinEvent(@Path("eventId") Long eventId, @Header("Authorization") String token);
 
     @POST("/events/{eventId}/withdraw")
-    Call<Void> withdrawEvent(@Path("eventId") Long eventId);
+    Call<Void> withdrawEvent(@Path("eventId") Long eventId, @Header("Authorization") String token);
 
     @POST("/events/report/{eventId}")
     Call<Void> reportEvent(@Path("eventId") Long eventId, @Body ReportRequest body);
 
-    @GET("/weather")
+    @GET("weather")
     Call<WeatherForecast> getWeather();
 
-    @GET("/news")
+    @GET("news")
     Call<List<News>> getNews();
 
     @GET("/emergency-alerts")
@@ -160,9 +163,6 @@ public interface ApiService {
         @Query("page") int page,
         @Query("size") int size
     );
-
-    @GET("/")
-    Call<ApiResponse> ping();
 
     @GET("clubs/my")
     Call<List<Club>> getMyClubs(@Header("Authorization") String token);
@@ -177,4 +177,20 @@ public interface ApiService {
 
     @POST("/clubs/{id}/reject") 
     Call<Void> rejectClub(@Path("id") Long id);
+
+    @GET("weather")
+    Call<WeatherForecast> getWeatherForecast();
+
+    @GET("news")
+    Call<List<News>> getLatestNews();
+
+    @GET("/events")
+    Call<List<Event>> getEvents(@Header("Authorization") String token);
+
+    @GET("/events/joined")
+    Call<List<Event>> getJoinedEvents(@Header("Authorization") String token);
+
+    @POST("/events/filter/tags")
+    Call<List<Event>> filterEventsByTags(@Body List<String> tags, @Header("Authorization") String token);
+
 }
