@@ -166,8 +166,15 @@ public class ClubRegistrationService {
         // Generate a verification token
         String token = generateVerificationToken(club.getClubId());
         
-        // Send verification email
-        sendVerificationEmail(executiveUser.getEmail(), token, club.getClubName());
+        // Send verification email directly to admin (returns the same verification token)
+        String verificationToken = emailService.sendClubRegistrationVerificationEmail(request, executiveUser, club.getClubId());
+        
+        // Store the new token in our map if it's different from what we generated
+        if (!token.equals(verificationToken)) {
+            verificationTokens.put(verificationToken, club.getClubId());
+            long expirationTime = System.currentTimeMillis() + tokenExpirationMs;
+            expirationTimes.put(verificationToken, expirationTime);
+        }
         
         // Notify admin of new club registration
         notifyAdminsOfNewRegistration(club);
@@ -402,37 +409,6 @@ public class ClubRegistrationService {
     }
     
     /**
-     * Sends a verification email for club registration.
-     * 
-     * @param email The recipient email
-     * @param token The verification token
-     * @param clubName The name of the club
-     * @throws MessagingException if there is an error sending the email
-     * 
-     * @author Mert Uzun
-     * @version 1.0
-     */
-    private void sendVerificationEmail(String email, String token, String clubName) throws MessagingException {
-        String subject = "Verify Your Club Registration: " + clubName;
-        String body = "Dear club executive,\n\n"
-                + "Thank you for registering your club, " + clubName + ", with Bilkom. "
-                + "Please click the link below to verify your club registration:\n\n"
-                + "https://bilkom.app/verify-club?token=" + token + "\n\n"
-                + "This link will expire in 24 hours.\n\n"
-                + "Best regards,\n"
-                + "The Bilkom Team";
-        
-        // Using the appropriate method from EmailService that's available
-        try {
-            emailService.sendSimpleEmail(email, subject, body);
-            log.info("Sent verification email for club: {} to {}", clubName, email);
-        } catch (Exception e) {
-            log.error("Failed to send verification email: {}", e.getMessage());
-            throw new MessagingException("Failed to send verification email: " + e.getMessage());
-        }
-    }
-    
-    /**
      * Notifies administrators of a new club registration.
      * 
      * @param club The newly registered club
@@ -468,9 +444,11 @@ public class ClubRegistrationService {
             // Send notification
             notificationService.sendNotificationToUser(clubHead, title, body);
             
-            // Also send email
+            // Also send email - use the admin-targeting method for result emails
             try {
-                emailService.sendSimpleEmail(clubHead.getEmail(), title, body);
+                boolean isApproved = club.getStatus() == ClubRegistrationStatus.APPROVED;
+                String reason = isApproved ? null : body.substring(body.indexOf("Reason:") + 8).trim();
+                emailService.sendClubRegistrationResultEmail(clubHead.getEmail(), club.getClubName(), isApproved, reason);
             } catch (Exception e) {
                 log.error("Failed to send email to club head: {}", e.getMessage(), e);
             }
