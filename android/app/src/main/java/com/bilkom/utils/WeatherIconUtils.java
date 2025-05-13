@@ -64,8 +64,40 @@ public class WeatherIconUtils {
      * @return The drawable resource ID
      */
     public static int getWeatherIconResourceId(Context context, String iconCode) {
-        String resourceName = getResourceNameForIconCode(iconCode);
-        return context.getResources().getIdentifier(resourceName, "drawable", context.getPackageName());
+        // Default fallback icon
+        int defaultIcon = android.R.drawable.ic_menu_compass;
+        
+        if (iconCode == null) return defaultIcon;
+        
+        try {
+            // Try to load a custom weather icon by name pattern
+            int resourceId = context.getResources().getIdentifier(
+                "ic_weather_" + iconCode.replace("-", "_"), 
+                "drawable", 
+                context.getPackageName());
+                
+            // If found, use it
+            if (resourceId != 0) {
+                return resourceId;
+            }
+            
+            // Otherwise use standard Android icons as fallbacks
+            if (iconCode.contains("clear") || iconCode.equals("01d") || iconCode.equals("01n")) {
+                return android.R.drawable.ic_menu_day;
+            } else if (iconCode.contains("cloud") || iconCode.startsWith("02") || iconCode.startsWith("03") || iconCode.startsWith("04")) {
+                return android.R.drawable.ic_menu_compass;
+            } else if (iconCode.contains("rain") || iconCode.startsWith("09") || iconCode.startsWith("10")) {
+                return android.R.drawable.ic_menu_recent_history;
+            } else if (iconCode.contains("thunder") || iconCode.startsWith("11")) {
+                return android.R.drawable.ic_dialog_alert;
+            } else if (iconCode.contains("snow") || iconCode.startsWith("13")) {
+                return android.R.drawable.ic_menu_view;
+            } else {
+                return defaultIcon;
+            }
+        } catch (Exception e) {
+            return defaultIcon;
+        }
     }
 
     /**

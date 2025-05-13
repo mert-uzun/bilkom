@@ -68,8 +68,4 @@ public final class RetrofitClient {
         }
         return apiService;
     }
-
-    public static Retrofit getRetrofit() {
-        return retrofit;
-    }
 }

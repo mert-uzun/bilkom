@@ -5,12 +5,17 @@ package com.bilkom.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
-import com.bilkom.R;
+import com.bilkom.utils.SecureStorage;
+import com.google.android.material.navigation.NavigationView;
+
 
 /**
  * BaseActivity class for managing common functionality across activities.
@@ -22,10 +27,53 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected DrawerLayout drawerLayout;
     protected View navView;
     protected ImageButton menuButton;
+    protected androidx.appcompat.widget.Toolbar toolbar;
+    protected NavigationView navigationView;
+    protected View contentFrame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_base);
+
+        // Setup toolbar with null checks
+        toolbar = findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        contentFrame = findViewById(R.id.contentFrame);
+
+        // Only setup drawer if all components exist
+        if (drawerLayout != null && navigationView != null && toolbar != null) {
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawerLayout.addDrawerListener(toggle);
+            toggle.syncState();
+
+            navigationView.setNavigationItemSelectedListener(this);
+            
+            // Set user info with null checks
+            View headerView = navigationView.getHeaderView(0);
+            if (headerView != null) {
+                TextView navUsername = headerView.findViewById(R.id.nav_header_username);
+                if (navUsername != null) {
+                    SecureStorage secureStorage = new SecureStorage(this);
+                    try {
+                        if (!secureStorage.getAuthToken().isEmpty()) {
+                            navUsername.setText("User #" + secureStorage.getUserId());
+                        } else {
+                            navUsername.setText("Guest");
+                        }
+                    } catch (Exception e) {
+                        Log.e("BaseActivity", "Error setting user info", e);
+                        navUsername.setText("User");
+                    }
+                }
+            }
+        }
     }
 
     protected void setupNavigationDrawer() {
