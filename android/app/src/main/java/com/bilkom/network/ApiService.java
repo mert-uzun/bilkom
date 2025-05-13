@@ -163,4 +163,18 @@ public interface ApiService {
 
     @GET("/")
     Call<ApiResponse> ping();
+
+    @GET("clubs/my")
+    Call<List<Club>> getMyClubs(@Header("Authorization") String token);
+
+    @GET("events/club/{clubId}")
+    Call<List<Event>> getClubEventsByClubId(@Path("clubId") long clubId, @Header("Authorization") String token);
+
+    @GET("events/club/my")
+    Call<Map<Long, List<Event>>> getMyClubsEvents(@Header("Authorization") String token);
+    @POST("/clubs/{id}/approve")
+    Call<Void> approveClub(@Path("id") Long id);
+
+    @POST("/clubs/{id}/reject") 
+    Call<Void> rejectClub(@Path("id") Long id);
 }

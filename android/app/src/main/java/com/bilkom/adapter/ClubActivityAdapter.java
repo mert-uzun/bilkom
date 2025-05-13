@@ -63,7 +63,7 @@ public class ClubActivityAdapter extends EventAdapter {
         public ClubActivityViewHolder(@NonNull View itemView) {
             super(itemView);
             secureStorage = new SecureStorage(itemView.getContext());
-            apiService = RetrofitClient.getApiService();
+            apiService = RetrofitClient.getInstance().getApiService();
             tagsContainer = itemView.findViewById(R.id.tagsContainer);
         }
 
