@@ -7,12 +7,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.drawerlayout.widget.DrawerLayout.DrawerListener;
+import androidx.drawerlayout.widget.DrawerLayout.GravityCompat;
 import com.bilkom.utils.SecureStorage;
 import com.google.android.material.navigation.NavigationView;
 
@@ -119,5 +123,28 @@ public abstract class BaseActivity extends AppCompatActivity {
                 startActivity(new Intent(this, SettingsActivity.class));
             }
         });
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        
+        // Handle navigation view item clicks
+        if (id == R.id.nav_home && !(this instanceof HomeActivity)) {
+            startActivity(new Intent(this, HomeActivity.class));
+        } else if (id == R.id.nav_events) {
+            startActivity(new Intent(this, EventsActivity.class));
+        } else if (id == R.id.nav_clubs) {
+            startActivity(new Intent(this, ClubsActivity.class));
+        } else if (id == R.id.nav_profile) {
+            startActivity(new Intent(this, ProfileActivity.class));
+        } else if (id == R.id.nav_settings && !(this instanceof SettingsActivity)) {
+            startActivity(new Intent(this, SettingsActivity.class));
+        } else if (id == R.id.nav_logout) {
+            logout();
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 } 
