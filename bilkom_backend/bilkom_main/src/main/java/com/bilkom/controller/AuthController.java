@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
@@ -138,21 +139,16 @@ public class AuthController {
      * @version 1.0
      */
     @PostMapping("/reset-password/confirm")
-    public ResponseEntity<AuthResponse> confirmPasswordReset(
+    public ResponseEntity<String> confirmPasswordReset(
             @RequestParam("token") String token,
             @RequestParam("newPassword") String newPassword) {
-        try {
-            boolean reset = authService.resetPassword(token, newPassword);
-            if (reset) {
-                return ResponseEntity.ok(new AuthResponse(true, "Password reset successful"));
-            } else {
-                return ResponseEntity.badRequest().body(new AuthResponse(false, "Invalid or expired token"));
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new AuthResponse(false, "Error resetting password: " + e.getMessage()));
-        }
+        
+        boolean success = authService.resetPassword(token, newPassword);
+        return success
+            ? ResponseEntity.ok("Password reset successful.")
+            : ResponseEntity.badRequest().body("Failed to reset password.");
     }
-    
+
     /**
      * Changes a user's password.
      * 

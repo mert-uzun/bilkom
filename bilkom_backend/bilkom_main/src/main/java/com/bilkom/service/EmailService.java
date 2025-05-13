@@ -77,26 +77,36 @@ public class EmailService {
     }
     
     /**
-     * Sends a password reset email to a user.
+     * Sends a password reset email to the user in html format.
      * 
      * @param to The recipient's email address
-     * @param resetUrl The URL for resetting the password
+     * @param token The password reset token
      * 
-     * @author Mert Uzun
-     * @version 1.0
+     * @author Elif Bozkurt
+     * @version 2.0
      */
-    public void sendPasswordResetEmail(String to, String resetUrl) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject("Reset your Bilkom password");
-        message.setText("Hello,\n\n" 
-                + "We received a request to reset your password. Please click the link below to set a new password:\n"
-                + resetUrl + "\n\n" 
-                + "If you did not request a password reset, please ignore this email or contact support if you have concerns.");
-        
-        mailSender.send(message);
+    public void sendPasswordResetEmail(String to, String token) {
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            helper.setTo(to);
+            helper.setSubject("Reset your Bilkom password");
+
+            Context context = new Context();
+            context.setVariable("token", token);
+
+            String emailContent = templateEngine.process("password-reset-mail", context);
+
+            helper.setText(emailContent, true); // true = HTML
+
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Failed to send password reset email", e);
+        }
     }
-    
+
+
     /**
      * Sends a club registration verification email to the admin.
      * 
