@@ -36,9 +36,18 @@ public class PendingClubAdapter extends RecyclerView.Adapter<PendingClubAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Club club = pendingClubs.get(position);
-        holder.tvName.setText(club.getClubName());
-        holder.tvDescription.setText(club.getClubDescription());
-        holder.tvRequestedBy.setText("Requested by: " + club.getPresident().getUsername());
+        holder.tvName.setText(club.getName());
+        holder.tvDescription.setText(club.getDescription());
+        
+        String requestedBy = "Requested by: Unknown";
+        if (club.getPresident() != null) {
+            String username = club.getPresident().getFullName();
+            if (username == null || username.isEmpty()) {
+                username = club.getPresident().getEmail();
+            }
+            requestedBy = "Requested by: " + username;
+        }
+        holder.tvRequestedBy.setText(requestedBy);
 
         holder.btnApprove.setOnClickListener(v -> listener.onApprove(club));
         holder.btnReject.setOnClickListener(v -> listener.onReject(club));
