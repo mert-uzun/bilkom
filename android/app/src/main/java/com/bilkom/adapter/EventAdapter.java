@@ -17,7 +17,7 @@ import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
     protected List<Event> eventList;
-    private Context context;
+    protected Context context;
     private OnJoinClickListener joinClickListener;
 
     public interface OnJoinClickListener {
@@ -41,7 +41,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
         Event event = eventList.get(position);
         holder.bind(event);
-        
+
         holder.joinButton.setOnClickListener(v -> {
             if (joinClickListener != null) {
                 joinClickListener.onJoinClick(event);
