@@ -62,28 +62,32 @@ public class EmergencyAlert {
      */
     private String extractBloodType(String content) {
         if (content == null || content.isEmpty()) return "";
-
-        String upper = content.toUpperCase();
+    
+        String upper = content.toUpperCase(java.util.Locale.forLanguageTag("tr-TR"));
+    
         String[] patterns = {
-            "(A|B|AB|O)\\s*RH\\s*\\(?([+-])\\)?",
-            "\\b(A|B|AB|O)([+-])\\b",
-            "\\b(A|B|AB|O)\\s*(POZITIF|NEGATIF)\\b",
-            "KAN\\s*GRUBU\\s*[:\\-]?\\s*(A|B|AB|O)\\s*RH\\s*([+-])"
+            "(A|B|AB|O|0)\\s*RH\\s*\\(\\s*([+-])\\s*\\)",                   
+            "(A|B|AB|O|0)\\s*RH\\s*([+-])",                                 
+            "(A|B|AB|O|0)RH([+-])",                                         
+            "(A|B|AB|O|0)([+-])",                                           
+            "(A|B|AB|O|0)\\s*([+-])\\s*KAN",                                
+            "(A|B|AB|O|0)\\s*(POZITIF|NEGATIF|POZİTİF|NEGATİF)",            
+            "(A|B|AB|O|0)\\s*RH\\s*(POZITIF|NEGATIF|POZİTİF|NEGATİF)",       
+            "KAN\\s*GRUBU\\s*[:\\-]?\\s*(A|B|AB|O|0)\\s*RH\\s*\\(?\\s*([+-])\\s*\\)?", 
+            "KAN\\s*GRUBU\\s*[:\\-]?\\s*(A|B|AB|O|0)\\s*([+-])"             
         };
-
+    
         for (String regex : patterns) {
             var pattern = java.util.regex.Pattern.compile(regex);
             var matcher = pattern.matcher(upper);
             if (matcher.find()) {
                 String blood = matcher.group(1);
-                String sign;
-                if (matcher.groupCount() >= 2) {
-                    sign = matcher.group(2);
-                    if ("POZITIF".equals(sign)) sign = "+";
-                    else if ("NEGATIF".equals(sign)) sign = "-";
-                } else {
-                    sign = matcher.group().contains("-") ? "-" : "+";
-                }
+                String sign = matcher.group(2);
+    
+                sign = sign.replace('İ', 'I').toUpperCase();
+                if ("POZITIF".equals(sign)) sign = "+";
+                else if ("NEGATIF".equals(sign)) sign = "-";
+    
                 return blood + " Rh (" + sign + ")";
             }
         }

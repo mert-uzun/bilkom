@@ -58,9 +58,9 @@ public class EmergencyAlertTest {
         String email2 = "bilkom.test" + UUID.randomUUID().toString().substring(0, 6) + "@bilkent.edu.tr";
         String email3 = "bilkom.test" + UUID.randomUUID().toString().substring(0, 6) + "@bilkent.edu.tr";
         
-        testUser1 = createTestUser(email1, "A+", "test_fcm_token_1");
-        testUser2 = createTestUser(email2, "B+", "test_fcm_token_2");
-        testUser3 = createTestUser(email3, "A+", "test_fcm_token_3");
+        testUser1 = createTestUser(email1, "A Rh(+)", "test_fcm_token_1");
+        testUser2 = createTestUser(email2, "B Rh(+)", "test_fcm_token_2");
+        testUser3 = createTestUser(email3, "A Rh(+)", "test_fcm_token_3");
         
         testUser1 = userRepository.save(testUser1);
         testUser2 = userRepository.save(testUser2);
@@ -99,10 +99,10 @@ public class EmergencyAlertTest {
         EmergencyAlert alert = new EmergencyAlert(subject, content, new Date());
         
         // Setting the blood type manually since it's not auto-extracted in the test
-        alert.setBloodType("A+");
+        alert.setBloodType("A Rh(+)");
         
         // Verify blood type is correctly set
-        assertEquals("A+", alert.getBloodType());
+        assertEquals("A Rh(+)", alert.getBloodType());
         
         // For different scenarios, create different alerts
         EmergencyAlert alert2 = new EmergencyAlert(
@@ -110,17 +110,17 @@ public class EmergencyAlertTest {
             "Bilkent Üniversitesi'nde bir öğrenci için acil O Rh- kan ihtiyacı vardır.",
             new Date()
         );
-        alert2.setBloodType("O-");
-        assertEquals("O-", alert2.getBloodType());
+        alert2.setBloodType("O Rh(-)");
+        assertEquals("O Rh(-)", alert2.getBloodType());
         
         // Blood type is stored as-is, no normalization happens
         EmergencyAlert alert3 = new EmergencyAlert();
-        alert3.setBloodType("AB+");
-        assertEquals("AB+", alert3.getBloodType());
+        alert3.setBloodType("AB Rh(+)");
+        assertEquals("AB Rh(+)", alert3.getBloodType());
         
         EmergencyAlert alert4 = new EmergencyAlert();
-        alert4.setBloodType("O-");
-        assertEquals("O-", alert4.getBloodType());
+        alert4.setBloodType("O Rh(-)");
+        assertEquals("O Rh(-)", alert4.getBloodType());
     }
     
     @Test
@@ -153,16 +153,16 @@ public class EmergencyAlertTest {
             "Bilkent Üniversitesi'nde bir öğrenci için acil A Rh+ kan ihtiyacı vardır.", 
             new Date()
         );
-        alert.setBloodType("A+");
+        alert.setBloodType("A Rh(+)");
         alertRepository.save(alert);
         
         // Get users with matching blood type - exact match needed
-        List<User> aPositiveUsers = userService.getUsersByBloodType("A+");
-        List<User> bPositiveUsers = userService.getUsersByBloodType("B+");
+        List<User> aPositiveUsers = userService.getUsersByBloodType("A Rh(+)");
+        List<User> bPositiveUsers = userService.getUsersByBloodType("B Rh(+)");
         
         // Verify that users exist with expected blood types
-        assertTrue(aPositiveUsers.size() >= 2, "Should find at least 2 users with A+ blood type");
-        assertTrue(bPositiveUsers.size() >= 1, "Should find at least 1 user with B+ blood type");
+        assertTrue(aPositiveUsers.size() >= 2, "Should find at least 2 users with A Rh(+) blood type");
+        assertTrue(bPositiveUsers.size() >= 1, "Should find at least 1 user with B Rh(+) blood type");
         
         // Verify our test users are in the respective lists
         boolean foundUser1 = false;
@@ -175,8 +175,8 @@ public class EmergencyAlertTest {
                 foundUser3 = true;
             }
         }
-        assertTrue(foundUser1, "Should find testUser1 with A+ blood type");
-        assertTrue(foundUser3, "Should find testUser3 with A+ blood type");
+        assertTrue(foundUser1, "Should find testUser1 with A Rh(+) blood type");
+        assertTrue(foundUser3, "Should find testUser3 with A Rh(+) blood type");
         
         // Verify B+ test user is in the B+ list
         boolean foundUser2 = false;
@@ -186,7 +186,7 @@ public class EmergencyAlertTest {
                 break;
             }
         }
-        assertTrue(foundUser2, "Should find testUser2 with B+ blood type");
+        assertTrue(foundUser2, "Should find testUser2 with B Rh(+) blood type");
         
         // Send notifications (using the real notification service)
         for (User user : aPositiveUsers) {
