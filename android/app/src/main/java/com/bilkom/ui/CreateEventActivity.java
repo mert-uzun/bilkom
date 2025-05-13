@@ -125,7 +125,7 @@ public class CreateEventActivity extends BaseActivity {
             String formattedDate = DateUtils.formatApiDate(eventDate);
             
             // Prepare request
-            EventRequest request = new EventRequest(name, description, location, formattedDate, maxParticipants, tags);
+            EventRequest request = new EventRequest(name, description, maxParticipants, location, formattedDate, tags, false, null);
             SecureStorage secureStorage = new SecureStorage(this);
             String token = secureStorage.getAuthToken();
             ApiService apiService = RetrofitClient.getInstance().getApiService();
