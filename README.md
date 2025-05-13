@@ -45,10 +45,9 @@ By bringing all these features together, Bilkom not only enhances the social and
 
 ### Backend
 - **Language & Framework:** Java with Spring Boot  
-- **Database:** MySQL / PostgreSQL  
+- **Database:** MySQL
 - **ORM:** Hibernate (JPA)  
 - **Authentication:** JWT-based authentication using Bilkent email verification  
-- **Hosting:** Cloud platforms (AWS, DigitalOcean, or Heroku)  
 - **Real-Time Communication:** WebSockets for emergency alerts and messaging
 
 ### Frontend
@@ -57,7 +56,7 @@ By bringing all these features together, Bilkom not only enhances the social and
 - **APIs:**  
   - Google Maps API / OpenStreetMap API for location services  
   - OpenWeatherMap API for real-time weather updates  
-  - RSS Feed Parsing/JSoup for integrating Bilkent news
+  - JSoup for integrating Bilkent news
 
 ## Usage
 
@@ -79,7 +78,7 @@ By bringing all these features together, Bilkom not only enhances the social and
 - Replaces Instagram/WhatsApp chaos
 
 ### Emergency Alerts
-- Fire, accident, blood donation, etc.  
+- blood donation
 - Uses WebSocket for instant broadcast
 
 ### News & Weather Feed
@@ -97,5 +96,4 @@ By bringing all these features together, Bilkom not only enhances the social and
 - **Salih Mert Uzun**  
 - **Sıla Bozkurt**  
 - **Elif Bozkurt**  
-- **Utku Kabukçu**  
 - **Ali İhsan Sevindi**
