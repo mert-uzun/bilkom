@@ -188,7 +188,6 @@ public class MyActivitiesActivity extends BaseActivity {
                         "Failed to withdraw from event", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 loadingToast.cancel();

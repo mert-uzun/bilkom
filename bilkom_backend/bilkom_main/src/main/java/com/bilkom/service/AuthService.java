@@ -43,7 +43,7 @@ public class AuthService {
     
     // Valid blood types
     private static final Set<String> VALID_BLOOD_TYPES = new HashSet<>(
-        Arrays.asList("A Rh(+)", "A Rh(-)", "B Rh(+)", "B Rh(-)", "AB Rh(+)", "AB Rh(-)", "O Rh(+)", "O Rh(-)")
+        Arrays.asList("A+", "A-", "B+", "B-", "AB+", "AB-", "0+", "0-")
     );
     
     // Admin emails - typically would be in configuration
@@ -91,7 +91,7 @@ public class AuthService {
         
         // Validate blood type
         if (!VALID_BLOOD_TYPES.contains(request.getBloodType())) {
-            throw new BadRequestException("Invalid blood type. Valid types are: A Rh(+), A Rh(-), B Rh(+), B Rh(-), AB Rh(+), AB Rh(-), O Rh(+), O Rh(-)");
+            throw new BadRequestException("Invalid blood type. Valid types are: A+, A-, B+, B-, AB+, AB-, 0+, 0-");
         }
         
         // Create new user

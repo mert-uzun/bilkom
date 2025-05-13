@@ -86,15 +86,34 @@ public class EmailService {
      * @version 1.0
      */
     public void sendPasswordResetEmail(String to, String resetUrl) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject("Reset your Bilkom password");
-        message.setText("Hello,\n\n" 
+        try {
+            // Create the email context with template variables
+            Context context = new Context();
+            context.setVariable("token", resetUrl.substring(resetUrl.indexOf("token=") + 6));
+            
+            // Process the template
+            String emailContent = templateEngine.process("password-reset-mail", context);
+            
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+            
+            helper.setTo(to);
+            helper.setSubject("Reset your Bilkom password");
+            helper.setText(emailContent, true); // true indicates HTML content
+            
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            // Fallback to simple text email if HTML email fails
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(to);
+            message.setSubject("Reset your Bilkom password");
+            message.setText("Hello,\n\n" 
                 + "We received a request to reset your password. Please click the link below to set a new password:\n"
                 + resetUrl + "\n\n" 
                 + "If you did not request a password reset, please ignore this email or contact support if you have concerns.");
-        
-        mailSender.send(message);
+            
+            mailSender.send(message);
+        }
     }
     
     /**
@@ -158,28 +177,107 @@ public class EmailService {
      * @version 1.0
      */
     public void sendClubRegistrationResultEmail(String to, String clubName, boolean approved, String reason) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        
-        if (approved) {
-            message.setSubject("Club Registration Approved: " + clubName);
-            message.setText("Hello,\n\n"
-                    + "Congratulations! Your club registration for \"" + clubName + "\" has been approved.\n\n"
-                    + "You have been assigned as the club head and can now manage your club through the Bilkom platform.\n\n"
-                    + "Thank you for enriching our campus community!\n\n"
-                    + "The Bilkom Team");
-        } 
-        else {
-            message.setSubject("Club Registration Rejected: " + clubName);
-            message.setText("Hello,\n\n"
-                    + "We regret to inform you that your club registration for \"" + clubName + "\" has been rejected.\n\n"
-                    + "Reason: " + (reason != null ? reason : "No specific reason provided.") + "\n\n"
-                    + "If you believe this is a mistake or would like to submit an improved registration, "
-                    + "please contact the Bilkom administrators.\n\n"
-                    + "The Bilkom Team");
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+            
+            String htmlContent;
+            if (approved) {
+                htmlContent = 
+                    "<html>" +
+                    "<head>" +
+                    "  <style>" +
+                    "    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }" +
+                    "    .container { max-width: 600px; margin: 0 auto; padding: 20px; }" +
+                    "    .header { background-color: #0046AA; color: white; padding: 20px; text-align: center; }" +
+                    "    .content { padding: 20px; background-color: #f8f9fa; }" +
+                    "    .footer { text-align: center; padding: 10px; font-size: 12px; color: #6c757d; }" +
+                    "  </style>" +
+                    "</head>" +
+                    "<body>" +
+                    "  <div class='container'>" +
+                    "    <div class='header'>" +
+                    "      <h2>Club Registration Approved</h2>" +
+                    "    </div>" +
+                    "    <div class='content'>" +
+                    "      <p>Hello,</p>" +
+                    "      <p>Congratulations! Your club registration for <strong>" + clubName + "</strong> has been approved.</p>" +
+                    "      <p>You have been assigned as the club head and can now manage your club through the Bilkom platform.</p>" +
+                    "      <p>Thank you for enriching our campus community!</p>" +
+                    "      <p>The Bilkom Team</p>" +
+                    "    </div>" +
+                    "    <div class='footer'>" +
+                    "      <p>&copy; 2025 Bilkom - Bilkent University Club Management System</p>" +
+                    "    </div>" +
+                    "  </div>" +
+                    "</body>" +
+                    "</html>";
+            } else {
+                htmlContent = 
+                    "<html>" +
+                    "<head>" +
+                    "  <style>" +
+                    "    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }" +
+                    "    .container { max-width: 600px; margin: 0 auto; padding: 20px; }" +
+                    "    .header { background-color: #dc3545; color: white; padding: 20px; text-align: center; }" +
+                    "    .content { padding: 20px; background-color: #f8f9fa; }" +
+                    "    .reason { background-color: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 15px 0; }" +
+                    "    .footer { text-align: center; padding: 10px; font-size: 12px; color: #6c757d; }" +
+                    "  </style>" +
+                    "</head>" +
+                    "<body>" +
+                    "  <div class='container'>" +
+                    "    <div class='header'>" +
+                    "      <h2>Club Registration Rejected</h2>" +
+                    "    </div>" +
+                    "    <div class='content'>" +
+                    "      <p>Hello,</p>" +
+                    "      <p>We regret to inform you that your club registration for <strong>" + clubName + "</strong> has been rejected.</p>" +
+                    "      <div class='reason'>" +
+                    "        <p><strong>Reason:</strong> " + (reason != null ? reason : "No specific reason provided.") + "</p>" +
+                    "      </div>" +
+                    "      <p>If you believe this is a mistake or would like to submit an improved registration, " +
+                    "         please contact the Bilkom administrators.</p>" +
+                    "      <p>The Bilkom Team</p>" +
+                    "    </div>" +
+                    "    <div class='footer'>" +
+                    "      <p>&copy; 2025 Bilkom - Bilkent University Club Management System</p>" +
+                    "    </div>" +
+                    "  </div>" +
+                    "</body>" +
+                    "</html>";
+            }
+            
+            helper.setTo(to);
+            helper.setSubject(approved ? "Club Registration Approved: " + clubName : "Club Registration Rejected: " + clubName);
+            helper.setText(htmlContent, true); // true indicates HTML content
+            
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            // Fallback to simple text email if HTML email fails
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(to);
+            
+            if (approved) {
+                message.setSubject("Club Registration Approved: " + clubName);
+                message.setText("Hello,\n\n"
+                        + "Congratulations! Your club registration for \"" + clubName + "\" has been approved.\n\n"
+                        + "You have been assigned as the club head and can now manage your club through the Bilkom platform.\n\n"
+                        + "Thank you for enriching our campus community!\n\n"
+                        + "The Bilkom Team");
+            } 
+            else {
+                message.setSubject("Club Registration Rejected: " + clubName);
+                message.setText("Hello,\n\n"
+                        + "We regret to inform you that your club registration for \"" + clubName + "\" has been rejected.\n\n"
+                        + "Reason: " + (reason != null ? reason : "No specific reason provided.") + "\n\n"
+                        + "If you believe this is a mistake or would like to submit an improved registration, "
+                        + "please contact the Bilkom administrators.\n\n"
+                        + "The Bilkom Team");
+            }
+            
+            mailSender.send(message);
         }
-        
-        mailSender.send(message);
     }
 
     /**
