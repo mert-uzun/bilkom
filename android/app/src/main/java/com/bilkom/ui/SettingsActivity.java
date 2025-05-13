@@ -66,7 +66,7 @@ public class SettingsActivity extends BaseActivity {
             return;
         }
         User updatedUser = new User();
-        updatedUser.setPasswordHash(newPassword); // Assuming backend expects passwordHash
+        updatedUser.setPasswordHash(newPassword); 
         RetrofitClient.getInstance().getApiService().updateUser(userId, updatedUser, token)
             .enqueue(new Callback<User>() {
                 @Override

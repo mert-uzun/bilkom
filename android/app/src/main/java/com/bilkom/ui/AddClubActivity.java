@@ -17,6 +17,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Activity for adding a club event. Extends {@link CreateEventActivity} to provide
+ * functionality for creating events associated with a specific club.
+ * Handles UI interactions, form validation, and API calls for event creation.
+ * 
+ * @author Sıla Bozkurt
+ */
 public class AddClubActivity extends CreateEventActivity {
     private Spinner clubSpinner;
     private List<Club> clubs = new ArrayList<>();
@@ -29,7 +36,6 @@ public class AddClubActivity extends CreateEventActivity {
         setContentView(R.layout.activity_add_club_activity);
         setupNavigationDrawer();
 
-        // Initialize views
         eventNameEdit = findViewById(R.id.eventNameEditText);
         eventLocationEdit = findViewById(R.id.eventLocationEditText);
         eventDateEdit = findViewById(R.id.eventDateEdit);
@@ -39,18 +45,14 @@ public class AddClubActivity extends CreateEventActivity {
         submitEventButton = findViewById(R.id.createEventButton);
         clubSpinner = findViewById(R.id.clubSpinner);
 
-        // Initialize services
         secureStorage = new SecureStorage(this);
         apiService = RetrofitClient.getInstance().getApiService();
 
-        // Setup club spinner
         setupClubSpinner();
         fetchClubs();
 
-        // Setup tags
         setupTags();
 
-        // Setup submit button
         submitEventButton.setOnClickListener(v -> submitClubEvent());
     }
 
@@ -85,7 +87,6 @@ public class AddClubActivity extends CreateEventActivity {
     }
 
     private void submitClubEvent() {
-        // Validate form
         String name = eventNameEdit.getText().toString().trim();
         String location = eventLocationEdit.getText().toString().trim();
         String date = eventDateEdit.getText().toString().trim();
@@ -128,10 +129,8 @@ public class AddClubActivity extends CreateEventActivity {
         }
         if (!valid) return;
 
-        // Get selected club
         Club selectedClub = (Club) clubSpinner.getSelectedItem();
 
-        // Prepare request
         EventRequest request = new EventRequest(name, description, location, date, maxParticipants, tags);
         request.setClubId(selectedClub.getClubId());
 
@@ -160,4 +159,4 @@ public class AddClubActivity extends CreateEventActivity {
             }
         });
     }
-} 
+}
