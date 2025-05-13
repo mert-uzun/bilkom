@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import com.bilkom.R;
 
 /**
  * BaseActivity class for managing common functionality across activities.

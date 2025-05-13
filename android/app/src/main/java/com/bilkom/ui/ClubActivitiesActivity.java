@@ -20,7 +20,7 @@ import com.bilkom.model.Club;
 import com.bilkom.model.Event;
 import com.bilkom.network.ApiService;
 import com.bilkom.network.RetrofitClient;
-import com.bilkom.storage.SecureStorage;
+import com.bilkom.utils.SecureStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +107,7 @@ public class ClubActivitiesActivity extends BaseActivity {
     }
 
     private void fetchMyClubs() {
-        String token = secureStorage.getToken();
+        String token = secureStorage.getAuthToken();
         if (token == null) {
             Toast.makeText(this, "Not logged in", Toast.LENGTH_SHORT).show();
             return;
@@ -147,7 +147,7 @@ public class ClubActivitiesActivity extends BaseActivity {
     }
 
     private void fetchClubActivitiesByClub(long clubId) {
-        String token = secureStorage.getToken();
+        String token = secureStorage.getAuthToken();
         if (token == null) {
             Toast.makeText(this, "Not logged in", Toast.LENGTH_SHORT).show();
             return;
@@ -182,7 +182,7 @@ public class ClubActivitiesActivity extends BaseActivity {
     }
 
     private void fetchMyClubsActivities() {
-        String token = secureStorage.getToken();
+        String token = secureStorage.getAuthToken();
         if (token == null) {
             Toast.makeText(this, "Not logged in", Toast.LENGTH_SHORT).show();
             return;

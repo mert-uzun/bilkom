@@ -4,7 +4,7 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.widget.*;
 import androidx.annotation.Nullable;
-import com.bilkom.BaseActivity;
+import com.bilkom.ui.BaseActivity;
 import com.bilkom.R;
 import android.graphics.Color;
 import android.view.View;

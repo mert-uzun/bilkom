@@ -138,10 +138,10 @@ public interface ApiService {
     );
 
     @POST("/events/{eventId}/join")
-    Call<Void> joinEvent(@Path("eventId") Long eventId);
+    Call<Void> joinEvent(@Path("eventId") Long eventId, @Header("Authorization") String token);
 
     @POST("/events/{eventId}/withdraw")
-    Call<Void> withdrawEvent(@Path("eventId") Long eventId);
+    Call<Void> withdrawEvent(@Path("eventId") Long eventId, @Header("Authorization") String token);
 
     @POST("/events/report/{eventId}")
     Call<Void> reportEvent(@Path("eventId") Long eventId, @Body ReportRequest body);
@@ -177,4 +177,13 @@ public interface ApiService {
 
     @POST("/clubs/{id}/reject") 
     Call<Void> rejectClub(@Path("id") Long id);
+
+    @GET("/events")
+    Call<List<Event>> getEvents(@Header("Authorization") String token);
+
+    @GET("/events/joined")
+    Call<List<Event>> getJoinedEvents(@Header("Authorization") String token);
+
+    @POST("/events/filter/tags")
+    Call<List<Event>> filterEventsByTags(@Body List<String> tags, @Header("Authorization") String token);
 }
