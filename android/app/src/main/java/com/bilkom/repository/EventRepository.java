@@ -3,6 +3,7 @@ package com.bilkom.repository;
 import android.content.Context;
 
 import com.bilkom.model.Event;
+import com.bilkom.model.EventRequest;
 import com.bilkom.model.PageResponse;
 import com.bilkom.network.ApiService;
 import com.bilkom.network.RetrofitClient;
@@ -77,8 +78,10 @@ public class EventRepository {
         }
         
         // Make API call (whether we returned cached data or not, to refresh cache)
-        Call<PageResponse<Event>> call = apiService.getPagedEvents(
-                page, pageSize, sessionManager.getAuthToken());
+        Call<PageResponse<Event>> call = apiService.filterEventsPaged(
+                new EventRequest(), // Empty request for all events
+                page, 
+                pageSize);
         
         call.enqueue(new ApiErrorHandler.ApiCallback<>(
                 context,
@@ -191,7 +194,7 @@ public class EventRepository {
             ApiErrorHandler.OnSuccess<Void> onSuccess,
             ApiErrorHandler.OnError onError) {
         
-        Call<Void> call = apiService.withdrawFromEvent(eventId, sessionManager.getAuthToken());
+        Call<Void> call = apiService.withdrawEvent(eventId, sessionManager.getAuthToken());
         
         call.enqueue(new ApiErrorHandler.ApiCallback<>(
                 context,
