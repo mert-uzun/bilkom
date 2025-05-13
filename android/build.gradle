@@ -12,3 +12,12 @@ buildscript {
 tasks.register('clean', Delete) {
     delete rootProject.buildDir
 } 
+
+buildTypes {
+    debug {
+        buildConfigField "String", "BASE_URL", "\"http://10.0.2.2:8080/api/\""
+    }
+    release {
+        buildConfigField "String", "BASE_URL", "\"https://bilkom.com/api/\""
+    }
+}

@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private MaterialButton loginButton;
     private SecureStorage secureStorage;
     private ApiService apiService;
+    private Call<AuthResponse> currentCall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,9 +117,25 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(LoginActivity.this, auth.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(LoginActivity.this, "Login failed. Try again.", Toast.LENGTH_SHORT).show();
+                } 
+                else {
+                    Converter<ResponseBody, ApiError> converter =
+                        RetrofitClient.getRetrofit()
+                                .responseBodyConverter(ApiError.class, new Annotation[0]);
+
+                    try {
+                        ApiError apiError = converter.convert(response.errorBody());
+                        if (apiError != null && apiError.getError() != null) {
+                            Toast.makeText(LoginActivity.this, apiError.getError(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Login failed. Try again.", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(LoginActivity.this, "Something went wrong while parsing error.", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
             }
 
             @Override

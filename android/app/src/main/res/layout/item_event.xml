@@ -20,7 +20,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_avatar_placeholder"
-            android:background="@drawable/circle_bg"
+            android:background="@drawable/avatar_placeholder"
             android:contentDescription="Avatar"
             android:layout_marginEnd="12dp" />
 
