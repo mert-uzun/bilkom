@@ -167,8 +167,10 @@ public class AuthService {
 
             String jwt = jwtUtils.generateToken(userDetails);
 
-            return new AuthResponse(true, "Login successful", jwt, user.getUserId());
+            System.out.println("\n\n\nTesting password match: " + passwordEncoder.matches("YENIsifre789", user.getPasswordHash()));
+            System.out.println("Stored hash: " + user.getPasswordHash() + "\n\n\n");
 
+            return new AuthResponse(true, "Login successful", jwt, user.getUserId());
         } catch (BadRequestException e) {
             throw e;
         } catch (Exception e) {
