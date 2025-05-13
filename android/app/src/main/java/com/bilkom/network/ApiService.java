@@ -161,9 +161,6 @@ public interface ApiService {
         @Query("size") int size
     );
 
-    @GET("/")
-    Call<ApiResponse> ping();
-
     @GET("clubs/my")
     Call<List<Club>> getMyClubs(@Header("Authorization") String token);
 
