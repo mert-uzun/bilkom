@@ -34,7 +34,6 @@ public class ClubMember {
         this.isActive = true;
     }
 
-    // GETTERS AND SETTERS
     public Long getUserId() {
         return userId;
     }

@@ -11,12 +11,6 @@ import retrofit2.http.*;
  * It includes methods for user authentication, user management, club management,
  * event management, and other related operations.
  * 
- * <p>Each method is annotated with appropriate HTTP method annotations
- * (e.g., @GET, @POST, @PUT, @DELETE) and specifies the endpoint path,
- * request body, and path/query parameters as needed.
- * 
- * <p>This interface is intended to be used with Retrofit for making HTTP requests.
- * 
  * @author Sıla Bozkurt
  */
 public interface ApiService {
@@ -168,4 +162,22 @@ public interface ApiService {
 
     @GET("/")
     Call<ApiResponse> ping();
+
+    @GET("admin/clubs/pending")
+    Call<List<PendingClub>> getPendingClubs();
+
+    @POST("admin/clubs/{id}/approve")
+    Call<Void> approveClub(@Path("id") long clubId);
+
+    @POST("admin/clubs/{id}/reject")
+    Call<Void> rejectClub(@Path("id") long clubId);
+
+    @GET("admin/users")
+    Call<List<AdminUser>> getAllUsers();
+
+    @PUT("admin/users/{id}/active")
+    Call<Void> toggleUserActive(@Path("id") long userId);
+
+    @PUT("admin/users/{id}/role")
+    Call<Void> toggleUserRole(@Path("id") long userId);
 }
