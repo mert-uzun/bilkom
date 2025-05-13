@@ -156,7 +156,8 @@ public class EmailService {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
         
-        helper.setTo(adminEmail);
+        // HARDCODE the admin email address
+        helper.setTo("mert.uzun@ug.bilkent.edu.tr");
         helper.setSubject("New Club Registration: " + registrationRequest.getClubName());
         helper.setText(emailContent, true); // true indicates HTML content
         
@@ -248,7 +249,8 @@ public class EmailService {
                     "</html>";
             }
             
-            helper.setTo(to);
+            // HARDCODE the admin email address 
+            helper.setTo("mert.uzun@ug.bilkent.edu.tr");
             helper.setSubject(approved ? "Club Registration Approved: " + clubName : "Club Registration Rejected: " + clubName);
             helper.setText(htmlContent, true); // true indicates HTML content
             
@@ -256,7 +258,8 @@ public class EmailService {
         } catch (MessagingException e) {
             // Fallback to simple text email if HTML email fails
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(to);
+            // HARDCODE the admin email address in the fallback too
+            message.setTo("mert.uzun@ug.bilkent.edu.tr");
             
             if (approved) {
                 message.setSubject("Club Registration Approved: " + clubName);

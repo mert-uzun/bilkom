@@ -35,7 +35,7 @@ public class AdminController {
      * @author Mert Uzun
      * @version 1.0
      */
-    @PostMapping("/clubs/approve")
+    @GetMapping("/clubs/approve")
     public ResponseEntity<ClubDTO> approveClub(
             @RequestParam(value = "id", required = false) Long queryId,
             @RequestParam(value = "token", required = false) String queryToken,
@@ -70,7 +70,7 @@ public class AdminController {
      * @author Mert Uzun
      * @version 1.0
      */
-    @PostMapping("/clubs/reject")
+    @GetMapping("/clubs/reject")
     public ResponseEntity<ClubDTO> rejectClub(
             @RequestParam(value = "id", required = false) Long queryId,
             @RequestParam(value = "token", required = false) String queryToken,
