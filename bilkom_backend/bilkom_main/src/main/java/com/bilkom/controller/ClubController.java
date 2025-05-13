@@ -158,6 +158,13 @@ public class ClubController {
         
         return ResponseEntity.ok(clubService.updateClub(id, clubName, clubDescription));
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('CLUB_HEAD') or hasRole('ADMIN')")
+    public ResponseEntity<String> deleteClub(@PathVariable("id") Long id) {
+        clubService.deleteClub(id);
+        return ResponseEntity.ok("Club deleted successfully");
+    }
     
     /**
      * Changes the club head.

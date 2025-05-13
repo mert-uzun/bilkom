@@ -105,6 +105,24 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
+    @GetMapping("/{eventId}") 
+    public ResponseEntity<Event> getEvent(@PathVariable Long eventId) {
+        Event event = eventService.getEvent(eventId);
+        return ResponseEntity.ok(event);
+    }
+
+    @PutMapping("/{eventId}")
+    public ResponseEntity<Event> updateEvent(@PathVariable Long eventId, @RequestBody EventDto dto) {
+        Event updated = eventService.updateEvent(eventId, dto);
+        return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping("/{eventId}")
+    public ResponseEntity<Void> deleteEvent(@PathVariable Long eventId) {
+        eventService.deleteEvent(eventId);
+        return ResponseEntity.ok().build();
+    }
+    
     /**
      * Lists all events created by the user.
      * @param principal

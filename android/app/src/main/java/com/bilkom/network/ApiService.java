@@ -22,6 +22,17 @@ public interface ApiService {
     @POST("/auth/register")
     Call<AuthResponse> register(@Body RegistrationRequest body);
 
+    // POST request to verify the email address
+    // I'm not sure if this will work
+    // Please check the actual code, there is a backend endpoint for this
+    @POST("/auth/logout")
+    Call<Void> logout(@Header("Authorization") String token);
+
+    // I'm not sure if this will work
+    // Please check the actual code, there is a backend endpoint for this
+    @POST("/auth/reset-password/request")
+    Call<Void> requestPasswordReset(@Body PasswordResetRequest body);
+
     @GET("/users")
     Call<List<User>> listUsers();
 
@@ -82,7 +93,7 @@ public interface ApiService {
     @POST("/clubs/{clubId}/members")
     Call<Void> joinClub(@Path("clubId") Long clubId);
 
-    @DELETE("/clubs/{clubId}/members/{userId}")
+    @DELETE("/clubs/members/{userId}/club/{clubId}")    
     Call<Void> removeMember(@Path("clubId") Long clubId, @Path("userId") Long userId);
 
     @POST("/clubs/executives/club/{clubId}")
@@ -100,7 +111,7 @@ public interface ApiService {
     @POST("/events")
     Call<Event> createEvent(@Body EventRequest body, @Header("Authorization") String token);
 
-    @POST("/events/club")
+    @POST("/events/create-club-event ")    
     Call<Event> createClubEvent(@Body EventRequest body, @Header("Authorization") String token);
 
     @GET("/events/{id}")
@@ -133,12 +144,14 @@ public interface ApiService {
     @POST("/events/filter")
     Call<PageResponse<Event>> filterEvents(@Body EventRequest body);
 
-    @POST("/events/filter/paged")
+    /*@POST("/events/filter/paged")
     Call<PageResponse<Event>> filterEventsPaged(
         @Body EventRequest body,
         @Query("page") int page,
         @Query("size") int size
-    );
+    );*/ 
+    // I didn't understand the purpose of this method
+    // There is no such method in the backend
 
     @POST("/events/{eventId}/join")
     Call<Void> joinEvent(@Path("eventId") Long eventId, @Header("Authorization") String token);
@@ -146,23 +159,25 @@ public interface ApiService {
     @POST("/events/{eventId}/withdraw")
     Call<Void> withdrawEvent(@Path("eventId") Long eventId, @Header("Authorization") String token);
 
-    @POST("/events/report/{eventId}")
+    @POST("/events/{eventId}/report")
     Call<Void> reportEvent(@Path("eventId") Long eventId, @Body ReportRequest body);
 
-    @GET("weather")
+    @GET("/weather")
     Call<WeatherForecast> getWeather();
 
-    @GET("news")
+    @GET("/news")
     Call<List<News>> getNews();
 
     @GET("/emergency-alerts")
     Call<List<EmergencyAlert>> getAlerts();
 
-    @GET("/emergency-alerts/paged")
+    /*@GET("/emergency-alerts/paged")
     Call<PageResponse<EmergencyAlert>> getAlertsPaged(
         @Query("page") int page,
         @Query("size") int size
-    );
+    );*/
+    // I didn't understand the purpose of this method
+    // There is no such method in the backend
 
     @GET("clubs/my")
     Call<List<Club>> getMyClubs(@Header("Authorization") String token);
@@ -170,7 +185,7 @@ public interface ApiService {
     @GET("events/club/{clubId}")
     Call<List<Event>> getClubEventsByClubId(@Path("clubId") long clubId, @Header("Authorization") String token);
 
-    @GET("events/club/my")
+    @GET("events/club/my-club-events")
     Call<Map<Long, List<Event>>> getMyClubsEvents(@Header("Authorization") String token);
     @POST("/clubs/{id}/approve")
     Call<Void> approveClub(@Path("id") Long id);
@@ -178,11 +193,13 @@ public interface ApiService {
     @POST("/clubs/{id}/reject") 
     Call<Void> rejectClub(@Path("id") Long id);
 
-    @GET("weather")
-    Call<WeatherForecast> getWeatherForecast();
+    /*@GET("weather")
+    Call<WeatherForecast> getWeatherForecast();*/
+    /*we cant get forecast cause we dont pay for the api */
 
-    @GET("news")
-    Call<List<News>> getLatestNews();
+    /*@GET("news")
+    Call<List<News>> getLatestNews();*/ 
+    /*we dont need get latest news we already always fetch latest news */
 
     @GET("/events")
     Call<List<Event>> getEvents(@Header("Authorization") String token);
@@ -192,5 +209,6 @@ public interface ApiService {
 
     @POST("/events/filter/tags")
     Call<List<Event>> filterEventsByTags(@Body List<String> tags, @Header("Authorization") String token);
-
+    // here, the /events/filter already filters by tags in the backend, but probably takes tags as a parameter. 
+    // so i believe this should work, check again
 }

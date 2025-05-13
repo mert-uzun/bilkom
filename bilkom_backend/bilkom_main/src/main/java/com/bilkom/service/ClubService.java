@@ -599,4 +599,12 @@ public class ClubService {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new BadRequestException("User not found with ID: " + userId));
     }
+
+    public void deleteClub(Long id) {
+        Club club = clubRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Club not found with ID: " + id));
+        club.setActive(false);
+        club.setActive(false);
+        clubRepository.save(club);
+    }
 }

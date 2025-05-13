@@ -304,6 +304,7 @@ public class EventService {
 
         pastEventReportRepository.save(report);
     }
+    
 
     /**
      * Retrieves all events associated with a specific club.
@@ -490,5 +491,41 @@ public class EventService {
         }
         
         return result;
+    }
+
+
+    public Event getEvent(Long eventId) {
+        return eventRepository.findById(eventId)
+            .orElseThrow(() -> new BadRequestException("Event not found"));
+    }
+
+
+    public Event updateEvent(Long eventId, EventDto dto) {
+       return eventRepository.findById(eventId)
+            .map(event -> {
+                event.setEventName(dto.getName());
+                event.setEventDescription(dto.getDescription());
+                event.setEventLocation(dto.getLocation());
+                event.setEventDate(dto.getEventDate());
+                event.setMaxParticipants(dto.getMaxParticipants());
+                event.setCurrentParticipantsNumber(0);
+                return eventRepository.save(event);
+            })
+            .orElseThrow(() -> new BadRequestException("Event not found"));
+    }
+
+
+    public void deleteEvent(Long eventId) {
+        Event event = eventRepository.findById(eventId)
+            .orElseThrow(() -> new BadRequestException("Event not found"));
+    
+        // Remove all participants
+        participantRepository.deleteAll(event.getParticipants());
+    
+        // Remove all tags
+        event.getTags().clear();
+    
+        // Delete the event
+        eventRepository.delete(event);
     }
 }
