@@ -7,7 +7,7 @@ CREATE TABLE users (
     last_name Varchar(255) NOT NULL,
     bilkent_id VARCHAR(15) NOT NULL UNIQUE,
     phone_number VARCHAR(15) NOT NULL UNIQUE,
-    blood_type VARCHAR(5) NOT NULL,
+    blood_type VARCHAR(10) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     is_verified BOOLEAN DEFAULT FALSE,
     is_active BOOLEAN DEFAULT TRUE,

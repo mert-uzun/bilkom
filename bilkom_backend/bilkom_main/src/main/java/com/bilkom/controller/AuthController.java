@@ -94,7 +94,7 @@ public class AuthController {
      * @author Mert Uzun
      * @version 1.0
      */
-    @PostMapping("/verify")
+    @GetMapping("/verify")
     public ResponseEntity<String> verifyEmail(
             @RequestParam(value = "token", required = false) String queryToken,
             @RequestBody(required = false) Map<String, String> payload) {

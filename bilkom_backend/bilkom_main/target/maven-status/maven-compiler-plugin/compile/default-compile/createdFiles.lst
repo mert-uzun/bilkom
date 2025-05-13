@@ -10,6 +10,7 @@ com\bilkom\controller\EmergencyAlertController.class
 com\bilkom\controller\UserSettingsController.class
 com\bilkom\entity\ClubMember.class
 com\bilkom\entity\Weather.class
+com\bilkom\controller\PasswordResetFormController.class
 com\bilkom\repository\PastEventReportRepository.class
 com\bilkom\dto\AvatarListResponse.class
 com\bilkom\service\ClubService.class
