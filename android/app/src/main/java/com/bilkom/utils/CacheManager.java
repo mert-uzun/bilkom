@@ -4,11 +4,13 @@ import android.content.Context;
 import android.util.LruCache;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -103,8 +105,11 @@ public class CacheManager {
         File cacheFile = new File(cacheDir, key);
         if (cacheFile.exists()) {
             try (FileReader reader = new FileReader(cacheFile)) {
-                CacheEntry<T> entry = gson.fromJson(reader, 
-                        gson.getTypeAdapter(CacheEntry.class).getClass());
+                // Create a TypeToken for CacheEntry<T>
+                Type cacheEntryType = TypeToken.getParameterized(CacheEntry.class, classOfT).getType();
+                
+                // Deserialize using the correct type information
+                CacheEntry<T> entry = gson.fromJson(reader, cacheEntryType);
                 
                 // Check if cache entry has expired
                 if (System.currentTimeMillis() - entry.timestamp <= DEFAULT_CACHE_EXPIRY) {

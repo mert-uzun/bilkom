@@ -1,5 +1,6 @@
 package com.bilkom.network;
 
+import android.content.Context;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,12 +20,18 @@ public final class RetrofitClient {
     private static final String BASE_URL = "http://10.0.2.2:8080/api/"; //localhost
     private static volatile Retrofit retrofit;
     private static volatile ApiService apiService;
+    private static volatile Context applicationContext;
     private static final Gson gson = new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX") 
         .create();
 
     private RetrofitClient() { }
+
+    // Add init method to store application context if needed
+    public static void init(Context appContext) {
+        applicationContext = appContext.getApplicationContext();
+    }
 
     // Singleton holder pattern
     private static class RetrofitClientHolder {
@@ -67,5 +74,9 @@ public final class RetrofitClient {
             }
         }
         return apiService;
+    }
+    
+    public static Context getApplicationContext() {
+        return applicationContext;
     }
 }

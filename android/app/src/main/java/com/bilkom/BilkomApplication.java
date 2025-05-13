@@ -7,6 +7,9 @@ public class BilkomApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        RetrofitClient.init(this);
+        
+        RetrofitClient.getInstance();
+        
+     
     }
 } 
