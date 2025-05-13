@@ -23,7 +23,7 @@ public class SecureStorage {
     private static final String USER_ID_KEY = "user_id";
     
     private final SharedPreferences preferences;
-
+    
     public SecureStorage(Context context) {
         try {
             // Create or get the master key
@@ -45,7 +45,7 @@ public class SecureStorage {
             preferences = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         }
     }
-
+    
     /**
      * Save the authentication token
      * @param token The token to save
@@ -53,7 +53,7 @@ public class SecureStorage {
     public void saveAuthToken(String token) {
         preferences.edit().putString(AUTH_TOKEN_KEY, token).apply();
     }
-
+    
     /**
      * Get the saved authentication token
      * @return The saved token, or empty string if not found
@@ -61,7 +61,7 @@ public class SecureStorage {
     public String getAuthToken() {
         return preferences.getString(AUTH_TOKEN_KEY, "");
     }
-
+    
     /**
      * Save the user ID
      * @param userId The user ID to save
@@ -69,7 +69,7 @@ public class SecureStorage {
     public void saveUserId(long userId) {
         preferences.edit().putLong(USER_ID_KEY, userId).apply();
     }
-
+    
     /**
      * Get the saved user ID
      * @return The saved user ID, or -1 if not found
@@ -77,7 +77,7 @@ public class SecureStorage {
     public long getUserId() {
         return preferences.getLong(USER_ID_KEY, -1);
     }
-
+    
     /**
      * Clear all saved data
      */

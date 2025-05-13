@@ -3,6 +3,7 @@ package com.bilkom.ui;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import com.bilkom.R;
 
 public class MainActivity extends AppCompatActivity {
     @Override

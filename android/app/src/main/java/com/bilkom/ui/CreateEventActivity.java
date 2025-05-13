@@ -16,9 +16,10 @@ import com.bilkom.utils.*;
 import retrofit2.*;
 
 public class CreateEventActivity extends BaseActivity {
-    private EditText eventNameEdit, eventLocationEdit, eventDateEdit, maxParticipantsEdit, eventDescriptionEdit;
-    private LinearLayout tagsContainer;
-    private Button submitEventButton;
+    protected EditText eventNameEdit, eventLocationEdit, eventDateEdit, maxParticipantsEdit, eventDescriptionEdit;
+    protected LinearLayout tagsContainer;
+    protected Button submitEventButton;
+    protected Set<String> selectedTags = new HashSet<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -125,7 +126,17 @@ public class CreateEventActivity extends BaseActivity {
             String formattedDate = DateUtils.formatApiDate(eventDate);
             
             // Prepare request
-            EventRequest request = new EventRequest(name, description, maxParticipants, location, formattedDate, tags, false, null);
+            EventRequest request = new EventRequest(
+                name,           // eventName
+                description,    // eventDescription
+                maxParticipants,// maxParticipants
+                location,       // eventLocation
+                formattedDate,  // eventDate
+                tags,          // tags
+                false,         // isClubEvent
+                null           // clubId
+            );
+
             SecureStorage secureStorage = new SecureStorage(this);
             String token = secureStorage.getAuthToken();
             ApiService apiService = RetrofitClient.getInstance().getApiService();

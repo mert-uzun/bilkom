@@ -71,10 +71,10 @@ public interface ApiService {
     Call<Void> reactivateClub(@Path("id") Long id);
 
     @POST("/clubs/registration")
-    Call<ClubRegistrationRequest> registerClub(@Body ClubRegistrationRequest body);
+    Call<Club> registerClub(@Body ClubRequest body);
 
     @GET("/clubs/registration/pending/{adminId}")
-    Call<List<ClubRegistrationRequest>> getPendingRegistrations(@Path("adminId") Long adminId);
+    Call<List<Club>> getPendingRegistrations(@Path("adminId") Long adminId);
 
     @GET("/clubs/members/club/{clubId}")
     Call<List<ClubMember>> listMembers(@Path("clubId") Long clubId);
@@ -99,6 +99,9 @@ public interface ApiService {
 
     @POST("/events")
     Call<Event> createEvent(@Body EventRequest body, @Header("Authorization") String token);
+
+    @POST("/events/club")
+    Call<Event> createClubEvent(@Body EventRequest body, @Header("Authorization") String token);
 
     @GET("/events/{id}")
     Call<Event> getEvent(@Path("id") Long id);
