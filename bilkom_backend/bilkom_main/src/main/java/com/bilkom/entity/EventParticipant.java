@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.IdClass;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * EventParticipant is an entity class representing a participant in an event.
@@ -22,12 +23,19 @@ public class EventParticipant {
     @Id
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
+    @JsonIgnore
     private Event event;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @Override
+    public String toString() {
+        System.out.println("Calling EventParticipant.toString()");
+        return "EventParticipant{" + "user=" + user.getUserId() + "}";
+    }
 
     // GETTERS AND SETTERS
     public Event getEvent() { return event; }

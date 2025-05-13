@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public final class RetrofitClient {
 
-    private static final String BASE_URL = "http://10.0.2.2:8080/api/"; //localhost
+    //private static final String BASE_URL = "http://10.0.2.2:8080/api/"; //localhost
     private static volatile Retrofit retrofit;
     private static volatile ApiService apiService;
 
@@ -33,9 +33,9 @@ public final class RetrofitClient {
                             .build();
 
                     retrofit = new Retrofit.Builder()
-                            .baseUrl(BASE_URL)
+                            .baseUrl(BuildConfig.BASE_URL)
                             .client(okHttp)
-                            .addConverterFactory(GsonConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create(gson))
                             .build();
                 }
             }
@@ -52,5 +52,14 @@ public final class RetrofitClient {
             }
         }
         return apiService;
+    }
+
+    Gson gson = new GsonBuilder()
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX") 
+        .create();
+
+    public static Retrofit getRetrofit() {
+        return retrofit;
     }
 }

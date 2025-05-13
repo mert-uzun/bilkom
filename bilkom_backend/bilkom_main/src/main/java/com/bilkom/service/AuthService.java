@@ -137,35 +137,6 @@ public class AuthService {
      * @author Mert Uzun
      * @version 1.0
      */
-    /*public AuthResponse login(LoginRequest request) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-            );
-            
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            User user = userRepository.findByEmail(userDetails.getUsername())
-                .orElseThrow(() -> new BadRequestException("User not found"));
-            
-            if (!user.isVerified()) {
-                throw new BadRequestException("Please verify your email before logging in");
-            }
-            
-            // Update last login time
-            user.updateLastLogin();
-            userRepository.save(user);
-            
-            String jwt = jwtUtils.generateToken(userDetails);
-            
-            return new AuthResponse(true, "Login successful", jwt, user.getUserId());
-            
-        } catch (BadRequestException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new BadRequestException("Invalid email or password");
-        }
-    }*/
-    //DEBUG
     public AuthResponse login(LoginRequest request) {
         System.out.println("Login requested for: " + request.getEmail());
 

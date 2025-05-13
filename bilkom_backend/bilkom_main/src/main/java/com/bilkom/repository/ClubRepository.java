@@ -23,7 +23,7 @@ import com.bilkom.enums.ClubRegistrationStatus;
 public interface ClubRepository extends JpaRepository<Club, Long> {
     Optional<Club> findByClubName(String clubName); 
     Optional<Club> findByClubId(Long clubId);
-    Optional<Club> findByClubHead(User clubHead);
+    List<Club> findByClubHead(User clubHead);
     boolean existsByClubName(String clubName);
     List<Club> findByStatus(ClubRegistrationStatus status);
     List<Club> findByIsActiveTrue();

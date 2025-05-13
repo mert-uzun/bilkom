@@ -5,50 +5,45 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import java.sql.Timestamp;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-
-import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "club_executives")
-@IdClass(ClubExecutivePK.class)
 public class ClubExecutive {
-    @Id
-    @OneToOne
-    @JoinColumn(name = "executive_id", referencedColumnName = "user_id", nullable = false, columnDefinition = "BIGINT")
-    @JsonIgnore
+
+    @EmbeddedId
+    private ClubExecutiveId id;
+
+    @ManyToOne
+    @MapsId("userId")
+    @JoinColumn(name = "executive_id", nullable = false)
     private User user;
 
-    @Id
     @ManyToOne
+    @MapsId("clubId")
     @JoinColumn(name = "club_id", nullable = false)
-    @JsonIgnore
-    private Club club;    
+    private Club club;
 
-    @Column(name = "position", nullable = false, columnDefinition = "VARCHAR(255)")
+    @Column(name = "position", nullable = false)
     private String position;
 
-    @Column(name = "join_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "join_date", nullable = false)
     private Timestamp joinDate;
 
-    @Column(name = "leave_date", nullable = true)
+    @Column(name = "leave_date")
     private Timestamp leaveDate;
 
-    @Column(name = "is_active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private boolean isActive; 
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
 
-    public ClubExecutive() {}
+    public ClubExecutive() {
+    }
 
-    public ClubExecutive(User user, Club club, String position)
-    {
+    public ClubExecutive(User user, Club club, String position) {
         this.user = user;
         this.club = club;
+        this.id = new ClubExecutiveId(user.getUserId(), club.getClubId());
         this.position = position;
         this.joinDate = new Timestamp(System.currentTimeMillis());
         this.leaveDate = null;
@@ -60,10 +55,36 @@ public class ClubExecutive {
         }
     }
 
+    //GETTERS AND SETTERS
+
+    public ClubExecutiveId getId() {
+        return id;
+    }
+
+    public void setId(ClubExecutiveId id) {
+        this.id = id;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        if (this.id == null)
+            this.id = new ClubExecutiveId();
+        this.id.setUserId(user.getUserId());
+    }
+
+    public void setClub(Club club) {
+        this.club = club;
+        if (this.id == null)
+            this.id = new ClubExecutiveId();
+        this.id.setClubId(club.getClubId());
+    }
+
+
     @Override
     public String toString() {
         return "ClubExecutive{" +
-                "user=" + user +
+                "id=" + id +
+                ", user=" + user +
                 ", club=" + club +
                 ", position='" + position + '\'' +
                 ", joinDate=" + joinDate +
@@ -71,6 +92,7 @@ public class ClubExecutive {
                 ", isActive=" + isActive +
                 '}';
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -154,5 +176,33 @@ public class ClubExecutive {
         }
         
         this.isActive = active;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public boolean isUserClubHead() {
+        return user != null && user.getRole() == UserRole.CLUB_HEAD;
+    }
+
+    public boolean isUserClubExecutive() {
+        return user != null && user.getRole() == UserRole.CLUB_EXECUTIVE;
+    }
+
+    public boolean isUserAdmin() {
+        return user != null && user.getRole() == UserRole.ADMIN;
+    }
+
+    public boolean isUserMember() {
+        return user != null && user.getRole() == UserRole.USER;
+    }
+
+    public boolean isUserClubMember() {
+        return user != null && user.getRole() == UserRole.CLUB_MEMBER;
     }
 }
