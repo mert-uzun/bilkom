@@ -206,7 +206,8 @@ public class EventController {
      * @author Elif Bozkurt
      */
     @PostMapping("/{eventId}/report")
-    public ResponseEntity<Void> reportPastEvent(@PathVariable Long eventId, @RequestBody String reason, Principal principal) {
+    public ResponseEntity<Void> reportPastEvent(@PathVariable Long eventId, @RequestBody Map<String, String> payload, Principal principal) {
+        String reason = payload.get("reason");
         eventService.reportEvent(eventId, principal.getName(), reason);
         return ResponseEntity.ok().build();
     }

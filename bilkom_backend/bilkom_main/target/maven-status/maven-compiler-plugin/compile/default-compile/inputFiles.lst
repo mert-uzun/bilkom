@@ -22,6 +22,7 @@ C:\Users\Mert\Desktop\2025S\CS102\bilkom\bilkom_backend\bilkom_main\src\main\jav
 C:\Users\Mert\Desktop\2025S\CS102\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\dto\RegistrationRequest.java
 C:\Users\Mert\Desktop\2025S\CS102\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\repository\UserRepository.java
 C:\Users\Mert\Desktop\2025S\CS102\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\config\WebSocketConfig.java
+C:\Users\Mert\Desktop\2025S\CS102\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\dto\MemberBatchRequest.java
 C:\Users\Mert\Desktop\2025S\CS102\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\repository\EmergencyAlertRepository.java
 C:\Users\Mert\Desktop\2025S\CS102\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\repository\EventParticipantRepository.java
 C:\Users\Mert\Desktop\2025S\CS102\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\service\AuthService.java
@@ -53,6 +54,7 @@ C:\Users\Mert\Desktop\2025S\CS102\bilkom\bilkom_backend\bilkom_main\src\main\jav
 C:\Users\Mert\Desktop\2025S\CS102\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\entity\Weather.java
 C:\Users\Mert\Desktop\2025S\CS102\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\service\NotificationService.java
 C:\Users\Mert\Desktop\2025S\CS102\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\service\TokenBlacklistService.java
+C:\Users\Mert\Desktop\2025S\CS102\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\entity\ClubExecutiveId.java
 C:\Users\Mert\Desktop\2025S\CS102\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\repository\PastEventReportRepository.java
 C:\Users\Mert\Desktop\2025S\CS102\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\controller\EmergencyAlertController.java
 C:\Users\Mert\Desktop\2025S\CS102\bilkom\bilkom_backend\bilkom_main\src\main\java\com\bilkom\service\ClubMemberService.java

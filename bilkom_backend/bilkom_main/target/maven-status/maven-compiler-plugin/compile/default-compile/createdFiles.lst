@@ -28,10 +28,12 @@ com\bilkom\exception\GlobalExceptionHandler.class
 com\bilkom\controller\ClubExecutiveController.class
 com\bilkom\service\EventService.class
 com\bilkom\controller\NewsController.class
+com\bilkom\dto\MemberBatchRequest.class
 com\bilkom\BilkomApplication.class
 com\bilkom\controller\ClubMemberController.class
 com\bilkom\entity\User$ProfileVisibility.class
 com\bilkom\entity\ClubExecutive.class
+com\bilkom\entity\ClubExecutiveId.class
 com\bilkom\controller\ClubRegistrationController.class
 com\bilkom\entity\Event.class
 com\bilkom\service\EmergencyAlertService.class

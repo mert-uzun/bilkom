@@ -3,6 +3,7 @@ package com.bilkom.controller;
 import com.bilkom.dto.ClubDTO;
 import com.bilkom.dto.ClubRegistrationRequestDTO;
 import com.bilkom.service.ClubRegistrationService;
+import com.bilkom.exception.BadRequestException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,14 +46,29 @@ public class ClubRegistrationController {
     /**
      * Checks if a club name is available.
      * 
-     * @param clubName The club name to check
+     * @param queryName Club name from query parameter
+     * @param payload JSON payload containing the club name to check (alternative)
      * @return true if the name is available, false otherwise
      * 
      * @author Mert Uzun
      * @version 1.0
      */
-    @GetMapping("/check-name")
-    public ResponseEntity<Boolean> isClubNameAvailable(@RequestParam("name") String clubName) {
+    @PostMapping("/check-name")
+    public ResponseEntity<Boolean> isClubNameAvailable(
+            @RequestParam(value = "name", required = false) String queryName,
+            @RequestBody(required = false) java.util.Map<String, String> payload) {
+        
+        String clubName = queryName;
+        
+        // If not provided in query param, try to get from JSON body
+        if (clubName == null && payload != null) {
+            clubName = payload.get("name");
+        }
+        
+        if (clubName == null) {
+            throw new BadRequestException("Club name is required");
+        }
+        
         boolean isAvailable = clubRegistrationService.isClubNameAvailable(clubName);
         return ResponseEntity.ok(isAvailable);
     }

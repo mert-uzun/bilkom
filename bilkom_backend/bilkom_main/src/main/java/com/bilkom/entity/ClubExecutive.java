@@ -7,6 +7,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Column;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity
 @Table(name = "club_executives")
@@ -65,11 +66,19 @@ public class ClubExecutive {
         this.id = id;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public void setUser(User user) {
         this.user = user;
         if (this.id == null)
             this.id = new ClubExecutiveId();
         this.id.setUserId(user.getUserId());
+    }
+
+    public Club getClub() {
+        return club;
     }
 
     public void setClub(Club club) {
@@ -79,56 +88,6 @@ public class ClubExecutive {
         this.id.setClubId(club.getClubId());
     }
 
-
-    @Override
-    public String toString() {
-        return "ClubExecutive{" +
-                "id=" + id +
-                ", user=" + user +
-                ", club=" + club +
-                ", position='" + position + '\'' +
-                ", joinDate=" + joinDate +
-                ", leaveDate=" + leaveDate +
-                ", isActive=" + isActive +
-                '}';
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o){
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()){
-            return false;
-        }
-        
-        ClubExecutive that = (ClubExecutive) o;
-        return user.equals(that.user) && club.equals(that.club);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(user, club);
-    }
-    
-    //GETTERS AND SETTERS
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-    
-    public Club getClub() {
-        return club;
-    }
-    
-    public void setClub(Club club) {
-        this.club = club;
-    }
-    
     public String getPosition() {
         return position;
     }
@@ -141,8 +100,8 @@ public class ClubExecutive {
         return joinDate;
     }
     
-    public void setJoinDate(Timestamp createdAt) {
-        this.joinDate = createdAt;
+    public void setJoinDate(Timestamp joinDate) {
+        this.joinDate = joinDate;
     }
 
     public Timestamp getLeaveDate() {
@@ -186,6 +145,37 @@ public class ClubExecutive {
         this.isActive = isActive;
     }
 
+    @Override
+    public String toString() {
+        return "ClubExecutive{" +
+                "id=" + id +
+                ", user=" + user +
+                ", club=" + club +
+                ", position='" + position + '\'' +
+                ", joinDate=" + joinDate +
+                ", leaveDate=" + leaveDate +
+                ", isActive=" + isActive +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o){
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()){
+            return false;
+        }
+        
+        ClubExecutive that = (ClubExecutive) o;
+        return user.equals(that.user) && club.equals(that.club);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user, club);
+    }
+
     public boolean isUserClubHead() {
         return user != null && user.getRole() == UserRole.CLUB_HEAD;
     }
@@ -200,9 +190,5 @@ public class ClubExecutive {
 
     public boolean isUserMember() {
         return user != null && user.getRole() == UserRole.USER;
-    }
-
-    public boolean isUserClubMember() {
-        return user != null && user.getRole() == UserRole.CLUB_MEMBER;
     }
 }

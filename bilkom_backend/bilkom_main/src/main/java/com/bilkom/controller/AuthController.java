@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -71,8 +72,10 @@ public class AuthController {
      * @author Mert Uzun
      * @version 1.0
      */
-    public ResponseEntity<AuthResponse> logout(@RequestParam("userId") Long userId, @RequestHeader(value = "Authorization", required = false) String authHeader) {
+    @PostMapping("/logout")
+    public ResponseEntity<AuthResponse> logout(@RequestBody Map<String, Long> payload, @RequestHeader(value = "Authorization", required = false) String authHeader) {
         try {
+            Long userId = payload.get("userId");
             return ResponseEntity.ok(authService.logout(userId, authHeader));
         } catch (BadRequestException e) {
             return ResponseEntity.badRequest().body(new AuthResponse(false, e.getMessage()));
@@ -84,15 +87,29 @@ public class AuthController {
     /**
      * Verifies a user's email.
      * 
-     * @param token The verification token
+     * @param queryToken Token from query parameter
+     * @param payload JSON payload containing the verification token (alternative)
      * @return ResponseEntity containing the AuthResponse
      * 
      * @author Mert Uzun
      * @version 1.0
      */
-    @GetMapping("/verify")
-    public ResponseEntity<String> verifyEmail(@RequestParam("token") String token) {
+    @PostMapping("/verify")
+    public ResponseEntity<String> verifyEmail(
+            @RequestParam(value = "token", required = false) String queryToken,
+            @RequestBody(required = false) Map<String, String> payload) {
         try {
+            String token = queryToken;
+            
+            // If not provided in query param, try to get from JSON body
+            if (token == null && payload != null) {
+                token = payload.get("token");
+            }
+            
+            if (token == null) {
+                return ResponseEntity.badRequest().body("Verification token is required");
+            }
+            
             boolean verified = authService.verifyEmail(token);
             if (verified) {
                 return ResponseEntity.ok("Email verified successfully. You can now log in.");
@@ -114,8 +131,9 @@ public class AuthController {
      * @version 1.0
      */
     @PostMapping("/reset-password/request")
-    public ResponseEntity<AuthResponse> requestPasswordReset(@RequestParam("email") String email) {
+    public ResponseEntity<AuthResponse> requestPasswordReset(@RequestBody Map<String, String> payload) {
         try {
+            String email = payload.get("email");
             boolean requestSent = authService.requestPasswordReset(email);
             if (requestSent) {
                 return ResponseEntity.ok(new AuthResponse(true, "Password reset instructions sent to your email"));
@@ -138,10 +156,10 @@ public class AuthController {
      * @version 1.0
      */
     @PostMapping("/reset-password/confirm")
-    public ResponseEntity<AuthResponse> confirmPasswordReset(
-            @RequestParam("token") String token,
-            @RequestParam("newPassword") String newPassword) {
+    public ResponseEntity<AuthResponse> confirmPasswordReset(@RequestBody Map<String, String> payload) {
         try {
+            String token = payload.get("token");
+            String newPassword = payload.get("newPassword");
             boolean reset = authService.resetPassword(token, newPassword);
             if (reset) {
                 return ResponseEntity.ok(new AuthResponse(true, "Password reset successful"));
@@ -166,11 +184,11 @@ public class AuthController {
      */
     @PostMapping("/change-password")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<AuthResponse> changePassword(
-            @RequestParam("userId") Long userId,
-            @RequestParam("currentPassword") String currentPassword,
-            @RequestParam("newPassword") String newPassword) {
+    public ResponseEntity<AuthResponse> changePassword(@RequestBody Map<String, Object> payload) {
         try {
+            Long userId = Long.valueOf(payload.get("userId").toString());
+            String currentPassword = payload.get("currentPassword").toString();
+            String newPassword = payload.get("newPassword").toString();
             return ResponseEntity.ok(authService.changePassword(userId, currentPassword, newPassword));
         } catch (BadRequestException e) {
             return ResponseEntity.badRequest().body(new AuthResponse(false, e.getMessage()));

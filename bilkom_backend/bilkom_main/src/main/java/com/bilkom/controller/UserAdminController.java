@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -51,14 +52,15 @@ public class UserAdminController {
      * Updates a user's role.
      * 
      * @param id The user ID
-     * @param role The new role
+     * @param payload JSON payload containing the new role
      * @return The updated user
      * 
      * @author Mert Uzun
      * @version 1.0
      */
     @PutMapping("/{id}/role")
-    public ResponseEntity<UserDTO> updateUserRole(@PathVariable("id") Long id, @RequestParam("role") UserRole role) {
+    public ResponseEntity<UserDTO> updateUserRole(@PathVariable("id") Long id, @RequestBody Map<String, String> payload) {
+        UserRole role = UserRole.valueOf(payload.get("role"));
         User updatedUser = authService.updateUserRole(id, role);
         return ResponseEntity.ok(new UserDTO(updatedUser));
     }
@@ -67,14 +69,15 @@ public class UserAdminController {
      * Activates or deactivates a user.
      * 
      * @param id The user ID
-     * @param active Whether the user should be active
+     * @param payload JSON payload containing the active flag
      * @return The updated user
      * 
      * @author Mert Uzun
      * @version 1.0
      */
     @PutMapping("/{id}/active")
-    public ResponseEntity<UserDTO> setUserActive(@PathVariable("id") Long id, @RequestParam("active") boolean active) {
+    public ResponseEntity<UserDTO> setUserActive(@PathVariable("id") Long id, @RequestBody Map<String, Boolean> payload) {
+        Boolean active = payload.get("active");
         User user = userService.getUserById(id);
         user.setActive(active);
         User updatedUser = userService.updateUser(id, user);
@@ -85,14 +88,15 @@ public class UserAdminController {
      * Makes a user verified.
      * 
      * @param id The user ID
-     * @param verified Whether the user should be verified
+     * @param payload JSON payload containing the verified flag
      * @return The updated user
      * 
      * @author Mert Uzun
      * @version 1.0
      */
     @PutMapping("/{id}/verified")
-    public ResponseEntity<UserDTO> setUserVerified(@PathVariable("id") Long id, @RequestParam("verified") boolean verified) {
+    public ResponseEntity<UserDTO> setUserVerified(@PathVariable("id") Long id, @RequestBody Map<String, Boolean> payload) {
+        Boolean verified = payload.get("verified");
         User user = userService.getUserById(id);
         user.setVerified(verified);
         User updatedUser = userService.updateUser(id, user);

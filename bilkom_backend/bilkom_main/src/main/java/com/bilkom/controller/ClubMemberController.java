@@ -201,14 +201,15 @@ public class ClubMemberController {
      * Searches for members by name pattern in a specific club.
      * 
      * @param clubId The club ID
-     * @param namePattern The name pattern to search for
+     * @param payload JSON payload containing the name pattern to search for
      * @return List of matching members
      * 
      * @author Mert Uzun
      * @version 1.0
      */
-    @GetMapping("/club/{clubId}/search")
-    public ResponseEntity<List<ClubMemberDTO>> searchMembersByName(@PathVariable("clubId") Long clubId, @RequestParam("name") String namePattern) {
+    @PostMapping("/club/{clubId}/search")
+    public ResponseEntity<List<ClubMemberDTO>> searchMembersByName(@PathVariable("clubId") Long clubId, @RequestBody Map<String, String> payload) {
+        String namePattern = payload.get("name");
         return ResponseEntity.ok(clubMemberService.searchMembersByName(clubId, namePattern));
     }
 }
