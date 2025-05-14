@@ -3545,6 +3545,7 @@ id maxParticipantsEditText
 id menuButton
 id menu_home
 id menu_logout
+id menu_profile
 id menu_settings
 id message
 id messageTextView
