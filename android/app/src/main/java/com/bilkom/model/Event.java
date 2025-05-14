@@ -12,6 +12,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
 
 import com.bilkom.utils.DateUtils;
 
@@ -48,8 +50,7 @@ public class Event implements Serializable {
     private boolean isActive;
     
     @SerializedName("tags")
-    @JsonAdapter(TagsTypeAdapter.class)
-    private List<String> tags;
+    private List<Object> rawTags;
     
     @SerializedName("clubId")
     private Long clubId;
@@ -128,7 +129,7 @@ public class Event implements Serializable {
         this.eventLocation = eventLocation;
         this.eventDate = eventDate;
         this.isActive = isActive;
-        this.tags = tags;
+        this.rawTags = new ArrayList<>(tags);
     }
 
     public Long getEventId() { return eventId; }
@@ -185,8 +186,27 @@ public class Event implements Serializable {
     public boolean isActive() { return isActive; }
     public void setActive(boolean active) { isActive = active; }
 
-    public List<String> getTags() { return tags; }
-    public void setTags(List<String> tags) { this.tags = tags; }
+    public List<String> getTags() {
+        List<String> tagStrings = new ArrayList<>();
+        if (rawTags != null) {
+            for (Object tag : rawTags) {
+                if (tag instanceof String) {
+                    tagStrings.add((String) tag);
+                } else if (tag instanceof Map) {
+                    // Handle object tags like {"name": "tag1"}
+                    Map<String, Object> tagMap = (Map<String, Object>) tag;
+                    if (tagMap.containsKey("name")) {
+                        tagStrings.add(tagMap.get("name").toString());
+                    }
+                }
+            }
+        }
+        return tagStrings;
+    }
+
+    public void setTags(List<String> tags) {
+        this.rawTags = new ArrayList<>(tags);
+    }
     
     public Long getClubId() { return clubId; }
     public void setClubId(Long clubId) { this.clubId = clubId; }
