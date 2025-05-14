@@ -126,6 +126,35 @@ public class EventActivity extends BaseActivity {
         fetchEvents();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        int id = item.getItemId();
+        
+        // Handle the Up/Home/Back button
+        if (id == android.R.id.home) {
+            Log.d("EventActivity", "Back/Up button pressed");
+            onBackPressed();
+            return true;
+        }
+        
+        return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
+    public void onBackPressed() {
+        Log.d("EventActivity", "onBackPressed called");
+        try {
+            // Navigate to HomeActivity
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        } catch (Exception e) {
+            Log.e("EventActivity", "Error navigating back to home: " + e.getMessage());
+            super.onBackPressed();
+        }
+    }
+
     private void fetchEvents() {
         fetchAllEventsNotJoined();
     }
