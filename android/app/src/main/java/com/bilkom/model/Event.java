@@ -1,7 +1,15 @@
 package com.bilkom.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
+
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,6 +48,7 @@ public class Event implements Serializable {
     private boolean isActive;
     
     @SerializedName("tags")
+    @JsonAdapter(TagsTypeAdapter.class)
     private List<String> tags;
     
     @SerializedName("clubId")
@@ -53,6 +62,58 @@ public class Event implements Serializable {
 
     @SerializedName("isJoined")
     private boolean isJoined;
+
+    /**
+     * Custom type adapter for tags that can handle both String values and Tag objects
+     */
+    public static class TagsTypeAdapter extends TypeAdapter<List<String>> {
+        @Override
+        public void write(JsonWriter out, List<String> value) throws IOException {
+            out.beginArray();
+            for (String tag : value) {
+                out.value(tag);
+            }
+            out.endArray();
+        }
+
+        @Override
+        public List<String> read(JsonReader in) throws IOException {
+            List<String> tags = new ArrayList<>();
+            
+            if (in.peek() == JsonToken.NULL) {
+                in.nextNull();
+                return tags;
+            }
+            
+            in.beginArray();
+            while (in.hasNext()) {
+                if (in.peek() == JsonToken.STRING) {
+                    // If the next token is a string, read it directly
+                    tags.add(in.nextString());
+                } else if (in.peek() == JsonToken.BEGIN_OBJECT) {
+                    // If the next token is an object, extract the tagName field
+                    in.beginObject();
+                    String tagName = null;
+                    while (in.hasNext()) {
+                        String name = in.nextName();
+                        if (name.equals("tagName")) {
+                            tagName = in.nextString();
+                        } else {
+                            in.skipValue();
+                        }
+                    }
+                    in.endObject();
+                    if (tagName != null) {
+                        tags.add(tagName);
+                    }
+                } else {
+                    in.skipValue();
+                }
+            }
+            in.endArray();
+            return tags;
+        }
+    }
 
     public Event() {}
 
