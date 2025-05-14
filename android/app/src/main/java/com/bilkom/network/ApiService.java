@@ -162,10 +162,10 @@ public interface ApiService {
     @POST("/api/events/{eventId}/report")
     Call<Void> reportEvent(@Path("eventId") Long eventId, @Body ReportRequest body);
 
-    @GET("/weather")
+    @GET("/api/weather")
     Call<WeatherForecast> getWeather();
 
-    @GET("/news")
+    @GET("/api/news")
     Call<List<News>> getNews();
 
     @GET("/api/emergency-alerts")
