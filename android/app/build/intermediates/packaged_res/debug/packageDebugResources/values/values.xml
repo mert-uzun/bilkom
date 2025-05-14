@@ -16,6 +16,7 @@
     <color name="weather_card_bg">#1E1E1E</color>
     <color name="white">#FFFFFFFF</color>
     <string name="Bilkom">Bilkom</string>
+    <string name="activities_and_events">Activities and Events</string>
     <string name="activity_selection">Activity Selection</string>
     <string name="app_logo">BILKOM</string>
     <string name="app_name">Bilkom</string>
