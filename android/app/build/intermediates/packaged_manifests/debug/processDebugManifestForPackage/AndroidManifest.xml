@@ -82,6 +82,7 @@ it is used to store the permissions, activities, application, etc.
         <activity android:name="com.bilkom.ui.MyClubsActivity" />
         <activity android:name="com.bilkom.ui.ClubMembersActivity" />
         <activity android:name="com.bilkom.ui.ManageClubActivity" />
+        <activity android:name="com.bilkom.ui.CreateClubActivity" />
 
         <!-- Event Activities -->
         <activity android:name="com.bilkom.ui.EventActivity" />

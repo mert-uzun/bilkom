@@ -1,7 +1,6 @@
 R_DEF: Internal format may change without notice
 local
 color bilkom_bg
-color bilkom_blue
 color bilkom_on_bg
 color black
 color card_bg_dark
@@ -75,6 +74,7 @@ id activitySelectionButton
 id addActivityButton
 id addClubActivityButton
 id addEmergencyAlertButton
+id additionalInfoEditText
 id alertDateText
 id alertDescriptionText
 id alertLocationText
@@ -98,6 +98,8 @@ id changeProfilePicButton
 id clubActionButton
 id clubActivitiesButton
 id clubActivitiesRecyclerView
+id clubDescriptionEditText
+id clubNameEditText
 id clubNameTextView
 id clubSpinner
 id clubsContainer
@@ -145,6 +147,7 @@ id event_participants_label
 id event_tags_container
 id event_tags_label
 id event_title
+id executivePositionEditText
 id firstNameInput
 id firstNameLayout
 id forgotPasswordEmailInput
@@ -163,6 +166,7 @@ id loginText
 id logoImage
 id logoImageView
 id logoutButton
+id mainMenuButton
 id manageClubsButton
 id managedClubsRecyclerView
 id maxParticipantsEdit
@@ -214,6 +218,7 @@ id searchLayout
 id settingsContainer
 id settingsMenuItem
 id settingsTitle
+id statusMessageTextView
 id submitEventButton
 id submitReportButton
 id tagSpinner
@@ -234,6 +239,7 @@ id tvRequestedBy
 id tvRole
 id updatePasswordButton
 id updateProfileButton
+id verificationDocUrlEditText
 id weatherCard
 id weatherContainer
 id weatherDesc
@@ -252,6 +258,7 @@ layout activity_base
 layout activity_club_activities
 layout activity_club_list
 layout activity_club_management
+layout activity_create_club
 layout activity_create_event
 layout activity_emergency_alerts
 layout activity_event
@@ -260,11 +267,7 @@ layout activity_join_club
 layout activity_login
 layout activity_main
 layout activity_my_activities
-<<<<<<< HEAD
-layout activity_news
-=======
 layout activity_my_clubs
->>>>>>> c1fe8b07c91dd82dd562ab995787330ed8bab05b
 layout activity_profile
 layout activity_registration
 layout activity_report

@@ -50,6 +50,15 @@ public class EmergencyAlertService {
     private String appPassword;
     
     /**
+     * Gets all emergency alerts from the repository.
+     * 
+     * @return List of all EmergencyAlert objects
+     */
+    public List<EmergencyAlert> getAllEmergencyAlerts() {
+        return emergencyAlertRepository.findAll();
+    }
+    
+    /**
      * Gets all active emergency alerts from the repository.
      * 
      * @return List of active EmergencyAlert objects
