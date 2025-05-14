@@ -95,11 +95,9 @@ public class MainActivity extends AppCompatActivity {
             if (emergencyAlertsButton != null) {
                 emergencyAlertsButton.setOnClickListener(v -> {
                     try {
-                        // Temporarily comment out until EmergencyAlertsActivity is created
-                        // Intent intent = new Intent(MainActivity.this, EmergencyAlertsActivity.class);
-                        // Instead, show a toast message
-                        Toast.makeText(MainActivity.this, "Emergency Alerts feature coming soon", Toast.LENGTH_SHORT).show();
-                        // startActivity(intent);
+                        Intent intent = new Intent(MainActivity.this, EmergencyAlertsActivity.class);
+                        startActivity(intent);
+                        Log.d(TAG, "Navigating to EmergencyAlertsActivity");
                     } catch (Exception e) {
                         Log.e(TAG, "Error navigating to emergency alerts", e);
                         Toast.makeText(this, "Cannot open emergency alerts", Toast.LENGTH_SHORT).show();
@@ -128,18 +126,6 @@ public class MainActivity extends AppCompatActivity {
                     if (itemId == R.id.menu_home) {
                         // Already on home page
                         Toast.makeText(MainActivity.this, "You are already on Home page", Toast.LENGTH_SHORT).show();
-                        return true;
-                    } 
-                    else if (itemId == R.id.menu_profile) {
-                        Intent intent = new Intent();
-                        intent.setClassName(getPackageName(), "com.bilkom.ui.ProfileActivity");
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        try {
-                            startActivity(intent);
-                            finish();
-                        } catch (Exception e) {
-                            Toast.makeText(MainActivity.this, "Cannot open profile: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
                         return true;
                     } 
                     else if (itemId == R.id.menu_settings) {

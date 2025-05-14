@@ -3420,7 +3420,6 @@ id eventLocationTextView
 id eventNameEdit
 id eventNameEditText
 id eventNameTextView
-id eventRecyclerView
 id event_date
 id event_date_label
 id event_description
@@ -3545,6 +3544,7 @@ id maxParticipantsEditText
 id menuButton
 id menu_home
 id menu_logout
+id menu_profile
 id menu_settings
 id message
 id messageTextView
@@ -3669,6 +3669,7 @@ id radio
 id ratio
 id reasonEditText
 id rectangles
+id recyclerView
 id registerButton
 id registerText
 id report_drawn
