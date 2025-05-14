@@ -82,6 +82,34 @@
                 android:padding="16dp"/>
 
         </LinearLayout>
+        
+        <!-- Activity Selection Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+            
+            <Button
+                android:id="@+id/activitySelectionButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Activity Selection"
+                android:backgroundTint="#2E7D32"
+                android:textColor="@color/white"
+                android:layout_marginEnd="8dp"/>
+                
+            <Button
+                android:id="@+id/clubActivitiesButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Club Activities"
+                android:backgroundTint="#6D4C41"
+                android:textColor="@color/white"/>
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView> 
