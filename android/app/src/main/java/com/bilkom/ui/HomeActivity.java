@@ -11,6 +11,7 @@ package com.bilkom.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,8 +62,19 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // Simplify layout inflation to avoid issues
-        setContentView(R.layout.activity_home);
+        // Try-catch to handle potential inflation issues
+        try {
+            View contentFrame = findViewById(R.id.contentFrame);
+            if (contentFrame instanceof FrameLayout) {
+                getLayoutInflater().inflate(R.layout.activity_home, (FrameLayout)contentFrame);
+            } else {
+                Log.w(TAG, "contentFrame not found or not a FrameLayout");
+                setContentView(R.layout.activity_home);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error inflating layout", e);
+            setContentView(R.layout.activity_home);
+        }
         
         setupNavigationDrawer();
         
@@ -112,21 +124,45 @@ public class HomeActivity extends BaseActivity {
 
     private void loadWeatherData() {
         ApiService apiService = RetrofitClient.getInstance().getApiService();
+        
+        // Set default weather text while loading
+        weatherTemp.setText("Loading weather...");
+        weatherDesc.setText("");
+        
+        // Add a timeout handler in case the API call takes too long
+        Handler timeoutHandler = new Handler();
+        Runnable timeoutRunnable = () -> {
+            weatherTemp.setText("Weather data unavailable");
+            weatherDesc.setText("Check your connection");
+            weatherIcon.setImageResource(android.R.drawable.ic_menu_compass);
+        };
+        timeoutHandler.postDelayed(timeoutRunnable, 10000); // 10 second timeout
+        
         apiService.getWeather().enqueue(new Callback<WeatherForecast>() {
             @Override
             public void onResponse(Call<WeatherForecast> call, Response<WeatherForecast> response) {
+                // Cancel timeout handler
+                timeoutHandler.removeCallbacks(timeoutRunnable);
+                
                 if (response.isSuccessful() && response.body() != null) {
                     WeatherForecast wf = response.body();
                     updateWeatherUI(wf);
                 } else {
                     weatherTemp.setText("Weather data unavailable");
+                    weatherDesc.setText("Error: " + response.code());
+                    weatherIcon.setImageResource(android.R.drawable.ic_menu);
                 }
             }
             
             @Override
             public void onFailure(Call<WeatherForecast> call, Throwable t) {
+                // Cancel timeout handler
+                timeoutHandler.removeCallbacks(timeoutRunnable);
+                
                 Log.e(TAG, "Failed to load weather data", t);
                 weatherTemp.setText("Weather data unavailable");
+                weatherDesc.setText("Network error");
+                weatherIcon.setImageResource(android.R.drawable.ic_menu);
             }
         });
     }
@@ -134,13 +170,19 @@ public class HomeActivity extends BaseActivity {
     private void updateWeatherUI(WeatherForecast wf) {
         if (wf == null) {
             weatherTemp.setText("Weather data unavailable");
+            weatherDesc.setText("");
+            weatherIcon.setImageResource(android.R.drawable.ic_menu);
             return;
         }
         
         try {
             // Icon handling with null safety
             String icon = wf.getIcon();
-            weatherIcon.setImageResource(WeatherIconUtils.getWeatherIconResourceId(this, icon));
+            if (icon != null) {
+                weatherIcon.setImageResource(WeatherIconUtils.getWeatherIconResourceId(this, icon));
+            } else {
+                weatherIcon.setImageResource(android.R.drawable.ic_menu);
+            }
             
             // Temperature formatting with default if needed
             String description = wf.getDescription();
@@ -152,6 +194,8 @@ public class HomeActivity extends BaseActivity {
         } catch (Exception e) {
             Log.e(TAG, "Error updating weather UI", e);
             weatherTemp.setText("Weather data unavailable");
+            weatherDesc.setText("Error parsing data");
+            weatherIcon.setImageResource(android.R.drawable.ic_menu);
         }
     }
 
