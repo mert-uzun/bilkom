@@ -180,14 +180,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 Log.d(TAG, "Navigating to HomeActivity");
                 startActivity(new Intent(this, HomeActivity.class));
             } else if (id == R.id.nav_events) {
-                Log.d(TAG, "Attempting to navigate to EventsActivity");
-                try {
-                    Class<?> eventsClass = Class.forName("com.bilkom.ui.EventActivity");
-                    startActivity(new Intent(this, eventsClass));
-                } catch (ClassNotFoundException e) {
-                    Log.e(TAG, "EventActivity class not found", e);
-                    Toast.makeText(this, "Events feature coming soon", Toast.LENGTH_SHORT).show();
-                }
+                Log.d(TAG, "Navigating to EventActivity");
+                startActivity(new Intent(this, EventActivity.class));
             } else if (id == R.id.nav_profile && !(this instanceof ProfileActivity)) {
                 Log.d(TAG, "Navigating to ProfileActivity");
                 startActivity(new Intent(this, ProfileActivity.class));
@@ -205,9 +199,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     
     private void handleNavigationToClubs() {
         try {
-            Class<?> clubsActivityClass = Class.forName("com.bilkom.ui.ClubsActivity");
-            startActivity(new Intent(this, clubsActivityClass));
-        } catch (ClassNotFoundException e) {
+            startActivity(new Intent(this, ClubActivitiesActivity.class));
+        } catch (Exception e) {
             Toast.makeText(this, "Clubs feature coming soon", Toast.LENGTH_SHORT).show();
         }
     }
