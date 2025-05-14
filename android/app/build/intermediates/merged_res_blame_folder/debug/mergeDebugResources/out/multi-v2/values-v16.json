@@ -4,7 +4,7 @@
             "outputFile": "com.bilkom.app-mergeDebugResources-38:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\alisv\\GradleHome\\caches\\8.11.1\\transforms\\396b3bd9f7cc838ca8b3160313162102\\transformed\\core-1.12.0\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\Mert\\.gradle\\caches\\8.11.1\\transforms\\396b3bd9f7cc838ca8b3160313162102\\transformed\\core-1.12.0\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\alisv\\GradleHome\\caches\\8.11.1\\transforms\\fefe834a386d035fe20e523c8d594398\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\Mert\\.gradle\\caches\\8.11.1\\transforms\\fefe834a386d035fe20e523c8d594398\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

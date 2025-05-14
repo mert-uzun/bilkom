@@ -4,7 +4,7 @@
             "outputFile": "com.bilkom.app-mergeDebugResources-38:/values-v25/values-v25.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\alisv\\GradleHome\\caches\\8.11.1\\transforms\\fefe834a386d035fe20e523c8d594398\\transformed\\appcompat-1.6.1\\res\\values-v25\\values-v25.xml",
+                    "source": "C:\\Users\\Mert\\.gradle\\caches\\8.11.1\\transforms\\fefe834a386d035fe20e523c8d594398\\transformed\\appcompat-1.6.1\\res\\values-v25\\values-v25.xml",
                     "from": {
                         "startLines": "2,3,4,6",
                         "startColumns": "4,4,4,4",
