@@ -103,11 +103,11 @@ public class HomeActivity extends BaseActivity {
             Intent intent = getIntent();
             if (intent != null) {
                 if (intent.getBooleanExtra("openProfileAfterLoad", false)) {
-                    Toast.makeText(this, "Profile feature temporarily unavailable", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(this, ProfileActivity.class));
                 }
                 
                 if (intent.getBooleanExtra("openSettingsAfterLoad", false)) {
-                    Toast.makeText(this, "Settings feature temporarily unavailable", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(this, SettingsActivity.class));
                 }
             }
         } catch (Exception e) {
@@ -259,8 +259,8 @@ public class HomeActivity extends BaseActivity {
         // Add button to navigate to emergency alerts
         View.OnClickListener alertsListener = v -> {
             try {
-                // Try to navigate to the EventActivity (where emergency alerts are shown)
-                Intent intent = new Intent(this, "com.bilkom.ui.EmergencyAlertActivity");
+                // Navigate to ReportActivity for emergency alerts
+                Intent intent = new Intent(this, ReportActivity.class);
                 startActivity(intent);
             } catch (Exception e) {
                 Log.e(TAG, "Error navigating to emergency alerts", e);
@@ -285,8 +285,8 @@ public class HomeActivity extends BaseActivity {
         if (activitySelectionButton != null) {
             activitySelectionButton.setOnClickListener(v -> {
                 try {
-                    // Navigate to EventActivity
-                    Intent intent = new Intent(this, "com.bilkom.ui.EventActivity");
+                    // Navigate to EventActivity for activity selection
+                    Intent intent = new Intent(this, EventActivity.class);
                     startActivity(intent);
                 } catch (Exception e) {
                     Log.e(TAG, "Error navigating to activity selection", e);
@@ -300,8 +300,8 @@ public class HomeActivity extends BaseActivity {
         if (clubActivitiesButton != null) {
             clubActivitiesButton.setOnClickListener(v -> {
                 try {
-                    // Navigate to ClubActivitiesActivity
-                    Intent intent = new Intent(this, "com.bilkom.ui.ClubActivitiesActivity");
+                    // Navigate to ClubActivitiesActivity for club activities
+                    Intent intent = new Intent(this, ClubActivitiesActivity.class);
                     startActivity(intent);
                 } catch (Exception e) {
                     Log.e(TAG, "Error navigating to club activities", e);

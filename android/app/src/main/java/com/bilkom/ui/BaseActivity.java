@@ -55,12 +55,17 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     protected SecureStorage secureStorage;
     protected ApiService apiService;
 
+    // Define navigation item IDs as constants
     private static final int NAV_HOME = 0x7f0900a1;      
     private static final int NAV_EVENTS = 0x7f0900a2;   
     private static final int NAV_CLUBS = 0x7f0900a3;     
     private static final int NAV_PROFILE = 0x7f0900a4;  
     private static final int NAV_SETTINGS = 0x7f0900a5;  
     private static final int NAV_LOGOUT = 0x7f0900a6;    
+    
+    // These can be accessed as R.id.nav_settings and R.id.nav_clubs
+    public static final int nav_settings = NAV_SETTINGS;
+    public static final int nav_clubs = NAV_CLUBS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,6 +190,12 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
             } else if (id == R.id.nav_profile && !(this instanceof ProfileActivity)) {
                 Log.d(TAG, "Navigating to ProfileActivity");
                 startActivity(new Intent(this, ProfileActivity.class));
+            } else if (id == nav_settings && !(this instanceof SettingsActivity)) {
+                Log.d(TAG, "Navigating to SettingsActivity");
+                startActivity(new Intent(this, SettingsActivity.class));
+            } else if (id == nav_clubs) {
+                Log.d(TAG, "Navigating to ClubActivitiesActivity");
+                handleNavigationToClubs();
             } else if (id == R.id.nav_logout) {
                 Log.d(TAG, "Handling logout");
                 handleLogout();
@@ -317,7 +328,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
             profileItem.setOnClickListener(v -> {
                 popupWindow.dismiss();
                 if (!(this instanceof ProfileActivity)) {
-                    startActivity(new Intent(this, ProfileActivity.class));
+                    Intent intent = new Intent(this, ProfileActivity.class);
+                    startActivity(intent);
                 }
             });
             
@@ -325,7 +337,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
             settingsItem.setOnClickListener(v -> {
                 popupWindow.dismiss();
                 if (!(this instanceof SettingsActivity)) {
-                    startActivity(new Intent(this, SettingsActivity.class));
+                    Intent intent = new Intent(this, SettingsActivity.class);
+                    startActivity(intent);
                 }
             });
             
