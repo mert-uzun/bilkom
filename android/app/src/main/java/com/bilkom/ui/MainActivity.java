@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate started");
         
         try {
-            setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
             Toast.makeText(this, "Main Activity loaded", Toast.LENGTH_SHORT).show();
             
             secureStorage = new SecureStorage(this);
