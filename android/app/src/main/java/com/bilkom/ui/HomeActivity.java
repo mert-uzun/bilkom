@@ -227,14 +227,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void setupClickListeners() {
-        // Make weather card clickable to show detailed forecast
-        CardView weatherCard = findViewById(R.id.weatherCard);
-        if (weatherCard != null) {
-            weatherCard.setOnClickListener(v -> {
-                Toast.makeText(this, "Weather details coming soon", Toast.LENGTH_SHORT).show();
-                // Here you could start a WeatherDetailActivity
-            });
-        }
+        // Weather card is no longer clickable
         
         // Add button to navigate to emergency alerts
         View.OnClickListener alertsListener = v -> {
