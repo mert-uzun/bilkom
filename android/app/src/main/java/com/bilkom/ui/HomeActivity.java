@@ -61,19 +61,8 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // Try-catch to handle potential inflation issues
-        try {
-            View contentFrame = findViewById(R.id.contentFrame);
-            if (contentFrame instanceof FrameLayout) {
-                getLayoutInflater().inflate(R.layout.activity_home, (FrameLayout)contentFrame);
-            } else {
-                Log.w(TAG, "contentFrame not found or not a FrameLayout");
-                setContentView(R.layout.activity_home);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error inflating layout", e);
-            setContentView(R.layout.activity_home);
-        }
+        // Simplify layout inflation to avoid issues
+        setContentView(R.layout.activity_home);
         
         setupNavigationDrawer();
         
@@ -246,10 +235,19 @@ public class HomeActivity extends BaseActivity {
         // Set up Emergency Alerts button
         Button emergencyAlertsButton = findViewById(R.id.emergencyAlertsButton);
         if (emergencyAlertsButton != null) {
+            Log.d(TAG, "Found emergencyAlertsButton, setting click listener");
+            
             emergencyAlertsButton.setOnClickListener(v -> {
-                Intent intent = new Intent();
-                intent.setClassName(getPackageName(), "com.bilkom.ui.EmergencyAlertsActivity");
-                startActivity(intent);
+                Log.d(TAG, "Emergency Alerts button clicked, navigating to EmergencyAlertsActivity");
+                
+                try {
+                    Intent intent = new Intent();
+                    intent.setClassName(getPackageName(), "com.bilkom.ui.EmergencyAlertsActivity");
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Log.e(TAG, "Error navigating to EmergencyAlertsActivity: " + e.getMessage(), e);
+                    Toast.makeText(this, "Cannot open emergency alerts page: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             });
         } else {
             Log.e(TAG, "Could not find emergencyAlertsButton");
