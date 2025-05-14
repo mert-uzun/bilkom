@@ -32,6 +32,7 @@ public class EventActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private Button addActivityButton;
     private Button myActivitiesButton;
+    private Button mainMenuButton;
     private Spinner tagSpinner;
     private EventAdapter adapter;
     private List<Event> eventList;
@@ -49,6 +50,7 @@ public class EventActivity extends BaseActivity {
         recyclerView = findViewById(R.id.recyclerView);
         addActivityButton = findViewById(R.id.addActivityButton);
         myActivitiesButton = findViewById(R.id.myActivitiesButton);
+        mainMenuButton = findViewById(R.id.mainMenuButton);
         tagSpinner = findViewById(R.id.tagSpinner);
         secureStorage = new SecureStorage(this);
 
@@ -59,6 +61,11 @@ public class EventActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("Events");
         }
+
+        // Set up main menu button
+        mainMenuButton.setOnClickListener(v -> {
+            navigateToMainActivity();
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         eventList = new ArrayList<>();
@@ -320,5 +327,12 @@ public class EventActivity extends BaseActivity {
                 Toast.makeText(EventActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Clear the back stack
+        startActivity(intent);
+        finish(); // Close this activity
     }
 } 

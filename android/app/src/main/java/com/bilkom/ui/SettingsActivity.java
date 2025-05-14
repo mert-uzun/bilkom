@@ -38,6 +38,7 @@ public class SettingsActivity extends BaseActivity {
     
     private EditText newPasswordEdit, confirmPasswordEdit;
     private MaterialButton updatePasswordButton, logoutButton, changeProfilePicButton;
+    private Button mainMenuButton;
     private ImageView profileImageView;
     private SecureStorage secureStorage;
     private Long userId;
@@ -113,6 +114,7 @@ public class SettingsActivity extends BaseActivity {
             updateProfileButton = findViewById(findResourceId("id", "updateProfileButton"));
             manageClubsButton = findViewById(findResourceId("id", "manageClubsButton"));
             joinClubButton = findViewById(findResourceId("id", "joinClubButton"));
+            mainMenuButton = findViewById(findResourceId("id", "mainMenuButton"));
             apiService = RetrofitClient.getInstance().getApiService();
         } catch (Exception e) {
             Log.e(TAG, "Error initializing views", e);
@@ -122,11 +124,11 @@ public class SettingsActivity extends BaseActivity {
     private void setupListeners() {
         try {
             if (updatePasswordButton != null) {
-        updatePasswordButton.setOnClickListener(v -> updatePassword());
+                updatePasswordButton.setOnClickListener(v -> updatePassword());
             }
             
             if (logoutButton != null) {
-        logoutButton.setOnClickListener(v -> logout());
+                logoutButton.setOnClickListener(v -> logout());
             }
             
             if (changeProfilePicButton != null) {
@@ -144,6 +146,10 @@ public class SettingsActivity extends BaseActivity {
             
             if (joinClubButton != null) {
                 joinClubButton.setOnClickListener(v -> joinClub());
+            }
+            
+            if (mainMenuButton != null) {
+                mainMenuButton.setOnClickListener(v -> navigateToMainActivity());
             }
         } catch (Exception e) {
             Log.e(TAG, "Error setting up listeners", e);
