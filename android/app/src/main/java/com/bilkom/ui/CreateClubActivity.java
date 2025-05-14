@@ -130,7 +130,7 @@ public class CreateClubActivity extends BaseActivity {
         
         // Submit the club registration request
         String token = "Bearer " + secureStorage.getAuthToken();
-        apiService.registerClub(clubRequest).enqueue(new Callback<Club>() {
+        apiService.registerClub(clubRequest, token).enqueue(new Callback<Club>() {
             @Override
             public void onResponse(Call<Club> call, Response<Club> response) {
                 if (response.isSuccessful() && response.body() != null) {
