@@ -20,24 +20,24 @@ import com.bilkom.utils.DateUtils;
  */
 public class EmergencyAlert implements Serializable {
 
-    @SerializedName("id")        private Long   id;
-    @SerializedName("title")     private String title;
-    @SerializedName("description") private String description;
-    @SerializedName("location")  private String location;
-    @SerializedName("date")      private String date;
-    @SerializedName("active")    private boolean active;
-    @SerializedName("createdBy") private Long createdBy;
+    @SerializedName("alertId") private Long   id;
+    @SerializedName("subject") private String title;
+    @SerializedName("content") private String description;
+    @SerializedName("phoneNumber") private String location;
+    @SerializedName("sentDate") private String date;
+    @SerializedName("isActive") private boolean active;
+    @SerializedName("bloodType") private String bloodType;
 
     public EmergencyAlert() { }
 
-    public EmergencyAlert(Long id, String title, String description, String location, String date, boolean active, Long createdBy) {
+    public EmergencyAlert(Long id, String title, String description, String location, String date, boolean active, String bloodType) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.location = location;
         this.date = date;
         this.active = active;
-        this.createdBy = createdBy;
+        this.bloodType = bloodType;
     }
 
     public Long   getId()          { return id; }
@@ -58,8 +58,8 @@ public class EmergencyAlert implements Serializable {
     public boolean isActive()      { return active; }
     public void    setActive(boolean active) { this.active = active; }
 
-    public Long getCreatedBy()     { return createdBy; }
-    public void   setCreatedBy(Long createdBy) { this.createdBy = createdBy; }
+    public String getBloodType()   { return bloodType; }
+    public void   setBloodType(String bloodType) { this.bloodType = bloodType; }
 
     /** Raw ISO string → {@link java.util.Date} (may return {@code null} on parse error). */
     public Date getCreatedDate() {

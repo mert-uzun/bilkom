@@ -3543,7 +3543,6 @@ int id maxParticipantsEditText 0x7f080169
 int id menuButton 0x7f08016a
 int id menu_home 0x7f08016b
 int id menu_logout 0x7f08016c
-int id menu_profile 0x7f08016d
 int id menu_settings 0x7f08016e
 int id message 0x7f08016f
 int id messageTextView 0x7f080170

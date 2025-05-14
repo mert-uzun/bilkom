@@ -21,6 +21,8 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import java.util.List;
+import android.app.AlertDialog;
 /**
  * SettingsActivity handles user settings such as updating passwords and logging out.
  * 
@@ -39,8 +41,12 @@ public class SettingsActivity extends BaseActivity {
     private LinearLayout settingsContainer;
     private EditText nameEditText;
     private EditText emailEditText;
+    private EditText phoneEditText;
+    private EditText bloodTypeEditText;
+    private EditText bilkentIdEditText;
     private Button updateProfileButton;
     private Button manageClubsButton;
+    private Button joinClubButton;
     private ApiService apiService;
 
     @Override
@@ -97,8 +103,12 @@ public class SettingsActivity extends BaseActivity {
             profileImageView = findViewById(findResourceId("id", "profileImageView"));
             nameEditText = findViewById(findResourceId("id", "nameEditText"));
             emailEditText = findViewById(findResourceId("id", "emailEditText"));
+            phoneEditText = findViewById(findResourceId("id", "phoneEditText"));
+            bloodTypeEditText = findViewById(findResourceId("id", "bloodTypeEditText"));
+            bilkentIdEditText = findViewById(findResourceId("id", "bilkentIdEditText"));
             updateProfileButton = findViewById(findResourceId("id", "updateProfileButton"));
             manageClubsButton = findViewById(findResourceId("id", "manageClubsButton"));
+            joinClubButton = findViewById(findResourceId("id", "joinClubButton"));
             apiService = RetrofitClient.getInstance().getApiService();
         } catch (Exception e) {
             Log.e(TAG, "Error initializing views", e);
@@ -126,6 +136,10 @@ public class SettingsActivity extends BaseActivity {
             
             if (manageClubsButton != null) {
                 manageClubsButton.setOnClickListener(v -> openClubManagement());
+            }
+            
+            if (joinClubButton != null) {
+                joinClubButton.setOnClickListener(v -> joinClub());
             }
         } catch (Exception e) {
             Log.e(TAG, "Error setting up listeners", e);
@@ -351,6 +365,9 @@ public class SettingsActivity extends BaseActivity {
             // Show loading state if UI elements exist
             if (nameEditText != null) nameEditText.setEnabled(false);
             if (emailEditText != null) emailEditText.setEnabled(false);
+            if (phoneEditText != null) phoneEditText.setEnabled(false);
+            if (bloodTypeEditText != null) bloodTypeEditText.setEnabled(false);
+            if (bilkentIdEditText != null) bilkentIdEditText.setEnabled(false);
             
             // Load user data from API
             apiService.getUser(userId).enqueue(new Callback<User>() {
@@ -359,32 +376,57 @@ public class SettingsActivity extends BaseActivity {
                     // Restore UI state
                     if (nameEditText != null) nameEditText.setEnabled(true);
                     if (emailEditText != null) emailEditText.setEnabled(true);
+                    if (phoneEditText != null) phoneEditText.setEnabled(true);
+                    if (bloodTypeEditText != null) bloodTypeEditText.setEnabled(true);
+                    if (bilkentIdEditText != null) bilkentIdEditText.setEnabled(true);
                     
                     if (response.isSuccessful() && response.body() != null) {
                         User user = response.body();
                         
-                        // Use reflection to get name/email if direct methods aren't available
+                        // Set name using getFullName method
                         if (nameEditText != null) {
-                            try {
-                                java.lang.reflect.Method getNameMethod = User.class.getMethod("getName");
-                                String name = (String) getNameMethod.invoke(user);
-                                nameEditText.setText(name);
-                            } catch (Exception e) {
-                                Log.e(TAG, "Error getting name via reflection", e);
-                                trySettingUserField(user, nameEditText, "name");
+                            String fullName = user.getFullName();
+                            if (fullName != null && !fullName.trim().isEmpty()) {
+                                nameEditText.setText(fullName);
+                            } else {
+                                // Fallback to firstName + lastName if getFullName returns empty
+                                String firstName = user.getFirstName();
+                                String lastName = user.getLastName();
+                                if (firstName != null || lastName != null) {
+                                    StringBuilder nameBuilder = new StringBuilder();
+                                    if (firstName != null) nameBuilder.append(firstName);
+                                    if (lastName != null) {
+                                        if (nameBuilder.length() > 0) nameBuilder.append(" ");
+                                        nameBuilder.append(lastName);
+                                    }
+                                    nameEditText.setText(nameBuilder.toString());
+                                }
                             }
                         }
                         
-                        if (emailEditText != null) {
-                            try {
-                                java.lang.reflect.Method getEmailMethod = User.class.getMethod("getEmail");
-                                String email = (String) getEmailMethod.invoke(user);
-                                emailEditText.setText(email);
-                            } catch (Exception e) {
-                                Log.e(TAG, "Error getting email via reflection", e);
-                                trySettingUserField(user, emailEditText, "email");
-                            }
+                        // Set email directly using getter
+                        if (emailEditText != null && user.getEmail() != null) {
+                            emailEditText.setText(user.getEmail());
                         }
+                        
+                        // Set phone number
+                        if (phoneEditText != null && user.getPhoneNumber() != null) {
+                            phoneEditText.setText(user.getPhoneNumber());
+                        }
+                        
+                        // Set blood type
+                        if (bloodTypeEditText != null && user.getBloodType() != null) {
+                            bloodTypeEditText.setText(user.getBloodType());
+                        }
+                        
+                        // Set Bilkent ID
+                        if (bilkentIdEditText != null && user.getBilkentId() != null) {
+                            bilkentIdEditText.setText(user.getBilkentId());
+                        }
+                        
+                        // Update UI based on club memberships
+                        updateClubUI(user);
+                        
                     } else {
                         String errorMessage = "Failed to load user data: " + response.code();
                         Toast.makeText(SettingsActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
@@ -397,6 +439,9 @@ public class SettingsActivity extends BaseActivity {
                     // Restore UI state
                     if (nameEditText != null) nameEditText.setEnabled(true);
                     if (emailEditText != null) emailEditText.setEnabled(true);
+                    if (phoneEditText != null) phoneEditText.setEnabled(true);
+                    if (bloodTypeEditText != null) bloodTypeEditText.setEnabled(true);
+                    if (bilkentIdEditText != null) bilkentIdEditText.setEnabled(true);
                     
                     String errorMessage = "Network error: " + t.getMessage();
                     Toast.makeText(SettingsActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
@@ -409,41 +454,81 @@ public class SettingsActivity extends BaseActivity {
         }
     }
     
-    // Helper method to try setting a text field using a field name
-    private void trySettingUserField(User user, EditText editText, String fieldName) {
+    private void updateClubUI(User user) {
         try {
-            java.lang.reflect.Field field = User.class.getDeclaredField(fieldName);
-            field.setAccessible(true);
-            String value = (String) field.get(user);
-            editText.setText(value);
+            List<ClubMember> memberships = user.getClubMemberships();
+            
+            if (memberships != null && !memberships.isEmpty()) {
+                // User is already in some clubs
+                if (manageClubsButton != null) {
+                    manageClubsButton.setEnabled(true);
+                    manageClubsButton.setText("Manage My Clubs (" + memberships.size() + ")");
+                }
+            } else {
+                // User has no clubs
+                if (manageClubsButton != null) {
+                    manageClubsButton.setText("No Clubs Joined");
+                }
+            }
         } catch (Exception e) {
-            Log.e(TAG, "Error accessing field " + fieldName, e);
+            Log.e(TAG, "Error updating club UI", e);
+        }
+    }
+    
+    private void joinClub() {
+        try {
+            Intent intent = new Intent(SettingsActivity.this, ClubListActivity.class);
+            intent.putExtra("mode", "join");
+            startActivity(intent);
+        } catch (Exception e) {
+            // Try with class name if direct reference fails
+            try {
+                Intent intent = new Intent();
+                intent.setClassName(getPackageName(), "com.bilkom.ui.ClubListActivity");
+                intent.putExtra("mode", "join");
+                startActivity(intent);
+            } catch (Exception ex) {
+                Log.e(TAG, "Error opening club join page", ex);
+                Toast.makeText(this, "Club joining feature coming soon", Toast.LENGTH_SHORT).show();
+            }
         }
     }
     
     private void updateUserProfile() {
         try {
             // Get values from fields
-            String name = nameEditText.getText().toString().trim();
-            String email = emailEditText.getText().toString().trim();
+            String name = nameEditText != null ? nameEditText.getText().toString().trim() : "";
+            String email = emailEditText != null ? emailEditText.getText().toString().trim() : "";
+            String phone = phoneEditText != null ? phoneEditText.getText().toString().trim() : "";
+            String bloodType = bloodTypeEditText != null ? bloodTypeEditText.getText().toString().trim() : "";
+            String bilkentId = bilkentIdEditText != null ? bilkentIdEditText.getText().toString().trim() : "";
             
             // Clear previous errors
-            nameEditText.setError(null);
-            emailEditText.setError(null);
+            if (nameEditText != null) nameEditText.setError(null);
+            if (emailEditText != null) emailEditText.setError(null);
+            if (phoneEditText != null) phoneEditText.setError(null);
+            if (bloodTypeEditText != null) bloodTypeEditText.setError(null);
+            if (bilkentIdEditText != null) bilkentIdEditText.setError(null);
             
             // Validate inputs
             boolean isValid = true;
             
-            if (name.isEmpty()) {
+            if (name.isEmpty() && nameEditText != null) {
                 nameEditText.setError("Required");
                 isValid = false;
             }
             
-            if (email.isEmpty()) {
+            if (email.isEmpty() && emailEditText != null) {
                 emailEditText.setError("Required");
                 isValid = false;
-            } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            } else if (!email.isEmpty() && !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() && emailEditText != null) {
                 emailEditText.setError("Invalid email format");
+                isValid = false;
+            }
+            
+            // Additional validations if needed
+            if (!phone.isEmpty() && !isValidPhoneNumber(phone) && phoneEditText != null) {
+                phoneEditText.setError("Invalid phone format");
                 isValid = false;
             }
             
@@ -452,51 +537,33 @@ public class SettingsActivity extends BaseActivity {
             }
             
             // Update UI state
-            updateProfileButton.setEnabled(false);
-            updateProfileButton.setText("Updating...");
-            
-            // Create user object with updated data
-        User updatedUser = new User();
-            
-            // Use reflection to set name/email if direct methods aren't available
-            try {
-                java.lang.reflect.Method setNameMethod = User.class.getMethod("setName", String.class);
-                setNameMethod.invoke(updatedUser, name);
-            } catch (Exception e) {
-                Log.e(TAG, "Error setting name via reflection", e);
-                try {
-                    // Try to find a similar method
-                    for (java.lang.reflect.Method method : User.class.getMethods()) {
-                        if (method.getName().toLowerCase().contains("name") && 
-                            method.getParameterCount() == 1 && 
-                            method.getParameterTypes()[0] == String.class) {
-                            method.invoke(updatedUser, name);
-                            break;
-                        }
-                    }
-                } catch (Exception ex) {
-                    Log.e(TAG, "Failed to set name by any method", ex);
-                }
+            if (updateProfileButton != null) {
+                updateProfileButton.setEnabled(false);
+                updateProfileButton.setText("Updating...");
             }
             
+            // Create user object with updated data
+            User updatedUser = new User();
+            
+            // Set all fields directly
             try {
-                java.lang.reflect.Method setEmailMethod = User.class.getMethod("setEmail", String.class);
-                setEmailMethod.invoke(updatedUser, email);
-            } catch (Exception e) {
-                Log.e(TAG, "Error setting email via reflection", e);
-                try {
-                    // Try to find a similar method
-                    for (java.lang.reflect.Method method : User.class.getMethods()) {
-                        if (method.getName().toLowerCase().contains("email") && 
-                            method.getParameterCount() == 1 && 
-                            method.getParameterTypes()[0] == String.class) {
-                            method.invoke(updatedUser, email);
-                            break;
-                        }
+                // Parse the full name into first and last name
+                String[] nameParts = name.split(" ", 2);
+                if (nameParts.length > 0) {
+                    updatedUser.setFirstName(nameParts[0]);
+                    if (nameParts.length > 1) {
+                        updatedUser.setLastName(nameParts[1]);
                     }
-                } catch (Exception ex) {
-                    Log.e(TAG, "Failed to set email by any method", ex);
                 }
+                
+                // Set other fields
+                updatedUser.setEmail(email);
+                updatedUser.setPhoneNumber(phone);
+                updatedUser.setBloodType(bloodType);
+                updatedUser.setBilkentId(bilkentId);
+                
+            } catch (Exception e) {
+                Log.e(TAG, "Error setting user fields", e);
             }
             
             // Update API
@@ -504,12 +571,17 @@ public class SettingsActivity extends BaseActivity {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     // Restore UI state
-                    updateProfileButton.setEnabled(true);
-                    updateProfileButton.setText("Update Profile");
+                    if (updateProfileButton != null) {
+                        updateProfileButton.setEnabled(true);
+                        updateProfileButton.setText("Update Profile");
+                    }
                     
                     if (response.isSuccessful() && response.body() != null) {
                         Toast.makeText(SettingsActivity.this, 
                             "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                            
+                        // Reload user data to refresh the UI
+                        loadUserData();
                     } else {
                         String errorMessage = "Failed to update profile: " + response.code();
                         Toast.makeText(SettingsActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
@@ -520,8 +592,10 @@ public class SettingsActivity extends BaseActivity {
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
                     // Restore UI state
-                    updateProfileButton.setEnabled(true);
-                    updateProfileButton.setText("Update Profile");
+                    if (updateProfileButton != null) {
+                        updateProfileButton.setEnabled(true);
+                        updateProfileButton.setText("Update Profile");
+                    }
                     
                     String errorMessage = "Network error: " + t.getMessage();
                     Toast.makeText(SettingsActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
@@ -539,15 +613,97 @@ public class SettingsActivity extends BaseActivity {
         }
     }
     
+    // Validate phone number format
+    private boolean isValidPhoneNumber(String phoneNumber) {
+        // Basic phone validation - can be extended
+        return phoneNumber.matches("\\+?\\d{10,15}");
+    }
+    
     private void openClubManagement() {
         try {
-            // Check if ProfileActivity exists
-            Intent intent = new Intent(this, ProfileActivity.class);
-            intent.putExtra("mode", "manage_clubs");
-            startActivity(intent);
+            // First try with direct class reference
+            try {
+                Intent intent = new Intent(this, ClubManagementActivity.class);
+                startActivity(intent);
+                return;
+            } catch (Exception e) {
+                Log.d(TAG, "ClubManagementActivity not found, trying alternative");
+            }
+            
+            // Try with class name if direct reference fails
+            try {
+                Intent intent = new Intent();
+                intent.setClassName(getPackageName(), "com.bilkom.ui.ClubManagementActivity");
+                startActivity(intent);
+                return;
+            } catch (Exception e) {
+                Log.d(TAG, "ClubManagementActivity class not found, trying MyClubsActivity");
+            }
+            
+            // Try MyClubsActivity as a fallback
+            try {
+                Intent intent = new Intent();
+                intent.setClassName(getPackageName(), "com.bilkom.ui.MyClubsActivity");
+                startActivity(intent);
+                return;
+            } catch (Exception e) {
+                Log.e(TAG, "No club management activity found", e);
+            }
+            
+            // If all else fails, show a dialog with club info
+            showClubInfoDialog();
+            
         } catch (Exception e) {
             Log.e(TAG, "Error opening club management", e);
             Toast.makeText(this, "Club management not available", Toast.LENGTH_SHORT).show();
+        }
+    }
+    
+    private void showClubInfoDialog() {
+        try {
+            // Get user's club memberships
+            apiService.getUser(userId).enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        User user = response.body();
+                        List<ClubMember> memberships = user.getClubMemberships();
+                        
+                        if (memberships != null && !memberships.isEmpty()) {
+                            // Create dialog with club info
+                            AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+                            builder.setTitle("My Clubs");
+                            
+                            // Create a list of club names
+                            StringBuilder clubInfo = new StringBuilder();
+                            for (ClubMember membership : memberships) {
+                                try {
+                                    clubInfo.append("• ");
+                                    clubInfo.append(membership.getClubName());
+                                    clubInfo.append("\n");
+                                } catch (Exception e) {
+                                    Log.e(TAG, "Error getting club name", e);
+                                }
+                            }
+                            
+                            builder.setMessage(clubInfo.toString());
+                            builder.setPositiveButton("OK", null);
+                            builder.show();
+                        } else {
+                            Toast.makeText(SettingsActivity.this, 
+                                "You are not a member of any clubs yet", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+                
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    Toast.makeText(SettingsActivity.this, 
+                        "Could not retrieve club information", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Log.e(TAG, "Error showing club info dialog", e);
         }
     }
 

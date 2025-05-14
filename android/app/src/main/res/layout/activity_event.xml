@@ -12,32 +12,21 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <!-- Emergency logo at the top -->
-    <ImageView
-        android:id="@+id/imgEmergencyLogo"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="24dp"
-        android:contentDescription="@string/emergency_alert_logo"
-        android:src="@drawable/emergency_logo"
-        android:scaleType="centerInside"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Header text below the logo -->
+    <!-- Header text -->
     <TextView
         android:id="@+id/tvEmergencyHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/emergency_alerts"
+        android:text="@string/activities_and_events"
         android:textColor="@color/cream"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/imgEmergencyLogo"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
