@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
                 activitySelectionButton.setOnClickListener(v -> {
                     try {
                         Intent intent = new Intent(MainActivity.this, EventActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
+                        finish();
                     } catch (Exception e) {
                         Log.e(TAG, "Error navigating to activity selection", e);
                         Toast.makeText(this, "Cannot open activity selection", Toast.LENGTH_SHORT).show();
@@ -129,22 +131,24 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     } 
                     else if (itemId == R.id.menu_profile) {
-                        // Direct, basic navigation to profile - simplest possible approach
                         Intent intent = new Intent();
                         intent.setClassName(getPackageName(), "com.bilkom.ui.ProfileActivity");
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         try {
                             startActivity(intent);
+                            finish();
                         } catch (Exception e) {
                             Toast.makeText(MainActivity.this, "Cannot open profile: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                         return true;
                     } 
                     else if (itemId == R.id.menu_settings) {
-                        // Direct, basic navigation to settings - simplest possible approach
                         Intent intent = new Intent();
                         intent.setClassName(getPackageName(), "com.bilkom.ui.SettingsActivity");
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         try {
                             startActivity(intent);
+                            finish();
                         } catch (Exception e) {
                             Toast.makeText(MainActivity.this, "Cannot open settings: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -173,5 +177,23 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, "Error showing menu", e);
             Toast.makeText(this, "Error showing menu: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Clean up any resources
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Clean up any resources
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Clean up any resources
     }
 } 
