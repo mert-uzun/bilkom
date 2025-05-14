@@ -176,7 +176,6 @@ id nav_events
 id nav_header_username
 id nav_home
 id nav_logout
-id nav_profile
 id nav_view
 id newPasswordEdit
 id newsContainer
@@ -196,7 +195,6 @@ id profileEmail
 id profileFirstName
 id profileImageView
 id profileLastName
-id profileMenuItem
 id profilePhone
 id quotaTextView
 id reasonEditText

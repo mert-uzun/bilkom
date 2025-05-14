@@ -13,16 +13,16 @@ import java.util.List;
  */
 public class EventRequest {
 
-    @SerializedName("eventName")
+    @SerializedName("name")
     private String eventName;
 
-    @SerializedName("eventDescription")
+    @SerializedName("description")
     private String eventDescription;
 
     @SerializedName("maxParticipants")
     private int maxParticipants;
 
-    @SerializedName("eventLocation")
+    @SerializedName("location")
     private String eventLocation;
 
     @SerializedName("eventDate")
