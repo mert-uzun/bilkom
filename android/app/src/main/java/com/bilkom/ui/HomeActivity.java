@@ -260,13 +260,8 @@ public class HomeActivity extends BaseActivity {
         View.OnClickListener alertsListener = v -> {
             try {
                 // Try to navigate to the EventActivity (where emergency alerts are shown)
-                try {
-                    Class<?> eventsClass = Class.forName("com.bilkom.ui.EventActivity");
-                    startActivity(new Intent(this, eventsClass));
-                } catch (ClassNotFoundException e) {
-                    Log.e(TAG, "EventActivity class not found", e);
-                    Toast.makeText(this, "Events feature coming soon", Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent(this, "com.bilkom.ui.EmergencyAlertActivity");
+                startActivity(intent);
             } catch (Exception e) {
                 Log.e(TAG, "Error navigating to emergency alerts", e);
                 Toast.makeText(this, "Cannot open emergency alerts", Toast.LENGTH_SHORT).show();
@@ -291,13 +286,8 @@ public class HomeActivity extends BaseActivity {
             activitySelectionButton.setOnClickListener(v -> {
                 try {
                     // Navigate to EventActivity
-                    try {
-                        Class<?> eventsClass = Class.forName("com.bilkom.ui.EventActivity");
-                        startActivity(new Intent(this, eventsClass));
-                    } catch (ClassNotFoundException e) {
-                        Log.e(TAG, "EventActivity class not found", e);
-                        Toast.makeText(this, "Activity Selection coming soon", Toast.LENGTH_SHORT).show();
-                    }
+                    Intent intent = new Intent(this, "com.bilkom.ui.EventActivity");
+                    startActivity(intent);
                 } catch (Exception e) {
                     Log.e(TAG, "Error navigating to activity selection", e);
                     Toast.makeText(this, "Cannot open activity selection", Toast.LENGTH_SHORT).show();
@@ -311,13 +301,8 @@ public class HomeActivity extends BaseActivity {
             clubActivitiesButton.setOnClickListener(v -> {
                 try {
                     // Navigate to ClubActivitiesActivity
-                    try {
-                        Class<?> clubsClass = Class.forName("com.bilkom.ui.ClubActivitiesActivity");
-                        startActivity(new Intent(this, clubsClass));
-                    } catch (ClassNotFoundException e) {
-                        Log.e(TAG, "ClubActivitiesActivity class not found", e);
-                        Toast.makeText(this, "Club Activities coming soon", Toast.LENGTH_SHORT).show();
-                    }
+                    Intent intent = new Intent(this, "com.bilkom.ui.ClubActivitiesActivity");
+                    startActivity(intent);
                 } catch (Exception e) {
                     Log.e(TAG, "Error navigating to club activities", e);
                     Toast.makeText(this, "Cannot open club activities", Toast.LENGTH_SHORT).show();
