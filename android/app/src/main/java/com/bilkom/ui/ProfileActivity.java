@@ -70,12 +70,12 @@ public class ProfileActivity extends BaseActivity {
                         bloodTypeText.setText(user.getBloodType());
                         displayClubs(user.getClubMemberships());
                     } else {
-                        Toast.makeText(this, "Failed to load profile", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileActivity.this, "Failed to load profile", Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-                    Toast.makeText(this, "Network error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileActivity.this, "Network error", Toast.LENGTH_SHORT).show();
                 }
             });
     }

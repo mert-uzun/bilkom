@@ -238,7 +238,7 @@ public class ClubActivitiesActivity extends BaseActivity {
     }
 
     private void onClubActivityClick(Event event) {
-        Intent intent = new Intent(this, Class.forName("com.bilkom.ui.EventDetailsActivity"));
+        Intent intent = new Intent(this, EventDetailsActivity.class);
         intent.putExtra("event", event);
         startActivity(intent);
     }

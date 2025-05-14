@@ -7,7 +7,7 @@
     </style><style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style><style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/><style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light"/></file><file path="C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\res\values\themes.xml" qualifiers=""><style name="Theme.Bilkom" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    </style><style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/><style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light"/></file><file path="C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\res\values\themes.xml" qualifiers=""><style name="Theme.Bilkom" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <item name="colorPrimary">#2E7D32</item>
         <item name="colorPrimaryVariant">#1B5E20</item>

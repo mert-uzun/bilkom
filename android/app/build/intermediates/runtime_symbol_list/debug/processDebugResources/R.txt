@@ -3472,7 +3472,6 @@ int id ifRoom 0x7f08011e
 int id ignore 0x7f08011f
 int id ignoreRequest 0x7f080120
 int id image 0x7f080121
-int id imgEmergencyLogo 0x7f080122
 int id immediateStop 0x7f080123
 int id included 0x7f080124
 int id indeterminate 0x7f080125
@@ -3798,7 +3797,6 @@ int id triangle 0x7f08025e
 int id tvClubName 0x7f08025f
 int id tvDescription 0x7f080260
 int id tvEmail 0x7f080261
-int id tvEmergencyHeader 0x7f080262
 int id tvRequestedBy 0x7f080263
 int id tvRole 0x7f080264
 int id unchecked 0x7f080265

@@ -55,54 +55,65 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     protected SecureStorage secureStorage;
     protected ApiService apiService;
 
-    // Define navigation item IDs as constants
-    private static final int NAV_HOME = 0x7f0900a1;      
-    private static final int NAV_EVENTS = 0x7f0900a2;   
-    private static final int NAV_CLUBS = 0x7f0900a3;     
-    private static final int NAV_PROFILE = 0x7f0900a4;  
-    private static final int NAV_SETTINGS = 0x7f0900a5;  
-    private static final int NAV_LOGOUT = 0x7f0900a6;    
-    
-    // These can be accessed as R.id.nav_settings and R.id.nav_clubs
-    public static final int nav_settings = NAV_SETTINGS;
-    public static final int nav_clubs = NAV_CLUBS;
+    // Define navigation item IDs as constants - use only those that exist in the menu
+    private static final int NAV_HOME = R.id.nav_home;      
+    private static final int NAV_EVENTS = R.id.nav_events;   
+    private static final int NAV_PROFILE = R.id.nav_profile;  
+    private static final int NAV_LOGOUT = R.id.nav_logout;    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // First set the content view
         setContentView(getBaseLayoutId());
         
+        secureStorage = new SecureStorage(this);
+        apiService = RetrofitClient.getInstance().getApiService();
+        
         try {
+            // Find and set up the toolbar if it exists
             toolbar = findViewById(getToolbarId());
-            setSupportActionBar(toolbar);
-
+            
+            // Find the drawer layout and navigation view
             drawerLayout = findViewById(getDrawerLayoutId());
             navigationView = findViewById(getNavViewId());
             contentFrame = findViewById(getContentFrameId());
+            
+            // Set up the toolbar if it exists
+            if (toolbar != null) {
+                try {
+                    setSupportActionBar(toolbar);
+                } catch (IllegalStateException e) {
+                    Log.w(TAG, "Activity already has an action bar, not setting Toolbar: " + e.getMessage());
+                }
+            }
 
-            if (drawerLayout != null && navigationView != null && toolbar != null) {
-                ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                        this, drawerLayout, toolbar, 
-                        getNavigationDrawerOpenId(), getNavigationDrawerCloseId());
-                drawerLayout.addDrawerListener(toggle);
-                toggle.syncState();
-
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setHomeButtonEnabled(true);
+            // Set up the navigation drawer if both drawer layout and navigation view exist
+            if (drawerLayout != null && navigationView != null) {
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    getSupportActionBar().setHomeButtonEnabled(true);
+                }
+                
+                if (toolbar != null) {
+                    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                            this, drawerLayout, toolbar,
+                            getNavigationDrawerOpenId(), getNavigationDrawerCloseId());
+                    drawerLayout.addDrawerListener(toggle);
+                    toggle.syncState();
+                }
 
                 navigationView.setNavigationItemSelectedListener(this);
                 setupUserInfo();
-            } else {
-                Log.w(TAG, "Some navigation components are missing");
             }
+            
+            // Set up the corner menu button
+            setupCornerMenu();
+            
         } catch (Exception e) {
             Log.e(TAG, "Error setting up navigation", e);
         }
-
-        setupCornerMenu();
-
-        secureStorage = new SecureStorage(this);
-        apiService = RetrofitClient.getInstance().getApiService();
     }
     
     private void setupUserInfo() {
@@ -133,35 +144,35 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     }
 
     protected int getBaseLayoutId() {
-        return 0x7f0c001c; 
+        return R.layout.activity_base; 
     }
     
     protected int getToolbarId() {
-        return 0x7f09017c; 
+        return R.id.toolbar; 
     }
     
     protected int getDrawerLayoutId() {
-        return 0x7f090071; 
+        return R.id.drawer_layout; 
     }
     
     protected int getNavViewId() {
-        return 0x7f0900e4; 
+        return R.id.nav_view; 
     }
     
     protected int getContentFrameId() {
-        return 0x7f09005a;
+        return R.id.contentFrame;
     }
     
     protected int getNavHeaderUsernameId() {
-        return 0x7f0900e3;
+        return R.id.nav_header_username;
     }
     
     protected int getNavigationDrawerOpenId() {
-        return 0x7f1000a1;
+        return R.string.navigation_drawer_open;
     }
     
     protected int getNavigationDrawerCloseId() {
-        return 0x7f1000a0; 
+        return R.string.navigation_drawer_close; 
     }
 
     protected void setupNavigationDrawer() {
@@ -195,13 +206,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 Log.d(TAG, "Navigating to ProfileActivity");
                 intent.setClassName(getPackageName(), "com.bilkom.ui.ProfileActivity");
                 startActivity(intent);
-            } else if (id == nav_settings && !(this instanceof SettingsActivity)) {
-                Log.d(TAG, "Navigating to SettingsActivity");
-                intent.setClassName(getPackageName(), "com.bilkom.ui.SettingsActivity");
-                startActivity(intent);
-            } else if (id == nav_clubs) {
-                Log.d(TAG, "Navigating to ClubActivitiesActivity");
-                handleNavigationToClubs();
             } else if (id == R.id.nav_logout) {
                 Log.d(TAG, "Handling logout");
                 handleLogout();
@@ -214,7 +218,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         return true;
     }
     
-    private void handleNavigationToClubs() {
+    // Method to navigate to club activities
+    protected void navigateToClubActivities() {
         try {
             Intent intent = new Intent();
             intent.setClassName(getPackageName(), "com.bilkom.ui.ClubActivitiesActivity");
@@ -222,6 +227,21 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         } catch (Exception e) {
             Toast.makeText(this, "Clubs feature coming soon", Toast.LENGTH_SHORT).show();
         }
+    }
+    
+    // Method to navigate to settings
+    protected void navigateToSettings() {
+        try {
+            Intent intent = new Intent();
+            intent.setClassName(getPackageName(), "com.bilkom.ui.SettingsActivity");
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, "Settings feature coming soon", Toast.LENGTH_SHORT).show();
+        }
+    }
+    
+    private void handleNavigationToClubs() {
+        navigateToClubActivities();
     }
     
     private void handleLogout() {

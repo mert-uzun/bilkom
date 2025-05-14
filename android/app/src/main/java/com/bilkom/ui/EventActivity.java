@@ -39,7 +39,6 @@ public class EventActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event);
         setupNavigationDrawer();
 
         eventRecyclerView = findViewById(R.id.eventRecyclerView);
@@ -98,6 +97,11 @@ public class EventActivity extends BaseActivity {
         });
 
         fetchEvents();
+    }
+
+    @Override
+    protected int getBaseLayoutId() {
+        return R.layout.activity_event;
     }
 
     private void fetchEvents() {
