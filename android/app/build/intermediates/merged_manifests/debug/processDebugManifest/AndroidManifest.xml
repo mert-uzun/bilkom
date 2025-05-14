@@ -67,13 +67,25 @@ it is used to store the permissions, activities, application, etc.
         <activity android:name="com.bilkom.ui.ClubDetailsActivity" />
         <activity android:name="com.bilkom.ui.AddClubActivity" />
         <activity android:name="com.bilkom.ui.ClubActivitiesActivity" />
+        <activity android:name="com.bilkom.ui.JoinClubActivity" />
+        <activity android:name="com.bilkom.ui.MyClubsActivity" />
+        <activity android:name="com.bilkom.ui.ClubMembersActivity" />
+        <activity android:name="com.bilkom.ui.ManageClubActivity" />
 
         <!-- Event Activities -->
+        <activity android:name="com.bilkom.ui.EventActivity" />
         <activity android:name="com.bilkom.ui.EventListActivity" />
         <activity android:name="com.bilkom.ui.EventDetailsActivity" />
         <activity android:name="com.bilkom.ui.CreateEventActivity" />
         <activity android:name="com.bilkom.ui.MyActivitiesActivity" />
         <activity android:name="com.bilkom.ui.ReportActivity" />
+        <activity android:name="com.bilkom.ui.EventDetailsFragment" />
+
+        <!-- Settings Related Activities -->
+        <activity android:name="com.bilkom.ui.AccountSettingsActivity" />
+        <activity android:name="com.bilkom.ui.NotificationSettingsActivity" />
+        <activity android:name="com.bilkom.ui.PrivacySettingsActivity" />
+        <activity android:name="com.bilkom.ui.ChangePasswordActivity" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"

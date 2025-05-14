@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
+import android.content.ComponentName;
 
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -252,8 +253,8 @@ public class HomeActivity extends BaseActivity {
         // Add button to navigate to emergency alerts
         View.OnClickListener alertsListener = v -> {
             try {
-                // Navigate to ReportActivity for emergency alerts
-                Intent intent = new Intent(this, ReportActivity.class);
+                // Navigate to ReportActivity for emergency alerts using Class.forName()
+                Intent intent = new Intent(this, Class.forName("com.bilkom.ui.ReportActivity"));
                 startActivity(intent);
             } catch (Exception e) {
                 Log.e(TAG, "Error navigating to emergency alerts", e);
@@ -278,12 +279,29 @@ public class HomeActivity extends BaseActivity {
         if (activitySelectionButton != null) {
             activitySelectionButton.setOnClickListener(v -> {
                 try {
-                    // Navigate to EventActivity for activity selection
-                    Intent intent = new Intent(this, EventActivity.class);
+                    // First try using the package name approach
+                    String className = "com.bilkom.ui.EventActivity";
+                    Log.d(TAG, "Attempting to navigate to: " + className);
+                    Intent intent = new Intent();
+                    intent.setComponent(new ComponentName(getPackageName(), className));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 } catch (Exception e) {
-                    Log.e(TAG, "Error navigating to activity selection", e);
-                    Toast.makeText(this, "Cannot open activity selection", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Error navigating to activity selection: " + e.getMessage(), e);
+                    // Log the cause if available
+                    if (e.getCause() != null) {
+                        Log.e(TAG, "Caused by: " + e.getCause().getMessage(), e.getCause());
+                    }
+                    
+                    try {
+                        // Fallback to a basic explicit intent
+                        Log.d(TAG, "Trying fallback navigation method");
+                        Intent fallbackIntent = new Intent(HomeActivity.this, EventActivity.class);
+                        startActivity(fallbackIntent);
+                    } catch (Exception e2) {
+                        Log.e(TAG, "Fallback navigation also failed: " + e2.getMessage(), e2);
+                        Toast.makeText(HomeActivity.this, "Cannot open activity selection", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }
@@ -293,8 +311,8 @@ public class HomeActivity extends BaseActivity {
         if (clubActivitiesButton != null) {
             clubActivitiesButton.setOnClickListener(v -> {
                 try {
-                    // Navigate to ClubActivitiesActivity for club activities
-                    Intent intent = new Intent(this, ClubActivitiesActivity.class);
+                    // Navigate to ClubActivitiesActivity using Class.forName()
+                    Intent intent = new Intent(this, Class.forName("com.bilkom.ui.ClubActivitiesActivity"));
                     startActivity(intent);
                 } catch (Exception e) {
                     Log.e(TAG, "Error navigating to club activities", e);

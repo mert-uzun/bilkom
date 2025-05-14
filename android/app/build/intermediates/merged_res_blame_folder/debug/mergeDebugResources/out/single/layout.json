@@ -1,9 +1,5 @@
 [
     {
-        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_main.xml",
-        "source": "com.bilkom.app-main-42:/layout/activity_main.xml"
-    },
-    {
         "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_event.xml",
         "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_event.xml"
     },
@@ -58,10 +54,6 @@
     {
         "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\item_user_club.xml",
         "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_user_club.xml"
-    },
-    {
-        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_settings.xml",
-        "source": "com.bilkom.app-main-42:/layout/activity_settings.xml"
     },
     {
         "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_login.xml",
@@ -126,10 +118,6 @@
     {
         "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\item_news.xml",
         "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_news.xml"
-    },
-    {
-        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_profile.xml",
-        "source": "com.bilkom.app-main-42:/layout/activity_profile.xml"
     },
     {
         "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_home.xml",

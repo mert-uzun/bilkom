@@ -44,13 +44,25 @@ it is used to store the permissions, activities, application, etc.-->
         <activity android:name=".ui.ClubDetailsActivity" />
         <activity android:name=".ui.AddClubActivity" />
         <activity android:name=".ui.ClubActivitiesActivity" />
+        <activity android:name=".ui.JoinClubActivity" />
+        <activity android:name=".ui.MyClubsActivity" />
+        <activity android:name=".ui.ClubMembersActivity" />
+        <activity android:name=".ui.ManageClubActivity" />
 
         <!-- Event Activities -->
+        <activity android:name=".ui.EventActivity" />
         <activity android:name=".ui.EventListActivity" />
         <activity android:name=".ui.EventDetailsActivity" />
         <activity android:name=".ui.CreateEventActivity" />
         <activity android:name=".ui.MyActivitiesActivity" />
         <activity android:name=".ui.ReportActivity" />
+        <activity android:name=".ui.EventDetailsFragment" />
+
+        <!-- Settings Related Activities -->
+        <activity android:name=".ui.AccountSettingsActivity" />
+        <activity android:name=".ui.NotificationSettingsActivity" />
+        <activity android:name=".ui.PrivacySettingsActivity" />
+        <activity android:name=".ui.ChangePasswordActivity" />
         
     </application>
 </manifest> 

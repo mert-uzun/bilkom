@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:5:1-56:12
-INJECTED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:5:1-56:12
-INJECTED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:5:1-56:12
-INJECTED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:5:1-56:12
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:5:1-68:12
+INJECTED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:5:1-68:12
+INJECTED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:5:1-68:12
+INJECTED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:5:1-68:12
 MERGED from [androidx.databinding:viewbinding:8.9.2] C:\Users\Mert\.gradle\caches\8.11.1\transforms\76cf30edc3134fc32bfb5eb16f4ac010\transformed\jetified-viewbinding-8.9.2\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\Mert\.gradle\caches\8.11.1\transforms\d8bec85b96b802b8c0d3a8e5ac690938\transformed\material-1.11.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\Mert\.gradle\caches\8.11.1\transforms\39b6c8218581e55544da7f7c89bf6790\transformed\constraintlayout-2.1.4\AndroidManifest.xml:2:1-11:12
@@ -89,8 +89,8 @@ MERGED from [com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Us
 	android:name
 		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:9:22-64
 application
-ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:11:5-55:19
-INJECTED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:11:5-55:19
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:11:5-67:19
+INJECTED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:11:5-67:19
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\Mert\.gradle\caches\8.11.1\transforms\d8bec85b96b802b8c0d3a8e5ac690938\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\Mert\.gradle\caches\8.11.1\transforms\d8bec85b96b802b8c0d3a8e5ac690938\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\Mert\.gradle\caches\8.11.1\transforms\39b6c8218581e55544da7f7c89bf6790\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -213,26 +213,66 @@ activity#com.bilkom.ui.ClubActivitiesActivity
 ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:46:9-63
 	android:name
 		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:46:19-60
+activity#com.bilkom.ui.JoinClubActivity
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:47:9-57
+	android:name
+		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:47:19-54
+activity#com.bilkom.ui.MyClubsActivity
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:48:9-56
+	android:name
+		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:48:19-53
+activity#com.bilkom.ui.ClubMembersActivity
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:49:9-60
+	android:name
+		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:49:19-57
+activity#com.bilkom.ui.ManageClubActivity
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:50:9-59
+	android:name
+		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:50:19-56
+activity#com.bilkom.ui.EventActivity
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:53:9-54
+	android:name
+		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:53:19-51
 activity#com.bilkom.ui.EventListActivity
-ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:49:9-58
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:54:9-58
 	android:name
-		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:49:19-55
+		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:54:19-55
 activity#com.bilkom.ui.EventDetailsActivity
-ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:50:9-61
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:55:9-61
 	android:name
-		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:50:19-58
+		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:55:19-58
 activity#com.bilkom.ui.CreateEventActivity
-ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:51:9-60
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:56:9-60
 	android:name
-		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:51:19-57
+		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:56:19-57
 activity#com.bilkom.ui.MyActivitiesActivity
-ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:52:9-61
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:57:9-61
 	android:name
-		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:52:19-58
+		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:57:19-58
 activity#com.bilkom.ui.ReportActivity
-ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:53:9-55
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:58:9-55
 	android:name
-		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:53:19-52
+		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:58:19-52
+activity#com.bilkom.ui.EventDetailsFragment
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:59:9-61
+	android:name
+		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:59:19-58
+activity#com.bilkom.ui.AccountSettingsActivity
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:62:9-64
+	android:name
+		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:62:19-61
+activity#com.bilkom.ui.NotificationSettingsActivity
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:63:9-69
+	android:name
+		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:63:19-66
+activity#com.bilkom.ui.PrivacySettingsActivity
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:64:9-64
+	android:name
+		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:64:19-61
+activity#com.bilkom.ui.ChangePasswordActivity
+ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:65:9-63
+	android:name
+		ADDED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml:65:19-60
 uses-sdk
 INJECTED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\Mert\Desktop\2025S\CS102\bilkom\android\app\src\main\AndroidManifest.xml

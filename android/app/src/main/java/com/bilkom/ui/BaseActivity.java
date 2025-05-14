@@ -183,16 +183,16 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         try {
             if (id == R.id.nav_home && !(this instanceof HomeActivity)) {
                 Log.d(TAG, "Navigating to HomeActivity");
-                startActivity(new Intent(this, HomeActivity.class));
+                startActivity(new Intent(this, Class.forName("com.bilkom.ui.HomeActivity")));
             } else if (id == R.id.nav_events) {
                 Log.d(TAG, "Navigating to EventActivity");
-                startActivity(new Intent(this, EventActivity.class));
+                startActivity(new Intent(this, Class.forName("com.bilkom.ui.EventActivity")));
             } else if (id == R.id.nav_profile && !(this instanceof ProfileActivity)) {
                 Log.d(TAG, "Navigating to ProfileActivity");
-                startActivity(new Intent(this, ProfileActivity.class));
+                startActivity(new Intent(this, Class.forName("com.bilkom.ui.ProfileActivity")));
             } else if (id == nav_settings && !(this instanceof SettingsActivity)) {
                 Log.d(TAG, "Navigating to SettingsActivity");
-                startActivity(new Intent(this, SettingsActivity.class));
+                startActivity(new Intent(this, Class.forName("com.bilkom.ui.SettingsActivity")));
             } else if (id == nav_clubs) {
                 Log.d(TAG, "Navigating to ClubActivitiesActivity");
                 handleNavigationToClubs();
@@ -210,7 +210,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     
     private void handleNavigationToClubs() {
         try {
-            startActivity(new Intent(this, ClubActivitiesActivity.class));
+            startActivity(new Intent(this, Class.forName("com.bilkom.ui.ClubActivitiesActivity")));
         } catch (Exception e) {
             Toast.makeText(this, "Clubs feature coming soon", Toast.LENGTH_SHORT).show();
         }
