@@ -56,19 +56,19 @@ public final class RetrofitClient {
                             Log.d(TAG, "Network: " + message);
                         }).setLevel(HttpLoggingInterceptor.Level.BODY);
 
-                        OkHttpClient okHttp = new OkHttpClient.Builder()
-                                .addInterceptor(new AuthInterceptor())
-                                .addInterceptor(log)
+                    OkHttpClient okHttp = new OkHttpClient.Builder()
+                            .addInterceptor(new AuthInterceptor())
+                            .addInterceptor(log)
                                 .connectTimeout(30, TimeUnit.SECONDS)
                                 .readTimeout(30, TimeUnit.SECONDS)
                                 .writeTimeout(30, TimeUnit.SECONDS)
-                                .build();
+                            .build();
 
-                        retrofit = new Retrofit.Builder()
-                                .baseUrl(BASE_URL)
-                                .client(okHttp)
-                                .addConverterFactory(GsonConverterFactory.create(gson))
-                                .build();
+                    retrofit = new Retrofit.Builder()
+                            .baseUrl(BASE_URL)
+                            .client(okHttp)
+                            .addConverterFactory(GsonConverterFactory.create(gson))
+                            .build();
                         
                         Log.d(TAG, "Retrofit instance created successfully");
                     } catch (Exception e) {
@@ -86,7 +86,7 @@ public final class RetrofitClient {
                 if (apiService == null) {
                     try {
                         Log.d(TAG, "Creating new ApiService");
-                        apiService = getRetrofit().create(ApiService.class);
+                    apiService = getRetrofit().create(ApiService.class);
                         Log.d(TAG, "ApiService created successfully");
                     } catch (Exception e) {
                         Log.e(TAG, "Error creating ApiService", e);
