@@ -139,6 +139,7 @@ it extends the ScrollView class to show the registration activity content-->
             android:layout_marginBottom="16dp"
             app:boxStrokeColor="#191970"
             app:hintTextColor="#191970"
+            
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
