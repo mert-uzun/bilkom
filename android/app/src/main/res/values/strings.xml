@@ -40,4 +40,7 @@
     <string name="network_error">Network error</string>
     <string name="loading">Loading…</string>
     <string name="error_occurred">An error occurred</string>
+    
+    <!-- Events -->
+    <string name="activities_and_events">Activities and Events</string>
 </resources> 

@@ -48,6 +48,9 @@ public class Club {
     @SerializedName("clubEvents")
     private List<Event> clubEvents;
 
+    @SerializedName("clubMemberships")
+    private List<ClubMembership> clubMemberships;
+
     public Club() {
     }
 
@@ -147,5 +150,13 @@ public class Club {
 
     public void setClubEvents(List<Event> clubEvents) {
         this.clubEvents = clubEvents;
+    }
+
+    public List<ClubMembership> getClubMemberships() {
+        return clubMemberships;
+    }
+
+    public void setClubMemberships(List<ClubMembership> clubMemberships) {
+        this.clubMemberships = clubMemberships;
     }
 } 
