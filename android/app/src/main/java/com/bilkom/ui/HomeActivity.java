@@ -93,6 +93,26 @@ public class HomeActivity extends BaseActivity {
         
         // Setup clickable areas if needed
         setupClickListeners();
+        
+        // Handle navigation requests from MainActivity
+        handleNavigationRequests();
+    }
+    
+    private void handleNavigationRequests() {
+        try {
+            Intent intent = getIntent();
+            if (intent != null) {
+                if (intent.getBooleanExtra("openProfileAfterLoad", false)) {
+                    Toast.makeText(this, "Profile feature temporarily unavailable", Toast.LENGTH_LONG).show();
+                }
+                
+                if (intent.getBooleanExtra("openSettingsAfterLoad", false)) {
+                    Toast.makeText(this, "Settings feature temporarily unavailable", Toast.LENGTH_LONG).show();
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error handling navigation requests", e);
+        }
     }
 
     @Override
