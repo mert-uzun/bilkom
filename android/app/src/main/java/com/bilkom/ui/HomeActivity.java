@@ -126,7 +126,7 @@ public class HomeActivity extends BaseActivity {
         Runnable timeoutRunnable = () -> {
             weatherTemp.setText("Weather data unavailable");
             weatherDesc.setText("Check your connection");
-            weatherIcon.setImageResource(android.R.drawable.ic_menu_compass);
+            weatherIcon.setImageResource(R.drawable.ic_menu);
         };
         timeoutHandler.postDelayed(timeoutRunnable, 10000); // 10 second timeout
         
@@ -142,7 +142,7 @@ public class HomeActivity extends BaseActivity {
                 } else {
                     weatherTemp.setText("Weather data unavailable");
                     weatherDesc.setText("Error: " + response.code());
-                    weatherIcon.setImageResource(android.R.drawable.ic_menu);
+                    weatherIcon.setImageResource(R.drawable.ic_menu);
                 }
             }
             
@@ -154,7 +154,7 @@ public class HomeActivity extends BaseActivity {
                 Log.e(TAG, "Failed to load weather data", t);
                 weatherTemp.setText("Weather data unavailable");
                 weatherDesc.setText("Network error");
-                weatherIcon.setImageResource(android.R.drawable.ic_menu);
+                weatherIcon.setImageResource(R.drawable.ic_menu);
             }
         });
     }
@@ -163,7 +163,7 @@ public class HomeActivity extends BaseActivity {
         if (wf == null) {
             weatherTemp.setText("Weather data unavailable");
             weatherDesc.setText("");
-            weatherIcon.setImageResource(android.R.drawable.ic_menu);
+            weatherIcon.setImageResource(R.drawable.ic_menu);
             return;
         }
         
@@ -173,7 +173,7 @@ public class HomeActivity extends BaseActivity {
             if (icon != null) {
                 weatherIcon.setImageResource(WeatherIconUtils.getWeatherIconResourceId(this, icon));
             } else {
-                weatherIcon.setImageResource(android.R.drawable.ic_menu);
+                weatherIcon.setImageResource(R.drawable.ic_menu);
             }
             
             // Temperature formatting with default if needed
@@ -187,7 +187,7 @@ public class HomeActivity extends BaseActivity {
             Log.e(TAG, "Error updating weather UI", e);
             weatherTemp.setText("Weather data unavailable");
             weatherDesc.setText("Error parsing data");
-            weatherIcon.setImageResource(android.R.drawable.ic_menu);
+            weatherIcon.setImageResource(R.drawable.ic_menu);
         }
     }
 
