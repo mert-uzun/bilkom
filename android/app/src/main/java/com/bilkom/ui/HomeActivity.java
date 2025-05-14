@@ -62,38 +62,30 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // Try-catch to handle potential inflation issues
-        try {
-            View contentFrame = findViewById(R.id.contentFrame);
-            if (contentFrame instanceof FrameLayout) {
-                getLayoutInflater().inflate(R.layout.activity_home, (FrameLayout)contentFrame);
-            } else {
-                Log.w(TAG, "contentFrame not found or not a FrameLayout");
-                setContentView(R.layout.activity_home);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error inflating layout", e);
-            setContentView(R.layout.activity_home);
-        }
+        // Use a simpler, more direct inflation method
+        setContentView(R.layout.activity_home);
         
         setupNavigationDrawer();
         
-        // Initialize views
-        weatherTemp = findViewById(R.id.weatherTemp);
-        weatherDesc = findViewById(R.id.weatherDesc);
-        weatherIcon = findViewById(R.id.weatherIcon);
-        newsContainer = findViewById(R.id.newsContainer);
-        
-        if (weatherTemp == null || weatherDesc == null || weatherIcon == null || newsContainer == null) {
-            Log.e(TAG, "Failed to initialize views");
-            return;
+        // Initialize views with better error handling
+        try {
+            weatherTemp = findViewById(R.id.weatherTemp);
+            weatherDesc = findViewById(R.id.weatherDesc);
+            weatherIcon = findViewById(R.id.weatherIcon);
+            newsContainer = findViewById(R.id.newsContainer);
+            
+            if (weatherTemp == null || weatherDesc == null || weatherIcon == null || newsContainer == null) {
+                Log.e(TAG, "Failed to initialize weather or news views");
+            } else {
+                // Load weather and news data
+                loadWeatherData();
+                loadNewsData();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error initializing views", e);
         }
         
-        // Load data
-        loadWeatherData();
-        loadNewsData();
-        
-        // Setup clickable areas if needed
+        // Setup clickable areas if needed - move this after view initialization
         setupClickListeners();
         
         // Handle navigation requests from MainActivity
@@ -276,45 +268,56 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void setupClickListeners() {
-        // Set up Emergency Alerts button
-        Button emergencyAlertsButton = findViewById(R.id.emergencyAlertsButton);
-        if (emergencyAlertsButton != null) {
-            Log.d(TAG, "Found emergencyAlertsButton, setting click listener");
-            
-            emergencyAlertsButton.setOnClickListener(v -> {
-                Log.d(TAG, "Emergency Alerts button clicked, navigating to EmergencyAlertsActivity");
+        try {
+            // Set up Emergency Alerts button
+            Button emergencyAlertsButton = findViewById(R.id.emergencyAlertsButton);
+            if (emergencyAlertsButton != null) {
+                Log.d(TAG, "Found emergencyAlertsButton, setting click listener");
                 
-                try {
-                    Intent intent = new Intent();
-                    intent.setClassName(getPackageName(), "com.bilkom.ui.EmergencyAlertsActivity");
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Log.e(TAG, "Error navigating to EmergencyAlertsActivity: " + e.getMessage(), e);
-                    Toast.makeText(this, "Cannot open emergency alerts page: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            Log.e(TAG, "Could not find emergencyAlertsButton");
-        }
-        
-        // Add Activity Selection button
-        Button activitySelectionButton = findViewById(R.id.activitySelectionButton);
-        if (activitySelectionButton != null) {
-            activitySelectionButton.setOnClickListener(v -> {
-                Intent intent = new Intent();
-                intent.setClassName(getPackageName(), "com.bilkom.ui.EventActivity");
-                startActivity(intent);
-            });
-        }
-        
-        // Add Club Activities button
-        Button clubActivitiesButton = findViewById(R.id.clubActivitiesButton);
-        if (clubActivitiesButton != null) {
-            clubActivitiesButton.setOnClickListener(v -> {
-                Intent intent = new Intent();
-                intent.setClassName(getPackageName(), "com.bilkom.ui.ClubActivitiesActivity");
-                startActivity(intent);
-            });
+                emergencyAlertsButton.setOnClickListener(v -> {
+                    Log.d(TAG, "Emergency Alerts button clicked, navigating to EmergencyAlertsActivity");
+                    
+                    try {
+                        Intent intent = new Intent(HomeActivity.this, EmergencyAlertsActivity.class);
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error navigating to EmergencyAlertsActivity: " + e.getMessage(), e);
+                        Toast.makeText(this, "Cannot open emergency alerts page: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Log.e(TAG, "Could not find emergencyAlertsButton - make sure it exists in activity_home.xml");
+            }
+            
+            // Add Activity Selection button
+            Button activitySelectionButton = findViewById(R.id.activitySelectionButton);
+            if (activitySelectionButton != null) {
+                activitySelectionButton.setOnClickListener(v -> {
+                    try {
+                        Intent intent = new Intent(HomeActivity.this, EventActivity.class);
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error navigating to EventActivity: " + e.getMessage());
+                        Toast.makeText(this, "Cannot open activity selection", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            
+            // Add Club Activities button
+            Button clubActivitiesButton = findViewById(R.id.clubActivitiesButton);
+            if (clubActivitiesButton != null) {
+                clubActivitiesButton.setOnClickListener(v -> {
+                    try {
+                        Intent intent = new Intent(HomeActivity.this, ClubActivitiesActivity.class);
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error navigating to ClubActivitiesActivity: " + e.getMessage());
+                        Toast.makeText(this, "Cannot open club activities", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error setting up click listeners", e);
         }
         
         // Make navigation drawer menu items work by properly setting up the drawer
