@@ -159,6 +159,16 @@ public class ClubController {
         return ResponseEntity.ok(clubService.updateClub(id, clubName, clubDescription));
     }
 
+    /**
+     * Deletes a club (admin only).
+     * 
+     * @param id The club ID
+     * @return Success message
+     * 
+     * @author Elif Bozkurt
+     * @version 1.0
+     * -- ADDED AFTER COMPARING WITH ANDROID --
+     */
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('CLUB_HEAD') or hasRole('ADMIN')")
     public ResponseEntity<String> deleteClub(@PathVariable("id") Long id) {

@@ -105,18 +105,44 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
+    /**
+     * Gets a specific event by its ID.
+     * @param eventId The ID of the event
+     * @return ResponseEntity containing the event details.
+     * 
+     * @author Elif Bozkurt
+     * -- ADDED AFTER COMPARING WITH ANDROID --
+     */
     @GetMapping("/{eventId}") 
     public ResponseEntity<Event> getEvent(@PathVariable Long eventId) {
         Event event = eventService.getEvent(eventId);
         return ResponseEntity.ok(event);
     }
 
+    /**
+     * Updates an event.
+     * The event details are provided in the request body.
+     * @param eventId The ID of the event
+     * @param dto The updated event details
+     * @return ResponseEntity containing the updated event.
+     * 
+     * @author Elif Bozkurt
+     * -- ADDED AFTER COMPARING WITH ANDROID --
+     */
     @PutMapping("/{eventId}")
     public ResponseEntity<Event> updateEvent(@PathVariable Long eventId, @RequestBody EventDto dto) {
         Event updated = eventService.updateEvent(eventId, dto);
         return ResponseEntity.ok(updated);
     }
 
+    /**
+     * Deletes an event.
+     * @param eventId The ID of the event
+     * @return ResponseEntity indicating success or failure.
+     * 
+     * @author Elif Bozkurt
+     * -- ADDED AFTER COMPARING WITH ANDROID --
+     */
     @DeleteMapping("/{eventId}")
     public ResponseEntity<Void> deleteEvent(@PathVariable Long eventId) {
         eventService.deleteEvent(eventId);
