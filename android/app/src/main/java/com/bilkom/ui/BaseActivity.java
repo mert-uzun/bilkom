@@ -1,4 +1,4 @@
-// this is the base activity class for the home, profile and settings activities
+// this is the base activity class for the home and settings activities
 // it is used to store the base activity content
 // it extends the AppCompatActivity class to show the menu 
 package com.bilkom.ui;
@@ -58,8 +58,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     // Define navigation item IDs as constants
     private static final int NAV_HOME = 0x7f0900a1;      
     private static final int NAV_EVENTS = 0x7f0900a2;   
-    private static final int NAV_CLUBS = 0x7f0900a3;     
-    private static final int NAV_PROFILE = 0x7f0900a4;  
+    private static final int NAV_CLUBS = 0x7f0900a3;    
     private static final int NAV_SETTINGS = 0x7f0900a5;  
     private static final int NAV_LOGOUT = 0x7f0900a6;    
     
@@ -191,11 +190,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 Log.d(TAG, "Navigating to EventActivity");
                 intent.setClassName(getPackageName(), "com.bilkom.ui.EventActivity");
                 startActivity(intent);
-            } else if (id == R.id.nav_profile && !(this instanceof ProfileActivity)) {
-                Log.d(TAG, "Navigating to ProfileActivity");
-                intent.setClassName(getPackageName(), "com.bilkom.ui.ProfileActivity");
-                startActivity(intent);
-            } else if (id == nav_settings && !(this instanceof SettingsActivity)) {
+            }  else if (id == nav_settings && !(this instanceof SettingsActivity)) {
                 Log.d(TAG, "Navigating to SettingsActivity");
                 intent.setClassName(getPackageName(), "com.bilkom.ui.SettingsActivity");
                 startActivity(intent);
@@ -333,16 +328,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 }
             });
             
-            View profileItem = popupView.findViewById(R.id.menu_profile);
-            profileItem.setOnClickListener(v -> {
-                popupWindow.dismiss();
-                if (!(this instanceof ProfileActivity)) {
-                    Intent intent = new Intent();
-                    intent.setClassName(getPackageName(), "com.bilkom.ui.ProfileActivity");
-                    startActivity(intent);
-                }
-            });
-            
+
             View settingsItem = popupView.findViewById(R.id.menu_settings);
             settingsItem.setOnClickListener(v -> {
                 popupWindow.dismiss();

@@ -1,6 +1,7 @@
 // we use this class to store the emergency alert data from the server using id, title, message and severity
 package com.bilkom.model;
 
+import java.io.Serializable;
 import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import com.bilkom.utils.DateUtils;
@@ -17,29 +18,27 @@ import com.bilkom.utils.DateUtils;
  * @version 1.0
  * @since   2025-05-11
  */
-public class EmergencyAlert {
+public class EmergencyAlert implements Serializable {
 
     @SerializedName("id")        private Long   id;
     @SerializedName("title")     private String title;
     @SerializedName("description") private String description;
     @SerializedName("location")  private String location;
-    @SerializedName("severity")  private String severity;
-    @SerializedName("createdAt") private String createdAt;  
+    @SerializedName("date")      private String date;
     @SerializedName("active")    private boolean active;
+    @SerializedName("createdBy") private Long createdBy;
 
     public EmergencyAlert() { }
 
-    public EmergencyAlert(Long id, String title, String description, String location,
-                          String severity, String createdAt, boolean active) {
+    public EmergencyAlert(Long id, String title, String description, String location, String date, boolean active, Long createdBy) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.location = location;
-        this.severity = severity;
-        this.createdAt = createdAt;
+        this.date = date;
         this.active = active;
+        this.createdBy = createdBy;
     }
-
 
     public Long   getId()          { return id; }
     public void   setId(Long id)   { this.id = id; }
@@ -53,22 +52,20 @@ public class EmergencyAlert {
     public String getLocation()    { return location; }
     public void   setLocation(String location) { this.location = location; }
 
-    public String getSeverity()    { return severity; }
-    public void   setSeverity(String severity) { this.severity = severity; }
-
-    public String getCreatedAt()   { return createdAt; }
-    public void   setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+    public String getDate()        { return date; }
+    public void   setDate(String date) { this.date = date; }
 
     public boolean isActive()      { return active; }
     public void    setActive(boolean active) { this.active = active; }
 
+    public Long getCreatedBy()     { return createdBy; }
+    public void   setCreatedBy(Long createdBy) { this.createdBy = createdBy; }
 
     /** Raw ISO string → {@link java.util.Date} (may return {@code null} on parse error). */
     public Date getCreatedDate() {
-        return DateUtils.parseApiDate(createdAt);
+        return DateUtils.parseApiDate(date);
     }
 
-    /** Returns date-time in a user-friendly format, e.g. “11 May 2025 13:07”. */
     public String getFormattedCreated() {
         return DateUtils.formatUserFriendlyDateTime(getCreatedDate());
     }

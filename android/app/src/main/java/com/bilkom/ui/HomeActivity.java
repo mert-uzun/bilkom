@@ -61,19 +61,8 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // Try-catch to handle potential inflation issues
-        try {
-            View contentFrame = findViewById(R.id.contentFrame);
-            if (contentFrame instanceof FrameLayout) {
-                getLayoutInflater().inflate(R.layout.activity_home, (FrameLayout)contentFrame);
-            } else {
-                Log.w(TAG, "contentFrame not found or not a FrameLayout");
-                setContentView(R.layout.activity_home);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error inflating layout", e);
-            setContentView(R.layout.activity_home);
-        }
+        // Simplify layout inflation to avoid issues
+        setContentView(R.layout.activity_home);
         
         setupNavigationDrawer();
         
@@ -199,6 +188,7 @@ public class HomeActivity extends BaseActivity {
             return;
         }
         
+        // For each news item, inflate a view and add it to the container
         LayoutInflater inflater = getLayoutInflater();
         for (News news : newsList) {
             // Skip null news items
@@ -220,18 +210,12 @@ public class HomeActivity extends BaseActivity {
                 dateView.setVisibility(View.GONE);
             }
             
-            // Set click listener with null check for link
+            // Set click listener for link
             final String link = news.getLink();
             if (link != null && !link.isEmpty()) {
                 newsItem.setOnClickListener(v -> {
-                    try {
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse(link));
-                        startActivity(intent);
-                    } catch (Exception e) {
-                        Log.e(TAG, "Error opening link: " + link, e);
-                        Toast.makeText(HomeActivity.this, "Cannot open link", Toast.LENGTH_SHORT).show();
-                    }
+                    // Open the link when clicked
+                    // ...
                 });
             }
             
@@ -248,23 +232,25 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void setupClickListeners() {
-        // Add button to navigate to emergency alerts
-        View.OnClickListener alertsListener = v -> {
-            Intent intent = new Intent();
-            intent.setClassName(getPackageName(), "com.bilkom.ui.ReportActivity");
-            startActivity(intent);
-        };
-        
-        // Find a view to attach the emergency alerts click listener
-        LinearLayout newsContainer = findViewById(R.id.newsContainer);
-        if (newsContainer != null && newsContainer.getChildCount() > 0) {
-            // Add a "View Emergency Alerts" button at the top of news
-            Button alertsButton = new Button(this);
-            alertsButton.setText("View Emergency Alerts");
-            alertsButton.setOnClickListener(alertsListener);
+        // Set up Emergency Alerts button
+        Button emergencyAlertsButton = findViewById(R.id.emergencyAlertsButton);
+        if (emergencyAlertsButton != null) {
+            Log.d(TAG, "Found emergencyAlertsButton, setting click listener");
             
-            // Add the button at the top of the news container
-            newsContainer.addView(alertsButton, 0);
+            emergencyAlertsButton.setOnClickListener(v -> {
+                Log.d(TAG, "Emergency Alerts button clicked, navigating to EmergencyAlertsActivity");
+                
+                try {
+                    Intent intent = new Intent();
+                    intent.setClassName(getPackageName(), "com.bilkom.ui.EmergencyAlertsActivity");
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Log.e(TAG, "Error navigating to EmergencyAlertsActivity: " + e.getMessage(), e);
+                    Toast.makeText(this, "Cannot open emergency alerts page: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Log.e(TAG, "Could not find emergencyAlertsButton");
         }
         
         // Add Activity Selection button

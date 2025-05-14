@@ -73,8 +73,14 @@ drawable weather_wind
 id activitySelectionButton
 id addActivityButton
 id addClubActivityButton
+id addEmergencyAlertButton
+id alertDateText
+id alertDescriptionText
+id alertLocationText
 id alertMessage
+id alertStatusText
 id alertTitle
+id alertTitleText
 id avatarImageView
 id bilkentIdInput
 id bilkentIdLayout
@@ -110,6 +116,8 @@ id emailEditText
 id emailInput
 id emailLayout
 id emergencyAlertsButton
+id emergencyAlertsRecyclerView
+id emergencyAlertsTitle
 id eventDateEdit
 id eventDateTextView
 id eventDescriptionEdit
@@ -157,7 +165,6 @@ id maxParticipantsEditText
 id menuButton
 id menu_home
 id menu_logout
-id menu_profile
 id menu_settings
 id messageTextView
 id myActivitiesButton
@@ -168,12 +175,12 @@ id nav_events
 id nav_header_username
 id nav_home
 id nav_logout
-id nav_profile
 id nav_view
 id newPasswordEdit
 id newsContainer
 id newsDate
 id newsTitle
+id noAlertsText
 id participantsTextView
 id passwordEditText
 id passwordInput
@@ -187,7 +194,6 @@ id profileEmail
 id profileFirstName
 id profileImageView
 id profileLastName
-id profileMenuItem
 id profilePhone
 id quotaTextView
 id reasonEditText
@@ -234,6 +240,7 @@ layout activity_admin_user_list
 layout activity_base
 layout activity_club_activities
 layout activity_create_event
+layout activity_emergency_alerts
 layout activity_event
 layout activity_home
 layout activity_login
@@ -248,6 +255,7 @@ layout dialog_forgot_password
 layout fragment_event_details
 layout item_club_activity
 layout item_dialog_club
+layout item_emergency_alert
 layout item_event
 layout item_news
 layout item_pending_club

@@ -33,31 +33,7 @@
             android:layout_marginStart="16dp"/>
     </LinearLayout>
 
-    <!-- Profile Item -->
-    <LinearLayout
-        android:id="@+id/menu_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="12dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?attr/selectableItemBackground">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_profile"
-            android:tint="#FFFFFF"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Profile"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:layout_marginStart="16dp"/>
-    </LinearLayout>
 
     <!-- Settings Item -->
     <LinearLayout
