@@ -1,358 +1,354 @@
 [
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_temperature.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\temperature.png"
+        "merged": "com.bilkom.app-debug-40:/layout_nav_header.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/nav_header.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_heavy_rain.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_heavy_rain.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_location.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_location.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_news_item_bg.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\news_item_bg.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_thunderstorm.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_thunderstorm.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_tornado.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_tornado.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_hail.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_hail.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_event.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_event.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_temperature.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/temperature.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_sleet.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_sleet.png"
+        "merged": "com.bilkom.app-debug-40:/layout_activity_club_activities.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/activity_club_activities.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_profile.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_profile.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_weather_01n.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_weather_01n.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_add_club.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_add_club.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_clear_night.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_clear_night.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_location.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_location.xml"
+        "merged": "com.bilkom.app-debug-40:/layout_activity_login.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/activity_login.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_item_event.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_event.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_people.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/people.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_calendar.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_calendar.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_partly_cloudy_night.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_partly_cloudy_night.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_admin_user_list.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_admin_user_list.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_sleet.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_sleet.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_admin_club_approval.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_admin_club_approval.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_wind.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_wind.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_login.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_login.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_launcher_foreground.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_calendar.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\calendar.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_humidity.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/humidity.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_item_pending_club.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_pending_club.xml"
+        "merged": "com.bilkom.app-debug-40:/layout_activity_admin_user_list.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/activity_admin_user_list.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_add_club_activity.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_add_club_activity.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_calendar.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_calendar.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_clear_night.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_clear_night.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_news_item_bg.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/news_item_bg.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_nav_drawer_menu.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\nav_drawer_menu.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_spinner_background.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/spinner_background.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_item_user_club.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_user_club.xml"
+        "merged": "com.bilkom.app-debug-40:/layout_activity_base.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/activity_base.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_weather_10d.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_weather_10d.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_emergency_logo.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/emergency_logo.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_home.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_home.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_menu.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_menu.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_popup_background.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\popup_background.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_weather_01d.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_weather_01d.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_nav_header.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\nav_header.xml"
+        "merged": "com.bilkom.app-debug-40:/layout_item_dialog_club.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/item_dialog_club.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_admin_dashboard.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_admin_dashboard.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_cloudy.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_cloudy.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_item_user.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_user.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_weather_clear.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_weather_clear.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_base.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_base.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_moderate_rain.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_moderate_rain.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_main.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_main.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_profile.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_profile.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_create_event.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_create_event.xml"
+        "merged": "com.bilkom.app-debug-40:/layout_item_pending_club.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/item_pending_club.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_avatar_placeholder.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_avatar_placeholder.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_drizzle.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_drizzle.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_emergency_logo.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\emergency_logo.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_popup_background.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/popup_background.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_temperature.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_temperature.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_edit_text_background.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/edit_text_background.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_bilkom_logo.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_bilkom_logo.png"
+        "merged": "com.bilkom.app-debug-40:/layout_activity_settings.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/activity_settings.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_drizzle.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_drizzle.png"
+        "merged": "com.bilkom.app-debug-40:/layout_item_event.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/item_event.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_people.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\people.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_partly_cloudy.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_partly_cloudy.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\menu_main_menu.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\menu\\main_menu.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_light_rain.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_light_rain.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_humidity.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_humidity.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_fog.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_fog.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_activity_selection.jpg.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\activity_selection.jpg"
+        "merged": "com.bilkom.app-debug-40:/drawable_calendar.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/calendar.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_menu_item.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\menu_item.png"
+        "merged": "com.bilkom.app-debug-40:/layout_item_user_club.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/item_user_club.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_settings.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_settings.xml"
+        "merged": "com.bilkom.app-debug-40:/layout_nav_drawer_menu.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/nav_drawer_menu.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_settings.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_settings.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_bilkom_logo.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/bilkom_logo.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_edit_text_background.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\edit_text_background.png"
+        "merged": "com.bilkom.app-debug-40:/layout_activity_admin_dashboard.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/activity_admin_dashboard.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_weather_unknown.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_weather_unknown.xml"
+        "merged": "com.bilkom.app-debug-40:/layout_popup_menu.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/popup_menu.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_tag_chip_selected_bg.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\tag_chip_selected_bg.xml"
+        "merged": "com.bilkom.app-debug-40:/layout_item_user.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/item_user.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_people.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_people.xml"
+        "merged": "com.bilkom.app-debug-40:/layout_activity_create_event.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/activity_create_event.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_item_news.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_news.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_bilkom_logo.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_bilkom_logo.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_weather_clear.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_weather_clear.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_clear.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_clear.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_hurricane.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_hurricane.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_hurricane.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_hurricane.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_report.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_report.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_rain.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_rain.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_home.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_home.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_people.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_people.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_icon_bg.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_icon_bg.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_location.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/location.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_item_dialog_club.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_dialog_club.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_wind.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_wind.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_moderate_rain.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_moderate_rain.png"
+        "merged": "com.bilkom.app-debug-40:/layout_activity_report.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/activity_report.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_menu.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_menu.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_weather_cloudy.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_weather_cloudy.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_weather_01d.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_weather_01d.xml"
+        "merged": "com.bilkom.app-debug-40:/layout_activity_add_club.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/activity_add_club.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_cloudy.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_cloudy.png"
+        "merged": "com.bilkom.app-debug-40:/layout_activity_profile.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/activity_profile.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_humidity.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\humidity.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_snow.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_snow.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_rain.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_rain.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_avatar_placeholder.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/avatar_placeholder.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_weather_01n.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_weather_01n.xml"
+        "merged": "com.bilkom.app-debug-40:/menu_main_menu.xml.flat",
+        "source": "com.bilkom.app-main-42:/menu/main_menu.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_item_weather.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_weather.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_activity_selection.jpg.flat",
+        "source": "com.bilkom.app-main-42:/drawable/activity_selection.jpg"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_wind.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_wind.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_humidity.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_humidity.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_avatar_placeholder.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\avatar_placeholder.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_weather_10d.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_weather_10d.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\menu_drawer_menu.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\menu\\drawer_menu.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_tornado.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_tornado.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_launcher_foreground.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_launcher_foreground.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_home.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_home.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_tag_chip_bg.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\tag_chip_bg.xml"
+        "merged": "com.bilkom.app-debug-40:/layout_activity_main.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/activity_main.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_warning.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_warning.png"
+        "merged": "com.bilkom.app-debug-40:/menu_drawer_menu.xml.flat",
+        "source": "com.bilkom.app-main-42:/menu/drawer_menu.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_spinner_background.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\spinner_background.png"
+        "merged": "com.bilkom.app-debug-40:/layout_activity_my_activities.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/activity_my_activities.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_thunderstorm.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_thunderstorm.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_menu_item.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/menu_item.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_partly_cloudy.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_partly_cloudy.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_weather_unknown.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_weather_unknown.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_snow.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_snow.png"
+        "merged": "com.bilkom.app-debug-40:/layout_activity_home.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/activity_home.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_my_activities.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_my_activities.xml"
+        "merged": "com.bilkom.app-debug-40:/layout_activity_registration.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/activity_registration.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_light_rain.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_light_rain.png"
+        "merged": "com.bilkom.app-debug-40:/layout_dialog_clubs_list.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/dialog_clubs_list.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_location.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\location.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_temperature.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_temperature.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_partly_cloudy_night.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_partly_cloudy_night.png"
+        "merged": "com.bilkom.app-debug-40:/layout_activity_admin_club_approval.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/activity_admin_club_approval.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_club_activities.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_club_activities.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_avatar_placeholder.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_avatar_placeholder.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_fog.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_fog.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_tag_chip_bg.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/tag_chip_bg.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_bilkom_logo.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\bilkom_logo.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_tag_chip_selected_bg.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/tag_chip_selected_bg.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_item_club_activity.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_club_activity.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_settings.xml.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_settings.xml"
+    },
+    {
+        "merged": "com.bilkom.app-debug-40:/layout_item_news.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/item_news.xml"
+    },
+    {
+        "merged": "com.bilkom.app-debug-40:/layout_dialog_forgot_password.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/dialog_forgot_password.xml"
     },
     {
         "merged": "com.bilkom.app-debug-40:/layout_activity_event.xml.flat",
         "source": "com.bilkom.app-main-42:/layout/activity_event.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_popup_menu.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\popup_menu.xml"
+        "merged": "com.bilkom.app-debug-40:/layout_fragment_event_details.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/fragment_event_details.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_wind.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_wind.xml"
+        "merged": "com.bilkom.app-debug-40:/layout_item_club_activity.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/item_club_activity.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_ic_weather_cloudy.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\ic_weather_cloudy.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_ic_warning.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/ic_warning.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_clear.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_clear.png"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_icon_bg.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_icon_bg.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_registration.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_registration.xml"
+        "merged": "com.bilkom.app-debug-40:/layout_activity_add_club_activity.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/activity_add_club_activity.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_dialog_forgot_password.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\dialog_forgot_password.xml"
+        "merged": "com.bilkom.app-debug-40:/drawable_weather_heavy_rain.png.flat",
+        "source": "com.bilkom.app-main-42:/drawable/weather_heavy_rain.png"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\drawable_weather_hail.png.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\drawable\\weather_hail.png"
-    },
-    {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_dialog_clubs_list.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\dialog_clubs_list.xml"
-    },
-    {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_fragment_event_details.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\fragment_event_details.xml"
-    },
-    {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-debug-40:\\layout_activity_profile.xml.flat",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_profile.xml"
+        "merged": "com.bilkom.app-debug-40:/layout_item_weather.xml.flat",
+        "source": "com.bilkom.app-main-42:/layout/item_weather.xml"
     }
 ]

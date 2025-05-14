@@ -66,7 +66,7 @@
         <item name="windowNoTitle">true</item>
     </style>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light"/>
-    <style name="Theme.Bilkom" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Bilkom" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
 
         <item name="colorPrimary">#2E7D32</item>
         <item name="colorPrimaryVariant">#1B5E20</item>

@@ -3473,6 +3473,7 @@ id ifRoom
 id ignore
 id ignoreRequest
 id image
+id imgEmergencyLogo
 id immediateStop
 id included
 id indeterminate
@@ -3798,6 +3799,7 @@ id triangle
 id tvClubName
 id tvDescription
 id tvEmail
+id tvEmergencyHeader
 id tvRequestedBy
 id tvRole
 id unchecked

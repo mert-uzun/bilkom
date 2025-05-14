@@ -140,6 +140,7 @@ id forgotPasswordEmailLayout
 id forgotPasswordText
 id homeMenuItem
 id humidityText
+id imgEmergencyLogo
 id joinButton
 id join_button
 id lastNameInput
@@ -211,6 +212,7 @@ id toolbar
 id tvClubName
 id tvDescription
 id tvEmail
+id tvEmergencyHeader
 id tvRequestedBy
 id tvRole
 id updatePasswordButton
