@@ -56,7 +56,18 @@ it is used to store the permissions, activities, application, etc.
         <activity android:name="com.bilkom.ui.RegistrationActivity" />
 
         <!-- Main Activities -->
-        <activity android:name="com.bilkom.ui.MainActivity" />
+        <activity
+            android:name="com.bilkom.ui.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.bilkom.ui.HomeActivity" />
         <activity android:name="com.bilkom.ui.ProfileActivity" />
         <activity android:name="com.bilkom.ui.SettingsActivity" />

@@ -3419,7 +3419,6 @@ int id eventLocationTextView 0x7f0800ec
 int id eventNameEdit 0x7f0800ed
 int id eventNameEditText 0x7f0800ee
 int id eventNameTextView 0x7f0800ef
-int id eventRecyclerView 0x7f0800f0
 int id event_date 0x7f0800f1
 int id event_date_label 0x7f0800f2
 int id event_description 0x7f0800f3
@@ -3669,6 +3668,7 @@ int id radio 0x7f0801e8
 int id ratio 0x7f0801e9
 int id reasonEditText 0x7f0801ea
 int id rectangles 0x7f0801eb
+int id recyclerView 0x7f08029a
 int id registerButton 0x7f0801ec
 int id registerText 0x7f0801ed
 int id report_drawn 0x7f0801ee

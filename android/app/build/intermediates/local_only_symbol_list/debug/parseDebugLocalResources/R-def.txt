@@ -129,7 +129,6 @@ id eventLocationTextView
 id eventNameEdit
 id eventNameEditText
 id eventNameTextView
-id eventRecyclerView
 id event_date
 id event_date_label
 id event_description
@@ -198,6 +197,7 @@ id profileLastName
 id profilePhone
 id quotaTextView
 id reasonEditText
+id recyclerView
 id registerButton
 id registerText
 id rvClubs
