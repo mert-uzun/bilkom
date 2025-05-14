@@ -37,7 +37,8 @@ it extends the ScrollView class to show the registration activity content-->
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Bilkent Email"
-                android:inputType="textEmailAddress"/>
+                android:inputType="textEmailAddress"
+                android:background="@color/white"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -53,7 +54,8 @@ it extends the ScrollView class to show the registration activity content-->
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:background="@color/white"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -68,7 +70,8 @@ it extends the ScrollView class to show the registration activity content-->
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="First Name"
-                android:inputType="textPersonName"/>
+                android:inputType="textPersonName"
+                android:background="@color/white"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -83,7 +86,8 @@ it extends the ScrollView class to show the registration activity content-->
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Last Name"
-                android:inputType="textPersonName"/>
+                android:inputType="textPersonName"
+                android:background="@color/white"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -98,7 +102,8 @@ it extends the ScrollView class to show the registration activity content-->
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Bilkent ID"
-                android:inputType="number"/>
+                android:inputType="number"
+                android:background="@color/white"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -113,7 +118,8 @@ it extends the ScrollView class to show the registration activity content-->
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Phone Number"
-                android:inputType="phone"/>
+                android:inputType="phone"
+                android:background="@color/white"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -128,7 +134,8 @@ it extends the ScrollView class to show the registration activity content-->
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Blood Type"
-                android:inputType="text"/>
+                android:inputType="text"
+                android:background="@color/white"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton

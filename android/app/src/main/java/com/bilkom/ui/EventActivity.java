@@ -44,12 +44,22 @@ public class EventActivity extends BaseActivity {
         eventRecyclerView = findViewById(R.id.eventRecyclerView);
         addActivityButton = findViewById(R.id.addActivityButton);
         tagSpinner = findViewById(R.id.tagSpinner);
+        secureStorage = new SecureStorage(this);
 
         eventRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         eventList = new ArrayList<>();
         adapter = new EventAdapter(this, eventList, event -> {
             Toast.makeText(this, "Join clicked for: " + event.getEventName(), Toast.LENGTH_SHORT).show();
         });
+        
+        // Set click listener for item click to navigate to details
+        adapter.setOnItemClickListener(event -> {
+            // Navigate to details activity
+            Intent intent = new Intent(EventActivity.this, EventDetailsActivity.class);
+            intent.putExtra("event", event);
+            startActivity(intent);
+        });
+        
         eventRecyclerView.setAdapter(adapter);
 
         addActivityButton.setOnClickListener(v -> {
