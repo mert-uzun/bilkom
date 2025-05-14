@@ -24,8 +24,11 @@ import retrofit2.Response;
 import java.util.List;
 import android.app.AlertDialog;
 import android.view.MenuItem;
-/**
- * SettingsActivity handles user settings such as updating passwords and logging out.
+import com.bilkom.ui.ClubActivitiesActivity;
+import com.bilkom.model.ClubMembership;
+import com.bilkom.model.Club;
+
+/** SettingsActivity handles user settings such as updating passwords and logging out.
  * 
  * @author Sıla Bozkurt
  * @version 1.0
@@ -478,14 +481,14 @@ public class SettingsActivity extends BaseActivity {
     
     private void joinClub() {
         try {
-            Intent intent = new Intent(SettingsActivity.this, ClubListActivity.class);
+            Intent intent = new Intent(SettingsActivity.this, ClubActivitiesActivity.class);
             intent.putExtra("mode", "join");
             startActivity(intent);
         } catch (Exception e) {
             // Try with class name if direct reference fails
             try {
                 Intent intent = new Intent();
-                intent.setClassName(getPackageName(), "com.bilkom.ui.ClubListActivity");
+                intent.setClassName(getPackageName(), "com.bilkom.ui.ClubActivitiesActivity");
                 intent.putExtra("mode", "join");
                 startActivity(intent);
             } catch (Exception ex) {
@@ -624,21 +627,21 @@ public class SettingsActivity extends BaseActivity {
         try {
             // First try with direct class reference
             try {
-                Intent intent = new Intent(this, ClubManagementActivity.class);
+                Intent intent = new Intent(this, ClubActivitiesActivity.class);
                 startActivity(intent);
                 return;
             } catch (Exception e) {
-                Log.d(TAG, "ClubManagementActivity not found, trying alternative");
+                Log.d(TAG, "ClubActivitiesActivity not found, trying alternative");
             }
             
             // Try with class name if direct reference fails
             try {
                 Intent intent = new Intent();
-                intent.setClassName(getPackageName(), "com.bilkom.ui.ClubManagementActivity");
+                intent.setClassName(getPackageName(), "com.bilkom.ui.ClubActivitiesActivity");
                 startActivity(intent);
                 return;
             } catch (Exception e) {
-                Log.d(TAG, "ClubManagementActivity class not found, trying MyClubsActivity");
+                Log.d(TAG, "ClubActivitiesActivity class not found, trying MyClubsActivity");
             }
             
             // Try MyClubsActivity as a fallback
@@ -661,51 +664,76 @@ public class SettingsActivity extends BaseActivity {
     }
     
     private void showClubInfoDialog() {
-        try {
-            // Get user's club memberships
-            apiService.getUser(userId).enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        User user = response.body();
-                        List<ClubMember> memberships = user.getClubMemberships();
-                        
-                        if (memberships != null && !memberships.isEmpty()) {
-                            // Create dialog with club info
-                            AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
-                            builder.setTitle("My Clubs");
-                            
-                            // Create a list of club names
-                            StringBuilder clubInfo = new StringBuilder();
-                            for (ClubMember membership : memberships) {
-                                try {
-                                    clubInfo.append("• ");
-                                    clubInfo.append(membership.getClubName());
-                                    clubInfo.append("\n");
-                                } catch (Exception e) {
-                                    Log.e(TAG, "Error getting club name", e);
+        apiService.getUser(userId).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    User user = response.body();
+                    List<ClubMember> memberships = user.getClubMemberships();
+                    
+                    if (memberships == null || memberships.isEmpty()) {
+                        new AlertDialog.Builder(SettingsActivity.this)
+                            .setTitle("My Clubs")
+                            .setMessage("No clubs joined")
+                            .setPositiveButton("OK", null)
+                            .show();
+                        return;
+                    }
+
+                    // Fetch all club names asynchronously
+                    StringBuilder clubInfo = new StringBuilder();
+                    final int[] clubsFetched = {0};
+                    for (ClubMember membership : memberships) {
+                        Long clubId = membership.getClubId();
+                        if (clubId != null) {
+                            apiService.getClub(clubId, "Bearer " + token).enqueue(new Callback<Club>() {
+                                @Override
+                                public void onResponse(Call<Club> call, Response<Club> response) {
+                                    if (response.isSuccessful() && response.body() != null) {
+                                        clubInfo.append(response.body().getName()).append("\n");
+                                    }
+                                    clubsFetched[0]++;
+                                    if (clubsFetched[0] == memberships.size()) {
+                                        // All clubs fetched, show dialog
+                                        new AlertDialog.Builder(SettingsActivity.this)
+                                            .setTitle("My Clubs")
+                                            .setMessage(clubInfo.length() > 0 ? clubInfo.toString() : "No clubs joined")
+                                            .setPositiveButton("OK", null)
+                                            .show();
+                                    }
                                 }
-                            }
-                            
-                            builder.setMessage(clubInfo.toString());
-                            builder.setPositiveButton("OK", null);
-                            builder.show();
+                                
+                                @Override
+                                public void onFailure(Call<Club> call, Throwable t) {
+                                    clubsFetched[0]++;
+                                    if (clubsFetched[0] == memberships.size()) {
+                                        new AlertDialog.Builder(SettingsActivity.this)
+                                            .setTitle("My Clubs")
+                                            .setMessage(clubInfo.length() > 0 ? clubInfo.toString() : "No clubs joined")
+                                            .setPositiveButton("OK", null)
+                                            .show();
+                                    }
+                                }
+                            });
                         } else {
-                            Toast.makeText(SettingsActivity.this, 
-                                "You are not a member of any clubs yet", Toast.LENGTH_SHORT).show();
+                            clubsFetched[0]++;
+                            if (clubsFetched[0] == memberships.size()) {
+                                new AlertDialog.Builder(SettingsActivity.this)
+                                    .setTitle("My Clubs")
+                                    .setMessage(clubInfo.length() > 0 ? clubInfo.toString() : "No clubs joined")
+                                    .setPositiveButton("OK", null)
+                                    .show();
+                            }
                         }
                     }
                 }
-                
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
-                    Toast.makeText(SettingsActivity.this, 
-                        "Could not retrieve club information", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (Exception e) {
-            Log.e(TAG, "Error showing club info dialog", e);
-        }
+            }
+            
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(SettingsActivity.this, "Error loading club information", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     protected void logout() {

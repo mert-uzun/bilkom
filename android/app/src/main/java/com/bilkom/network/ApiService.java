@@ -70,7 +70,7 @@ public interface ApiService {
     Call<Club> createClub(@Body ClubRequest body);
 
     @GET("/api/clubs/{id}")
-    Call<Club> getClub(@Path("id") Long id);
+    Call<Club> getClub(@Path("id") Long clubId, @Header("Authorization") String token);
 
     @PUT("/api/clubs/{id}")
     Call<Club> updateClub(@Path("id") Long id, @Body Club body);
