@@ -130,24 +130,26 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     } 
                     else if (itemId == R.id.menu_profile) {
-                        // Navigate to profile
+                        // Navigate to profile using direct Intent
                         try {
-                            Intent intent = new Intent(MainActivity.this, Class.forName("com.bilkom.ui.ProfileActivity"));
+                            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                             startActivity(intent);
-                        } catch (ClassNotFoundException e) {
-                            Log.e(TAG, "ProfileActivity not found", e);
-                            Toast.makeText(MainActivity.this, "Profile page is not available", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Navigating to ProfileActivity");
+                        } catch (Exception e) {
+                            Log.e(TAG, "Error navigating to ProfileActivity", e);
+                            Toast.makeText(MainActivity.this, "Error opening Profile: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                         return true;
                     } 
                     else if (itemId == R.id.menu_settings) {
-                        // Navigate to settings
+                        // Navigate to settings using direct Intent
                         try {
-                            Intent intent = new Intent(MainActivity.this, Class.forName("com.bilkom.ui.SettingsActivity"));
+                            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                             startActivity(intent);
-                        } catch (ClassNotFoundException e) {
-                            Log.e(TAG, "SettingsActivity not found", e);
-                            Toast.makeText(MainActivity.this, "Settings page is not available", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Navigating to SettingsActivity");
+                        } catch (Exception e) {
+                            Log.e(TAG, "Error navigating to SettingsActivity", e);
+                            Toast.makeText(MainActivity.this, "Error opening Settings: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                         return true;
                     } 
