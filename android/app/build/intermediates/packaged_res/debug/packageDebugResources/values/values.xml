@@ -1,40 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:ns1="http://schemas.android.com/tools">
+    <color name="bilkom_bg">#F5F5F5</color>
+    <color name="bilkom_on_bg">#FFFFFF</color>
     <color name="black">#FF000000</color>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="card_bg_dark">#1E1E1E</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="cream">#FFF5E1</color>
+    <color name="design_default_color_primary">#2E7D32</color>
+    <color name="design_default_color_secondary">#6D4C41</color>
+    <color name="green">#4CAF50</color>
+    <color name="red">#FF0000</color>
+    <color name="red_alert">#FF4444</color>
+    <color name="weather_card_bg">#1E1E1E</color>
     <color name="white">#FFFFFFFF</color>
+    <string name="Bilkom">Bilkom</string>
+    <string name="activity_selection">Activity Selection</string>
+    <string name="app_logo">BILKOM</string>
     <string name="app_name">Bilkom</string>
-    <string name="email_hint">Email</string>
+    <string name="club_activities">Club Activities</string>
+    <string name="contact">Contact</string>
+    <string name="create">Create</string>
+    <string name="email">Email</string>
+    <string name="emergency_alert_logo">Emergency</string>
+    <string name="emergency_alerts">Emergency Alerts</string>
+    <string name="error_occurred">An error occurred</string>
+    <string name="event_description">Description</string>
+    <string name="event_name">Event Name</string>
+    <string name="gcm_defaultSenderId" translatable="false">567237993009</string>
+    <string name="google_api_key" translatable="false">AIzaSyCK3xocXh518Fdt23XVC-n05M27MvIveK4</string>
+    <string name="google_app_id" translatable="false">1:567237993009:android:5f5c177b1cbeb79e512b10</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCK3xocXh518Fdt23XVC-n05M27MvIveK4</string>
+    <string name="google_storage_bucket" translatable="false">bilkomapp.firebasestorage.app</string>
+    <string name="label">Bilkom</string>
+    <string name="latest_news">Latest News</string>
+    <string name="loading">Loading…</string>
+    <string name="logging_in">Logging in…</string>
     <string name="login">Login</string>
-    <string name="login_failed">Login failed</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="network_error">Network error</string>
-    <string name="password_hint">Password</string>
+    <string name="no_account_register">No account? Register</string>
+    <string name="password">Password</string>
+    <string name="password_update_failed">Failed to update password</string>
+    <string name="password_updated">Password updated successfully</string>
+    <string name="profile_update_failed">Failed to update profile</string>
+    <string name="profile_updated">Profile updated successfully</string>
+    <string name="project_id" translatable="false">bilkomapp</string>
     <string name="register">Register</string>
-    <string name="welcome_message">Welcome to Bilkom</string>
-    <style name="Theme.Bilkom" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    <string name="registering">Registering…</string>
+    <string name="select_date_time">Select Date &amp; Time</string>
+    <string name="select_tag">Select a tag</string>
+    <string name="weather_forecast">Weather Forecast</string>
+    <string name="welcome_to">WELCOME TO</string>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="Theme.Bilkom.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-    <style name="Theme.Bilkom.NoActionBar">
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/>
+    <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <style name="Theme.Bilkom.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
-    <style name="Widget.Bilkom.Button" parent="Widget.MaterialComponents.Button">
-        <item name="cornerRadius">24dp</item>
-        <item name="android:insetTop">12dp</item>
-        <item name="android:insetBottom">12dp</item>
-        <item name="android:paddingStart">32dp</item>
-        <item name="android:paddingEnd">32dp</item>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light"/>
+    <style name="Theme.Bilkom" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+
+        <item name="colorPrimary">#2E7D32</item>
+        <item name="colorPrimaryVariant">#1B5E20</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+
+        <item name="colorSecondary">#6200EA</item>
+        <item name="colorSecondaryVariant">#3700B3</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+
+        <item name="android:statusBarColor" ns1:targetApi="l">#1B5E20</item>
+
+        <item name="android:textColor">#212121</item>
+        <item name="android:windowBackground">#F5F5F5</item>
     </style>
 </resources>

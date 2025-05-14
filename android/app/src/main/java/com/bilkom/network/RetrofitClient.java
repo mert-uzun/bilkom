@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @since 2025-05-09
  */
 public final class RetrofitClient {
-    private static final String BASE_URL = "http://192.168.19.145:8080/api/";
+    private static final String BASE_URL = "http://172.20.10.2:8080/api/";
     private static volatile Retrofit retrofit;
     private static volatile ApiService apiService;
     private static volatile Context applicationContext;

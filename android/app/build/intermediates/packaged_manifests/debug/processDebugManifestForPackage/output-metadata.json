@@ -4,7 +4,7 @@
     "type": "PACKAGED_MANIFESTS",
     "kind": "Directory"
   },
-  "applicationId": "com.bilkom.android",
+  "applicationId": "com.bilkom",
   "variantName": "debug",
   "elements": [
     {
