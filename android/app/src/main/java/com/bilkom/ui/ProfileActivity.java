@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.bilkom.BaseActivity;
+import com.bilkom.ui.BaseActivity;
 import com.bilkom.R;
 import com.bilkom.model.ClubMember;
 import com.bilkom.model.User;

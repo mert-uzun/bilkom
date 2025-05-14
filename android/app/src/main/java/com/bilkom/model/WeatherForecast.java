@@ -16,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class WeatherForecast {
     @SerializedName("temperature")
-    private float temperature;
+    private double temperature;
     
     @SerializedName("description")
     private String description;
@@ -93,12 +93,12 @@ public class WeatherForecast {
         this.windDirection = windDirection;
     }
 
-    public String getIconCode() {
-        return iconCode;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setIconCode(String iconCode) {
-        this.iconCode = iconCode;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getLocation() {

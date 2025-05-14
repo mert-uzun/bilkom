@@ -78,10 +78,9 @@ public class EventRepository {
         }
         
         // Make API call (whether we returned cached data or not, to refresh cache)
-        Call<PageResponse<Event>> call = apiService.filterEventsPaged(
-                new EventRequest(), // Empty request for all events
-                page, 
-                pageSize);
+        Call<PageResponse<Event>> call = apiService.filterEvents(
+                new EventRequest() // Empty request for all events
+        );
         
         call.enqueue(new ApiErrorHandler.ApiCallback<>(
                 context,

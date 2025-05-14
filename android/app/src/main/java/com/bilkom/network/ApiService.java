@@ -16,132 +16,132 @@ import retrofit2.http.*;
  */
 public interface ApiService {
 
-    @POST("/auth/login")
+    @POST("/api/auth/login")
     Call<AuthResponse> login(@Body LoginRequest body);
 
-    @POST("/auth/register")
+    @POST("/api/auth/register")
     Call<AuthResponse> register(@Body RegistrationRequest body);
 
     // POST request to verify the email address
     // I'm not sure if this will work
     // Please check the actual code, there is a backend endpoint for this
-    @POST("/auth/logout")
+    @POST("/api/auth/logout")
     Call<Void> logout(@Header("Authorization") String token);
 
     // I'm not sure if this will work
     // Please check the actual code, there is a backend endpoint for this
-    @POST("/auth/reset-password/request")
-    Call<Void> requestPasswordReset(@Body PasswordResetRequest body);
+    @POST("/api/auth/reset-password/request")
+    Call<Void> requestPasswordReset(@Body Map<String, String> payload);
 
-    @GET("/users")
+    @GET("/api/users")
     Call<List<User>> listUsers();
 
-    @POST("/users")
+    @POST("/api/users")
     Call<User> createUser(@Body User body);
 
-    @GET("/users/{id}")
+    @GET("/api/users/{id}")
     Call<User> getUser(@Path("id") Long id);
 
-    @PUT("/users/{id}")
+    @PUT("/api/users/{id}")
     Call<User> updateUser(@Path("id") Long id, @Body User body);
 
-    @DELETE("/users/{id}")
+    @DELETE("/api/users/{id}")
     Call<Void> deleteUser(@Path("id") Long id);
 
-    @PUT("/users/{id}/active")
+    @PUT("/api/users/{id}/active")
     Call<Void> setUserActive(@Path("id") Long id, @Body Map<String, Boolean> payload);
 
-    @GET("/users/me/all-clubs")
+    @GET("/api/users/me/all-clubs")
     Call<List<Club>> getMyClubsAll();
 
-    @GET("/users/{id}/all-clubs")
+    @GET("/api/users/{id}/all-clubs")
     Call<List<Club>> getUserClubsAll(@Path("id") Long id);
 
-    @GET("/admin/users")
+    @GET("/api/admin/users")
     Call<List<User>> adminListUsers();
 
-    @PUT("/admin/users/{id}/verified")
+    @PUT("/api/admin/users/{id}/verified")
     Call<Void> adminVerify(@Path("id") Long id);
 
-    @GET("/clubs")
+    @GET("/api/clubs")
     Call<List<Club>> listClubs();
 
-    @POST("/clubs")
+    @POST("/api/clubs")
     Call<Club> createClub(@Body ClubRequest body);
 
-    @GET("/clubs/{id}")
+    @GET("/api/clubs/{id}")
     Call<Club> getClub(@Path("id") Long id);
 
-    @PUT("/clubs/{id}")
+    @PUT("/api/clubs/{id}")
     Call<Club> updateClub(@Path("id") Long id, @Body Club body);
 
-    @DELETE("/clubs/{id}")
+    @DELETE("/api/clubs/{id}")
     Call<Void> deleteClub(@Path("id") Long id);
 
-    @PUT("/clubs/{id}/reactivate")
+    @PUT("/api/clubs/{id}/reactivate")
     Call<Void> reactivateClub(@Path("id") Long id);
 
-    @POST("/clubs/registration")
+    @POST("/api/clubs/registration")
     Call<Club> registerClub(@Body ClubRequest body);
 
-    @GET("/clubs/registration/pending/{adminId}")
+    @GET("/api/clubs/registration/pending/{adminId}")
     Call<List<Club>> getPendingRegistrations(@Path("adminId") Long adminId);
 
-    @GET("/clubs/members/club/{clubId}")
+    @GET("/api/clubs/members/club/{clubId}")
     Call<List<ClubMember>> listMembers(@Path("clubId") Long clubId);
 
-    @POST("/clubs/{clubId}/members")
+    @POST("/api/clubs/{clubId}/members")
     Call<Void> joinClub(@Path("clubId") Long clubId);
 
-    @DELETE("/clubs/members/{userId}/club/{clubId}")    
+    @DELETE("/api/clubs/members/{userId}/club/{clubId}")    
     Call<Void> removeMember(@Path("clubId") Long clubId, @Path("userId") Long userId);
 
-    @POST("/clubs/executives/club/{clubId}")
+    @POST("/api/clubs/executives/club/{clubId}")
     Call<Void> addExecutive(@Path("clubId") Long clubId, @Body ClubMember body);
 
-    @GET("/clubs/executives/club/{clubId}")
+    @GET("/api/clubs/executives/club/{clubId}")
     Call<List<ClubMember>> listExecutives(@Path("clubId") Long clubId);
 
-    @PUT("/clubs/executives/{userId}/club/{clubId}")
+    @PUT("/api/clubs/executives/{userId}/club/{clubId}")
     Call<Void> changeExecutive(@Path("userId") Long userId, @Path("clubId") Long clubId);
 
-    @GET("/events")
+    @GET("/api/events")
     Call<List<Event>> listEvents();
 
-    @POST("/events")
+    @POST("/api/events")
     Call<Event> createEvent(@Body EventRequest body, @Header("Authorization") String token);
 
-    @POST("/events/create-club-event ")    
+    @POST("/api/events/create-club-event ")    
     Call<Event> createClubEvent(@Body EventRequest body, @Header("Authorization") String token);
 
-    @GET("/events/{id}")
+    @GET("/api/events/{id}")
     Call<Event> getEvent(@Path("id") Long id);
 
-    @PUT("/events/{id}")
+    @PUT("/api/events/{id}")
     Call<Event> updateEvent(@Path("id") Long id, @Body Event body);
 
-    @DELETE("/events/{id}")
+    @DELETE("/api/events/{id}")
     Call<Void> deleteEvent(@Path("id") Long id);
 
-    @GET("/events/created")
+    @GET("/api/events/created")
     Call<List<Event>> getMyCreatedEvents();
 
-    @GET("/events/created/past")
+    @GET("/api/events/created/past")
     Call<List<Event>> getMyCreatedPast();
 
-    @GET("/events/joined/past")
+    @GET("/api/events/joined/past")
     Call<List<Event>> getMyJoinedPast();
 
-    @GET("/events/my-club-events/past")
+    @GET("/api/events/my-club-events/past")
     Call<List<Event>> getPastOfMyClubs();
 
-    @GET("/events/clubs/{clubId}/events")
+    @GET("/api/events/clubs/{clubId}/events")
     Call<List<Event>> getClubEvents(@Path("clubId") Long clubId);
 
-    @GET("/events/clubs/{clubId}/events/current")
+    @GET("/api/events/clubs/{clubId}/events/current")
     Call<List<Event>> getClubCurrentEvents(@Path("clubId") Long clubId);
 
-    @POST("/events/filter")
+    @POST("/api/events/filter")
     Call<PageResponse<Event>> filterEvents(@Body EventRequest body);
 
     /*@POST("/events/filter/paged")
@@ -153,22 +153,22 @@ public interface ApiService {
     // I didn't understand the purpose of this method
     // There is no such method in the backend
 
-    @POST("/events/{eventId}/join")
+    @POST("/api/events/{eventId}/join")
     Call<Void> joinEvent(@Path("eventId") Long eventId, @Header("Authorization") String token);
 
-    @POST("/events/{eventId}/withdraw")
+    @POST("/api/events/{eventId}/withdraw")
     Call<Void> withdrawEvent(@Path("eventId") Long eventId, @Header("Authorization") String token);
 
-    @POST("/events/{eventId}/report")
+    @POST("/api/events/{eventId}/report")
     Call<Void> reportEvent(@Path("eventId") Long eventId, @Body ReportRequest body);
 
-    @GET("/weather")
+    @GET("/api/weather")
     Call<WeatherForecast> getWeather();
 
-    @GET("/news")
+    @GET("/api/news")
     Call<List<News>> getNews();
 
-    @GET("/emergency-alerts")
+    @GET("/api/emergency-alerts")
     Call<List<EmergencyAlert>> getAlerts();
 
     /*@GET("/emergency-alerts/paged")
@@ -179,35 +179,36 @@ public interface ApiService {
     // I didn't understand the purpose of this method
     // There is no such method in the backend
 
-    @GET("users/me/clubs")
+    @GET("/api/users/me/clubs")
     Call<List<Club>> getMyClubs(@Header("Authorization") String token);
 
-    @GET("/events/clubs/{clubId}/events")
+    @GET("/api/events/clubs/{clubId}/events")
     Call<List<Event>> getClubEventsByClubId(@Path("clubId") long clubId, @Header("Authorization") String token);
 
-    @GET("events/club/my-club-events")
+    @GET("/api/events/club/my-club-events")
     Call<Map<Long, List<Event>>> getMyClubsEvents(@Header("Authorization") String token);
-    @POST("/clubs/{id}/approve")
+    @POST("/api/clubs/{id}/approve")
     Call<Void> approveClub(@Path("id") Long id);
 
-    @POST("/clubs/{id}/reject") 
+    @POST("/api/clubs/{id}/reject") 
     Call<Void> rejectClub(@Path("id") Long id);
 
-    /*@GET("weather")
-    Call<WeatherForecast> getWeatherForecast();*/
-    /*we cant get forecast cause we dont pay for the api */
+    @GET("/api/weather/forecast")
+    Call<WeatherForecast> getWeatherForecast();
 
-    /*@GET("news")
-    Call<List<News>> getLatestNews();*/ 
-    /*we dont need get latest news we already always fetch latest news */
+    @GET("/api/news/latest")
+    Call<List<News>> getLatestNews();
 
-    @GET("/events")
+    @GET("/api/events")
     Call<List<Event>> getEvents(@Header("Authorization") String token);
 
-    @GET("/events/joined")
+    @GET("/api/tags")
+    Call<List<String>> getAvailableTags();
+
+    @GET("/api/events/joined")
     Call<List<Event>> getJoinedEvents(@Header("Authorization") String token);
 
-    @POST("/events/filter/tags")
+    @POST("/api/events/filter/tags")
     Call<List<Event>> filterEventsByTags(@Body List<String> tags, @Header("Authorization") String token);
     // here, the /events/filter already filters by tags in the backend, but probably takes tags as a parameter. 
     // so i believe this should work, check again

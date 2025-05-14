@@ -21,6 +21,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.appcompat.app.AppCompatActivity;
+import android.widget.FrameLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,6 +39,9 @@ import com.bilkom.model.WeatherForecast;
 import com.bilkom.network.ApiService;
 import com.bilkom.network.RetrofitClient;
 import com.bilkom.utils.WeatherIconUtils;
+import com.bilkom.adapter.EventAdapter;
+import com.bilkom.model.Event;
+import com.bilkom.utils.SecureStorage;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -122,11 +129,11 @@ public class HomeActivity extends BaseActivity {
             weatherIcon.setImageResource(WeatherIconUtils.getWeatherIconResourceId(this, icon));
             
             // Temperature formatting with default if needed
-            float temperature = wf.getTemperature();
+            String description = wf.getDescription();
+            float temperature = (float) wf.getTemperature();
             weatherTemp.setText(String.format(Locale.getDefault(), "%.1f°C", temperature));
             
             // Description with null check
-            String description = wf.getDescription();
             weatherDesc.setText(description != null ? description : "");
         } catch (Exception e) {
             Log.e(TAG, "Error updating weather UI", e);
