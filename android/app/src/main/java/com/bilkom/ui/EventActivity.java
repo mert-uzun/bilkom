@@ -63,7 +63,45 @@ public class EventActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         eventList = new ArrayList<>();
         adapter = new EventAdapter(this, new ArrayList<>(), event -> {
-            Toast.makeText(this, "Join clicked for: " + event.getEventName(), Toast.LENGTH_SHORT).show();
+            // Show loading toast
+            Toast loadingToast = Toast.makeText(this, "Joining event...", Toast.LENGTH_SHORT);
+            loadingToast.show();
+
+            // Get API service and token
+            ApiService apiService = RetrofitClient.getInstance().getApiService();
+            String token = secureStorage.getAuthToken();
+
+            // Make the join API call
+            apiService.joinEvent(event.getEventId(), "Bearer " + token).enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    loadingToast.cancel();
+                    if (response.isSuccessful()) {
+                        Toast.makeText(EventActivity.this, 
+                            "Successfully joined event: " + event.getEventName(), 
+                            Toast.LENGTH_SHORT).show();
+                        
+                        // Remove the event from the list since it's now joined
+                        eventList.remove(event);
+                        adapter.setEventList(eventList);
+                        
+                        // Optionally refresh the list to ensure consistency
+                        fetchEvents();
+                    } else {
+                        Toast.makeText(EventActivity.this, 
+                            "Failed to join event: " + response.code(), 
+                            Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    loadingToast.cancel();
+                    Toast.makeText(EventActivity.this, 
+                        "Error joining event: " + t.getMessage(), 
+                        Toast.LENGTH_SHORT).show();
+                }
+            });
         });
         
         // Set click listener for item click to navigate to details
