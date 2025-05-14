@@ -1,6 +1,8 @@
 package com.bilkom.network;
 
 import android.content.Context;
+import android.util.Log;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,7 +20,8 @@ import java.util.concurrent.TimeUnit;
  * @since 2025-05-09
  */
 public final class RetrofitClient {
-    private static final String BASE_URL = "http://172.20.10.2:8080/api/";
+    private static final String TAG = "RetrofitClient";
+    private static final String BASE_URL = "http://10.201.158.83:8080/api/";
     private static volatile Retrofit retrofit;
     private static volatile ApiService apiService;
     private static volatile Context applicationContext;
@@ -46,23 +49,31 @@ public final class RetrofitClient {
         if (retrofit == null) {
             synchronized (RetrofitClient.class) {
                 if (retrofit == null) {
-                    HttpLoggingInterceptor log = new HttpLoggingInterceptor(message -> {
-                        android.util.Log.d("Retrofit", "Network: " + message);
-                    }).setLevel(HttpLoggingInterceptor.Level.BODY);
+                    try {
+                        Log.d(TAG, "Creating new Retrofit instance with BASE_URL: " + BASE_URL);
+                        
+                        HttpLoggingInterceptor log = new HttpLoggingInterceptor(message -> {
+                            Log.d(TAG, "Network: " + message);
+                        }).setLevel(HttpLoggingInterceptor.Level.BODY);
 
-                    OkHttpClient okHttp = new OkHttpClient.Builder()
-                            .addInterceptor(new AuthInterceptor())
-                            .addInterceptor(log)
-                            .connectTimeout(30, TimeUnit.SECONDS)
-                            .readTimeout(30, TimeUnit.SECONDS)
-                            .writeTimeout(30, TimeUnit.SECONDS)
-                            .build();
+                        OkHttpClient okHttp = new OkHttpClient.Builder()
+                                .addInterceptor(new AuthInterceptor())
+                                .addInterceptor(log)
+                                .connectTimeout(30, TimeUnit.SECONDS)
+                                .readTimeout(30, TimeUnit.SECONDS)
+                                .writeTimeout(30, TimeUnit.SECONDS)
+                                .build();
 
-                    retrofit = new Retrofit.Builder()
-                            .baseUrl(BASE_URL)
-                            .client(okHttp)
-                            .addConverterFactory(GsonConverterFactory.create(gson))
-                            .build();
+                        retrofit = new Retrofit.Builder()
+                                .baseUrl(BASE_URL)
+                                .client(okHttp)
+                                .addConverterFactory(GsonConverterFactory.create(gson))
+                                .build();
+                        
+                        Log.d(TAG, "Retrofit instance created successfully");
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error creating Retrofit instance", e);
+                    }
                 }
             }
         }
@@ -73,7 +84,13 @@ public final class RetrofitClient {
         if (apiService == null) {
             synchronized (RetrofitClient.class) {
                 if (apiService == null) {
-                    apiService = getRetrofit().create(ApiService.class);
+                    try {
+                        Log.d(TAG, "Creating new ApiService");
+                        apiService = getRetrofit().create(ApiService.class);
+                        Log.d(TAG, "ApiService created successfully");
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error creating ApiService", e);
+                    }
                 }
             }
         }

@@ -1,151 +1,170 @@
 <!--this is the activity_main.xml file for the main activity
 it extends the ScrollView class to show the main activity content-->
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/card_bg_dark">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- Menu Button in the corner - replacing ImageButton with Button -->
+    <Button
+        android:id="@+id/menuButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:gravity="center_horizontal">
+        android:layout_alignParentEnd="true"
+        android:layout_margin="8dp"
+        android:text="MENU"
+        android:textColor="@color/white"
+        android:backgroundTint="#2E7D32"
+        android:padding="8dp" />
 
-        <!-- Welcome and Logo -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="WELCOME TO"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/menuButton">
 
-        <ImageView
-            android:id="@+id/logoImageView"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/bilkom_logo"
-            android:contentDescription="Bilkom Logo"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"/>
-
-        <!-- Emergency Alerts Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/emergencyAlertsButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Emergency Alerts"
-            android:backgroundTint="#FF4444"
-            android:textColor="@color/white"
-            android:icon="@drawable/ic_warning"
-            android:padding="8dp"
-            android:layout_marginBottom="8dp"/>
-
-        <!-- Latest Emergency Alert Preview -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="#222">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
-                <TextView
-                    android:id="@+id/alertTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Alert Name"
-                    android:textColor="#FF4444"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-                <TextView
-                    android:id="@+id/alertMessage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="This area will contain detail regarding the most recent emergency situation."
-                    android:textColor="@color/white"
-                    android:layout_marginTop="4dp"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/contactAlertButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Contact"
-                    android:backgroundTint="#FF4444"
-                    android:textColor="@color/white"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="8dp"
-                    android:visibility="gone"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Weather Forecast Widget -->
-        <include
-            android:id="@+id/weatherContainer"
-            layout="@layout/item_weather"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"/>
-
-        <!-- News Section -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="#222">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Latest News"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-                <LinearLayout
-                    android:id="@+id/newsContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="4dp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Activity Selection Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="8dp">
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/activitySelectionButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Activity Selection"
-                android:backgroundTint="#2E7D32"
-                android:textColor="@color/white"
-                android:layout_marginEnd="8dp"/>
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/clubActivitiesButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Club Activities"
-                android:backgroundTint="#6D4C41"
-                android:textColor="@color/white"/>
-        </LinearLayout>
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center_horizontal">
 
-    </LinearLayout>
-</ScrollView> 
+            <!-- Welcome and Logo -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WELCOME TO"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"/>
+
+            <ImageView
+                android:id="@+id/logoImageView"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/bilkom_logo"
+                android:contentDescription="Bilkom Logo"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Emergency Alerts Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/emergencyAlertsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Emergency Alerts"
+                android:backgroundTint="#FF4444"
+                android:textColor="@color/white"
+                android:icon="@drawable/ic_warning"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Latest Emergency Alert Preview -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="#222">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+                    <TextView
+                        android:id="@+id/alertTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Alert Name"
+                        android:textColor="#FF4444"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+                    <TextView
+                        android:id="@+id/alertMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="This area will contain detail regarding the most recent emergency situation."
+                        android:textColor="@color/white"
+                        android:layout_marginTop="4dp"/>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/contactAlertButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contact"
+                        android:backgroundTint="#FF4444"
+                        android:textColor="@color/white"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="8dp"
+                        android:visibility="gone"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Weather Forecast Widget -->
+            <include
+                android:id="@+id/weatherContainer"
+                layout="@layout/item_weather"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- News Section -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="#222">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Latest News"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+                    <LinearLayout
+                        android:id="@+id/newsContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Activity Selection Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="8dp">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/activitySelectionButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Activity Selection"
+                    android:backgroundTint="#2E7D32"
+                    android:textColor="@color/white"
+                    android:layout_marginEnd="8dp"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clubActivitiesButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Club Activities"
+                    android:backgroundTint="#6D4C41"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout> 
