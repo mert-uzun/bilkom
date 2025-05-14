@@ -178,13 +178,13 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         try {
             if (id == R.id.nav_home && !(this instanceof HomeActivity)) {
                 Log.d(TAG, "Navigating to HomeActivity");
-                startActivity(new Intent(this, HomeActivity.class));
+                startActivity(new Intent(this, "com.bilkom.ui.HomeActivity"));
             } else if (id == R.id.nav_events) {
                 Log.d(TAG, "Navigating to EventActivity");
-                startActivity(new Intent(this, EventActivity.class));
+                startActivity(new Intent(this, "com.bilkom.ui.EventActivity"));
             } else if (id == R.id.nav_profile && !(this instanceof ProfileActivity)) {
                 Log.d(TAG, "Navigating to ProfileActivity");
-                startActivity(new Intent(this, ProfileActivity.class));
+                startActivity(new Intent(this, "com.bilkom.ui.ProfileActivity"));
             } else if (id == R.id.nav_logout) {
                 Log.d(TAG, "Handling logout");
                 handleLogout();
@@ -199,7 +199,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     
     private void handleNavigationToClubs() {
         try {
-            startActivity(new Intent(this, ClubActivitiesActivity.class));
+            startActivity(new Intent(this, "com.bilkom.ui.ClubActivitiesActivity"));
         } catch (Exception e) {
             Toast.makeText(this, "Clubs feature coming soon", Toast.LENGTH_SHORT).show();
         }
@@ -309,7 +309,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
             homeItem.setOnClickListener(v -> {
                 popupWindow.dismiss();
                 if (!(this instanceof HomeActivity)) {
-                    startActivity(new Intent(this, HomeActivity.class));
+                    startActivity(new Intent(this, "com.bilkom.ui.HomeActivity"));
                 }
             });
             
@@ -317,7 +317,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
             profileItem.setOnClickListener(v -> {
                 popupWindow.dismiss();
                 if (!(this instanceof ProfileActivity)) {
-                    startActivity(new Intent(this, ProfileActivity.class));
+                    startActivity(new Intent(this, "com.bilkom.ui.ProfileActivity"));
                 }
             });
             
@@ -325,7 +325,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
             settingsItem.setOnClickListener(v -> {
                 popupWindow.dismiss();
                 if (!(this instanceof SettingsActivity)) {
-                    startActivity(new Intent(this, SettingsActivity.class));
+                    startActivity(new Intent(this, "com.bilkom.ui.SettingsActivity"));
                 }
             });
             
