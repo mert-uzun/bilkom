@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
+import android.content.ComponentName;
 
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -247,18 +248,11 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void setupClickListeners() {
-        // Weather card is no longer clickable
-        
         // Add button to navigate to emergency alerts
         View.OnClickListener alertsListener = v -> {
-            try {
-                // Navigate to ReportActivity for emergency alerts
-                Intent intent = new Intent(this, ReportActivity.class);
-                startActivity(intent);
-            } catch (Exception e) {
-                Log.e(TAG, "Error navigating to emergency alerts", e);
-                Toast.makeText(this, "Cannot open emergency alerts", Toast.LENGTH_SHORT).show();
-            }
+            Intent intent = new Intent();
+            intent.setClassName(getPackageName(), "com.bilkom.ui.ReportActivity");
+            startActivity(intent);
         };
         
         // Find a view to attach the emergency alerts click listener
@@ -277,14 +271,9 @@ public class HomeActivity extends BaseActivity {
         Button activitySelectionButton = findViewById(R.id.activitySelectionButton);
         if (activitySelectionButton != null) {
             activitySelectionButton.setOnClickListener(v -> {
-                try {
-                    // Navigate to EventActivity for activity selection
-                    Intent intent = new Intent(this, EventActivity.class);
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Log.e(TAG, "Error navigating to activity selection", e);
-                    Toast.makeText(this, "Cannot open activity selection", Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent();
+                intent.setClassName(getPackageName(), "com.bilkom.ui.EventActivity");
+                startActivity(intent);
             });
         }
         
@@ -292,14 +281,9 @@ public class HomeActivity extends BaseActivity {
         Button clubActivitiesButton = findViewById(R.id.clubActivitiesButton);
         if (clubActivitiesButton != null) {
             clubActivitiesButton.setOnClickListener(v -> {
-                try {
-                    // Navigate to ClubActivitiesActivity for club activities
-                    Intent intent = new Intent(this, ClubActivitiesActivity.class);
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Log.e(TAG, "Error navigating to club activities", e);
-                    Toast.makeText(this, "Cannot open club activities", Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent();
+                intent.setClassName(getPackageName(), "com.bilkom.ui.ClubActivitiesActivity");
+                startActivity(intent);
             });
         }
         
