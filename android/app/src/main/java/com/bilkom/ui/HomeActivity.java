@@ -172,11 +172,21 @@ public class HomeActivity extends BaseActivity {
                 weatherIcon.setImageResource(R.drawable.ic_menu);
             }
             
-            // Temperature formatting with default if needed
+            // Temperature formatting with proper handling
+            double temperature = wf.getTemperature();
+            // Format to one decimal place
+            String tempFormatted = String.format(Locale.getDefault(), "%.1f°C", temperature);
+            weatherTemp.setText(tempFormatted);
+            
+            // Set description
             String description = wf.getDescription();
-            float temperature = (float) wf.getTemperature();
-            weatherTemp.setText(String.format(Locale.getDefault(), "%.1f°C", temperature));
-            weatherDesc.setText(description != null ? description : "");
+            if (description != null && !description.isEmpty()) {
+                weatherDesc.setText(description);
+            } else {
+                weatherDesc.setText("");
+            }
+            
+            Log.d(TAG, "Weather updated: " + temperature + "°C, " + description);
         } catch (Exception e) {
             Log.e(TAG, "Error updating weather UI", e);
             weatherTemp.setText("Weather data unavailable");

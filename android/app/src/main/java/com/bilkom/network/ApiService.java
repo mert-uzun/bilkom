@@ -82,7 +82,7 @@ public interface ApiService {
     Call<Void> reactivateClub(@Path("id") Long id);
 
     @POST("/api/clubs/registration")
-    Call<Club> registerClub(@Body ClubRequest body);
+    Call<Club> registerClub(@Body ClubRequest body, @Header("Authorization") String token);
 
     @GET("/api/clubs/registration/pending/{adminId}")
     Call<List<Club>> getPendingRegistrations(@Path("adminId") Long adminId);

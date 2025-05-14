@@ -38,6 +38,7 @@ public class ClubActivitiesActivity extends BaseActivity {
     private Button addClubActivityButton;
     private Button myClubsButton;
     private Button myActivitiesButton;
+    private Button createClubButton;
     private ClubActivityAdapter clubActivityAdapter;
     private List<Event> clubActivities;
     private List<Club> myClubs;
@@ -63,6 +64,7 @@ public class ClubActivitiesActivity extends BaseActivity {
         addClubActivityButton = findViewById(R.id.addClubActivityButton);
         myClubsButton = findViewById(R.id.myClubsButton);
         myActivitiesButton = findViewById(R.id.myActivitiesButton);
+        createClubButton = findViewById(R.id.createClubButton);
         secureStorage = new SecureStorage(this);
         apiService = RetrofitClient.getInstance().getApiService();
         clubActivities = new ArrayList<>();
@@ -121,6 +123,16 @@ public class ClubActivitiesActivity extends BaseActivity {
             } catch (ClassNotFoundException e) {
                 Log.e("ClubActivitiesActivity", "Error navigating to MyActivitiesActivity: " + e.getMessage());
                 Toast.makeText(ClubActivitiesActivity.this, "Cannot open my activities page", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
+        createClubButton.setOnClickListener(v -> {
+            try {
+                Intent intent = new Intent(this, CreateClubActivity.class);
+                startActivity(intent);
+            } catch (Exception e) {
+                Log.e("ClubActivitiesActivity", "Error navigating to CreateClubActivity: " + e.getMessage());
+                Toast.makeText(ClubActivitiesActivity.this, "Cannot open create club page", Toast.LENGTH_SHORT).show();
             }
         });
     }
