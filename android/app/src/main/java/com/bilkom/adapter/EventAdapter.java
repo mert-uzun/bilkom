@@ -19,15 +19,24 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     protected List<Event> eventList;
     protected Context context;
     private OnJoinClickListener joinClickListener;
+    private OnItemClickListener itemClickListener;
 
     public interface OnJoinClickListener {
         void onJoinClick(Event event);
+    }
+    
+    public interface OnItemClickListener {
+        void onItemClick(Event event);
     }
 
     public EventAdapter(Context context, List<Event> eventList, OnJoinClickListener joinClickListener) {
         this.context = context;
         this.eventList = eventList;
         this.joinClickListener = joinClickListener;
+    }
+    
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.itemClickListener = listener;
     }
 
     @NonNull
@@ -45,6 +54,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         holder.joinButton.setOnClickListener(v -> {
             if (joinClickListener != null) {
                 joinClickListener.onJoinClick(event);
+            }
+        });
+        
+      
+        holder.itemView.setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onItemClick(event);
             }
         });
     }
@@ -74,6 +90,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             dateLocationTextView = itemView.findViewById(R.id.dateLocationTextView);
             tagsContainer = itemView.findViewById(R.id.tagsContainer);
             joinButton = itemView.findViewById(R.id.joinButton);
+            
+            itemView.setClickable(true);
+            itemView.setFocusable(true);
+            itemView.setBackgroundResource(android.R.drawable.list_selector_background);
         }
 
         public void bind(Event event) {
@@ -81,12 +101,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
             detailsTextView.setText(event.getEventDescription());
             quotaTextView.setText("Activity Quota: " + event.getCurrentParticipantsNumber() + "/" + event.getMaxParticipants());
             
-            // Display formatted date and location
             String dateTimeLocation = event.getFormattedEventDate() + " • " + event.getEventLocation();
             dateLocationTextView.setText(dateTimeLocation);
             dateLocationTextView.setVisibility(View.VISIBLE);
 
-            // Clear previous tags
             tagsContainer.removeAllViews();
             if (event.getTags() != null) {
                 for (String tag : event.getTags()) {

@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -89,6 +90,9 @@ public class HomeActivity extends BaseActivity {
         // Load data
         loadWeatherData();
         loadNewsData();
+        
+        // Setup clickable areas if needed
+        setupClickListeners();
     }
 
     @Override
@@ -98,7 +102,7 @@ public class HomeActivity extends BaseActivity {
 
     private void loadWeatherData() {
         ApiService apiService = RetrofitClient.getInstance().getApiService();
-        apiService.getWeatherForecast().enqueue(new Callback<WeatherForecast>() {
+        apiService.getWeather().enqueue(new Callback<WeatherForecast>() {
             @Override
             public void onResponse(Call<WeatherForecast> call, Response<WeatherForecast> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -143,7 +147,7 @@ public class HomeActivity extends BaseActivity {
 
     private void loadNewsData() {
         ApiService apiService = RetrofitClient.getInstance().getApiService();
-        apiService.getLatestNews().enqueue(new Callback<List<News>>() {
+        apiService.getNews().enqueue(new Callback<List<News>>() {
             @Override
             public void onResponse(Call<List<News>> call, Response<List<News>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -220,5 +224,43 @@ public class HomeActivity extends BaseActivity {
         errorView.setText("Unable to load news");
         errorView.setPadding(16, 16, 16, 16);
         newsContainer.addView(errorView);
+    }
+
+    private void setupClickListeners() {
+        // Make weather card clickable to show detailed forecast
+        CardView weatherCard = findViewById(R.id.weatherCard);
+        if (weatherCard != null) {
+            weatherCard.setOnClickListener(v -> {
+                Toast.makeText(this, "Weather details coming soon", Toast.LENGTH_SHORT).show();
+                // Here you could start a WeatherDetailActivity
+            });
+        }
+        
+        // Add button to navigate to emergency alerts
+        View.OnClickListener alertsListener = v -> {
+            try {
+                // Try to navigate to the EventActivity (where emergency alerts are shown)
+                Intent intent = new Intent(this, EventActivity.class);
+                startActivity(intent);
+            } catch (Exception e) {
+                Log.e(TAG, "Error navigating to emergency alerts", e);
+                Toast.makeText(this, "Cannot open emergency alerts", Toast.LENGTH_SHORT).show();
+            }
+        };
+        
+        // Find a view to attach the emergency alerts click listener
+        LinearLayout newsContainer = findViewById(R.id.newsContainer);
+        if (newsContainer != null && newsContainer.getChildCount() > 0) {
+            // Add a "View Emergency Alerts" button at the top of news
+            Button alertsButton = new Button(this);
+            alertsButton.setText("View Emergency Alerts");
+            alertsButton.setOnClickListener(alertsListener);
+            
+            // Add the button at the top of the news container
+            newsContainer.addView(alertsButton, 0);
+        }
+        
+        // Make navigation drawer menu items work by properly setting up the drawer
+        setupNavigationDrawer();
     }
 }

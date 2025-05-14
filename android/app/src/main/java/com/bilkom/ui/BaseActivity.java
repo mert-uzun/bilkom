@@ -29,6 +29,13 @@ import com.bilkom.network.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.view.LayoutInflater;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.app.AlertDialog;
 
 
 /**
@@ -74,6 +81,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                         getNavigationDrawerOpenId(), getNavigationDrawerCloseId());
                 drawerLayout.addDrawerListener(toggle);
                 toggle.syncState();
+
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeButtonEnabled(true);
 
                 navigationView.setNavigationItemSelectedListener(this);
                 setupUserInfo();
@@ -163,25 +173,26 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        Log.d(TAG, "Menu item clicked with ID: " + id);
+        Log.d(TAG, "Menu item clicked with ID: " + id + ", title: " + item.getTitle());
         
         try {
-            if (id == NAV_HOME && !(this instanceof HomeActivity)) {
+            if (id == R.id.nav_home && !(this instanceof HomeActivity)) {
+                Log.d(TAG, "Navigating to HomeActivity");
                 startActivity(new Intent(this, HomeActivity.class));
-            } else if (id == NAV_EVENTS) {
+            } else if (id == R.id.nav_events) {
+                Log.d(TAG, "Attempting to navigate to EventsActivity");
                 try {
-                    Class<?> eventsClass = Class.forName("com.bilkom.ui.EventsActivity");
+                    Class<?> eventsClass = Class.forName("com.bilkom.ui.EventActivity");
                     startActivity(new Intent(this, eventsClass));
                 } catch (ClassNotFoundException e) {
+                    Log.e(TAG, "EventActivity class not found", e);
                     Toast.makeText(this, "Events feature coming soon", Toast.LENGTH_SHORT).show();
                 }
-            } else if (id == NAV_CLUBS) {
-                handleNavigationToClubs();
-            } else if (id == NAV_PROFILE) {
+            } else if (id == R.id.nav_profile && !(this instanceof ProfileActivity)) {
+                Log.d(TAG, "Navigating to ProfileActivity");
                 startActivity(new Intent(this, ProfileActivity.class));
-            } else if (id == NAV_SETTINGS && !(this instanceof SettingsActivity)) {
-                startActivity(new Intent(this, SettingsActivity.class));
-            } else if (id == NAV_LOGOUT) {
+            } else if (id == R.id.nav_logout) {
+                Log.d(TAG, "Handling logout");
                 handleLogout();
             }
 
@@ -203,16 +214,36 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     
     private void handleLogout() {
         try {
-            secureStorage.clearAll();
-            
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
+            String token = secureStorage.getAuthToken();
+            if (token != null && !token.isEmpty()) {
+                apiService.logout("Bearer " + token).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        Log.d(TAG, "Logout API call successful: " + response.code());
+                        performLocalLogout();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e(TAG, "Logout API call failed", t);
+                        performLocalLogout();
+                    }
+                });
+            } else {
+                performLocalLogout();
+            }
         } catch (Exception e) {
             Log.e(TAG, "Error during logout", e);
             Toast.makeText(this, "Error during logout", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void performLocalLogout() {
+        secureStorage.clearAll();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -224,109 +255,108 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (drawerLayout != null && item.getItemId() == android.R.id.home) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            } else {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+            return true;
+        }
+        // Handle your other action bar items...
+        return super.onOptionsItemSelected(item);
+    }
 
     protected void setupCornerMenu() {
         try {
-            ImageButton menuButton = findViewById(R.id.toolbar);
+            // The menu button might be in the toolbar
+            ImageButton menuButton = findViewById(R.id.menuButton);
             if (menuButton == null) {
-                Log.e(TAG, "Menu button not found in layout");
+                // Try to find it in the toolbar
+                if (toolbar != null) {
+                    menuButton = toolbar.findViewById(R.id.menuButton);
+                }
+            }
+            
+            if (menuButton == null) {
+                Log.e(TAG, "Menu button not found in layout or toolbar");
                 return;
             }
-
+            
+            Log.d(TAG, "Menu button found, setting onClick listener");
             menuButton.setOnClickListener(v -> {
-                try {
-                    if (drawerLayout != null) {
-                        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                            drawerLayout.closeDrawer(GravityCompat.START);
-                        } else {
-                            drawerLayout.openDrawer(GravityCompat.START);
-                        }
-                    }
-                } catch (Exception e) {
-                    Log.e(TAG, "Error showing menu", e);
-                    Toast.makeText(this, "Error showing menu: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+                showCustomMenu(v);
             });
         } catch (Exception e) {
             Log.e(TAG, "Error setting up corner menu", e);
         }
     }
     
-    private void showMenu(View v) {
+    private void showCustomMenu(View anchorView) {
         try {
-            PopupMenu popup = new PopupMenu(this, v);
-            popup.getMenu().add(0, 1, 0, "Home");
-            popup.getMenu().add(0, 2, 0, "Profile");
-            popup.getMenu().add(0, 3, 0, "Settings");
-            popup.getMenu().add(0, 4, 0, "Logout");
+            // Inflate the popup menu layout
+            LayoutInflater inflater = LayoutInflater.from(this);
+            View popupView = inflater.inflate(R.layout.popup_menu, null);
             
-            popup.setOnMenuItemClickListener(item -> {
-                try {
-                    switch (item.getItemId()) {
-                        case 1: 
-                            if (!(this instanceof HomeActivity)) {
-                                startActivity(new Intent(this, HomeActivity.class));
-                            }
-                            return true;
-                            
-                        case 2: 
-                            if (!(this instanceof ProfileActivity)) {
-                                try {
-                                    Intent profileIntent = new Intent(this, ProfileActivity.class);
-                                    startActivity(profileIntent);
-                                } catch (Exception e) {
-                                    Log.e(TAG, "Error starting ProfileActivity directly", e);
-                                    
-                                    try {
-                                        Class<?> profileClass = Class.forName("com.bilkom.ui.ProfileActivity");
-                                        Intent intent = new Intent(this, profileClass);
-                                        startActivity(intent);
-                                    } catch (ClassNotFoundException cnfe) {
-                                        Log.e(TAG, "ProfileActivity class not found", cnfe);
-                                        Toast.makeText(this, "Profile page not available", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            }
-                            return true;
-                            
-                        case 3: // Settings
-                            if (!(this instanceof SettingsActivity)) {
-                                startActivity(new Intent(this, SettingsActivity.class));
-                            }
-                            return true;
-                            
-                        case 4: // Logout
-                            logout();
-                            return true;
-                            
-                        default:
-                            return false;
-                    }
-                } catch (Exception e) {
-                    Log.e(TAG, "Error handling menu selection", e);
-                    Toast.makeText(BaseActivity.this, "Error navigating to selected page", Toast.LENGTH_SHORT).show();
-                    return false;
+
+            PopupWindow popupWindow = new PopupWindow(
+                popupView,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                true
+            );
+            
+
+            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            popupWindow.setElevation(24);
+            
+            View homeItem = popupView.findViewById(R.id.menu_home);
+            homeItem.setOnClickListener(v -> {
+                popupWindow.dismiss();
+                if (!(this instanceof HomeActivity)) {
+                    startActivity(new Intent(this, HomeActivity.class));
                 }
             });
             
-            popup.show();
+            View profileItem = popupView.findViewById(R.id.menu_profile);
+            profileItem.setOnClickListener(v -> {
+                popupWindow.dismiss();
+                if (!(this instanceof ProfileActivity)) {
+                    startActivity(new Intent(this, ProfileActivity.class));
+                }
+            });
+            
+            View settingsItem = popupView.findViewById(R.id.menu_settings);
+            settingsItem.setOnClickListener(v -> {
+                popupWindow.dismiss();
+                if (!(this instanceof SettingsActivity)) {
+                    startActivity(new Intent(this, SettingsActivity.class));
+                }
+            });
+            
+            View logoutItem = popupView.findViewById(R.id.menu_logout);
+            logoutItem.setOnClickListener(v -> {
+                popupWindow.dismiss();
+                new AlertDialog.Builder(this)
+                    .setTitle("Confirm Logout")
+                    .setMessage("Are you sure you want to logout?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        handleLogout();
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+            });
+            
+            popupWindow.showAsDropDown(anchorView, 0, 0);
         } catch (Exception e) {
-            Log.e(TAG, "Error showing menu", e);
+            Log.e(TAG, "Error showing menu popup", e);
             Toast.makeText(this, "Error showing menu", Toast.LENGTH_SHORT).show();
         }
     }
     
     protected void logout() {
-        try {
-            secureStorage.clearAll();
-            
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-        } catch (Exception e) {
-            Log.e(TAG, "Error during logout", e);
-            Toast.makeText(this, "Error during logout", Toast.LENGTH_SHORT).show();
-        }
+        handleLogout(); 
     }
 } 

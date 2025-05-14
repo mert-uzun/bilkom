@@ -39,6 +39,15 @@ it extends the LinearLayout class to show the profile activity content-->
         <TextView android:text="Blood Type" style="@style/TextAppearance.AppCompat.Medium" android:textColor="@color/white"/>
         <TextView android:id="@+id/profileBloodType" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/white" android:layout_marginBottom="16dp"/>
 
+        <Button
+            android:id="@+id/editProfileButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Profile"
+            android:backgroundTint="#4A89F3"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
