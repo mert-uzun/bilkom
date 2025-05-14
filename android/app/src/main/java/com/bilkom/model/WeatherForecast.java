@@ -16,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class WeatherForecast {
     @SerializedName("temperature")
-    private float temperature;
+    private double temperature;
     
     @SerializedName("description")
     private String description;

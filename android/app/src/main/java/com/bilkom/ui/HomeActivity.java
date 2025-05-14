@@ -91,7 +91,7 @@ public class HomeActivity extends BaseActivity {
 
     private void loadWeatherData() {
         ApiService apiService = RetrofitClient.getInstance().getApiService();
-        apiService.getWeatherForecast().enqueue(new Callback<WeatherForecast>() {
+        apiService.getWeather().enqueue(new Callback<WeatherForecast>() {
             @Override
             public void onResponse(Call<WeatherForecast> call, Response<WeatherForecast> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -136,7 +136,7 @@ public class HomeActivity extends BaseActivity {
 
     private void loadNewsData() {
         ApiService apiService = RetrofitClient.getInstance().getApiService();
-        apiService.getLatestNews().enqueue(new Callback<List<News>>() {
+        apiService.getNews().enqueue(new Callback<List<News>>() {
             @Override
             public void onResponse(Call<List<News>> call, Response<List<News>> response) {
                 if (response.isSuccessful() && response.body() != null) {
