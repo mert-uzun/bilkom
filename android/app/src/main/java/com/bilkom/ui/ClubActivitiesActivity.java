@@ -101,9 +101,9 @@ public class ClubActivitiesActivity extends BaseActivity {
     private void setupButtons() {
         addClubActivityButton.setOnClickListener(v -> {
             try {
-                Intent intent = new Intent(this, AddClubActivity.class);
+                Intent intent = new Intent(this, Class.forName("com.bilkom.ui.AddClubActivity"));
                 startActivity(intent);
-            } catch (Exception e) {
+            } catch (ClassNotFoundException e) {
                 Log.e("ClubActivitiesActivity", "Error navigating to AddClubActivity: " + e.getMessage());
                 Toast.makeText(ClubActivitiesActivity.this, "Cannot open add club activity page", Toast.LENGTH_SHORT).show();
             }
@@ -115,9 +115,9 @@ public class ClubActivitiesActivity extends BaseActivity {
         
         myActivitiesButton.setOnClickListener(v -> {
             try {
-                Intent intent = new Intent(this, MyActivitiesActivity.class);
+                Intent intent = new Intent(this, Class.forName("com.bilkom.ui.MyActivitiesActivity"));
                 startActivity(intent);
-            } catch (Exception e) {
+            } catch (ClassNotFoundException e) {
                 Log.e("ClubActivitiesActivity", "Error navigating to MyActivitiesActivity: " + e.getMessage());
                 Toast.makeText(ClubActivitiesActivity.this, "Cannot open my activities page", Toast.LENGTH_SHORT).show();
             }
@@ -238,8 +238,13 @@ public class ClubActivitiesActivity extends BaseActivity {
     }
 
     private void onClubActivityClick(Event event) {
-        Intent intent = new Intent(this, Class.forName("com.bilkom.ui.EventDetailsActivity"));
-        intent.putExtra("event", event);
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(this, Class.forName("com.bilkom.ui.EventDetailsActivity"));
+            intent.putExtra("event", event);
+            startActivity(intent);
+        } catch (ClassNotFoundException e) {
+            Log.e("ClubActivitiesActivity", "Error navigating to EventDetailsActivity: " + e.getMessage());
+            Toast.makeText(ClubActivitiesActivity.this, "Cannot open event details page", Toast.LENGTH_SHORT).show();
+        }
     }
 } 
