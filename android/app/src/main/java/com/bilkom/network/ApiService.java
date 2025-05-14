@@ -179,10 +179,10 @@ public interface ApiService {
     // I didn't understand the purpose of this method
     // There is no such method in the backend
 
-    @GET("clubs/my")
+    @GET("users/me/clubs")
     Call<List<Club>> getMyClubs(@Header("Authorization") String token);
 
-    @GET("events/club/{clubId}")
+    @GET("/events/clubs/{clubId}/events")
     Call<List<Event>> getClubEventsByClubId(@Path("clubId") long clubId, @Header("Authorization") String token);
 
     @GET("events/club/my-club-events")
