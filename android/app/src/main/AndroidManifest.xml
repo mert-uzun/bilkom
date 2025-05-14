@@ -58,6 +58,7 @@ it is used to store the permissions, activities, application, etc.-->
         <activity android:name=".ui.MyClubsActivity" />
         <activity android:name=".ui.ClubMembersActivity" />
         <activity android:name=".ui.ManageClubActivity" />
+        <activity android:name=".ui.CreateClubActivity" />
 
         <!-- Event Activities -->
         <activity android:name=".ui.EventActivity" />

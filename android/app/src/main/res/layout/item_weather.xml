@@ -5,7 +5,7 @@
     android:layout_marginBottom="8dp"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp"
-    app:cardBackgroundColor="#1E293B">
+    app:cardBackgroundColor="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                 android:id="@+id/weatherDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:maxLines="1"
@@ -70,13 +70,13 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_temperature"
-                        android:tint="@color/white"/>
+                        android:tint="@color/black"/>
 
                     <TextView
                         android:id="@+id/temperatureText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginStart="4dp"/>
@@ -94,13 +94,13 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_humidity"
-                        android:tint="@color/white"/>
+                        android:tint="@color/black"/>
 
                     <TextView
                         android:id="@+id/humidityText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:layout_marginStart="4dp"/>
                 </LinearLayout>
@@ -117,13 +117,13 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_wind"
-                        android:tint="@color/white"/>
+                        android:tint="@color/black"/>
 
                     <TextView
                         android:id="@+id/windText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:layout_marginStart="4dp"/>
                 </LinearLayout>
