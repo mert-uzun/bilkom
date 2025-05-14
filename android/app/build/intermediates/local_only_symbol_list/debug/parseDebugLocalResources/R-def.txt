@@ -1,6 +1,7 @@
 R_DEF: Internal format may change without notice
 local
 color bilkom_bg
+color bilkom_blue
 color bilkom_on_bg
 color black
 color card_bg_dark
@@ -246,6 +247,7 @@ layout activity_home
 layout activity_login
 layout activity_main
 layout activity_my_activities
+layout activity_news
 layout activity_profile
 layout activity_registration
 layout activity_report
@@ -268,6 +270,7 @@ layout popup_menu
 menu drawer_menu
 menu main_menu
 string Bilkom
+string activities_and_events
 string activity_selection
 string app_logo
 string app_name

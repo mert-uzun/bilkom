@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="http://schemas.android.com/tools">
     <color name="bilkom_bg">#F5F5F5</color>
+    <color name="bilkom_blue">#1976D2</color>
     <color name="bilkom_on_bg">#FFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="card_bg_dark">#1E1E1E</color>
@@ -16,6 +17,7 @@
     <color name="weather_card_bg">#1E1E1E</color>
     <color name="white">#FFFFFFFF</color>
     <string name="Bilkom">Bilkom</string>
+    <string name="activities_and_events">Activities and Events</string>
     <string name="activity_selection">Activity Selection</string>
     <string name="app_logo">BILKOM</string>
     <string name="app_name">Bilkom</string>

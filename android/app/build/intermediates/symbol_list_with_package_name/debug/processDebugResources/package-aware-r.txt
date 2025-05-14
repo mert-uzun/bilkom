@@ -1361,6 +1361,7 @@ color background_floating_material_light
 color background_material_dark
 color background_material_light
 color bilkom_bg
+color bilkom_blue
 color bilkom_on_bg
 color black
 color bright_foreground_disabled_material_dark
@@ -3972,6 +3973,7 @@ layout activity_home
 layout activity_login
 layout activity_main
 layout activity_my_activities
+layout activity_news
 layout activity_profile
 layout activity_registration
 layout activity_report
@@ -4102,6 +4104,7 @@ string abc_searchview_description_voice
 string abc_shareactionprovider_share_with
 string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
+string activities_and_events
 string activity_selection
 string androidx_startup
 string app_logo
