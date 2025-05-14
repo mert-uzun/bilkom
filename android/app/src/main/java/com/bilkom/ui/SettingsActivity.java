@@ -23,6 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import java.util.List;
 import android.app.AlertDialog;
+import android.view.MenuItem;
 /**
  * SettingsActivity handles user settings such as updating passwords and logging out.
  * 
@@ -731,5 +732,28 @@ public class SettingsActivity extends BaseActivity {
     // Return navigation ID programmatically instead of using R.id
     protected int getNavigationMenuItemId() {
         return 3; // Assuming 3 is the ID for settings in your menu
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            // Handle the back button in the action bar
+            navigateToMainActivity();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Override to handle the hardware back button
+        navigateToMainActivity();
+    }
+
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Clear the back stack
+        startActivity(intent);
+        finish(); // Close this activity
     }
 }
