@@ -22,6 +22,7 @@ import retrofit2.Response;
 public class AddClubActivity extends CreateEventActivity {
     private Spinner clubSpinner;
     private List<Club> clubs = new ArrayList<>();
+    private List<String> clubNames = new ArrayList<>();
     private SecureStorage secureStorage;
     private ApiService apiService;
     private Set<String> selectedTags = new HashSet<>();
@@ -48,7 +49,7 @@ public class AddClubActivity extends CreateEventActivity {
 
         // Setup club spinner
         setupClubSpinner();
-        fetchClubs();
+        fetchAllClubs();
 
         // Setup tags with default tags
         setupDefaultTags();
@@ -58,31 +59,47 @@ public class AddClubActivity extends CreateEventActivity {
     }
 
     private void setupClubSpinner() {
-        ArrayAdapter<Club> adapter = new ArrayAdapter<>(this,
-            android.R.layout.simple_spinner_item, clubs);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, clubNames) {
+            @Override
+            public android.view.View getView(int position, android.view.View convertView, android.view.ViewGroup parent) {
+                android.view.View view = super.getView(position, convertView, parent);
+                ((android.widget.TextView) view).setTextColor(android.graphics.Color.BLACK);
+                return view;
+            }
+            @Override
+            public android.view.View getDropDownView(int position, android.view.View convertView, android.view.ViewGroup parent) {
+                android.view.View view = super.getDropDownView(position, convertView, parent);
+                ((android.widget.TextView) view).setTextColor(android.graphics.Color.BLACK);
+                return view;
+            }
+        };
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         clubSpinner.setAdapter(adapter);
     }
 
-    private void fetchClubs() {
-        String token = secureStorage.getAuthToken();
-        apiService.getMyClubs("Bearer " + token).enqueue(new Callback<List<Club>>() {
+    private void fetchAllClubs() {
+        apiService.listClubs().enqueue(new Callback<List<Club>>() {
             @Override
             public void onResponse(Call<List<Club>> call, Response<List<Club>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     clubs.clear();
+                    clubNames.clear();
                     clubs.addAll(response.body());
+                    for (Club club : clubs) {
+                        clubNames.add(club.getName());
+                    }
                     ((ArrayAdapter) clubSpinner.getAdapter()).notifyDataSetChanged();
                 } else {
-                    Toast.makeText(AddClubActivity.this, 
-                        "Failed to load clubs", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddClubActivity.this,
+                            "Failed to load clubs", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Club>> call, Throwable t) {
-                Toast.makeText(AddClubActivity.this, 
-                    "Error loading clubs: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddClubActivity.this,
+                        "Error loading clubs: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -132,44 +149,47 @@ public class AddClubActivity extends CreateEventActivity {
         if (!valid) return;
 
         // Get selected club
-        Club selectedClub = (Club) clubSpinner.getSelectedItem();
+        int selectedIndex = clubSpinner.getSelectedItemPosition();
+        if (selectedIndex >= 0 && selectedIndex < clubs.size()) {
+            Club selectedClub = clubs.get(selectedIndex);
 
-        // Prepare request
-        EventRequest request = new EventRequest(
-            name,           // eventName
-            description,    // eventDescription
-            maxParticipants,// maxParticipants
-            location,       // eventLocation
-            date,          // eventDate
-            tags,          // tags
-            true,          // isClubEvent
-            selectedClub.getId() // clubId
-        );
+            // Prepare request
+            EventRequest request = new EventRequest(
+                name,           // eventName
+                description,    // eventDescription
+                maxParticipants,// maxParticipants
+                location,       // eventLocation
+                date,          // eventDate
+                tags,          // tags
+                true,          // isClubEvent
+                selectedClub.getId() // clubId
+            );
 
-        String token = "Bearer " + secureStorage.getAuthToken();
-        Toast loadingToast = Toast.makeText(this, "Creating club event...", Toast.LENGTH_SHORT);
-        loadingToast.show();
+            String token = "Bearer " + secureStorage.getAuthToken();
+            Toast loadingToast = Toast.makeText(this, "Creating club event...", Toast.LENGTH_SHORT);
+            loadingToast.show();
 
-        // Use the regular createEvent method, as it should handle club events too
-        apiService.createEvent(request, token).enqueue(new Callback<com.bilkom.model.Event>() {
-            @Override
-            public void onResponse(Call<com.bilkom.model.Event> call, Response<com.bilkom.model.Event> response) {
-                loadingToast.cancel();
-                if (response.isSuccessful() && response.body() != null) {
-                    Toast.makeText(AddClubActivity.this, "Club event created!", Toast.LENGTH_SHORT).show();
-                    finish();
-                } else {
-                    Toast.makeText(AddClubActivity.this, 
-                        "Failed to create club event", Toast.LENGTH_SHORT).show();
+            // Use the regular createEvent method, as it should handle club events too
+            apiService.createEvent(request, token).enqueue(new Callback<com.bilkom.model.Event>() {
+                @Override
+                public void onResponse(Call<com.bilkom.model.Event> call, Response<com.bilkom.model.Event> response) {
+                    loadingToast.cancel();
+                    if (response.isSuccessful() && response.body() != null) {
+                        Toast.makeText(AddClubActivity.this, "Club event created!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(AddClubActivity.this, 
+                            "Failed to create club event", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<com.bilkom.model.Event> call, Throwable t) {
-                loadingToast.cancel();
-                Toast.makeText(AddClubActivity.this, 
-                    "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<com.bilkom.model.Event> call, Throwable t) {
+                    loadingToast.cancel();
+                    Toast.makeText(AddClubActivity.this, 
+                        "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 } 

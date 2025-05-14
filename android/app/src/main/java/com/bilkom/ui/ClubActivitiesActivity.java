@@ -42,6 +42,7 @@ public class ClubActivitiesActivity extends BaseActivity {
     private ClubActivityAdapter clubActivityAdapter;
     private List<Event> clubActivities;
     private List<Club> myClubs;
+    private List<String> clubNames;
     private ApiService apiService;
     private SecureStorage secureStorage;
 
@@ -55,7 +56,7 @@ public class ClubActivitiesActivity extends BaseActivity {
         setupRecyclerView();
         setupSpinner();
         setupButtons();
-        fetchMyClubs();
+        fetchAllClubs();
     }
 
     private void initializeViews() {
@@ -69,6 +70,7 @@ public class ClubActivitiesActivity extends BaseActivity {
         apiService = RetrofitClient.getInstance().getApiService();
         clubActivities = new ArrayList<>();
         myClubs = new ArrayList<>();
+        clubNames = new ArrayList<>();
     }
 
     private void setupRecyclerView() {
@@ -78,26 +80,39 @@ public class ClubActivitiesActivity extends BaseActivity {
     }
 
     private void setupSpinner() {
-        List<String> spinnerItems = new ArrayList<>();
-        spinnerItems.add("Select a club");
+        clubNames.clear();
+        clubNames.add("Select a club"); // Placeholder
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, spinnerItems);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, clubNames) {
+            @Override
+            public View getView(int position, View convertView, android.view.ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                ((android.widget.TextView) view).setTextColor(android.graphics.Color.BLACK);
+                return view;
+            }
+            @Override
+            public View getDropDownView(int position, View convertView, android.view.ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                ((android.widget.TextView) view).setTextColor(android.graphics.Color.BLACK);
+                return view;
+            }
+        };
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         clubSpinner.setAdapter(adapter);
 
         clubSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0 && position <= myClubs.size()) {
+                if (position == 0) {
+                    fetchAllClubActivities();
+                } else if (position > 0 && position <= myClubs.size()) {
                     Club selectedClub = myClubs.get(position - 1);
                     fetchClubActivitiesByClub(selectedClub.getId());
                 }
             }
-
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
 
@@ -137,41 +152,30 @@ public class ClubActivitiesActivity extends BaseActivity {
         });
     }
 
-    private void fetchMyClubs() {
-        String token = secureStorage.getAuthToken();
-        if (token == null) {
-            Toast.makeText(this, "Not logged in", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        apiService.getMyClubs("Bearer " + token).enqueue(new Callback<List<Club>>() {
+    private void fetchAllClubs() {
+        apiService.listClubs().enqueue(new Callback<List<Club>>() {
             @Override
             public void onResponse(@NonNull Call<List<Club>> call, @NonNull Response<List<Club>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     myClubs.clear();
+                    clubNames.clear();
                     myClubs.addAll(response.body());
-
-                    List<String> spinnerItems = new ArrayList<>();
-                    spinnerItems.add("Select a club");
+                    clubNames.add("Select a club");
                     for (Club club : myClubs) {
-                        spinnerItems.add(club.getName());
+                        clubNames.add(club.getName());
                     }
-
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(ClubActivitiesActivity.this,
-                            android.R.layout.simple_spinner_item, spinnerItems);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    clubSpinner.setAdapter(adapter);
+                    ((ArrayAdapter) clubSpinner.getAdapter()).notifyDataSetChanged();
+                    fetchAllClubActivities(); // Optionally show all activities by default
                 } else {
-                    Toast.makeText(ClubActivitiesActivity.this, 
-                            "Failed to load clubs: " + response.message(), 
+                    Toast.makeText(ClubActivitiesActivity.this,
+                            "Failed to load clubs: " + response.message(),
                             Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(@NonNull Call<List<Club>> call, @NonNull Throwable t) {
-                Toast.makeText(ClubActivitiesActivity.this, 
-                        "Error: " + t.getMessage(), 
+                Toast.makeText(ClubActivitiesActivity.this,
+                        "Error: " + t.getMessage(),
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -245,6 +249,45 @@ public class ClubActivitiesActivity extends BaseActivity {
                 loadingToast.cancel();
                 Toast.makeText(ClubActivitiesActivity.this, 
                         "Error: " + t.getMessage(), 
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void fetchAllClubActivities() {
+        String token = secureStorage.getAuthToken();
+        if (token == null) {
+            Toast.makeText(this, "Not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Toast loadingToast = Toast.makeText(ClubActivitiesActivity.this, "Loading all club activities...", Toast.LENGTH_SHORT);
+        loadingToast.show();
+
+        apiService.getEvents("Bearer " + token).enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Event>> call, @NonNull Response<List<Event>> response) {
+                loadingToast.cancel();
+                if (response.isSuccessful() && response.body() != null) {
+                    clubActivities.clear();
+                    for (Event event : response.body()) {
+                        if (event.isClubEvent()) {
+                            clubActivities.add(event);
+                        }
+                    }
+                    clubActivityAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(ClubActivitiesActivity.this,
+                            "Failed to load activities: " + response.message(),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Event>> call, @NonNull Throwable t) {
+                loadingToast.cancel();
+                Toast.makeText(ClubActivitiesActivity.this,
+                        "Error: " + t.getMessage(),
                         Toast.LENGTH_SHORT).show();
             }
         });
