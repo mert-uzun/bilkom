@@ -4,7 +4,7 @@
             "outputFile": "com.bilkom.app-mergeDebugResources-38:/values-hy/values-hy.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Mert\\.gradle\\caches\\8.11.1\\transforms\\6715b31bbf1a1b6d2172160697e6b3ca\\transformed\\jetified-play-services-base-18.0.1\\res\\values-hy\\values.xml",
+                    "source": "C:\\Users\\alisv\\GradleHome\\caches\\8.11.1\\transforms\\6715b31bbf1a1b6d2172160697e6b3ca\\transformed\\jetified-play-services-base-18.0.1\\res\\values-hy\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -21,7 +21,24 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Mert\\.gradle\\caches\\8.11.1\\transforms\\fefe834a386d035fe20e523c8d594398\\transformed\\appcompat-1.6.1\\res\\values-hy\\values-hy.xml",
+                    "source": "C:\\Users\\alisv\\GradleHome\\caches\\8.11.1\\transforms\\45b0a36069b3fc6a52dfffce1aa30ac0\\transformed\\jetified-play-services-basement-18.1.0\\res\\values-hy\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "146",
+                        "endOffsets": "341"
+                    },
+                    "to": {
+                        "startLines": "56",
+                        "startColumns": "4",
+                        "startOffsets": "5505",
+                        "endColumns": "150",
+                        "endOffsets": "5651"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\alisv\\GradleHome\\caches\\8.11.1\\transforms\\fefe834a386d035fe20e523c8d594398\\transformed\\appcompat-1.6.1\\res\\values-hy\\values-hy.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -38,7 +55,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Mert\\.gradle\\caches\\8.11.1\\transforms\\396b3bd9f7cc838ca8b3160313162102\\transformed\\core-1.12.0\\res\\values-hy\\values-hy.xml",
+                    "source": "C:\\Users\\alisv\\GradleHome\\caches\\8.11.1\\transforms\\396b3bd9f7cc838ca8b3160313162102\\transformed\\core-1.12.0\\res\\values-hy\\values-hy.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
@@ -55,7 +72,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Mert\\.gradle\\caches\\8.11.1\\transforms\\d8bec85b96b802b8c0d3a8e5ac690938\\transformed\\material-1.11.0\\res\\values-hy\\values-hy.xml",
+                    "source": "C:\\Users\\alisv\\GradleHome\\caches\\8.11.1\\transforms\\d8bec85b96b802b8c0d3a8e5ac690938\\transformed\\material-1.11.0\\res\\values-hy\\values-hy.xml",
                     "from": {
                         "startLines": "2,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -71,23 +88,6 @@
                         "endLines": "5,33,34,35,36,37,45,46,47,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125",
                         "endColumns": "12,75,75,79,91,87,94,129,80,63,96,84,61,86,61,63,60,66,60,53,121,56,59,53,80,134,83,84,135,74,74,142,94,79,55,52,65,73,78,85,82,70,75,75,76,105,87,79,95,95,73,77,99,50,83,68,86,90,61,63,62,70,104,105,99,102,59,56,84",
                         "endOffsets": "310,3095,3171,3251,3343,3431,4246,4376,4457,6836,6933,7018,7080,7167,7229,7293,7354,7421,7482,7536,7658,7715,7775,7829,7910,8045,8129,8214,8350,8425,8500,8643,8738,8818,8874,8927,8993,9067,9146,9232,9315,9386,9462,9538,9615,9721,9809,9889,9985,10081,10155,10233,10333,10384,10468,10537,10624,10715,10777,10841,10904,10975,11080,11186,11286,11389,11449,11506,11591"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Mert\\.gradle\\caches\\8.11.1\\transforms\\45b0a36069b3fc6a52dfffce1aa30ac0\\transformed\\jetified-play-services-basement-18.1.0\\res\\values-hy\\values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "195",
-                        "endColumns": "146",
-                        "endOffsets": "341"
-                    },
-                    "to": {
-                        "startLines": "56",
-                        "startColumns": "4",
-                        "startOffsets": "5505",
-                        "endColumns": "150",
-                        "endOffsets": "5651"
                     }
                 }
             ]

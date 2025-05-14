@@ -133,7 +133,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     }
 
     protected int getBaseLayoutId() {
-        return 0x7f0c001c; 
+        return R.layout.activity_base;
     }
     
     protected int getToolbarId() {

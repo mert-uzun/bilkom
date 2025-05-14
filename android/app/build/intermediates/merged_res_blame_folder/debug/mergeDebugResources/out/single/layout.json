@@ -1,130 +1,126 @@
 [
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_event.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_event.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_main.xml",
+        "source": "com.bilkom.app-main-42:/layout/activity_main.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\nav_header.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\nav_header.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/item_weather.xml",
+        "source": "com.bilkom.app-main-42:/layout/item_weather.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\item_event.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_event.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/item_dialog_club.xml",
+        "source": "com.bilkom.app-main-42:/layout/item_dialog_club.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_club_activities.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_club_activities.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_my_activities.xml",
+        "source": "com.bilkom.app-main-42:/layout/activity_my_activities.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_registration.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_registration.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_login.xml",
+        "source": "com.bilkom.app-main-42:/layout/activity_login.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_settings.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_settings.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_report.xml",
+        "source": "com.bilkom.app-main-42:/layout/activity_report.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_admin_club_approval.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_admin_club_approval.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/nav_header.xml",
+        "source": "com.bilkom.app-main-42:/layout/nav_header.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\dialog_forgot_password.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\dialog_forgot_password.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/fragment_event_details.xml",
+        "source": "com.bilkom.app-main-42:/layout/fragment_event_details.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_add_club_activity.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_add_club_activity.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/item_club_activity.xml",
+        "source": "com.bilkom.app-main-42:/layout/item_club_activity.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\fragment_event_details.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\fragment_event_details.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_event.xml",
+        "source": "com.bilkom.app-main-42:/layout/activity_event.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_report.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_report.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/dialog_clubs_list.xml",
+        "source": "com.bilkom.app-main-42:/layout/dialog_clubs_list.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_create_event.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_create_event.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/item_pending_club.xml",
+        "source": "com.bilkom.app-main-42:/layout/item_pending_club.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\item_dialog_club.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_dialog_club.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_settings.xml",
+        "source": "com.bilkom.app-main-42:/layout/activity_settings.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\item_user_club.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_user_club.xml"
-    },
-    {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_login.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_login.xml"
-    },
-    {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_add_club.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_add_club.xml"
-    },
-    {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\popup_menu.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\popup_menu.xml"
-    },
-    {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\item_weather.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_weather.xml"
-    },
-    {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_main.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_main.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_registration.xml",
+        "source": "com.bilkom.app-main-42:/layout/activity_registration.xml"
     },
     {
         "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_home.xml",
         "source": "com.bilkom.app-main-42:/layout/activity_home.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_admin_user_list.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_admin_user_list.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_add_club.xml",
+        "source": "com.bilkom.app-main-42:/layout/activity_add_club.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_admin_dashboard.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_admin_dashboard.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/item_event.xml",
+        "source": "com.bilkom.app-main-42:/layout/item_event.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_my_activities.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_my_activities.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/popup_menu.xml",
+        "source": "com.bilkom.app-main-42:/layout/popup_menu.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\item_club_activity.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_club_activity.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_create_event.xml",
+        "source": "com.bilkom.app-main-42:/layout/activity_create_event.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_profile.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_profile.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/item_user_club.xml",
+        "source": "com.bilkom.app-main-42:/layout/item_user_club.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_base.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_base.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/dialog_forgot_password.xml",
+        "source": "com.bilkom.app-main-42:/layout/dialog_forgot_password.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\nav_drawer_menu.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\nav_drawer_menu.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/item_user.xml",
+        "source": "com.bilkom.app-main-42:/layout/item_user.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\item_pending_club.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_pending_club.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_base.xml",
+        "source": "com.bilkom.app-main-42:/layout/activity_base.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\item_user.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_user.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/nav_drawer_menu.xml",
+        "source": "com.bilkom.app-main-42:/layout/nav_drawer_menu.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\item_news.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\item_news.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_admin_user_list.xml",
+        "source": "com.bilkom.app-main-42:/layout/activity_admin_user_list.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\activity_home.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\activity_home.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_club_activities.xml",
+        "source": "com.bilkom.app-main-42:/layout/activity_club_activities.xml"
     },
     {
-        "merged": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-mergeDebugResources-39:\\layout\\dialog_clubs_list.xml",
-        "source": "C:\\Users\\Mert\\.gradle\\daemon\\8.11.1\\com.bilkom.app-main-42:\\layout\\dialog_clubs_list.xml"
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_profile.xml",
+        "source": "com.bilkom.app-main-42:/layout/activity_profile.xml"
+    },
+    {
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/item_news.xml",
+        "source": "com.bilkom.app-main-42:/layout/item_news.xml"
+    },
+    {
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_add_club_activity.xml",
+        "source": "com.bilkom.app-main-42:/layout/activity_add_club_activity.xml"
+    },
+    {
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_admin_club_approval.xml",
+        "source": "com.bilkom.app-main-42:/layout/activity_admin_club_approval.xml"
+    },
+    {
+        "merged": "com.bilkom.app-mergeDebugResources-39:/layout/activity_admin_dashboard.xml",
+        "source": "com.bilkom.app-main-42:/layout/activity_admin_dashboard.xml"
     }
 ]

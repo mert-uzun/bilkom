@@ -2,6 +2,7 @@ package com.bilkom.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,8 +43,13 @@ public class ProfileActivity extends BaseActivity {
         clubsContainer = findViewById(R.id.clubsContainer);
         
         findViewById(R.id.editProfileButton).setOnClickListener(v -> {
-            Intent intent = new Intent(this, Class.forName("com.bilkom.ui.SettingsActivity"));
-            startActivity(intent);
+            try {
+                Intent intent = new Intent(this, Class.forName("com.bilkom.ui.SettingsActivity"));
+                startActivity(intent);
+            } catch (ClassNotFoundException e) {
+                Log.e("ProfileActivity", "Error navigating to SettingsActivity: " + e.getMessage());
+                Toast.makeText(ProfileActivity.this, "Cannot open settings page", Toast.LENGTH_SHORT).show();
+            }
         });
 
         loadUserProfile();
@@ -70,12 +76,12 @@ public class ProfileActivity extends BaseActivity {
                         bloodTypeText.setText(user.getBloodType());
                         displayClubs(user.getClubMemberships());
                     } else {
-                        Toast.makeText(this, "Failed to load profile", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileActivity.this, "Failed to load profile", Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-                    Toast.makeText(this, "Network error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileActivity.this, "Network error", Toast.LENGTH_SHORT).show();
                 }
             });
     }
@@ -114,5 +120,10 @@ public class ProfileActivity extends BaseActivity {
             noClubsText.setText("No club memberships");
             clubsContainer.addView(noClubsText);
         }
+    }
+
+    @Override
+    protected int getBaseLayoutId() {
+        return R.layout.activity_base;
     }
 } 

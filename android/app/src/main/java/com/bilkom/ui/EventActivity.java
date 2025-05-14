@@ -24,6 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import java.util.stream.Collectors;
+import android.util.Log;
 
 public class EventActivity extends BaseActivity {
     private RecyclerView eventRecyclerView;
@@ -56,23 +57,37 @@ public class EventActivity extends BaseActivity {
         
         // Set click listener for item click to navigate to details
         adapter.setOnItemClickListener(event -> {
-            // Navigate to details activity
-            Intent intent = new Intent(this, Class.forName("com.bilkom.ui.EventDetailsActivity"));
-            intent.putExtra("event", event);
-            startActivity(intent);
+            try {
+                Intent intent = new Intent(this, Class.forName("com.bilkom.ui.EventDetailsActivity"));
+                intent.putExtra("event", event);
+                startActivity(intent);
+            } catch (ClassNotFoundException e) {
+                Log.e("EventActivity", "Error navigating to EventDetailsActivity: " + e.getMessage());
+                Toast.makeText(EventActivity.this, "Cannot open event details page", Toast.LENGTH_SHORT).show();
+            }
         });
         
         eventRecyclerView.setAdapter(adapter);
 
         addActivityButton.setOnClickListener(v -> {
-            Intent intent = new Intent(EventActivity.this, Class.forName("com.bilkom.ui.CreateEventActivity"));
-            startActivity(intent);
+            try {
+                Intent intent = new Intent(EventActivity.this, Class.forName("com.bilkom.ui.CreateEventActivity"));
+                startActivity(intent);
+            } catch (ClassNotFoundException e) {
+                Log.e("EventActivity", "Error navigating to CreateEventActivity: " + e.getMessage());
+                Toast.makeText(EventActivity.this, "Cannot open create event page", Toast.LENGTH_SHORT).show();
+            }
         });
         
         // Set click listener for My Activities button
         myActivitiesButton.setOnClickListener(v -> {
-            Intent intent = new Intent(EventActivity.this, Class.forName("com.bilkom.ui.MyActivitiesActivity"));
-            startActivity(intent);
+            try {
+                Intent intent = new Intent(EventActivity.this, Class.forName("com.bilkom.ui.MyActivitiesActivity"));
+                startActivity(intent);
+            } catch (ClassNotFoundException e) {
+                Log.e("EventActivity", "Error navigating to MyActivitiesActivity: " + e.getMessage());
+                Toast.makeText(EventActivity.this, "Cannot open my activities page", Toast.LENGTH_SHORT).show();
+            }
         });
 
         tagSpinner.setSelection(0);
