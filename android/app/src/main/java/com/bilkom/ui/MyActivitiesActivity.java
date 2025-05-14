@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bilkom.R;
 import com.bilkom.adapter.EventAdapter;
+import com.bilkom.adapter.CurrentEventAdapter;
 import com.bilkom.adapter.PastEventAdapter;
 import com.bilkom.model.Event;
 import com.bilkom.network.ApiService;
@@ -25,7 +26,7 @@ public class MyActivitiesActivity extends BaseActivity {
     private RecyclerView myClubsActivitiesRecyclerView;
     private RecyclerView pastActivitiesRecyclerView;
     
-    private EventAdapter currentActivitiesAdapter;
+    private CurrentEventAdapter currentActivitiesAdapter;
     private EventAdapter myClubsActivitiesAdapter;
     private PastEventAdapter pastActivitiesAdapter;
     
@@ -63,7 +64,7 @@ public class MyActivitiesActivity extends BaseActivity {
     private void setupRecyclerViews() {
         // Current Activities
         currentActivitiesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        currentActivitiesAdapter = new EventAdapter(this, currentActivities, event -> {
+        currentActivitiesAdapter = new CurrentEventAdapter(this, currentActivities, event -> {
             // Withdraw from event
             withdrawFromEvent(event);
         });
@@ -95,7 +96,7 @@ public class MyActivitiesActivity extends BaseActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     currentActivities.clear();
                     currentActivities.addAll(response.body());
-                    currentActivitiesAdapter.notifyDataSetChanged();
+                    currentActivitiesAdapter.setEventList(currentActivities);
                 } else {
                     Toast.makeText(MyActivitiesActivity.this, 
                         "Failed to load current activities", Toast.LENGTH_SHORT).show();
@@ -182,7 +183,7 @@ public class MyActivitiesActivity extends BaseActivity {
                 if (response.isSuccessful()) {
                     Toast.makeText(MyActivitiesActivity.this, 
                         "Successfully withdrew from event", Toast.LENGTH_SHORT).show();
-                    fetchCurrentActivities(); // Refresh the list
+                    fetchCurrentActivities(); 
                 } else {
                     Toast.makeText(MyActivitiesActivity.this, 
                         "Failed to withdraw from event", Toast.LENGTH_SHORT).show();

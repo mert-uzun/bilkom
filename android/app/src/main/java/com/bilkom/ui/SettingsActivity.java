@@ -149,7 +149,6 @@ public class SettingsActivity extends BaseActivity {
                 // Join Club option
                 addCustomButton("Join Club", v -> {
                     try {
-                        // Try using reflection to find JoinClubActivity
                         Class<?> joinClubClass = Class.forName("com.bilkom.ui.JoinClubActivity");
                         Intent intent = new Intent(SettingsActivity.this, joinClubClass);
                         startActivity(intent);

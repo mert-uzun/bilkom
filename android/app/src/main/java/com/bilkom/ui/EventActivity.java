@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class EventActivity extends BaseActivity {
     private RecyclerView eventRecyclerView;
     private Button addActivityButton;
+    private Button myActivitiesButton;
     private Spinner tagSpinner;
     private EventAdapter adapter;
     private List<Event> eventList;
@@ -43,6 +44,7 @@ public class EventActivity extends BaseActivity {
 
         eventRecyclerView = findViewById(R.id.eventRecyclerView);
         addActivityButton = findViewById(R.id.addActivityButton);
+        myActivitiesButton = findViewById(R.id.myActivitiesButton);
         tagSpinner = findViewById(R.id.tagSpinner);
         secureStorage = new SecureStorage(this);
 
@@ -55,7 +57,7 @@ public class EventActivity extends BaseActivity {
         // Set click listener for item click to navigate to details
         adapter.setOnItemClickListener(event -> {
             // Navigate to details activity
-            Intent intent = new Intent(EventActivity.this, EventDetailsActivity.class);
+            Intent intent = new Intent(this, Class.forName("com.bilkom.ui.EventDetailsActivity"));
             intent.putExtra("event", event);
             startActivity(intent);
         });
@@ -63,7 +65,13 @@ public class EventActivity extends BaseActivity {
         eventRecyclerView.setAdapter(adapter);
 
         addActivityButton.setOnClickListener(v -> {
-            Intent intent = new Intent(EventActivity.this, CreateEventActivity.class);
+            Intent intent = new Intent(EventActivity.this, Class.forName("com.bilkom.ui.CreateEventActivity"));
+            startActivity(intent);
+        });
+        
+        // Set click listener for My Activities button
+        myActivitiesButton.setOnClickListener(v -> {
+            Intent intent = new Intent(EventActivity.this, Class.forName("com.bilkom.ui.MyActivitiesActivity"));
             startActivity(intent);
         });
 

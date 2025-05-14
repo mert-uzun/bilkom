@@ -3,6 +3,7 @@ package com.bilkom.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,6 +36,7 @@ public class ClubActivitiesActivity extends BaseActivity {
     private Spinner clubSpinner;
     private Button addClubActivityButton;
     private Button myClubsButton;
+    private Button myActivitiesButton;
     private ClubActivityAdapter clubActivityAdapter;
     private List<Event> clubActivities;
     private List<Club> myClubs;
@@ -59,6 +61,7 @@ public class ClubActivitiesActivity extends BaseActivity {
         clubSpinner = findViewById(R.id.clubSpinner);
         addClubActivityButton = findViewById(R.id.addClubActivityButton);
         myClubsButton = findViewById(R.id.myClubsButton);
+        myActivitiesButton = findViewById(R.id.myActivitiesButton);
         secureStorage = new SecureStorage(this);
         apiService = RetrofitClient.getInstance().getApiService();
         clubActivities = new ArrayList<>();
@@ -97,12 +100,27 @@ public class ClubActivitiesActivity extends BaseActivity {
 
     private void setupButtons() {
         addClubActivityButton.setOnClickListener(v -> {
-            Toast.makeText(this, "Add Club Activity clicked", Toast.LENGTH_SHORT).show();
-            // TODO: Implement add club activity functionality
+            try {
+                Intent intent = new Intent(this, Class.forName("com.bilkom.ui.AddClubActivity"));
+                startActivity(intent);
+            } catch (Exception e) {
+                Log.e("ClubActivitiesActivity", "Error navigating to AddClubActivity: " + e.getMessage());
+                Toast.makeText(this, "Cannot open add club activity page", Toast.LENGTH_SHORT).show();
+            }
         });
 
         myClubsButton.setOnClickListener(v -> {
             fetchMyClubsActivities();
+        });
+        
+        myActivitiesButton.setOnClickListener(v -> {
+            try {
+                Intent intent = new Intent(this, Class.forName("com.bilkom.ui.MyActivitiesActivity"));
+                startActivity(intent);
+            } catch (Exception e) {
+                Log.e("ClubActivitiesActivity", "Error navigating to MyActivitiesActivity: " + e.getMessage());
+                Toast.makeText(this, "Cannot open my activities page", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -126,12 +144,12 @@ public class ClubActivitiesActivity extends BaseActivity {
                         spinnerItems.add(club.getName());
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(ClubActivitiesActivity.this,
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                             android.R.layout.simple_spinner_item, spinnerItems);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     clubSpinner.setAdapter(adapter);
                 } else {
-                    Toast.makeText(ClubActivitiesActivity.this, 
+                    Toast.makeText(this, 
                             "Failed to load clubs: " + response.message(), 
                             Toast.LENGTH_SHORT).show();
                 }
@@ -139,7 +157,7 @@ public class ClubActivitiesActivity extends BaseActivity {
 
             @Override
             public void onFailure(@NonNull Call<List<Club>> call, @NonNull Throwable t) {
-                Toast.makeText(ClubActivitiesActivity.this, 
+                Toast.makeText(this, 
                         "Error: " + t.getMessage(), 
                         Toast.LENGTH_SHORT).show();
             }
@@ -165,7 +183,7 @@ public class ClubActivitiesActivity extends BaseActivity {
                     clubActivities.addAll(response.body());
                     clubActivityAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(ClubActivitiesActivity.this, 
+                    Toast.makeText(this, 
                             "Failed to load activities: " + response.message(), 
                             Toast.LENGTH_SHORT).show();
                 }
@@ -174,7 +192,7 @@ public class ClubActivitiesActivity extends BaseActivity {
             @Override
             public void onFailure(@NonNull Call<List<Event>> call, @NonNull Throwable t) {
                 loadingToast.cancel();
-                Toast.makeText(ClubActivitiesActivity.this, 
+                Toast.makeText(this, 
                         "Error: " + t.getMessage(), 
                         Toast.LENGTH_SHORT).show();
             }
@@ -203,7 +221,7 @@ public class ClubActivitiesActivity extends BaseActivity {
                     }
                     clubActivityAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(ClubActivitiesActivity.this, 
+                    Toast.makeText(this, 
                             "Failed to load activities: " + response.message(), 
                             Toast.LENGTH_SHORT).show();
                 }
@@ -212,7 +230,7 @@ public class ClubActivitiesActivity extends BaseActivity {
             @Override
             public void onFailure(@NonNull Call<Map<Long, List<Event>>> call, @NonNull Throwable t) {
                 loadingToast.cancel();
-                Toast.makeText(ClubActivitiesActivity.this, 
+                Toast.makeText(this, 
                         "Error: " + t.getMessage(), 
                         Toast.LENGTH_SHORT).show();
             }
