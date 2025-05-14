@@ -23,12 +23,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import java.util.List;
 import android.app.AlertDialog;
-import com.bilkom.model.ClubMember;
+import android.view.MenuItem;
 import com.bilkom.ui.ClubActivitiesActivity;
 import com.bilkom.model.ClubMembership;
 import com.bilkom.model.Club;
-/**
- * SettingsActivity handles user settings such as updating passwords and logging out.
+
+/** SettingsActivity handles user settings such as updating passwords and logging out.
  * 
  * @author Sıla Bozkurt
  * @version 1.0
@@ -38,6 +38,7 @@ public class SettingsActivity extends BaseActivity {
     
     private EditText newPasswordEdit, confirmPasswordEdit;
     private MaterialButton updatePasswordButton, logoutButton, changeProfilePicButton;
+    private Button mainMenuButton, createClubButton;
     private ImageView profileImageView;
     private SecureStorage secureStorage;
     private Long userId;
@@ -113,6 +114,8 @@ public class SettingsActivity extends BaseActivity {
             updateProfileButton = findViewById(findResourceId("id", "updateProfileButton"));
             manageClubsButton = findViewById(findResourceId("id", "manageClubsButton"));
             joinClubButton = findViewById(findResourceId("id", "joinClubButton"));
+            mainMenuButton = findViewById(findResourceId("id", "mainMenuButton"));
+            createClubButton = findViewById(findResourceId("id", "createClubButton"));
             apiService = RetrofitClient.getInstance().getApiService();
         } catch (Exception e) {
             Log.e(TAG, "Error initializing views", e);
@@ -122,11 +125,11 @@ public class SettingsActivity extends BaseActivity {
     private void setupListeners() {
         try {
             if (updatePasswordButton != null) {
-        updatePasswordButton.setOnClickListener(v -> updatePassword());
+                updatePasswordButton.setOnClickListener(v -> updatePassword());
             }
             
             if (logoutButton != null) {
-        logoutButton.setOnClickListener(v -> logout());
+                logoutButton.setOnClickListener(v -> logout());
             }
             
             if (changeProfilePicButton != null) {
@@ -144,6 +147,22 @@ public class SettingsActivity extends BaseActivity {
             
             if (joinClubButton != null) {
                 joinClubButton.setOnClickListener(v -> joinClub());
+            }
+            
+            if (mainMenuButton != null) {
+                mainMenuButton.setOnClickListener(v -> navigateToMainActivity());
+            }
+            
+            if (createClubButton != null) {
+                createClubButton.setOnClickListener(v -> {
+                    try {
+                        Intent intent = new Intent(SettingsActivity.this, CreateClubActivity.class);
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error navigating to CreateClubActivity", e);
+                        Toast.makeText(this, "Cannot open create club page", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         } catch (Exception e) {
             Log.e(TAG, "Error setting up listeners", e);
@@ -760,5 +779,28 @@ public class SettingsActivity extends BaseActivity {
     // Return navigation ID programmatically instead of using R.id
     protected int getNavigationMenuItemId() {
         return 3; // Assuming 3 is the ID for settings in your menu
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            // Handle the back button in the action bar
+            navigateToMainActivity();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Override to handle the hardware back button
+        navigateToMainActivity();
+    }
+
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Clear the back stack
+        startActivity(intent);
+        finish(); // Close this activity
     }
 }

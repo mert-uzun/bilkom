@@ -2,6 +2,7 @@ package com.bilkom.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,11 +30,17 @@ public class ReportActivity extends BaseActivity {
         setupNavigationDrawer();
         getLayoutInflater().inflate(R.layout.activity_report, findViewById(R.id.contentFrame));
 
+        // Enable up/back navigation in the action bar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Report Event");
+        }
+
         // Get event ID from intent
         eventId = getIntent().getLongExtra("eventId", -1);
         if (eventId == -1) {
             Toast.makeText(this, "Invalid event", Toast.LENGTH_SHORT).show();
-            finish();
+            navigateToMainActivity();
             return;
         }
 
@@ -66,7 +73,8 @@ public class ReportActivity extends BaseActivity {
                         if (response.isSuccessful()) {
                             Toast.makeText(ReportActivity.this, 
                                 "Report submitted successfully", Toast.LENGTH_SHORT).show();
-                            finish();
+                            // Navigate to MainActivity after successful submission
+                            navigateToMainActivity();
                         } else {
                             Toast.makeText(ReportActivity.this, 
                                 "Failed to submit report", Toast.LENGTH_SHORT).show();
@@ -80,5 +88,28 @@ public class ReportActivity extends BaseActivity {
                             "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            // Handle the back button in the action bar
+            navigateToMainActivity();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
+    public void onBackPressed() {
+        // Override to handle the hardware back button
+        navigateToMainActivity();
+    }
+    
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Clear the back stack
+        startActivity(intent);
+        finish(); // Close this activity
     }
 }

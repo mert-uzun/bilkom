@@ -6,7 +6,7 @@ it extends the ScrollView class to show the main activity content-->
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/card_bg_dark">
+    android:background="@color/bilkom_bg">
 
     <!-- Menu Button in the corner - replacing ImageButton with Button -->
     <Button
@@ -37,7 +37,7 @@ it extends the ScrollView class to show the main activity content-->
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="WELCOME TO"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="22sp"
             android:textStyle="bold"
             android:layout_marginTop="8dp"/>
@@ -69,7 +69,7 @@ it extends the ScrollView class to show the main activity content-->
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="#222">
+            app:cardBackgroundColor="@color/white">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -88,7 +88,7 @@ it extends the ScrollView class to show the main activity content-->
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="This area will contain detail regarding the most recent emergency situation."
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:layout_marginTop="4dp"/>
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/contactAlertButton"
@@ -117,7 +117,7 @@ it extends the ScrollView class to show the main activity content-->
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="#222">
+            app:cardBackgroundColor="@color/white">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -127,7 +127,7 @@ it extends the ScrollView class to show the main activity content-->
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Latest News"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textStyle="bold"
                     android:textSize="16sp"/>
                 <LinearLayout

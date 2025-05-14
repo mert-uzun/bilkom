@@ -14,6 +14,8 @@ import com.bilkom.model.EventRequest;
 import com.bilkom.network.*;
 import com.bilkom.utils.*;
 import retrofit2.*;
+import android.content.Intent;
+import android.view.MenuItem;
 
 public class CreateEventActivity extends BaseActivity {
     protected EditText eventNameEdit, eventLocationEdit, eventDateEdit, maxParticipantsEdit, eventDescriptionEdit;
@@ -205,5 +207,28 @@ public class CreateEventActivity extends BaseActivity {
             });
             tagsContainer.addView(tagView);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            // Handle the back button in the action bar
+            navigateToMainActivity();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Override to handle the hardware back button
+        navigateToMainActivity();
+    }
+
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Clear the back stack
+        startActivity(intent);
+        finish(); // Close this activity
     }
 } 

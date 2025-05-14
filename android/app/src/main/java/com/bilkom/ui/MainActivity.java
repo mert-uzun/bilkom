@@ -201,10 +201,11 @@ public class MainActivity extends AppCompatActivity {
                 weatherDescription.setText(description != null ? description : "Unknown weather");
             }
             
-            // Temperature formatting
+            // Temperature formatting - fixed to properly handle temperature value
             if (temperatureText != null) {
-                float temperature = (float) wf.getTemperature();
+                double temperature = wf.getTemperature();
                 temperatureText.setText(String.format(Locale.getDefault(), "%.1f°C", temperature));
+                Log.d(TAG, "Temperature set to: " + temperature + "°C");
             }
             
             // Humidity
