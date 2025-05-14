@@ -105,7 +105,7 @@ public class ClubActivitiesActivity extends BaseActivity {
                 startActivity(intent);
             } catch (Exception e) {
                 Log.e("ClubActivitiesActivity", "Error navigating to AddClubActivity: " + e.getMessage());
-                Toast.makeText(this, "Cannot open add club activity page", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ClubActivitiesActivity.this, "Cannot open add club activity page", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -119,7 +119,7 @@ public class ClubActivitiesActivity extends BaseActivity {
                 startActivity(intent);
             } catch (Exception e) {
                 Log.e("ClubActivitiesActivity", "Error navigating to MyActivitiesActivity: " + e.getMessage());
-                Toast.makeText(this, "Cannot open my activities page", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ClubActivitiesActivity.this, "Cannot open my activities page", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -171,7 +171,7 @@ public class ClubActivitiesActivity extends BaseActivity {
             return;
         }
 
-        Toast loadingToast = Toast.makeText(this, "Loading club activities...", Toast.LENGTH_SHORT);
+        Toast loadingToast = Toast.makeText(ClubActivitiesActivity.this, "Loading club activities...", Toast.LENGTH_SHORT);
         loadingToast.show();
 
         apiService.getClubEventsByClubId(clubId, "Bearer " + token).enqueue(new Callback<List<Event>>() {
@@ -238,7 +238,7 @@ public class ClubActivitiesActivity extends BaseActivity {
     }
 
     private void onClubActivityClick(Event event) {
-        Intent intent = new Intent(this, EventDetailsActivity.class);
+        Intent intent = new Intent(this, Class.forName("com.bilkom.ui.EventDetailsActivity"));
         intent.putExtra("event", event);
         startActivity(intent);
     }
