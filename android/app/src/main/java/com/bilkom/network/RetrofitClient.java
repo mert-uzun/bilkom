@@ -8,6 +8,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Retrofit client for API requests
@@ -17,12 +18,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @since 2025-05-09
  */
 public final class RetrofitClient {
-    private static final String BASE_URL = "http://10.0.2.2:8080/api/"; //localhost
+    private static final String BASE_URL = "http://172.20.10.2:8080/api/";
     private static volatile Retrofit retrofit;
     private static volatile ApiService apiService;
     private static volatile Context applicationContext;
     private static final Gson gson = new GsonBuilder()
-        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX") 
         .create();
 
@@ -46,12 +46,16 @@ public final class RetrofitClient {
         if (retrofit == null) {
             synchronized (RetrofitClient.class) {
                 if (retrofit == null) {
-                    HttpLoggingInterceptor log = new HttpLoggingInterceptor()
-                            .setLevel(HttpLoggingInterceptor.Level.BODY);
+                    HttpLoggingInterceptor log = new HttpLoggingInterceptor(message -> {
+                        android.util.Log.d("Retrofit", "Network: " + message);
+                    }).setLevel(HttpLoggingInterceptor.Level.BODY);
 
                     OkHttpClient okHttp = new OkHttpClient.Builder()
                             .addInterceptor(new AuthInterceptor())
                             .addInterceptor(log)
+                            .connectTimeout(30, TimeUnit.SECONDS)
+                            .readTimeout(30, TimeUnit.SECONDS)
+                            .writeTimeout(30, TimeUnit.SECONDS)
                             .build();
 
                     retrofit = new Retrofit.Builder()

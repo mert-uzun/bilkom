@@ -93,12 +93,12 @@ public class WeatherForecast {
         this.windDirection = windDirection;
     }
 
-    public String getIconCode() {
-        return iconCode;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setIconCode(String iconCode) {
-        this.iconCode = iconCode;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getLocation() {

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+so what does android manifest do?
+it is used to store the android manifest content which is basically the main file for the android app
+it is used to store the permissions, activities, application, etc.
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bilkom.android"
+    package="com.bilkom"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -8,30 +13,39 @@
         android:minSdkVersion="24"
         android:targetSdkVersion="34" />
 
+    <!-- Internet Permission -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <permission
-        android:name="com.bilkom.android.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:name="com.bilkom.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.bilkom.android.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+    <uses-permission android:name="com.bilkom.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 
     <application
+        android:name="com.bilkom.BilkomApplication"
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-        android:dataExtractionRules="@xml/data_extraction_rules"
         android:debuggable="true"
         android:extractNativeLibs="false"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:networkSecurityConfig="@xml/network_security_config"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/bilkom_logo"
+        android:label="@string/Bilkom"
+        android:roundIcon="@drawable/bilkom_logo"
         android:supportsRtl="true"
+        android:testOnly="true"
         android:theme="@style/Theme.Bilkom"
         android:usesCleartextTraffic="true" >
+
+        <!-- Base Activity -->
+        <activity android:name="com.bilkom.ui.BaseActivity" />
+
+        <!-- Auth Activities -->
         <activity
-            android:name="com.bilkom.android.ui.LoginActivity"
+            android:name="com.bilkom.ui.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,20 +53,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.bilkom.android.ui.UserRegisterActivity"
-            android:exported="false"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Bilkom" />
-        <activity
-            android:name="com.bilkom.android.MainActivity"
-            android:exported="false"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Bilkom" />
+        <activity android:name="com.bilkom.ui.RegistrationActivity" />
+
+        <!-- Main Activities -->
+        <activity android:name="com.bilkom.ui.MainActivity" />
+        <activity android:name="com.bilkom.ui.HomeActivity" />
+        <activity android:name="com.bilkom.ui.ProfileActivity" />
+        <activity android:name="com.bilkom.ui.SettingsActivity" />
+        <activity android:name="com.bilkom.ui.EmergencyAlertsActivity" />
+
+        <!-- Club Activities -->
+        <activity android:name="com.bilkom.ui.ClubListActivity" />
+        <activity android:name="com.bilkom.ui.ClubDetailsActivity" />
+        <activity android:name="com.bilkom.ui.AddClubActivity" />
+        <activity android:name="com.bilkom.ui.ClubActivitiesActivity" />
+
+        <!-- Event Activities -->
+        <activity android:name="com.bilkom.ui.EventListActivity" />
+        <activity android:name="com.bilkom.ui.EventDetailsActivity" />
+        <activity android:name="com.bilkom.ui.CreateEventActivity" />
+        <activity android:name="com.bilkom.ui.MyActivitiesActivity" />
+        <activity android:name="com.bilkom.ui.ReportActivity" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.bilkom.android.androidx-startup"
+            android:authorities="com.bilkom.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"
@@ -65,6 +90,89 @@
                 android:value="androidx.startup" />
         </provider>
 
+        <receiver
+            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="com.google.android.gms.cloudmessaging.FINISHED_AFTER_HANDLED"
+                android:value="true" />
+        </receiver>
+        <!--
+             FirebaseMessagingService performs security checks at runtime,
+             but set to not exported to explicitly avoid allowing another app to call it.
+        -->
+        <service
+            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+            android:directBootAware="true"
+            android:exported="false" >
+            <intent-filter android:priority="-500" >
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.google.firebase.components.ComponentDiscoveryService"
+            android:directBootAware="true"
+            android:exported="false" >
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingKtxRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+        </service>
+
+        <activity
+            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <provider
+            android:name="com.google.firebase.provider.FirebaseInitProvider"
+            android:authorities="com.bilkom.firebaseinitprovider"
+            android:directBootAware="true"
+            android:exported="false"
+            android:initOrder="100" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <service
+            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+            android:exported="false" >
+            <meta-data
+                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+                android:value="cct" />
+        </service>
+        <service
+            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" >
+        </service>
+
+        <receiver
+            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+            android:exported="false" />
         <receiver
             android:name="androidx.profileinstaller.ProfileInstallReceiver"
             android:directBootAware="false"

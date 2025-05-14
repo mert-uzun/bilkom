@@ -1,11 +1,12 @@
 package com.bilkom.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.bilkom.BaseActivity;
+import com.bilkom.ui.BaseActivity;
 import com.bilkom.R;
 import com.bilkom.model.ClubMember;
 import com.bilkom.model.User;
@@ -39,6 +40,11 @@ public class ProfileActivity extends BaseActivity {
         phoneText = findViewById(R.id.profilePhone);
         bloodTypeText = findViewById(R.id.profileBloodType);
         clubsContainer = findViewById(R.id.clubsContainer);
+        
+        findViewById(R.id.editProfileButton).setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, SettingsActivity.class);
+            startActivity(intent);
+        });
 
         loadUserProfile();
     }
@@ -85,6 +91,22 @@ public class ProfileActivity extends BaseActivity {
                     "Club ID: " + member.getClubId();
                 clubText.setText(clubInfo);
                 clubText.setPadding(0, 0, 0, 16);
+                clubText.setClickable(true);
+                clubText.setTextColor(getResources().getColor(android.R.color.holo_blue_light));
+                
+                // Make club names clickable to view club details
+                final Long clubId = member.getClubId();
+                clubText.setOnClickListener(v -> {
+                    try {
+                        // Navigate to club activities
+                        Intent intent = new Intent(ProfileActivity.this, ClubActivitiesActivity.class);
+                        intent.putExtra("clubId", clubId);
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(ProfileActivity.this, "Club details not available", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                
                 clubsContainer.addView(clubText);
             }
         } else {

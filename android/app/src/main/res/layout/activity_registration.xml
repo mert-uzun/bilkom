@@ -3,13 +3,14 @@ it extends the ScrollView class to show the registration activity content-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,11 +26,23 @@ it extends the ScrollView class to show the registration activity content-->
                 android:contentDescription="Bilkom Logo"/>
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registration"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#191970"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            app:boxStrokeColor="#191970"
+            app:hintTextColor="#191970"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -37,6 +50,9 @@ it extends the ScrollView class to show the registration activity content-->
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Bilkent Email"
+                android:inputType="textEmailAddress"
+                android:background="@color/white"
+                android:textColor="#212121"
                 android:inputType="textEmailAddress"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -45,6 +61,8 @@ it extends the ScrollView class to show the registration activity content-->
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            app:boxStrokeColor="#191970"
+            app:hintTextColor="#191970"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:passwordToggleEnabled="true">
 
@@ -53,6 +71,9 @@ it extends the ScrollView class to show the registration activity content-->
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
+                android:inputType="textPassword"
+                android:background="@color/white"
+                android:textColor="#212121"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,6 +82,8 @@ it extends the ScrollView class to show the registration activity content-->
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            app:boxStrokeColor="#191970"
+            app:hintTextColor="#191970"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -68,6 +91,9 @@ it extends the ScrollView class to show the registration activity content-->
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="First Name"
+                android:inputType="textPersonName"
+                android:background="@color/white"
+                android:textColor="#212121"
                 android:inputType="textPersonName"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,6 +102,8 @@ it extends the ScrollView class to show the registration activity content-->
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            app:boxStrokeColor="#191970"
+            app:hintTextColor="#191970"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -83,6 +111,9 @@ it extends the ScrollView class to show the registration activity content-->
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Last Name"
+                android:inputType="textPersonName"
+                android:background="@color/white"
+                android:textColor="#212121"
                 android:inputType="textPersonName"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,6 +122,8 @@ it extends the ScrollView class to show the registration activity content-->
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            app:boxStrokeColor="#191970"
+            app:hintTextColor="#191970"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -98,6 +131,9 @@ it extends the ScrollView class to show the registration activity content-->
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Bilkent ID"
+                android:inputType="number"
+                android:background="@color/white"
+                android:textColor="#212121"
                 android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,6 +142,8 @@ it extends the ScrollView class to show the registration activity content-->
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            app:boxStrokeColor="#191970"
+            app:hintTextColor="#191970"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -113,6 +151,9 @@ it extends the ScrollView class to show the registration activity content-->
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Phone Number"
+                android:inputType="phone"
+                android:background="@color/white"
+                android:textColor="#212121"
                 android:inputType="phone"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,6 +162,8 @@ it extends the ScrollView class to show the registration activity content-->
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
+            app:boxStrokeColor="#191970"
+            app:hintTextColor="#191970"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -128,6 +171,9 @@ it extends the ScrollView class to show the registration activity content-->
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Blood Type"
+                android:inputType="text"
+                android:background="@color/white"
+                android:textColor="#212121"
                 android:inputType="text"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -136,7 +182,10 @@ it extends the ScrollView class to show the registration activity content-->
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Verify Account"
-            android:padding="12dp"/>
+            android:textSize="16sp"
+            android:backgroundTint="#191970"
+            android:textColor="@color/white"
+            android:padding="16dp"/>
 
         <TextView
             android:id="@+id/loginText"
@@ -144,8 +193,9 @@ it extends the ScrollView class to show the registration activity content-->
             android:layout_height="wrap_content"
             android:text="Already registered? Login"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:textColor="@color/design_default_color_primary"/>
+            android:layout_marginTop="20dp"
+            android:textSize="16sp"
+            android:textColor="#191970"/>
 
     </LinearLayout>
 </ScrollView> 

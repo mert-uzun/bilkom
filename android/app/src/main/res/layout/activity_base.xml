@@ -22,7 +22,19 @@ it extends the DrawerLayout class to show the menu -->
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            
+            <ImageButton
+                android:id="@+id/menuButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/menu_item"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="Menu" />
+            
+        </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
             android:id="@+id/contentFrame"

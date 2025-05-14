@@ -38,46 +38,24 @@ public class CreateEventActivity extends BaseActivity {
         // Set up date picker for eventDateEdit
         setupDatePicker();
 
-        // Sample tags (replace with dynamic tags if needed)
-        List<String> tagList = new ArrayList<>();
-        tagList.add("Sports");
-        tagList.add("Study");
-        tagList.add("Music");
-        tagList.add("Art");
-        tagList.add("Tech");
-        tagList.add("Club");
-        tagList.add("Competition");
-        tagList.add("Board Games");
-        tagList.add("Workshop");
-        tagList.add("Social");
-
-        Set<String> selectedTags = new HashSet<>();
-        tagsContainer.removeAllViews();
-        for (String tag : tagList) {
-            TextView tagView = new TextView(this);
-            tagView.setText(tag);
-            tagView.setTextColor(Color.WHITE);
-            tagView.setBackgroundResource(R.drawable.tag_chip_bg); // Use your chip drawable
-            tagView.setPadding(24, 8, 24, 8);
-            tagView.setTextSize(14);
-            tagView.setClickable(true);
-            tagView.setFocusable(true);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, 0, 16, 0);
-            tagView.setLayoutParams(params);
-            tagView.setOnClickListener(v -> {
-                if (selectedTags.contains(tag)) {
-                    selectedTags.remove(tag);
-                    tagView.setBackgroundResource(R.drawable.tag_chip_bg);
+        // Fetch available tags from backend
+        RetrofitClient.getInstance().getApiService().getAvailableTags().enqueue(new Callback<List<String>>() {
+            @Override
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    setupTags(response.body());
                 } else {
-                    selectedTags.add(tag);
-                    tagView.setBackgroundResource(R.drawable.tag_chip_selected_bg); // Use a different drawable for selected
+                    // Fallback to default tags if API call fails
+                    setupDefaultTags();
                 }
-            });
-            tagsContainer.addView(tagView);
-        }
+            }
+
+            @Override
+            public void onFailure(Call<List<String>> call, Throwable t) {
+                // Fallback to default tags if API call fails
+                setupDefaultTags();
+            }
+        });
 
         submitEventButton.setOnClickListener(v -> {
             // Validate form
@@ -189,5 +167,43 @@ public class CreateEventActivity extends BaseActivity {
             datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
             datePickerDialog.show();
         });
+    }
+
+    protected void setupDefaultTags() {
+        List<String> defaultTags = Arrays.asList(
+            "Sports", "Study", "Music", "Art", "Tech", 
+            "Club", "Competition", "Board Games", "Workshop", "Social"
+        );
+        setupTags(defaultTags);
+    }
+
+    protected void setupTags(List<String> tagList) {
+        selectedTags.clear();
+        tagsContainer.removeAllViews();
+        for (String tag : tagList) {
+            TextView tagView = new TextView(this);
+            tagView.setText(tag);
+            tagView.setTextColor(Color.WHITE);
+            tagView.setBackgroundResource(R.drawable.tag_chip_bg);
+            tagView.setPadding(24, 8, 24, 8);
+            tagView.setTextSize(14);
+            tagView.setClickable(true);
+            tagView.setFocusable(true);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0, 0, 16, 0);
+            tagView.setLayoutParams(params);
+            tagView.setOnClickListener(v -> {
+                if (selectedTags.contains(tag)) {
+                    selectedTags.remove(tag);
+                    tagView.setBackgroundResource(R.drawable.tag_chip_bg);
+                } else {
+                    selectedTags.add(tag);
+                    tagView.setBackgroundResource(R.drawable.tag_chip_selected_bg);
+                }
+            });
+            tagsContainer.addView(tagView);
+        }
     }
 } 

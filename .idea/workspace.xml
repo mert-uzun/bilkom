@@ -6,7 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="9426fac5-54b3-4121-970e-fbca8b02cd32" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/com/bilkom/adapter/EventAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/java/com/bilkom/adapter/EventAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/com/bilkom/ui/BaseActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/java/com/bilkom/ui/BaseActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/com/bilkom/ui/EventActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/java/com/bilkom/ui/EventActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/com/bilkom/ui/HomeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/java/com/bilkom/ui/HomeActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/com/bilkom/ui/ProfileActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/java/com/bilkom/ui/ProfileActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/layout/activity_base.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/layout/activity_base.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/layout/activity_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/layout/activity_home.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/layout/activity_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/layout/activity_profile.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/layout/activity_registration.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/layout/activity_registration.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/layout/item_event.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/layout/item_event.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/layout/item_news.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/layout/item_news.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +56,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/mert-uzun/bilkom.git&quot;,
-    &quot;accountId&quot;: &quot;2fc30805-7281-40c0-a7ca-3b7eea5ce045&quot;
+    &quot;accountId&quot;: &quot;99b4e976-1ff6-4573-994c-19c79772cd07&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -67,9 +77,10 @@
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Mert/Desktop/2025S/CS102/bilkom",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "last_opened_file_path": "C:/Users/Sıla/Documents/GitHub/bilkom",
+    "settings.editor.selected.configurable": "device.mirroring",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>

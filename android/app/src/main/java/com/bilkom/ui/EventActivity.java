@@ -44,12 +44,22 @@ public class EventActivity extends BaseActivity {
         eventRecyclerView = findViewById(R.id.eventRecyclerView);
         addActivityButton = findViewById(R.id.addActivityButton);
         tagSpinner = findViewById(R.id.tagSpinner);
+        secureStorage = new SecureStorage(this);
 
         eventRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         eventList = new ArrayList<>();
         adapter = new EventAdapter(this, eventList, event -> {
             Toast.makeText(this, "Join clicked for: " + event.getEventName(), Toast.LENGTH_SHORT).show();
         });
+        
+        // Set click listener for item click to navigate to details
+        adapter.setOnItemClickListener(event -> {
+            // Navigate to details activity
+            Intent intent = new Intent(EventActivity.this, EventDetailsActivity.class);
+            intent.putExtra("event", event);
+            startActivity(intent);
+        });
+        
         eventRecyclerView.setAdapter(adapter);
 
         addActivityButton.setOnClickListener(v -> {
@@ -95,45 +105,46 @@ public class EventActivity extends BaseActivity {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Event> allEvents = response.body();
-                    // Filter out club events
-                    allEvents = allEvents.stream()
+                    List<Event> allEvents = response.body().stream()
                             .filter(event -> !event.isClubEvent())
                             .collect(Collectors.toList());
                     // Fetch joined events
                     apiService.getJoinedEvents("Bearer " + token).enqueue(new Callback<List<Event>>() {
                         @Override
-                        public void onResponse(Call<List<Event>> call2, Response<List<Event>> response2) {
+                        public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                            if (response.isSuccessful() && response.body() != null) {
+                                List<Event> joinedEvents = response.body();
+                                // Filter out joined events
+                                List<Event> filteredEvents = allEvents.stream()
+                                        .filter(event -> !joinedEvents.stream()
+                                                .anyMatch(joined -> joined.getEventId().equals(event.getEventId())))
+                                        .collect(Collectors.toList());
+                                // Update UI
+                                adapter.setEventList(filteredEvents);
+                            }
                             loadingToast.cancel();
-                            Set<Long> joinedIds = new HashSet<>();
-                            if (response2.isSuccessful() && response2.body() != null) {
-                                for (Event joinedEvent : response2.body()) {
-                                    joinedIds.add(joinedEvent.getEventId());
-                                }
-                            }
-                            List<Event> notJoined = new ArrayList<>();
-                            for (Event event : allEvents) {
-                                if (!joinedIds.contains(event.getEventId())) {
-                                    notJoined.add(event);
-                                }
-                            }
-                            adapter.setEventList(notJoined);
                         }
+
                         @Override
-                        public void onFailure(Call<List<Event>> call2, Throwable t2) {
+                        public void onFailure(Call<List<Event>> call, Throwable t) {
                             loadingToast.cancel();
-                            Toast.makeText(EventActivity.this, "Network error: " + t2.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EventActivity.this, 
+                                "Error loading joined events: " + t.getMessage(), 
+                                Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {
                     loadingToast.cancel();
-                    Toast.makeText(EventActivity.this, "Failed to load events", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EventActivity.this, 
+                        "Failed to load events", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onFailure(Call<List<Event>> call, Throwable t) {
                 loadingToast.cancel();
-                Toast.makeText(EventActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(EventActivity.this, 
+                    "Error loading events: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

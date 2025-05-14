@@ -22,7 +22,7 @@ public class SecureStorage {
     private static final String AUTH_TOKEN_KEY = "auth_token";
     private static final String USER_ID_KEY = "user_id";
     
-    private final SharedPreferences preferences;
+    private SharedPreferences preferences;
     
     public SecureStorage(Context context) {
         try {

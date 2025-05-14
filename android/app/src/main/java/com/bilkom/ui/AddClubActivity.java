@@ -50,8 +50,8 @@ public class AddClubActivity extends CreateEventActivity {
         setupClubSpinner();
         fetchClubs();
 
-        // Setup tags
-        setupTags();
+        // Setup tags with default tags
+        setupDefaultTags();
 
         // Setup submit button
         submitEventButton.setOnClickListener(v -> submitClubEvent());

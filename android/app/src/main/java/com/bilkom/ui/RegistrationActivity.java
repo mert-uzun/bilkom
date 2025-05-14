@@ -21,6 +21,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import java.io.IOException;
 
 public class RegistrationActivity extends AppCompatActivity {
     private TextInputEditText emailInput, passwordInput, firstNameInput, lastNameInput;
@@ -66,35 +69,49 @@ public class RegistrationActivity extends AppCompatActivity {
         String phoneNumber = phoneNumberInput.getText().toString().trim();
         String bloodType = bloodTypeInput.getText().toString().trim();
 
+        // Email validation
         if (TextUtils.isEmpty(email) || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
             || !(email.endsWith("@bilkent.edu.tr") || email.endsWith("@ug.bilkent.edu.tr"))) {
             emailInput.setError("Enter a valid Bilkent email");
             isValid = false;
         }
+
+        // Password validation
         if (TextUtils.isEmpty(password) || password.length() < 8) {
             passwordInput.setError("Password must be at least 8 characters");
             isValid = false;
         }
+
+        // First name validation
         if (TextUtils.isEmpty(firstName)) {
             firstNameInput.setError("First name is required");
             isValid = false;
         }
+
+        // Last name validation
         if (TextUtils.isEmpty(lastName)) {
             lastNameInput.setError("Last name is required");
             isValid = false;
         }
-        if (TextUtils.isEmpty(bilkentId) || !bilkentId.matches("\\d+")) {
-            bilkentIdInput.setError("Enter a valid Bilkent ID");
+
+        // Bilkent ID validation
+        if (TextUtils.isEmpty(bilkentId) || !bilkentId.matches("^\\d+$")) {
+            bilkentIdInput.setError("Enter a valid Bilkent ID (numbers only)");
             isValid = false;
         }
-        if (TextUtils.isEmpty(phoneNumber)) {
-            phoneNumberInput.setError("Phone number is required");
+
+        // Phone validation
+        if (TextUtils.isEmpty(phoneNumber) || !phoneNumber.matches("^[+]?\\d{10,15}$")) {
+            phoneNumberInput.setError("Enter a valid phone number (10-15 digits with optional + prefix)");
             isValid = false;
         }
-        if (TextUtils.isEmpty(bloodType)) {
-            bloodTypeInput.setError("Blood type is required");
+
+        // Blood type validation
+        if (TextUtils.isEmpty(bloodType) || !bloodType.matches("^(A|B|AB|0)[+-]$")) {
+            bloodTypeInput.setError("Enter a valid blood type (A+, A-, B+, B-, AB+, AB-, 0+, 0-)");
             isValid = false;
         }
+
         return isValid;
     }
 
@@ -107,15 +124,16 @@ public class RegistrationActivity extends AppCompatActivity {
         String lastName = lastNameInput.getText().toString().trim();
         String bilkentId = bilkentIdInput.getText().toString().trim();
         String phoneNumber = phoneNumberInput.getText().toString().trim();
+        String bloodType = bloodTypeInput.getText().toString().trim();
         
-        // Constructor only takes 6 parameters - blood type is not in the model
         RegistrationRequest req = new RegistrationRequest(
             firstName,
             lastName,
             email, 
             password,
             bilkentId,
-            phoneNumber
+            phoneNumber,
+            bloodType
         );
 
         apiService.register(req).enqueue(new Callback<AuthResponse>() {
@@ -128,15 +146,36 @@ public class RegistrationActivity extends AppCompatActivity {
                     startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
                     finish();
                 } else {
-                    String msg = "Registration failed";
-                    Toast.makeText(RegistrationActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    String errorMessage = "Registration failed";
+                    if (response.code() == 409) {
+                        errorMessage = "Email already registered";
+                    } else if (response.code() == 400) {
+                        try {
+                            if (response.errorBody() != null) {
+                                String errorBody = response.errorBody().string();
+                                if (errorBody.contains("message")) {
+                                    errorMessage = new Gson().fromJson(errorBody, JsonObject.class)
+                                        .get("message").getAsString();
+                                }
+                            }
+                        } catch (Exception e) {
+                            errorMessage = "Invalid input data";
+                        }
+                    } else if (response.code() == 500) {
+                        errorMessage = "Server error. Please try again later.";
+                    }
+                    Toast.makeText(RegistrationActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<AuthResponse> call, Throwable t) {
                 registerButton.setEnabled(true);
-                Toast.makeText(RegistrationActivity.this, "Network error. Try again.", Toast.LENGTH_SHORT).show();
+                String errorMessage = "Network error. Please check your connection and try again.";
+                if (t instanceof IOException) {
+                    errorMessage = "No internet connection. Please try again when online.";
+                }
+                Toast.makeText(RegistrationActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }

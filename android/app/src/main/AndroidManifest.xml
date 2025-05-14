@@ -33,6 +33,7 @@ it is used to store the permissions, activities, application, etc.-->
         <activity android:name=".ui.RegistrationActivity" />
 
         <!-- Main Activities -->
+        <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.HomeActivity" />
         <activity android:name=".ui.ProfileActivity" />
         <activity android:name=".ui.SettingsActivity" />

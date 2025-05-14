@@ -18,9 +18,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.appcompat.app.AppCompatActivity;
+import android.widget.FrameLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,6 +40,9 @@ import com.bilkom.model.WeatherForecast;
 import com.bilkom.network.ApiService;
 import com.bilkom.network.RetrofitClient;
 import com.bilkom.utils.WeatherIconUtils;
+import com.bilkom.adapter.EventAdapter;
+import com.bilkom.model.Event;
+import com.bilkom.utils.SecureStorage;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,6 +90,9 @@ public class HomeActivity extends BaseActivity {
         // Load data
         loadWeatherData();
         loadNewsData();
+        
+        // Setup clickable areas if needed
+        setupClickListeners();
     }
 
     @Override
@@ -122,11 +133,11 @@ public class HomeActivity extends BaseActivity {
             weatherIcon.setImageResource(WeatherIconUtils.getWeatherIconResourceId(this, icon));
             
             // Temperature formatting with default if needed
-            float temperature = wf.getTemperature();
+            String description = wf.getDescription();
+            float temperature = (float) wf.getTemperature();
             weatherTemp.setText(String.format(Locale.getDefault(), "%.1f°C", temperature));
             
             // Description with null check
-            String description = wf.getDescription();
             weatherDesc.setText(description != null ? description : "");
         } catch (Exception e) {
             Log.e(TAG, "Error updating weather UI", e);
@@ -213,5 +224,43 @@ public class HomeActivity extends BaseActivity {
         errorView.setText("Unable to load news");
         errorView.setPadding(16, 16, 16, 16);
         newsContainer.addView(errorView);
+    }
+
+    private void setupClickListeners() {
+        // Make weather card clickable to show detailed forecast
+        CardView weatherCard = findViewById(R.id.weatherCard);
+        if (weatherCard != null) {
+            weatherCard.setOnClickListener(v -> {
+                Toast.makeText(this, "Weather details coming soon", Toast.LENGTH_SHORT).show();
+                // Here you could start a WeatherDetailActivity
+            });
+        }
+        
+        // Add button to navigate to emergency alerts
+        View.OnClickListener alertsListener = v -> {
+            try {
+                // Try to navigate to the EventActivity (where emergency alerts are shown)
+                Intent intent = new Intent(this, EventActivity.class);
+                startActivity(intent);
+            } catch (Exception e) {
+                Log.e(TAG, "Error navigating to emergency alerts", e);
+                Toast.makeText(this, "Cannot open emergency alerts", Toast.LENGTH_SHORT).show();
+            }
+        };
+        
+        // Find a view to attach the emergency alerts click listener
+        LinearLayout newsContainer = findViewById(R.id.newsContainer);
+        if (newsContainer != null && newsContainer.getChildCount() > 0) {
+            // Add a "View Emergency Alerts" button at the top of news
+            Button alertsButton = new Button(this);
+            alertsButton.setText("View Emergency Alerts");
+            alertsButton.setOnClickListener(alertsListener);
+            
+            // Add the button at the top of the news container
+            newsContainer.addView(alertsButton, 0);
+        }
+        
+        // Make navigation drawer menu items work by properly setting up the drawer
+        setupNavigationDrawer();
     }
 }
