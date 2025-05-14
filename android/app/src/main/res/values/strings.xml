@@ -43,4 +43,10 @@
     
     <!-- Events -->
     <string name="activities_and_events">Activities and Events</string>
+    
+    <!-- Newly added strings -->
+    <string name="event_location">Event Location</string>
+    <string name="event_date">Event Date</string>
+    <string name="max_participants">Max Participants</string>
+    <string name="create_event">Create Event</string>
 </resources> 

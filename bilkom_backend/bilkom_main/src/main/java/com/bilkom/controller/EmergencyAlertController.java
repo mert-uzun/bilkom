@@ -35,6 +35,6 @@ public class EmergencyAlertController {
      */
     @GetMapping
     public List<EmergencyAlert> getEmergencyAlerts() {
-        return emergencyAlertService.fetchEmergencyAlerts();
+        return emergencyAlertService.getAllEmergencyAlerts();
     }    
 }

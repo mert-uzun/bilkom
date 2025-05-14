@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import com.bilkom.ui.ClubActivitiesActivity;
 import com.bilkom.model.ClubMembership;
 import com.bilkom.model.Club;
+import com.bilkom.model.ClubMember;
 
 /** SettingsActivity handles user settings such as updating passwords and logging out.
  * 
