@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.bilkom.android.app-mergeDebugResources-30:/values-h480dp-land-v13/values-h480dp-land-v13.xml",
+            "outputFile": "com.bilkom.app-mergeDebugResources-38:/values-h480dp-land-v13/values-h480dp-land-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\alisv\\.gradle\\caches\\8.11.1\\transforms\\6e466d48a3e6292c8db8ebb6ffaca820\\transformed\\material-1.11.0\\res\\values-h480dp-land-v13\\values-h480dp-land-v13.xml",
+                    "source": "C:\\Users\\Mert\\.gradle\\caches\\8.11.1\\transforms\\d8bec85b96b802b8c0d3a8e5ac690938\\transformed\\material-1.11.0\\res\\values-h480dp-land-v13\\values-h480dp-land-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",

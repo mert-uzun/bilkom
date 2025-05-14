@@ -5,9 +5,11 @@ package com.bilkom.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bilkom.R;
@@ -22,6 +24,8 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -84,9 +88,97 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         
-        forgotPasswordText.setOnClickListener(v ->
-            Toast.makeText(this, "Forgot password feature coming soon", Toast.LENGTH_SHORT).show()
-        );
+        forgotPasswordText.setOnClickListener(v -> showForgotPasswordDialog());
+    }
+
+    private void showForgotPasswordDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Reset Password");
+        
+        // Inflate the dialog layout
+        LayoutInflater inflater = getLayoutInflater();
+        android.view.View dialogView = inflater.inflate(R.layout.dialog_forgot_password, null);
+        builder.setView(dialogView);
+        
+        final TextInputEditText emailInput = dialogView.findViewById(R.id.forgotPasswordEmailInput);
+        
+        // Set up the buttons
+        builder.setPositiveButton("Send Reset Link", null); // Set to null to prevent auto-dismiss
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+        
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        
+        // Override the positive button click to validate before dismissing
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            String email = emailInput.getText().toString().trim();
+            
+            // Validate email
+            if (email.isEmpty()) {
+                emailInput.setError("Email is required");
+                return;
+            }
+            
+            // Send password reset request
+            requestPasswordReset(email);
+            dialog.dismiss();
+        });
+    }
+    
+    private void requestPasswordReset(String email) {
+        // Create request payload
+        Map<String, String> payload = new HashMap<>();
+        payload.put("email", email);
+        
+        // Show loading
+        Toast.makeText(this, "Sending password reset email...", Toast.LENGTH_SHORT).show();
+        
+        // Make API call
+        ApiService apiService = RetrofitClient.getInstance().getApiService();
+        apiService.requestPasswordReset(payload).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(LoginActivity.this, 
+                        "Password reset link sent to your email", Toast.LENGTH_LONG).show();
+                } else {
+                    try {
+                        // Handle error
+                        String errorMessage = "Failed to send reset link";
+                        
+                        if (response.errorBody() != null) {
+                            try {
+                                // Simple extraction of message from JSON
+                                errorMessage = response.errorBody().string();
+                                if (errorMessage.contains("\"message\":")) {
+                                    errorMessage = errorMessage.split("\"message\":")[1];
+                                    errorMessage = errorMessage.split("\"")[1];
+                                }
+                            } catch (Exception e) {
+                                Log.e(TAG, "Error parsing error body", e);
+                                errorMessage = "Failed to send reset link: " + response.code();
+                            }
+                        }
+                        
+                        Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error handling password reset failure", e);
+                        Toast.makeText(LoginActivity.this, 
+                            "Failed to send reset link", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e(TAG, "Network error during password reset request", t);
+                Toast.makeText(
+                    LoginActivity.this,
+                    "Network error: " + t.getMessage(),
+                    Toast.LENGTH_LONG
+                ).show();
+            }
+        });
     }
 
     private void loginUser() {
