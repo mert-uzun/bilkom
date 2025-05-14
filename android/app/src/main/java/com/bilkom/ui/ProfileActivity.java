@@ -42,7 +42,7 @@ public class ProfileActivity extends BaseActivity {
         clubsContainer = findViewById(R.id.clubsContainer);
         
         findViewById(R.id.editProfileButton).setOnClickListener(v -> {
-            Intent intent = new Intent(this, Class.forName("com.bilkom.ui.SettingsActivity"));
+            Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         });
 
@@ -99,7 +99,7 @@ public class ProfileActivity extends BaseActivity {
                 clubText.setOnClickListener(v -> {
                     try {
                         // Navigate to club activities
-                        Intent intent = new Intent(this, Class.forName("com.bilkom.ui.ClubActivitiesActivity"));
+                        Intent intent = new Intent(this, ClubActivitiesActivity.class);
                         intent.putExtra("clubId", clubId);
                         startActivity(intent);
                     } catch (Exception e) {

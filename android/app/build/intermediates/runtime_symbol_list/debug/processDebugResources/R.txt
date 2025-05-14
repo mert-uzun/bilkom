@@ -3573,6 +3573,7 @@ int id mtrl_picker_text_input_range_start 0x7f08017e
 int id mtrl_picker_title_text 0x7f08017f
 int id mtrl_view_tag_bottom_padding 0x7f080180
 int id multiply 0x7f080181
+int id myActivitiesButton 0x7f080290
 int id myClubsActivitiesRecyclerView 0x7f080182
 int id myClubsButton 0x7f080183
 int id nameEditText 0x7f080184

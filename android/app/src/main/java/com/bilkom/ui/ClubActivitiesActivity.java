@@ -101,7 +101,7 @@ public class ClubActivitiesActivity extends BaseActivity {
     private void setupButtons() {
         addClubActivityButton.setOnClickListener(v -> {
             try {
-                Intent intent = new Intent(this, Class.forName("com.bilkom.ui.AddClubActivity"));
+                Intent intent = new Intent(this, AddClubActivity.class);
                 startActivity(intent);
             } catch (Exception e) {
                 Log.e("ClubActivitiesActivity", "Error navigating to AddClubActivity: " + e.getMessage());
@@ -115,7 +115,7 @@ public class ClubActivitiesActivity extends BaseActivity {
         
         myActivitiesButton.setOnClickListener(v -> {
             try {
-                Intent intent = new Intent(this, Class.forName("com.bilkom.ui.MyActivitiesActivity"));
+                Intent intent = new Intent(this, MyActivitiesActivity.class);
                 startActivity(intent);
             } catch (Exception e) {
                 Log.e("ClubActivitiesActivity", "Error navigating to MyActivitiesActivity: " + e.getMessage());
@@ -144,12 +144,12 @@ public class ClubActivitiesActivity extends BaseActivity {
                         spinnerItems.add(club.getName());
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(ClubActivitiesActivity.this,
                             android.R.layout.simple_spinner_item, spinnerItems);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     clubSpinner.setAdapter(adapter);
                 } else {
-                    Toast.makeText(this, 
+                    Toast.makeText(ClubActivitiesActivity.this, 
                             "Failed to load clubs: " + response.message(), 
                             Toast.LENGTH_SHORT).show();
                 }
@@ -157,7 +157,7 @@ public class ClubActivitiesActivity extends BaseActivity {
 
             @Override
             public void onFailure(@NonNull Call<List<Club>> call, @NonNull Throwable t) {
-                Toast.makeText(this, 
+                Toast.makeText(ClubActivitiesActivity.this, 
                         "Error: " + t.getMessage(), 
                         Toast.LENGTH_SHORT).show();
             }
@@ -183,7 +183,7 @@ public class ClubActivitiesActivity extends BaseActivity {
                     clubActivities.addAll(response.body());
                     clubActivityAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(this, 
+                    Toast.makeText(ClubActivitiesActivity.this, 
                             "Failed to load activities: " + response.message(), 
                             Toast.LENGTH_SHORT).show();
                 }
@@ -192,7 +192,7 @@ public class ClubActivitiesActivity extends BaseActivity {
             @Override
             public void onFailure(@NonNull Call<List<Event>> call, @NonNull Throwable t) {
                 loadingToast.cancel();
-                Toast.makeText(this, 
+                Toast.makeText(ClubActivitiesActivity.this, 
                         "Error: " + t.getMessage(), 
                         Toast.LENGTH_SHORT).show();
             }
@@ -221,7 +221,7 @@ public class ClubActivitiesActivity extends BaseActivity {
                     }
                     clubActivityAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(this, 
+                    Toast.makeText(ClubActivitiesActivity.this, 
                             "Failed to load activities: " + response.message(), 
                             Toast.LENGTH_SHORT).show();
                 }
@@ -230,7 +230,7 @@ public class ClubActivitiesActivity extends BaseActivity {
             @Override
             public void onFailure(@NonNull Call<Map<Long, List<Event>>> call, @NonNull Throwable t) {
                 loadingToast.cancel();
-                Toast.makeText(this, 
+                Toast.makeText(ClubActivitiesActivity.this, 
                         "Error: " + t.getMessage(), 
                         Toast.LENGTH_SHORT).show();
             }

@@ -56,8 +56,8 @@ public class EventActivity extends BaseActivity {
         
         // Set click listener for item click to navigate to details
         adapter.setOnItemClickListener(event -> {
-            // Navigate to details activity
-            Intent intent = new Intent(this, Class.forName("com.bilkom.ui.EventDetailsActivity"));
+            // Navigate to details activity using direct class reference
+            Intent intent = new Intent(this, EventDetailsActivity.class);
             intent.putExtra("event", event);
             startActivity(intent);
         });
@@ -65,13 +65,13 @@ public class EventActivity extends BaseActivity {
         eventRecyclerView.setAdapter(adapter);
 
         addActivityButton.setOnClickListener(v -> {
-            Intent intent = new Intent(EventActivity.this, Class.forName("com.bilkom.ui.CreateEventActivity"));
+            Intent intent = new Intent(EventActivity.this, CreateEventActivity.class);
             startActivity(intent);
         });
         
         // Set click listener for My Activities button
         myActivitiesButton.setOnClickListener(v -> {
-            Intent intent = new Intent(EventActivity.this, Class.forName("com.bilkom.ui.MyActivitiesActivity"));
+            Intent intent = new Intent(EventActivity.this, MyActivitiesActivity.class);
             startActivity(intent);
         });
 

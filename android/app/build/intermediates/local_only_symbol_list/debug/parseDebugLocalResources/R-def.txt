@@ -160,6 +160,7 @@ id menu_logout
 id menu_profile
 id menu_settings
 id messageTextView
+id myActivitiesButton
 id myClubsActivitiesRecyclerView
 id myClubsButton
 id nameEditText
