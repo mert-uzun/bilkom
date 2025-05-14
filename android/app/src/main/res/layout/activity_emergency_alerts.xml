@@ -5,6 +5,19 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
+        <!-- Emergency logo at the top -->
+    <ImageView
+        android:id="@+id/imgEmergencyLogo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="24dp"
+        android:contentDescription="@string/emergency_alert_logo"
+        android:src="@drawable/emergency_logo"
+        android:scaleType="centerInside"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <TextView
         android:id="@+id/emergencyAlertsTitle"
         android:layout_width="wrap_content"
