@@ -95,11 +95,7 @@ public class HomeActivity extends BaseActivity {
     private void handleNavigationRequests() {
         try {
             Intent intent = getIntent();
-            if (intent != null) {
-                if (intent.getBooleanExtra("openProfileAfterLoad", false)) {
-                    startActivity(new Intent(this, ProfileActivity.class));
-                }
-                
+            if (intent != null) {                
                 if (intent.getBooleanExtra("openSettingsAfterLoad", false)) {
                     startActivity(new Intent(this, SettingsActivity.class));
                 }
@@ -180,8 +176,6 @@ public class HomeActivity extends BaseActivity {
             String description = wf.getDescription();
             float temperature = (float) wf.getTemperature();
             weatherTemp.setText(String.format(Locale.getDefault(), "%.1f°C", temperature));
-            
-            // Description with null check
             weatherDesc.setText(description != null ? description : "");
         } catch (Exception e) {
             Log.e(TAG, "Error updating weather UI", e);
