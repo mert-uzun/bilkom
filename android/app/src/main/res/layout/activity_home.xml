@@ -57,6 +57,16 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <!-- Emergency Alerts Button -->
+        <Button
+            android:id="@+id/emergencyAlertsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Emergency Alerts"
+            android:backgroundTint="#B71C1C"
+            android:textColor="@color/white"
+            android:layout_marginBottom="16dp"/>
+
         <!-- News Section -->
         <TextView
             android:layout_width="match_parent"
