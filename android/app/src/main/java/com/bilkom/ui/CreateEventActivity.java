@@ -16,6 +16,7 @@ import com.bilkom.utils.*;
 import retrofit2.*;
 import android.content.Intent;
 import android.view.MenuItem;
+import android.util.Log;
 
 public class CreateEventActivity extends BaseActivity {
     protected EditText eventNameEdit, eventLocationEdit, eventDateEdit, maxParticipantsEdit, eventDescriptionEdit;
@@ -131,7 +132,17 @@ public class CreateEventActivity extends BaseActivity {
                         Toast.makeText(CreateEventActivity.this, "Event created!", Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
-                        Toast.makeText(CreateEventActivity.this, "Failed to create event", Toast.LENGTH_SHORT).show();
+                        try {
+                            String errorBody = response.errorBody() != null ? response.errorBody().string() : "No error body";
+                            Log.e("CreateEventActivity", "Failed to create event. Code: " + response.code() + 
+                                ", Error: " + errorBody);
+                            Toast.makeText(CreateEventActivity.this, 
+                                "Failed to create event: " + errorBody, Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Log.e("CreateEventActivity", "Error reading error response", e);
+                            Toast.makeText(CreateEventActivity.this, 
+                                "Failed to create event", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 @Override

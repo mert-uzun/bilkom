@@ -1,6 +1,7 @@
 package com.bilkom.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -178,8 +179,17 @@ public class AddClubActivity extends CreateEventActivity {
                         Toast.makeText(AddClubActivity.this, "Club event created!", Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
-                        Toast.makeText(AddClubActivity.this, 
-                            "Failed to create club event", Toast.LENGTH_SHORT).show();
+                        try {
+                            String errorBody = response.errorBody() != null ? response.errorBody().string() : "No error body";
+                            Log.e("AddClubActivity", "Failed to create event. Code: " + response.code() + 
+                                ", Error: " + errorBody);
+                            Toast.makeText(AddClubActivity.this, 
+                                "Failed to create club event: " + errorBody, Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Log.e("AddClubActivity", "Error reading error response", e);
+                            Toast.makeText(AddClubActivity.this, 
+                                "Failed to create club event", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
 

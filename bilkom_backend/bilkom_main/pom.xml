@@ -140,6 +140,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.1.5</version> 
                 <configuration>
+                    <mainClass>com.bilkom.BilkomMainApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>

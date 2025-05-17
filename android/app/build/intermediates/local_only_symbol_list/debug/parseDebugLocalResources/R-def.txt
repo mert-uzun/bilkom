@@ -1,6 +1,7 @@
 R_DEF: Internal format may change without notice
 local
 color bilkom_bg
+color bilkom_blue
 color bilkom_on_bg
 color black
 color card_bg_dark
@@ -82,7 +83,6 @@ id alertMessage
 id alertStatusText
 id alertTitle
 id alertTitleText
-id availableClubsRecyclerView
 id avatarImageView
 id bilkentIdInput
 id bilkentIdLayout
@@ -103,7 +103,6 @@ id clubNameEditText
 id clubNameTextView
 id clubSpinner
 id clubsContainer
-id clubsRecyclerView
 id confirmPasswordEdit
 id contactAlertButton
 id contentFrame
@@ -124,7 +123,6 @@ id emailLayout
 id emergencyAlertsButton
 id emergencyAlertsRecyclerView
 id emergencyAlertsTitle
-id emptyView
 id eventDateEdit
 id eventDateTextView
 id eventDescriptionEdit
@@ -168,7 +166,6 @@ id logoImageView
 id logoutButton
 id mainMenuButton
 id manageClubsButton
-id managedClubsRecyclerView
 id maxParticipantsEdit
 id maxParticipantsEditText
 id menuButton
@@ -179,7 +176,6 @@ id messageTextView
 id myActivitiesButton
 id myClubsActivitiesRecyclerView
 id myClubsButton
-id myClubsRecyclerView
 id nameEditText
 id nav_events
 id nav_header_username
@@ -212,9 +208,6 @@ id registerButton
 id registerText
 id rvClubs
 id rvUsers
-id searchButton
-id searchEditText
-id searchLayout
 id settingsContainer
 id settingsMenuItem
 id settingsTitle
@@ -223,13 +216,13 @@ id submitEventButton
 id submitReportButton
 id tagSpinner
 id tagsContainer
+id tagsScrollView
 id temperatureText
 id til_event_date
-id til_event_description
+id til_event_desc
 id til_event_location
 id til_event_name
 id til_max_participants
-id titleTextView
 id toolbar
 id tvClubName
 id tvDescription
@@ -256,18 +249,15 @@ layout activity_admin_dashboard
 layout activity_admin_user_list
 layout activity_base
 layout activity_club_activities
-layout activity_club_list
-layout activity_club_management
 layout activity_create_club
 layout activity_create_event
 layout activity_emergency_alerts
 layout activity_event
 layout activity_home
-layout activity_join_club
 layout activity_login
 layout activity_main
 layout activity_my_activities
-layout activity_my_clubs
+layout activity_news
 layout activity_profile
 layout activity_registration
 layout activity_report
@@ -297,11 +287,14 @@ string app_name
 string club_activities
 string contact
 string create
+string create_event
 string email
 string emergency_alert_logo
 string emergency_alerts
 string error_occurred
+string event_date
 string event_description
+string event_location
 string event_name
 string gcm_defaultSenderId
 string google_api_key
@@ -313,6 +306,7 @@ string latest_news
 string loading
 string logging_in
 string login
+string max_participants
 string navigation_drawer_close
 string navigation_drawer_open
 string network_error
