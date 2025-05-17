@@ -1,5 +1,6 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bilkom_bg">
@@ -24,9 +25,10 @@
             android:id="@+id/settingsTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Settings"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textColor=#FFFFFF"
             android:layout_marginBottom="16dp"/>
             
         <ImageView
@@ -35,32 +37,117 @@
             android:layout_height="80dp"
             android:src="@drawable/ic_profile"
             android:layout_marginBottom="8dp"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/changeProfilePicButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Change Profile Picture"
-            android:backgroundTint="@color/design_default_color_primary"
-            android:textColor="@color/white"
-            android:layout_marginBottom="24dp"/>
             
         <!-- User Profile Information -->
-        <EditText
-            android:id="@+id/nameEditText"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Full Name"
-            android:inputType="textPersonName"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
             
-        <EditText
-            android:id="@+id/emailEditText"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Full Name"
+                    android:inputType="textPersonName"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.cardview.widget.CardView>
+            
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email Address"
-            android:inputType="textEmailAddress"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+            
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email Address"
+                    android:inputType="textEmailAddress"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.cardview.widget.CardView>
+            
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+            
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone Number"
+                    android:inputType="phone"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.cardview.widget.CardView>
+            
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+            
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/bloodTypeEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Blood Type"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.cardview.widget.CardView>
+            
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+            
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/bilkentIdEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Bilkent ID"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.cardview.widget.CardView>
             
         <Button
             android:id="@+id/updateProfileButton"
@@ -69,30 +156,6 @@
             android:text="Update Profile"
             android:layout_marginBottom="24dp"/>
             
-        <!-- Password Update -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Change Password"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
-            
-        <EditText
-            android:id="@+id/newPasswordEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="New Password"
-            android:inputType="textPassword"
-            android:layout_marginBottom="8dp"/>
-            
-        <EditText
-            android:id="@+id/confirmPasswordEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Confirm New Password"
-            android:inputType="textPassword"
-            android:layout_marginBottom="16dp"/>
             
         <com.google.android.material.button.MaterialButton
             android:id="@+id/updatePasswordButton"
@@ -110,12 +173,21 @@
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
             
-        <LinearLayout
-            android:id="@+id/settingsContainer"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+            
+            <LinearLayout
+                android:id="@+id/settingsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:background="@android:color/white"/>
+        </androidx.cardview.widget.CardView>
             
         <!-- Club Management -->
         <Button
@@ -123,6 +195,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Manage Club Memberships"
+            android:layout_marginBottom="16dp"/>
+        
+        <Button
+            android:id="@+id/joinClubButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Join Club"
             android:layout_marginBottom="16dp"/>
             
         <Button

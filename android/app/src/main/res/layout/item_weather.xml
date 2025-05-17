@@ -27,12 +27,7 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/weather"/>
 
-            <!-- Optional: Add a subtle background for the icon -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/weather_icon_bg"
-                android:alpha="0.1"/>
+
         </FrameLayout>
 
         <!-- Weather Info -->

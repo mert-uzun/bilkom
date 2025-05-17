@@ -56,7 +56,7 @@ public class ClubActivitiesActivity extends BaseActivity {
         setupRecyclerView();
         setupSpinner();
         setupButtons();
-        fetchAllClubs();
+        fetchMyClubs();
     }
 
     private void initializeViews() {
@@ -104,8 +104,16 @@ public class ClubActivitiesActivity extends BaseActivity {
         clubSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (myClubs.isEmpty()) {
+                    // No clubs available, show message
+                    Toast.makeText(ClubActivitiesActivity.this, 
+                                  "You are not a member of any clubs yet", 
+                                  Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                
                 if (position == 0) {
-                    fetchAllClubActivities();
+                    fetchMyClubsActivities();
                 } else if (position > 0 && position <= myClubs.size()) {
                     Club selectedClub = myClubs.get(position - 1);
                     fetchClubActivitiesByClub(selectedClub.getId());
@@ -152,8 +160,14 @@ public class ClubActivitiesActivity extends BaseActivity {
         });
     }
 
-    private void fetchAllClubs() {
-        apiService.listClubs().enqueue(new Callback<List<Club>>() {
+    private void fetchMyClubs() {
+        String token = secureStorage.getAuthToken();
+        if (token == null) {
+            Toast.makeText(this, "Not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        apiService.getMyClubs("Bearer " + token).enqueue(new Callback<List<Club>>() {
             @Override
             public void onResponse(@NonNull Call<List<Club>> call, @NonNull Response<List<Club>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -165,17 +179,25 @@ public class ClubActivitiesActivity extends BaseActivity {
                         clubNames.add(club.getName());
                     }
                     ((ArrayAdapter) clubSpinner.getAdapter()).notifyDataSetChanged();
-                    fetchAllClubActivities(); // Optionally show all activities by default
+                    
+                    if (myClubs.isEmpty()) {
+                        Toast.makeText(ClubActivitiesActivity.this,
+                                "You are not a member of any clubs yet",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Show activities for the first club
+                        fetchMyClubsActivities();
+                    }
                 } else {
                     Toast.makeText(ClubActivitiesActivity.this,
-                            "Failed to load clubs: " + response.message(),
+                            "Failed to load your clubs: " + response.message(),
                             Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(@NonNull Call<List<Club>> call, @NonNull Throwable t) {
                 Toast.makeText(ClubActivitiesActivity.this,
-                        "Error: " + t.getMessage(),
+                        "Error loading your clubs: " + t.getMessage(),
                         Toast.LENGTH_SHORT).show();
             }
         });
