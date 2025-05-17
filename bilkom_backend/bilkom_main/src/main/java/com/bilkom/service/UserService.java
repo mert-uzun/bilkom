@@ -229,7 +229,7 @@ public class UserService {
             User savedUser = userRepository.save(user);
             
             // Send verification email
-            String verificationUrl = "http://localhost:8080/api/auth/verify?token=" + verificationToken;
+            String verificationUrl = "http://192.168.231.145:8080/api/auth/verify?token=" + verificationToken;
             emailService.sendVerificationEmail(user.getEmail(), verificationUrl);
             
             return savedUser;
@@ -396,7 +396,7 @@ public class UserService {
         User savedUser = userRepository.save(user);
         
         // Send verification email
-        String verificationUrl = "http://localhost:8080/api/auth/verify?token=" + verificationToken;
+        String verificationUrl = "http://192.168.231.145:8080/api/auth/verify?token=" + verificationToken;
         emailService.sendVerificationEmail(email, verificationUrl);
         
         return savedUser;

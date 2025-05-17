@@ -12,7 +12,7 @@ The following environment variables should be set:
 
 ```
 # Database Configuration
-BILKOM_DB_URL=jdbc:mysql://localhost:3306/bilkom_db
+BILKOM_DB_URL=jdbc:mysql://192.168.231.145:3306/bilkom_db
 BILKOM_DB_USERNAME=your_db_username
 BILKOM_DB_PASSWORD=your_db_password
 
@@ -35,7 +35,7 @@ BILKOM_BASE_URL=http://your-production-url
 #### Windows:
 
 ```
-set BILKOM_DB_URL=jdbc:mysql://localhost:3306/bilkom_db
+set BILKOM_DB_URL=jdbc:mysql://192.168.231.145:3306/bilkom_db
 set BILKOM_DB_USERNAME=your_db_username
 set BILKOM_DB_PASSWORD=your_db_password
 set BILKOM_JWT_SECRET=your_very_secure_jwt_secret_key
@@ -48,7 +48,7 @@ set BILKOM_BASE_URL=http://your-production-url
 #### Linux/MacOS:
 
 ```
-export BILKOM_DB_URL=jdbc:mysql://localhost:3306/bilkom_db
+export BILKOM_DB_URL=jdbc:mysql://192.168.231.145:3306/bilkom_db
 export BILKOM_DB_USERNAME=your_db_username
 export BILKOM_DB_PASSWORD=your_db_password
 export BILKOM_JWT_SECRET=your_very_secure_jwt_secret_key

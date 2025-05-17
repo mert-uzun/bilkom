@@ -122,7 +122,7 @@ public class AuthService {
         userRepository.save(user);
         
         // Send verification email
-        String verificationUrl = "http://localhost:8080/api/auth/verify?token=" + verificationToken;
+        String verificationUrl = "http://192.168.231.145:8080/api/auth/verify?token=" + verificationToken;
         emailService.sendVerificationEmail(user.getEmail(), verificationUrl);
         
         return new AuthResponse(true, "Registration successful. Please check your email to verify your account.");
@@ -278,7 +278,7 @@ public class AuthService {
         userRepository.save(user);
         
         // Send password reset email
-        String resetUrl = "http://localhost:8080/api/reset-password-form?token=" + resetToken;
+        String resetUrl = "http://192.168.231.145:8080/api/reset-password-form?token=" + resetToken;
         sendPasswordResetEmail(user.getEmail(), resetUrl);
         
         return true;

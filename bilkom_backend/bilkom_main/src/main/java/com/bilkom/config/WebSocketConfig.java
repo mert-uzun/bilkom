@@ -22,7 +22,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Value("${websocket.endpoint:/ws}")
     private String websocketEndpoint;
 
-    @Value("${websocket.allowed-origins:http://localhost:3000,http://localhost:8080}")
+    @Value("${websocket.allowed-origins:http://192.168.231.145:3000,http://192.168.231.145:8080}")
     private String allowedOrigins;
 
     /**
