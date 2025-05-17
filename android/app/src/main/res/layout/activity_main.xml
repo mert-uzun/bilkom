@@ -37,7 +37,7 @@ it extends the ScrollView class to show the main activity content-->
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="WELCOME TO"
-            android:textColor="@color/black"
+            android:textColor="#FFFFFF"
             android:textSize="22sp"
             android:textStyle="bold"
             android:layout_marginTop="8dp"/>
