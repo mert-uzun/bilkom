@@ -130,7 +130,7 @@ public interface ApiService {
     Call<List<Event>> getMyCreatedPast();
 
     @GET("/api/events/joined/past")
-    Call<List<Event>> getMyJoinedPast();
+    Call<List<Event>> getMyJoinedPast(@Header("Authorization") String token);
 
     @GET("/api/events/my-club-events/past")
     Call<List<Event>> getPastOfMyClubs();

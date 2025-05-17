@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="16sp"
-        android:textColor="1E1E1E"/>
+        android:textColor="#1E1E1E"/>
 
     <Button
         android:id="@+id/dialogJoinButton"

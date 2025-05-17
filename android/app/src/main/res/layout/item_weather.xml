@@ -25,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:scaleType="fitCenter"
-                android:src="@drawable/weather_cloudy"/>
+                android:src="@drawable/weather"/>
 
             <!-- Optional: Add a subtle background for the icon -->
             <View

@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 if (temperatureText != null) temperatureText.setText("--°C");
                 if (humidityText != null) humidityText.setText("--%");
                 if (windText != null) windText.setText("-- km/h");
+                if (weatherIcon != null) weatherIcon.setImageResource(R.drawable.weather);
             } else {
                 Log.e(TAG, "Weather container not found in layout");
             }
@@ -187,12 +188,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             // Icon handling with null safety
             if (weatherIcon != null) {
-                String icon = wf.getIcon();
-                if (icon != null) {
-                    weatherIcon.setImageResource(WeatherIconUtils.getWeatherIconResourceId(this, icon));
-                } else {
-                    weatherIcon.setImageResource(R.drawable.ic_menu);
-                }
+                weatherIcon.setImageResource(R.drawable.weather);
             }
             
             // Description
