@@ -149,7 +149,7 @@ public class MyActivitiesActivity extends BaseActivity {
         Toast loadingToast = Toast.makeText(this, "Loading past activities...", Toast.LENGTH_SHORT);
         loadingToast.show();
 
-        apiService.getMyJoinedPast().enqueue(new Callback<List<Event>>() {
+        apiService.getMyJoinedPast("Bearer " + token).enqueue(new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 loadingToast.cancel();

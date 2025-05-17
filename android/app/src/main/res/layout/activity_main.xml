@@ -155,14 +155,7 @@ it extends the ScrollView class to show the main activity content-->
                 android:backgroundTint="#2E7D32"
                 android:textColor="@color/white"
                 android:layout_marginEnd="8dp"/>
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/clubActivitiesButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Club Activities"
-                android:backgroundTint="#6D4C41"
-                android:textColor="@color/white"/>
+
         </LinearLayout>
 
     </LinearLayout>
