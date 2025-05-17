@@ -194,7 +194,21 @@ public class MainActivity extends AppCompatActivity {
             // Description
             String description = wf.getDescription();
             if (weatherDescription != null) {
-                weatherDescription.setText(description != null ? description : "Unknown weather");
+                if (description != null) {
+                    // Capitalize first letter of each word
+                    String[] words = description.split("\\s");
+                    StringBuilder capitalizedDescription = new StringBuilder();
+                    for (String word : words) {
+                        if (word.length() > 0) {
+                            capitalizedDescription.append(word.substring(0, 1).toUpperCase())
+                                    .append(word.substring(1))
+                                    .append(" ");
+                        }
+                    }
+                    weatherDescription.setText(capitalizedDescription.toString().trim());
+                } else {
+                    weatherDescription.setText("Unknown Weather");
+                }
             }
             
             // Temperature formatting - fixed to properly handle temperature value

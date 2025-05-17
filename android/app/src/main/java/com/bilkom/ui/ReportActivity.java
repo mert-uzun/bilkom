@@ -6,7 +6,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.bilkom.ui.BaseActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import com.bilkom.R;
 import com.bilkom.network.RetrofitClient;
 import com.bilkom.utils.SecureStorage;
@@ -16,7 +16,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReportActivity extends BaseActivity {
+public class ReportActivity extends AppCompatActivity {
 
     private EditText reasonEditText;
     private Button submitReportButton;
@@ -26,9 +26,7 @@ public class ReportActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
-        setupNavigationDrawer();
-        getLayoutInflater().inflate(R.layout.activity_report, findViewById(R.id.contentFrame));
+        setContentView(R.layout.activity_report);
 
         // Enable up/back navigation in the action bar
         if (getSupportActionBar() != null) {
@@ -63,6 +61,7 @@ public class ReportActivity extends BaseActivity {
         Toast loadingToast = Toast.makeText(this, "Submitting report...", Toast.LENGTH_SHORT);
         loadingToast.show();
 
+        String token = "Bearer " + secureStorage.getAuthToken();
         ReportRequest request = new ReportRequest(reason);
         RetrofitClient.getInstance().getApiService()
                 .reportEvent(eventId, request)
@@ -73,8 +72,7 @@ public class ReportActivity extends BaseActivity {
                         if (response.isSuccessful()) {
                             Toast.makeText(ReportActivity.this, 
                                 "Report submitted successfully", Toast.LENGTH_SHORT).show();
-                            // Navigate to MainActivity after successful submission
-                            navigateToMainActivity();
+                            finish();
                         } else {
                             Toast.makeText(ReportActivity.this, 
                                 "Failed to submit report", Toast.LENGTH_SHORT).show();
@@ -93,8 +91,7 @@ public class ReportActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            // Handle the back button in the action bar
-            navigateToMainActivity();
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -102,8 +99,7 @@ public class ReportActivity extends BaseActivity {
     
     @Override
     public void onBackPressed() {
-        // Override to handle the hardware back button
-        navigateToMainActivity();
+        finish();
     }
     
     private void navigateToMainActivity() {

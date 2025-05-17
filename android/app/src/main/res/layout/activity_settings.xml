@@ -28,7 +28,7 @@
             android:text="Settings"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor=#FFFFFF"
+            android:textColor="@color/white"
             android:layout_marginBottom="16dp"/>
             
         <ImageView
