@@ -19,7 +19,7 @@ Bilkom is a community-driven platform exclusively for Bilkent University student
 University life is about more than academic achievement—it’s a time for personal growth, social development, and community engagement. Bilkom addresses the challenges of campus disconnection and isolation by offering a dedicated platform where students can:
 - Connect over shared interests and activities.
 - Stay informed with real-time weather and campus news.
-- Safely coordinate rides and receive emergency alerts.
+- Receive emergency alerts.
 - Engage with student clubs and manage events efficiently.
 
 By bringing all these features together, Bilkom not only enhances the social and academic experience but also builds a safer, more supportive campus community.
