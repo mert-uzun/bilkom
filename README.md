@@ -64,10 +64,6 @@ By bringing all these features together, Bilkom not only enhances the social and
 - Only Bilkent emails (`@bilkent.edu.tr`) allowed  
 - Email verification via JWT system
 
-### Setup Profile
-- Add interests → get matched with relevant events  
-- Interests control homepage suggestions
-
 ### Create / Join Event
 - Fill title, description, quota, tags  
 - Join an event → Get notified when someone else joins too  
