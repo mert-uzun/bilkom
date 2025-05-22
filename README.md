@@ -1,4 +1,4 @@
-<h1 style="text-align: center;">Bilkom – Campus App for Bilkent University</h1>
+<h1 align="center">Bilkom – Campus App for Bilkent University</h1>
 
 <p align="center">
   <img src="Media/logo.jpg" width="300"/>
