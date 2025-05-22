@@ -1,4 +1,4 @@
-# Bilkom: Enhancing Campus Life at Bilkent University
+# Bilkom - Campus App for Bilkent University
 
 <p align="center">
   <img src="Media/logo.jpg" width="300"/>
@@ -18,16 +18,16 @@ Bilkom is a community-driven platform exclusively for Bilkent University student
 
 University life is about more than academic achievement—it’s a time for personal growth, social development, and community engagement. Bilkom addresses the challenges of campus disconnection and isolation by offering a dedicated platform where students can:
 - Connect over shared interests and activities.
-- Stay informed with real-time weather and campus news.
-- Receive emergency alerts.
-- Engage with student clubs and manage events efficiently.
+- Stay informed with real-time weather in Bilkent/Ankara and campus news.
+- Easily receive emergency alerts.
+- Engage with student clubs and post/manage club events efficiently.
 
 By bringing all these features together, Bilkom not only enhances the social and academic experience but also builds a safer, more supportive campus community.
 
 ## Features
 
 - **Activity Matching & Shared Interests:**  
-  Easily create or join events—ranging from sports to study groups—tailored to your interests.
+  Easily create or join events—ranging from leisure activities to study groups—tailored to your interests.
 
 - **Student Clubs & Event Promotion:**  
   Enable student clubs to advertise their events and activities without relying on outdated methods like posters or generic social media.
@@ -49,14 +49,13 @@ By bringing all these features together, Bilkom not only enhances the social and
 - **ORM:** Hibernate (JPA)  
 - **Authentication:** JWT-based authentication using Bilkent email verification  
 - **Real-Time Communication:** WebSockets for emergency alerts and messaging
+- - **APIs:**  
+  - OpenWeatherMap API for real-time weather updates  
+  - JSoup for integrating Bilkent news
 
 ### Frontend
 - **Core Technologies:** Android Studio (Java), Android SDK, XML Layouts  
-- **Styling:** Material Components, custom themes (`colors.xml`, `themes.xml`), vector drawables with tinting, optional shape-based styles for elevation and corner radius  
-- **APIs:**  
-  - Google Maps API / OpenStreetMap API for location services  
-  - OpenWeatherMap API for real-time weather updates  
-  - JSoup for integrating Bilkent news
+- **Styling:** Material Components, custom themes (`colors.xml`, `themes.xml`), vector drawables with tinting, optional shape-based styles for elevation and corner radius
 
 ## Usage
 
@@ -66,7 +65,7 @@ By bringing all these features together, Bilkom not only enhances the social and
 
 ### Create / Join Event
 - Fill title, description, quota, tags  
-- Join an event → Get notified when someone else joins too  
+- Join an event
 - Filter by interest, time, and availability
 
 ### Club Announcements
@@ -74,7 +73,7 @@ By bringing all these features together, Bilkom not only enhances the social and
 - Replaces Instagram/WhatsApp chaos
 
 ### Emergency Alerts
-- blood donation
+- Urgent needs for blood donation
 - Uses WebSocket for instant broadcast
 
 ### News & Weather Feed
